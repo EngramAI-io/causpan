@@ -1,0 +1,25 @@
+// Experiment 1: Does attribution accuracy degrade with concurrency?
+//
+// Independent variable: number of concurrent logical requests.
+// Dependent variable: attribution precision, recall, F1.
+// Strategies: PID, PID+TID, time window (multiple sizes).
+//
+// Hypothesis: As concurrency increases, baselines degrade because
+// multiple RPCs share PIDs/TIDs and temporal proximity becomes ambiguous.
+
+name: "exp-001-concurrency-scaling"
+description: "Scale concurrent logical requests from 1 to 64 and measure attribution accuracy."
+tags: ["concurrency", "baseline", "scaling"]
+
+workload:
+  concurrency: [1, 2, 4, 8, 16, 32, 64]
+  operations_per_rpc: 4
+  scenario: "mixed"
+  seed: 42
+  worker_threads: 2
+
+evaluator:
+  time_windows_ms: [1, 5, 10, 50, 100, 500, 1000]
+
+runs_per_config: 5
+output_dir: "results/exp-001"

@@ -1,0 +1,10 @@
+[package]
+name = "causpan-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Shared types for Causpan: kernel-event attribution research"
+
+[dependencies]
+serde.workspace = true
+thiserror.workspace = true

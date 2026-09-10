@@ -1,0 +1,17 @@
+[package]
+name = "collector"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Normalizes strace output (and eventually eBPF events) into causpan-core KernelEvent JSONL"
+
+[dependencies]
+causpan-core = { path = "../../causpan-core" }
+serde.workspace = true
+serde_json.workspace = true
+clap.workspace = true
+thiserror.workspace = true
+chrono.workspace = true
+regex = "1.11"
+tracing.workspace = true
+tracing-subscriber.workspace = true

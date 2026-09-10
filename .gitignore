@@ -1,0 +1,30 @@
+# Rust build artifacts
+/target/
+**/target/
+
+# Cargo
+Cargo.lock
+
+# Ground-truth and kernel event output (generated during experiments)
+ground-truth.jsonl
+*.strace
+kernel-events.jsonl
+
+# Experiment results
+results/*.csv
+results/*.png
+results/*.pdf
+
+# Data files
+/tmp/causpan/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

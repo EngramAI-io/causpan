@@ -1,0 +1,16 @@
+[package]
+name = "evaluator"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Runs attribution strategies against ground-truth and kernel-event JSONL and produces metrics"
+
+[dependencies]
+causpan-core = { path = "../../causpan-core" }
+serde.workspace = true
+serde_json.workspace = true
+clap.workspace = true
+thiserror.workspace = true
+chrono.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
