@@ -28,3 +28,4 @@ results/*.pdf
 # OS
 .DS_Store
 Thumbs.db
+strace-output/

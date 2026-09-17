@@ -134,12 +134,22 @@ impl EventMatcher {
         let mut matched_gt: Vec<bool> = vec![false; ground_truth.len()];
 
         // --- Pass 1: file openat matches ---
-        let mut gt_file: HashMap<String, Vec<(usize, &GroundTruthEvent)>> = HashMap::new();
+        // Group ground-truth file events by path AND operation kind (read vs write).
+        let mut gt_file_read: HashMap<String, Vec<(usize, &GroundTruthEvent)>> = HashMap::new();
+        let mut gt_file_write: HashMap<String, Vec<(usize, &GroundTruthEvent)>> = HashMap::new();
+
         for (i, e) in ground_truth.iter().enumerate() {
             if matched_gt[i] { continue; }
-            if !matches!(e.operation, OperationKind::FileRead | OperationKind::FileWrite) { continue; }
             if let causpan_core::OperationTarget::File(f) = &e.target {
-                gt_file.entry(f.path.clone()).or_default().push((i, e));
+                match e.operation {
+                    causpan_core::OperationKind::FileRead => {
+                        gt_file_read.entry(f.path.clone()).or_default().push((i, e));
+                    }
+                    causpan_core::OperationKind::FileWrite => {
+                        gt_file_write.entry(f.path.clone()).or_default().push((i, e));
+                    }
+                    _ => {}
+                }
             }
         }
 
@@ -152,22 +162,41 @@ impl EventMatcher {
 
         for (ke_idx, ke) in ke_openat {
             let Some(path) = &ke.args.arg1 else { continue };
-            if let Some(gt_list) = gt_file.get(path.as_str()) {
-                for &(gt_idx, gt) in gt_list {
-                    if matched_gt[gt_idx] || matched_ke[ke_idx] {
-                        continue;
-                    }
-                    if operation_matches_kernel(gt.operation, ke.event_type) {
-                        pairs.push(MatchedPair {
-                            gt_index: gt_idx,
-                            ke_index: ke_idx,
-                            rpc_id: gt.rpc_id,
-                        });
-                        matched_gt[gt_idx] = true;
-                        matched_ke[ke_idx] = true;
-                        break;
-                    }
+            let Some(flags_str) = &ke.args.arg2 else { continue };
+
+            // Determine if this openat is a read or write based on flags.
+            let is_write = flags_str.contains("O_WRONLY")
+                || flags_str.contains("O_RDWR")
+                || flags_str.contains("O_CREAT")
+                || flags_str.contains("O_TRUNC");
+            let is_read = flags_str.contains("O_RDONLY") || flags_str.contains("O_RDWR");
+
+            // Look up the appropriate ground-truth list.
+            let gt_list = if is_write && !is_read {
+                gt_file_write.get(path.as_str())
+            } else if is_read && !is_write {
+                gt_file_read.get(path.as_str())
+            } else {
+                // Ambiguous (e.g. O_RDWR) — try both, prefer the one that has
+                // unmatched entries.
+                let r = gt_file_read.get(path.as_str());
+                let w = gt_file_write.get(path.as_str());
+                r.or(w)
+            };
+
+            let Some(gt_candidates) = gt_list else { continue };
+            for &(gt_idx, gt) in gt_candidates {
+                if matched_gt[gt_idx] || matched_ke[ke_idx] {
+                    continue;
                 }
+                pairs.push(MatchedPair {
+                    gt_index: gt_idx,
+                    ke_index: ke_idx,
+                    rpc_id: gt.rpc_id,
+                });
+                matched_gt[gt_idx] = true;
+                matched_ke[ke_idx] = true;
+                break;
             }
         }
 

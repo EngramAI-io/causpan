@@ -13,7 +13,6 @@
 //! kernel observations (or vice versa).
 
 use serde::{Deserialize, Serialize};
-use std::error::Error;
 use thiserror::Error;
 
 pub mod identity;

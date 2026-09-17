@@ -12,7 +12,7 @@
 //! ```
 
 use causpan_core::{GroundTruthEvent, KernelEvent, RpcId};
-use evaluator::{AttributionStrategy, EventMatcher, EvaluationResults, StrategyResults};
+use evaluator::{AttributionStrategy, EventMatcher, EvaluationResults, MatchedPair, StrategyResults};
 use clap::{Parser, ValueEnum};
 use std::collections::HashSet;
 use std::fs::File;
@@ -51,6 +51,10 @@ struct Cli {
     /// Also run a "majority vote" meta-strategy.
     #[arg(long)]
     majority_vote: bool,
+
+    /// Print per-event diagnostic output showing what each strategy returns.
+    #[arg(long)]
+    verbose: bool,
 }
 
 // ---------------------------------------------------------------------------
@@ -116,6 +120,15 @@ fn evaluate(cli: &Cli) -> Result<EvaluationResults, String> {
     // Match kernel events to ground-truth RPC IDs via semantic fingerprinting.
     let matcher = EventMatcher::new(&gt_events, &kernel_events);
     let pairs = matcher.pairs();
+
+    // Verbose: print matched pairs and strategy output.
+    if cli.verbose {
+        print_verbose(&gt_events, &kernel_events, pairs, &mut strategies);
+        // Reset strategies for the actual evaluation.
+        for s in &mut strategies {
+            s.load_ground_truth(&gt_events);
+        }
+    }
 
     // Build a fast lookup: ke_index → RpcId
     let mut actual_rpc_ids: Vec<Option<RpcId>> = vec![None; kernel_events.len()];
@@ -236,6 +249,58 @@ fn print_summary(results: &EvaluationResults) {
         );
     }
     eprintln!();
+}
+
+// ---------------------------------------------------------------------------
+// Verbose diagnostic output
+// ---------------------------------------------------------------------------
+
+/// Print matched kernel events alongside their ground truth, then show what
+/// each strategy returns for each event.  This makes attribution failures
+/// immediately obvious.
+fn print_verbose(
+    gt_events: &[GroundTruthEvent],
+    kernel_events: &[KernelEvent],
+    pairs: &[MatchedPair],
+    strategies: &mut [Box<dyn AttributionStrategy>],
+) {
+    eprintln!("\n=== Verbose Attribution Debug ===\n");
+    eprintln!("Matched pairs ({} total):", pairs.len());
+
+    for pair in pairs {
+        let gt = &gt_events[pair.gt_index];
+        let ke = &kernel_events[pair.ke_index];
+        eprintln!(
+            "\n  KE#{}: pid={} tid={} type={:?} args={:?}",
+            pair.ke_index, ke.pid, ke.tid, ke.event_type, ke.args
+        );
+        eprintln!(
+            "  GT#{}: rpc_id={} op={:?} pid={} tid={} ts={}",
+            pair.gt_index, pair.rpc_id.0, gt.operation, gt.pid, gt.tid, gt.timestamp_ns
+        );
+        eprintln!(
+            "  PID match: {}  TID match: {}",
+            ke.pid == gt.pid,
+            ke.tid == gt.tid
+        );
+
+        // Show what each strategy returns for this kernel event.
+        for s in strategies.iter_mut() {
+            let result = s.attribute(ke);
+            let marker = match result {
+                Some(r) if r == pair.rpc_id => "OK",
+                Some(_) => "WRONG",
+                None => "MISS",
+            };
+            eprintln!("    {:>20} -> {:?} {}", s.name(), result, marker);
+        }
+    }
+
+    // Summary of why each strategy fails.
+    eprintln!("\n--- Strategy failure summary ---");
+    for s in strategies.iter() {
+        eprintln!("  {:>20}: {}", s.name(), s.name());
+    }
 }
 
 // ---------------------------------------------------------------------------

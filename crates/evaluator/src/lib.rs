@@ -3,5 +3,5 @@
 pub mod metrics;
 pub mod strategies;
 
-pub use metrics::{EvaluationResults, EventMatcher, StrategyResults};
+pub use metrics::{EvaluationResults, EventMatcher, MatchedPair, StrategyResults};
 pub use strategies::AttributionStrategy;

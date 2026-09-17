@@ -362,7 +362,8 @@ impl ExperimentRunner {
         };
 
         let status = Command::new("strace")
-            .arg("-ff")          // one file per thread
+            .arg("-f")           // prefix each line with PID
+            .arg("-ff")          // one file per thread (TID from filename)
             .arg("-ttt")         // absolute timestamps (seconds.microseconds)
             .arg("-e")
             .arg(&self.config.strace.syscalls)

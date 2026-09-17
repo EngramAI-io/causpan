@@ -28,7 +28,7 @@ mkdir -p "$STRACE_DIR" results
 # kernel observations (same execution, same process).
 echo "[1/3] strace: capturing kernel events + ground truth..."
 rm -f "$KE" "$GT" "$STRACE_DIR"/strace.*
-strace -ff -ttt \
+strace -f -ff -ttt \
     -e trace=openat,read,write,socket,connect,clone,fork,execve \
     -o "$STRACE_DIR/strace" \
     ./target/release/workload \
@@ -58,7 +58,8 @@ cargo run --release --bin evaluator -- \
     --ground-truth "$GT" \
     --kernel-events "$KE" \
     --output "$EVAL" \
-    --time-windows-ms 1,5,10,50,100,500,1000
+    --time-windows-ms 1,5,10,50,100,500,1000 \
+    --verbose
 
 echo ""
 echo "=== Smoke test complete ==="

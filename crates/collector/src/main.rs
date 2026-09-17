@@ -3,7 +3,7 @@
 //! ## Usage
 //!
 //! ```bash
-//! strace -ff -ttt -e trace=openat,read,write,socket,connect,clone,fork,execve \
+//! strace -f -ff -ttt -e trace=openat,read,write,socket,connect,clone,fork,execve \
 //!   ./target/release/workload 2> strace.raw
 //!
 //! collector strace.raw kernel-events.jsonl
@@ -57,7 +57,7 @@ struct ParsedLine {
     return_value: Option<i64>,
 }
 
-/// Parse a single `strace -ff -ttt` line.
+/// Parse a single `strace -f -ff -ttt` line.
 ///
 /// With `-ttt`, each file has one thread — no PID/TID on each line:
 ///
@@ -69,14 +69,11 @@ struct ParsedLine {
 /// The timestamp is in seconds with microsecond (or better) precision; we
 /// convert to nanoseconds.
 ///
-/// With `-ttt`, the line format is:
-///
-///   `<timestamp> <syscall>(<args>) = <ret>`
-///
-/// No PID/TID column appears — each file is one thread.  We extract the
-/// TID from the filename at the call site.
+/// The TID comes from the filename suffix (strace.<tid>) with `-ff`.
+/// The PID (thread-group ID) is obtained from `/proc/<tid>/status` → Tgid.
 fn parse_strace_line(line: &str) -> Result<Option<ParsedLine>, CauspanError> {
-    // Optional PID/TID group (for `-f` + `-tt` format); not present with `-ttt`.
+    // Line format (no PID/TID prefix with -ttt):
+    //   `<timestamp> <syscall>(<args>) = <ret>`
     let re = Regex::new(
         r#"^(?P<ts>\d+\.\d+)(?:\s+(?P<pid_tid>\d+))?\s+(?P<name>\w+)\((?P<args>[^)]*)\)(?:\s+=\s+(?P<ret>-?\d+|[a-fx0-9]+))?"#,
     )
@@ -89,8 +86,6 @@ fn parse_strace_line(line: &str) -> Result<Option<ParsedLine>, CauspanError> {
 
     let ts_str = caps.name("ts").expect("timestamp group").as_str();
     let timestamp_ns = parse_timestamp_ns(ts_str)?;
-
-    let _pid_tid = caps.name("pid_tid").and_then(|m| m.as_str().parse::<u32>().ok());
 
     let name = caps.name("name").expect("name group").as_str();
     let event_type = syscall_name_to_event(name);
@@ -137,7 +132,27 @@ fn parse_timestamp_ns(s: &str) -> Result<u64, CauspanError> {
     Ok(secs * 1_000_000_000 + frac_ns * scale)
 }
 
-/// Map a syscall name to a [`KernelEventType`].
+/// Read the thread-group leader PID (Tgid) for a given TID from `/proc`.
+/// All threads in a process share the same Tgid; this is the PID that
+/// processes and baselines expect.
+fn tgid_for_tid(tid: u32) -> u32 {
+    let status_path = format!("/proc/{}/status", tid);
+    let content = match std::fs::read_to_string(&status_path) {
+        Ok(c) => c,
+        Err(_) => return tid, // fallback: assume single-threaded
+    };
+    for line in content.lines() {
+        if line.starts_with("Tgid:") {
+            let parts: Vec<&str> = line.split_whitespace().collect();
+            if let Some(tgid_str) = parts.get(1) {
+                if let Ok(tgid) = tgid_str.parse::<u32>() {
+                    return tgid;
+                }
+            }
+        }
+    }
+    tid // fallback
+}
 fn syscall_name_to_event(name: &str) -> KernelEventType {
     match name {
         "openat" => KernelEventType::Openat,
@@ -189,9 +204,10 @@ fn collect_strace(input: PathBuf, output: PathBuf) -> Result<(), CauspanError> {
         let path = entry.path();
 
         // strace -ff writes files named <prefix>.<tid>.  Extract the TID from
-        // the filename extension.  PID defaults to the same value (single-
-        // threaded case); the per-line TID from strace is authoritative.
-        let tid_from_name = tid_from_filename(&path).unwrap_or(0);
+        // the filename extension.  PID (thread-group ID / Tgid) is obtained
+        // from /proc/<tid>/status so the two can differ for multi-threaded
+        // processes.
+        let tid_from_name = tid_from_filename(&path);
         let file = File::open(&path)?;
         let reader = BufReader::new(file);
 
@@ -200,11 +216,16 @@ fn collect_strace(input: PathBuf, output: PathBuf) -> Result<(), CauspanError> {
             let Some(parsed) = parse_strace_line(&line)? else {
                 continue;
             };
-            // PID = TID from filename (same for single-threaded processes).
-            // TID = TID from the strace line itself.
+            // TID from the filename (strace.<tid> with -ff).
+            // PID (thread-group ID / Tgid) from /proc/<tid>/status.
+            let tid = match tid_from_name {
+                Some(t) => t,
+                None => continue, // can't identify this thread
+            };
+            let pid = tgid_for_tid(tid);
             events.push(KernelEvent {
-                pid: tid_from_name,
-                tid: tid_from_name,
+                pid,
+                tid,
                 timestamp_ns: parsed.timestamp_ns,
                 event_type: parsed.event_type,
                 args: parsed.args,
