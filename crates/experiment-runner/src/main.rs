@@ -502,22 +502,24 @@ impl ExperimentRunner {
                 continue; // skip header
             }
             let parts: Vec<&str> = line.split(',').collect();
-            if parts.len() < 11 {
+            // evaluator writes: strategy,correct,wrong_rpc,unattributed,
+            //                    precision,recall,f1,wrong_rate,unattributed_rate
+            if parts.len() < 9 {
                 continue;
             }
             results.push(RunResult {
                 concurrency,
                 run,
                 tag: format!("c{:03}-r{:03}", concurrency, run),
-                strategy: parts[3].to_string(),
-                correct: parts[4].parse().unwrap_or(0),
-                wrong_rpc: parts[5].parse().unwrap_or(0),
-                unattributed: parts[6].parse().unwrap_or(0),
-                precision: parts[7].parse().unwrap_or(0.0),
-                recall: parts[8].parse().unwrap_or(0.0),
-                f1: parts[9].parse().unwrap_or(0.0),
-                wrong_rate: parts[10].parse().unwrap_or(0.0),
-                unattributed_rate: parts[11].parse().unwrap_or(0.0),
+                strategy: parts[0].to_string(),
+                correct: parts[1].parse().unwrap_or(0),
+                wrong_rpc: parts[2].parse().unwrap_or(0),
+                unattributed: parts[3].parse().unwrap_or(0),
+                precision: parts[4].parse().unwrap_or(0.0),
+                recall: parts[5].parse().unwrap_or(0.0),
+                f1: parts[6].parse().unwrap_or(0.0),
+                wrong_rate: parts[7].parse().unwrap_or(0.0),
+                unattributed_rate: parts[8].parse().unwrap_or(0.0),
             });
         }
 

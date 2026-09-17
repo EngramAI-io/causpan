@@ -1,0 +1,15 @@
+1789681493.331754 openat(AT_FDCWD, "results/exp-001/ground-truth/c004-r003.jsonl", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 11
+1789681493.336164 openat(AT_FDCWD, "/tmp/causpan/rpc-2-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 9
+1789681493.336264 write(9, "rpc-2-op-8589934594\n", 20) = 20
+1789681493.341961 openat(AT_FDCWD, "/tmp/causpan/rpc-1-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 9
+1789681493.342041 write(9, "rpc-1-op-4294967298\n", 20) = 20
+1789681493.342187 openat(AT_FDCWD, "/tmp/causpan/rpc-3-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 10
+1789681493.342237 write(10, "rpc-3-op-12884901891\n", 21) = 21
+1789681493.342340 write(11, "\n", 1)    = 1
+1789681493.342686 write(11, "\n", 1)    = 1
+1789681493.343057 write(11, "{\"rpc_id\":3,\"operation_id\":12884"..., 188) = 188
+1789681493.343088 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681493.343500 write(11, "{\"rpc_id\":3,\"operation_id\":12884"..., 190) = 190
+1789681493.344069 write(11, "\n", 1)    = 1
+1789681493.344622 write(11, "{\"rpc_id\":4,\"operation_id\":17179"..., 191) = 191
+1789681493.350760 +++ exited with 0 +++

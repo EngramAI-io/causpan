@@ -1,0 +1,20 @@
+1789681493.137075 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 9
+1789681493.138351 connect(9, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681493.146479 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 9
+1789681493.146509 connect(9, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681493.148229 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 9
+1789681493.148283 connect(9, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681493.149711 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681493.149797 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681493.149874 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681493.149949 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681493.150025 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681493.150104 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681493.150189 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681493.150270 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681493.150351 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681493.150429 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681493.150506 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681493.150582 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681493.150659 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681493.158548 +++ exited with 0 +++

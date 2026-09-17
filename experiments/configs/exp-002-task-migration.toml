@@ -1,8 +1,8 @@
-// Experiment 2: Task migration stress
-//
-// Force Tokio to migrate tasks across worker threads by using more worker
-// threads and many concurrent RPCs.  Measure whether attribution accuracy
-// degrades under migration.
+# Experiment 2: Task migration stress
+#
+# Force Tokio to migrate tasks across worker threads by using more worker
+# threads and many concurrent RPCs.  Measure whether attribution accuracy
+# degrades under migration.
 
 [experiment]
 name = "exp-002-task-migration"

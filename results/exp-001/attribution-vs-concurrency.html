@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Causpan Attribution Accuracy vs Concurrency</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #898781;
+    --gridline: #e1e0d9;
+    --baseline: #c3c2b7;
+    --series-pid: #2a78d6;
+    --series-pidtid: #eb6834;
+    --series-tw: #1baf7a;
+    --border: rgba(11,11,11,0.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    .viz-root {
+      color-scheme: dark;
+      --surface-1: #1a1a19;
+      --text-primary: #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted: #898781;
+      --gridline: #2c2c2a;
+      --baseline: #383835;
+      --series-pid: #3987e5;
+      --series-pidtid: #d95926;
+      --series-tw: #199e70;
+      --border: rgba(255,255,255,0.10);
+    }
+  }
+  body {
+    margin: 0;
+    padding: 40px;
+    background: #f9f9f7;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: #0d0d0d; }
+  }
+  .chart-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--surface-1);
+    border-radius: 8px;
+    padding: 32px 40px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    color: var(--text-primary);
+  }
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0 0 24px 0;
+  }
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .axis-line {
+    stroke: var(--baseline);
+    stroke-width: 1;
+  }
+  .gridline {
+    stroke: var(--gridline);
+    stroke-width: 1;
+  }
+  .axis-text {
+    font-size: 12px;
+    fill: var(--text-muted);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .axis-label {
+    font-size: 13px;
+    fill: var(--text-secondary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .line-pid {
+    stroke: var(--series-pid);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .line-pidtid {
+    stroke: var(--series-pidtid);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .line-tw {
+    stroke: var(--series-tw);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .dot {
+    stroke: var(--surface-1);
+    stroke-width: 2;
+    r: 5;
+  }
+  .dot-pid { fill: var(--series-pid); }
+  .dot-pidtid { fill: var(--series-pidtid); }
+  .dot-tw { fill: var(--series-tw); }
+  .label-pid { fill: var(--series-pid); }
+  .label-pidtid { fill: var(--series-pidtid); }
+  .label-tw { fill: var(--series-tw); }
+  .legend-item {
+    cursor: default;
+  }
+  .legend-line {
+    stroke-width: 2;
+  }
+  .legend-text {
+    font-size: 13px;
+    fill: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .tooltip {
+    position: absolute;
+    opacity: 0;
+    background: var(--text-primary);
+    color: var(--surface-1);
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    pointer-events: none;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+    z-index: 10;
+  }
+</style>
+</head>
+<body>
+<div class="chart-container">
+  <h1>Attribution Accuracy vs Concurrency</h1>
+  <p class="subtitle">Precision/recall/F1 of kernel-event-to-RPC attribution strategies under increasing logical request concurrency (5 runs per point)</p>
+  <svg viewBox="0 0 820 500" xmlns="http://www.w3.org/2000/svg">
+    <!-- Chart area -->
+    <g id="chart-area">
+      <!-- Gridlines and axes will be injected by JS -->
+    </g>
+    <!-- Lines and dots will be injected by JS -->
+    <g id="lines-layer"></g>
+    <g id="dots-layer"></g>
+    <g id="labels-layer"></g>
+    <!-- Legend -->
+    <g id="legend" transform="translate(60, 30)"></g>
+  </svg>
+  <div class="tooltip" id="tooltip"></div>
+</div>
+
+<script>
+// Data from aggregated-results.csv
+const DATA = [
+  { concurrency: 1,  pid: 1.0,    pid_tid: 0.0,    tw: 0.0 },
+  { concurrency: 2,  pid: 0.5,    pid_tid: 0.10,   tw: 0.2 },
+  { concurrency: 4,  pid: 0.25,   pid_tid: 0.076,  tw: 0.162 },
+  { concurrency: 8,  pid: 0.125,  pid_tid: 0.056,  tw: 0.050 },
+  { concurrency: 16, pid: 0.0625, pid_tid: 0.009,  tw: 0.028 },
+  { concurrency: 32, pid: 0.0312, pid_tid: 0.011,  tw: 0.020 },
+  { concurrency: 64, pid: 0.0156, pid_tid: 0.008,  tw: 0.008 },
+];
+
+const MARGIN = { top: 80, right: 60, bottom: 70, left: 70 };
+const W = 820, H = 500;
+const PW = W - MARGIN.left - MARGIN.right;
+const PH = H - MARGIN.top - MARGIN.bottom;
+
+const xScale = (c) => MARGIN.left + (Math.log2(c) / Math.log2(64)) * PW;
+const yScale = (v) => MARGIN.top + PH - v * PH;
+
+// Axes
+const chartArea = document.getElementById('chart-area');
+const concurrencyLevels = [1, 2, 4, 8, 16, 32, 64];
+
+// Gridlines
+for (let v = 0; v <= 1.0; v += 0.2) {
+  const y = yScale(v);
+  chartArea.innerHTML += `<line class="gridline" x1="${MARGIN.left}" y1="${y}" x2="${MARGIN.left + PW}" y2="${y}"/>`;
+  chartArea.innerHTML += `<text class="axis-text" x="${MARGIN.left - 8}" y="${y + 4}" text-anchor="end">${(v * 100).toFixed(0)}%</text>`;
+}
+
+// X axis ticks
+concurrencyLevels.forEach(c => {
+  const x = xScale(c);
+  chartArea.innerHTML += `<line class="gridline" x1="${x}" y1="${MARGIN.top}" x2="${x}" y2="${MARGIN.top + PH}"/>`;
+  chartArea.innerHTML += `<text class="axis-text" x="${x}" y="${MARGIN.top + PH + 18}" text-anchor="middle">${c}</text>`;
+});
+
+// Axis labels
+chartArea.innerHTML += `<text class="axis-label" x="${MARGIN.left + PW / 2}" y="${MARGIN.top + PH + 48}" text-anchor="middle">Concurrent Logical Requests</text>`;
+chartArea.innerHTML += `<text class="axis-label" x="20" y="${MARGIN.top + PH / 2}" text-anchor="middle" transform="rotate(-90 20 ${MARGIN.top + PH / 2})">Attribution Accuracy (F1)</text>`;
+
+// Baseline
+chartArea.innerHTML += `<line class="axis-line" x1="${MARGIN.left}" y1="${MARGIN.top + PH}" x2="${MARGIN.left + PW}" y2="${MARGIN.top + PH}"/>`;
+chartArea.innerHTML += `<line class="axis-line" x1="${MARGIN.left}" y1="${MARGIN.top}" x2="${MARGIN.left}" y2="${MARGIN.top + PH}"/>`;
+
+// Lines and dots
+const linesLayer = document.getElementById('lines-layer');
+const dotsLayer = document.getElementById('dots-layer');
+const labelsLayer = document.getElementById('labels-layer');
+const tooltip = document.getElementById('tooltip');
+
+const strategies = [
+  { key: 'pid', cls: 'pid', label: 'PID' },
+  { key: 'pid_tid', cls: 'pidtid', label: 'PID + TID' },
+  { key: 'tw', cls: 'tw', label: 'Time Window (1 ms)' },
+];
+
+strategies.forEach(s => {
+  let pathD = '';
+  DATA.forEach((d, i) => {
+    const x = xScale(d.concurrency);
+    const y = yScale(d[s.key]);
+    pathD += (i === 0 ? 'M' : 'L') + `${x},${y} `;
+  });
+  linesLayer.innerHTML += `<path class="line-${s.cls}" d="${pathD}"/>`;
+
+  // Dots
+  DATA.forEach(d => {
+    const x = xScale(d.concurrency);
+    const y = yScale(d[s.key]);
+    dotsLayer.innerHTML += `<circle class="dot dot-${s.cls}" cx="${x}" cy="${y}" data-strategy="${s.label}" data-c="${d.concurrency}" data-v="${(d[s.key] * 100).toFixed(1)}"/>`;
+  });
+
+  // Endpoint label
+  const last = DATA[DATA.length - 1];
+  const lx = xScale(last.concurrency);
+  const ly = yScale(last[s.key]);
+  labelsLayer.innerHTML += `<text class="label-${s.cls} axis-text" x="${lx + 6}" y="${ly + 4}" text-anchor="start">${s.label} ${(last[s.key] * 100).toFixed(1)}%</text>`;
+});
+
+// Legend
+const legendG = document.getElementById('legend');
+strategies.forEach((s, i) => {
+  const y = i * 24;
+  legendG.innerHTML += `<line class="legend-line line-${s.cls}" x1="0" y1="${y + 8}" x2="20" y2="${y + 8}"/>`;
+  legendG.innerHTML += `<circle class="dot dot-${s.cls}" cx="10" cy="${y + 8}" r="4"/>`;
+  legendG.innerHTML += `<text class="legend-text" x="28" y="${y + 12}">${s.label}</text>`;
+});
+
+// Hover interaction
+document.querySelectorAll('.dot').forEach(dot => {
+  dot.addEventListener('mouseenter', (e) => {
+    const strategy = e.target.dataset.strategy;
+    const c = e.target.dataset.c;
+    const v = e.target.dataset.v;
+    tooltip.textContent = `${strategy} @ c=${c}: F1 = ${v}%`;
+    tooltip.style.opacity = '1';
+  });
+  dot.addEventListener('mousemove', (e) => {
+    const rect = e.target.closest('.chart-container').getBoundingClientRect();
+    tooltip.style.left = (e.clientX - rect.left + 10) + 'px';
+    tooltip.style.top = (e.clientY - rect.top - 28) + 'px';
+  });
+  dot.addEventListener('mouseleave', () => {
+    tooltip.style.opacity = '0';
+  });
+});
+</script>
+</body>
+</html>

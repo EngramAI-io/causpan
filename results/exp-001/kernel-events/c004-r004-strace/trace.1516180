@@ -1,0 +1,14 @@
+1789681493.531420 openat(AT_FDCWD, "/tmp/causpan/rpc-1-read.bin", O_RDONLY|O_CLOEXEC) = 9
+1789681493.531501 read(9, "rpc-1-seed\n", 11) = 11
+1789681493.531532 read(9, "", 32)       = 0
+1789681493.533016 openat(AT_FDCWD, "/tmp/causpan/rpc-2-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 10
+1789681493.534338 write(10, "rpc-2-op-8589934594\n", 20) = 20
+1789681493.537867 openat(AT_FDCWD, "/tmp/causpan/rpc-1-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 13
+1789681493.537973 write(13, "rpc-1-op-4294967298\n", 20) = 20
+1789681493.538299 openat(AT_FDCWD, "/tmp/causpan/rpc-2-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 10
+1789681493.538362 write(10, "rpc-2-op-8589934596\n", 20) = 20
+1789681493.538670 write(11, "{\"rpc_id\":3,\"operation_id\":12884"..., 188) = 188
+1789681493.539093 write(11, "{\"rpc_id\":4,\"operation_id\":17179"..., 191) = 191
+1789681493.539667 write(11, "\n", 1)    = 1
+1789681493.540210 write(11, "{\"rpc_id\":4,\"operation_id\":17179"..., 191) = 191
+1789681493.548167 +++ exited with 0 +++
