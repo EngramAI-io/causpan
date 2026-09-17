@@ -1,0 +1,6 @@
+1789681932.856296 write(9, "{\"rpc_id\":1,\"operation_id\":42949"..., 187) = 187
+1789681932.856875 openat(AT_FDCWD, "/tmp/causpan/rpc-2-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 11
+1789681932.856974 write(11, "rpc-2-op-8589934596\n", 20) = 20
+1789681932.857262 write(9, "\n", 1)     = 1
+1789681932.857588 write(9, "\n", 1)     = 1
+1789681932.861928 +++ exited with 0 +++

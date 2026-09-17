@@ -1,0 +1,53 @@
+1789681934.161578 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 13
+1789681934.161682 connect(13, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681934.161865 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 14
+1789681934.161891 connect(14, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681934.162430 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 10
+1789681934.162464 connect(10, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681934.162587 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 12
+1789681934.162624 connect(12, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681934.162955 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 10
+1789681934.163007 connect(10, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681934.164870 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 12
+1789681934.164894 connect(12, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681934.166010 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.166092 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.166175 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.166254 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.166331 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.166409 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.166486 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.166565 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.166646 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.166724 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.166803 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.166880 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.166958 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.167045 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.167126 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.167207 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.167286 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.167366 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.167445 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.167523 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.167603 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.167680 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.167759 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.167837 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.167917 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.167995 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.168073 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.168151 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.168230 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.168308 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.168387 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.168465 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.168543 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.168622 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.168701 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.168779 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.168856 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.168933 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.169012 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.169098 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.176305 +++ exited with 0 +++

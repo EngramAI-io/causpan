@@ -1,0 +1,20 @@
+1789681935.163184 openat(AT_FDCWD, "/tmp/causpan/rpc-1-read.bin", O_RDONLY|O_CLOEXEC) = 12
+1789681935.163312 read(12, "rpc-1-seed\n", 11) = 11
+1789681935.163367 read(12, "", 32)      = 0
+1789681935.163431 openat(AT_FDCWD, "/tmp/causpan/rpc-4-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 12
+1789681935.163519 write(12, "rpc-4-op-17179869185\n", 21) = 21
+1789681935.164018 write(9, "{\"rpc_id\":1,\"operation_id\":42949"..., 187) = 187
+1789681935.164238 openat(AT_FDCWD, "/tmp/causpan/rpc-7-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 11
+1789681935.164328 write(11, "rpc-7-op-30064771074\n", 21) = 21
+1789681935.169425 openat(AT_FDCWD, "/tmp/causpan/rpc-6-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 10
+1789681935.169526 write(10, "rpc-6-op-25769803779\n", 21) = 21
+1789681935.170033 openat(AT_FDCWD, "/tmp/causpan/rpc-3-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 10
+1789681935.170116 write(10, "rpc-3-op-12884901891\n", 21) = 21
+1789681935.171183 write(9, "{\"rpc_id\":1,\"operation_id\":42949"..., 189) = 189
+1789681935.171771 write(9, "\n", 1)     = 1
+1789681935.172472 write(9, "{\"rpc_id\":4,\"operation_id\":17179"..., 188) = 188
+1789681935.173158 write(9, "\n", 1)     = 1
+1789681935.173808 write(9, "{\"rpc_id\":3,\"operation_id\":12884"..., 190) = 190
+1789681935.174479 write(9, "\n", 1)     = 1
+1789681935.175124 write(9, "{\"rpc_id\":2,\"operation_id\":85899"..., 189) = 189
+1789681935.180879 +++ exited with 0 +++

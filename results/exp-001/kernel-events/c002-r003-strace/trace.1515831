@@ -1,7 +1,0 @@
-1789681492.498400 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
-1789681492.498481 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 10
-1789681492.498513 connect(10, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
-1789681492.499320 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
-1789681492.499400 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
-1789681492.499479 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
-1789681492.503209 +++ exited with 0 +++

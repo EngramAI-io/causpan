@@ -1,0 +1,10 @@
+1789681933.588735 openat(AT_FDCWD, "/sys/devices/system/cpu/online", O_RDONLY|O_CLOEXEC) = 9
+1789681933.588810 read(9, "0-143\n", 1024) = 6
+1789681933.589424 write(11, "{\"rpc_id\":1,\"operation_id\":42949"..., 187) = 187
+1789681933.589826 write(11, "{\"rpc_id\":2,\"operation_id\":85899"..., 190) = 190
+1789681933.589857 openat(AT_FDCWD, "/tmp/causpan/rpc-3-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 9
+1789681933.589973 write(9, "rpc-3-op-12884901892\n", 21) = 21
+1789681933.590391 write(11, "\n", 1)    = 1
+1789681933.590767 write(11, "{\"rpc_id\":2,\"operation_id\":85899"..., 190) = 190
+1789681933.591334 write(11, "\n", 1)    = 1
+1789681933.593343 +++ exited with 0 +++

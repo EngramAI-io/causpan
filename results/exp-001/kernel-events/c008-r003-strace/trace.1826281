@@ -1,0 +1,57 @@
+1789681934.681932 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.683872 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 10
+1789681934.683912 connect(10, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681934.687504 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 12
+1789681934.687534 connect(12, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681934.689272 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 13
+1789681934.689333 connect(13, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681934.693778 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.693949 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 10
+1789681934.693997 connect(10, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681934.694162 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 9
+1789681934.694185 connect(9, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681934.694324 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 10
+1789681934.694346 connect(10, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681934.694809 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 9
+1789681934.694845 connect(9, {sa_family=AF_INET, sin_port=htons(9999), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+1789681934.695521 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.695602 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.695682 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.695772 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.695855 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.695944 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.696025 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.696103 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.696183 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.696276 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.696367 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.696460 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.696546 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.696632 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.696721 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.696825 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.696909 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.696995 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.697101 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.697191 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.697276 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.697363 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.697449 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.697541 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.697627 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.697717 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.697799 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.697884 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.697970 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.698054 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.698142 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.698231 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.698314 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.698404 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.698499 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.698614 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.698702 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.698792 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.698885 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.698975 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681934.701578 +++ exited with 0 +++

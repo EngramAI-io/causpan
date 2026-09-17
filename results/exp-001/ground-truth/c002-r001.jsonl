@@ -1,8 +1,8 @@
-{"rpc_id":2,"operation_id":8589934593,"operation":"network_connect","target":{"type":"network","host":"127.0.0.1","port":9999},"pid":1515588,"tid":1515589,"timestamp_ns":1789681492180699406}
-{"rpc_id":1,"operation_id":4294967297,"operation":"file_read","target":{"type":"file","path":"/tmp/causpan/rpc-1-read.bin"},"pid":1515588,"tid":1515590,"timestamp_ns":1789681492182298364}
-{"rpc_id":2,"operation_id":8589934594,"operation":"file_write","target":{"type":"file","path":"/tmp/causpan/rpc-2-write.bin"},"pid":1515588,"tid":1515589,"timestamp_ns":1789681492183998470}
-{"rpc_id":1,"operation_id":4294967298,"operation":"file_write","target":{"type":"file","path":"/tmp/causpan/rpc-1-write.bin"},"pid":1515588,"tid":1515589,"timestamp_ns":1789681492187520472}
-{"rpc_id":2,"operation_id":8589934595,"operation":"network_connect","target":{"type":"network","host":"127.0.0.1","port":9999},"pid":1515588,"tid":1515589,"timestamp_ns":1789681492187713714}
-{"rpc_id":1,"operation_id":4294967299,"operation":"file_read","target":{"type":"file","path":"/tmp/causpan/rpc-1-read.bin"},"pid":1515588,"tid":1515590,"timestamp_ns":1789681492187936075}
-{"rpc_id":2,"operation_id":8589934596,"operation":"file_write","target":{"type":"file","path":"/tmp/causpan/rpc-2-write.bin"},"pid":1515588,"tid":1515589,"timestamp_ns":1789681492188228642}
-{"rpc_id":1,"operation_id":4294967300,"operation":"file_write","target":{"type":"file","path":"/tmp/causpan/rpc-1-write.bin"},"pid":1515588,"tid":1515590,"timestamp_ns":1789681492188454043}
+{"rpc_id":2,"operation_id":8589934593,"operation":"network_connect","target":{"type":"network","host":"127.0.0.1","port":9999},"pid":1824223,"tid":1824238,"timestamp_ns":1789681932364942220}
+{"rpc_id":1,"operation_id":4294967297,"operation":"file_read","target":{"type":"file","path":"/tmp/causpan/rpc-1-read.bin"},"pid":1824223,"tid":1824241,"timestamp_ns":1789681932366664918}
+{"rpc_id":2,"operation_id":8589934594,"operation":"file_write","target":{"type":"file","path":"/tmp/causpan/rpc-2-write.bin"},"pid":1824223,"tid":1824238,"timestamp_ns":1789681932368602137}
+{"rpc_id":1,"operation_id":4294967298,"operation":"file_write","target":{"type":"file","path":"/tmp/causpan/rpc-1-write.bin"},"pid":1824223,"tid":1824241,"timestamp_ns":1789681932371994671}
+{"rpc_id":2,"operation_id":8589934595,"operation":"network_connect","target":{"type":"network","host":"127.0.0.1","port":9999},"pid":1824223,"tid":1824238,"timestamp_ns":1789681932372172170}
+{"rpc_id":1,"operation_id":4294967299,"operation":"file_read","target":{"type":"file","path":"/tmp/causpan/rpc-1-read.bin"},"pid":1824223,"tid":1824238,"timestamp_ns":1789681932372483008}
+{"rpc_id":2,"operation_id":8589934596,"operation":"file_write","target":{"type":"file","path":"/tmp/causpan/rpc-2-write.bin"},"pid":1824223,"tid":1824241,"timestamp_ns":1789681932372499872}
+{"rpc_id":1,"operation_id":4294967300,"operation":"file_write","target":{"type":"file","path":"/tmp/causpan/rpc-1-write.bin"},"pid":1824223,"tid":1824238,"timestamp_ns":1789681932372812374}

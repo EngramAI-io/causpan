@@ -1,0 +1,7 @@
+1789681933.189449 openat(AT_FDCWD, "/sys/devices/system/cpu/online", O_RDONLY|O_CLOEXEC) = 9
+1789681933.189513 read(9, "0-143\n", 1024) = 6
+1789681933.191225 write(11, "{\"rpc_id\":3,\"operation_id\":12884"..., 191) = 191
+1789681933.191664 write(11, "{\"rpc_id\":2,\"operation_id\":85899"..., 190) = 190
+1789681933.192743 write(11, "{\"rpc_id\":2,\"operation_id\":85899"..., 190) = 190
+1789681933.193445 write(11, "{\"rpc_id\":1,\"operation_id\":42949"..., 189) = 189
+1789681933.197740 +++ exited with 0 +++

@@ -1,0 +1,14 @@
+1789681933.969197 openat(AT_FDCWD, "results/exp-001/ground-truth/c004-r005.jsonl", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 11
+1789681933.974813 openat(AT_FDCWD, "/tmp/causpan/rpc-2-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 10
+1789681933.974931 write(10, "rpc-2-op-8589934594\n", 20) = 20
+1789681933.975095 openat(AT_FDCWD, "/tmp/causpan/rpc-3-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 10
+1789681933.975158 write(10, "rpc-3-op-12884901891\n", 21) = 21
+1789681933.975310 openat(AT_FDCWD, "/tmp/causpan/rpc-1-read.bin", O_RDONLY|O_CLOEXEC) = 10
+1789681933.975391 read(10, "rpc-1-seed\n", 11) = 11
+1789681933.975429 read(10, "", 32)      = 0
+1789681933.975850 write(11, "\n", 1)    = 1
+1789681933.975874 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+1789681933.976494 write(11, "\n", 1)    = 1
+1789681933.977067 write(11, "\n", 1)    = 1
+1789681933.977696 write(11, "\n", 1)    = 1
+1789681933.984620 +++ exited with 0 +++

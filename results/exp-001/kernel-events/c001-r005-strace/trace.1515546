@@ -1,6 +1,0 @@
-1789681492.039022 openat(AT_FDCWD, "results/exp-001/ground-truth/c001-r005.jsonl", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 9
-1789681492.040932 write(9, "\n", 1)     = 1
-1789681492.041110 write(9, "\n", 1)     = 1
-1789681492.041273 write(9, "\n", 1)     = 1
-1789681492.041438 write(9, "\n", 1)     = 1
-1789681492.042958 +++ exited with 0 +++
