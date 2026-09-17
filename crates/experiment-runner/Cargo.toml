@@ -1,0 +1,18 @@
+[package]
+name = "experiment-runner"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "TOML-driven experiment runner for Causpan"
+
+[dependencies]
+causpan-core = { path = "../../causpan-core" }
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+toml.workspace = true
+clap.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+thiserror.workspace = true
+chrono.workspace = true

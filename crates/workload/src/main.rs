@@ -67,6 +67,10 @@ struct Cli {
     #[arg(long, default_value = "9999")]
     net_port: u16,
 
+    /// Number of Tokio worker threads (runtime threads).
+    #[arg(long, default_value = "2")]
+    worker_threads: usize,
+
     /// Which preset workload scenario to run.
     #[arg(long, value_enum, default_value = "mixed")]
     scenario: Scenario,
@@ -278,10 +282,20 @@ async fn writer_task(mut rx: mpsc::Receiver<GroundTruthEvent>, output: PathBuf) 
 // Main
 // ---------------------------------------------------------------------------
 
-#[tokio::main(flavor = "multi_thread", worker_threads = "2")]
-async fn main() {
+fn main() {
     let cli = Cli::parse();
 
+    // Build the Tokio runtime with the requested number of worker threads.
+    let rt = tokio::runtime::Builder::new_multi_thread()
+        .worker_threads(cli.worker_threads)
+        .enable_all()
+        .build()
+        .expect("build tokio runtime");
+
+    rt.block_on(async_main(cli));
+}
+
+async fn async_main(cli: Cli) {
     // Set up tracing.
     tracing_subscriber::fmt()
         .with_env_filter(

@@ -1,25 +1,29 @@
-# Experiment 2: Task migration stress
+// Experiment 2: Task migration stress
 //
 // Force Tokio to migrate tasks across worker threads by using more worker
-// threads than CPU cores and many concurrent RPCs.  Measure whether
-// attribution accuracy degrades under migration.
+// threads and many concurrent RPCs.  Measure whether attribution accuracy
+// degrades under migration.
 
-name: "exp-002-task-migration"
-description: "Stress attribution accuracy under forced task migration across Tokio worker threads."
-tags: ["migration", "worker_threads", "stress"]
+[experiment]
+name = "exp-002-task-migration"
+description = "Stress attribution accuracy under forced task migration across Tokio worker threads."
+tags = ["migration", "worker_threads", "stress"]
+runs_per_config = 3
+output_dir = "results/exp-002"
 
-workload:
-  concurrency: [8, 16, 32]
-  operations_per_rpc: 8
-  scenario: "mixed"
-  seed: 42
+[workload]
+concurrency = [8, 16, 32]
+operations_per_rpc = 8
+scenario = "mixed"
+seed = 42
+# TODO: Cross worker_threads as an experiment dimension. For now, fixed at 4.
+worker_threads = 4
+net_host = "127.0.0.1"
+net_port = 9999
+data_dir = "/tmp/causpan"
 
-  # Vary the number of Tokio worker threads relative to concurrency.
-  # More threads than cores increases migration probability.
-  worker_threads: [2, 4, 8]
+[evaluator]
+time_windows_ms = [1, 5, 10, 50, 100, 500]
 
-evaluator:
-  time_windows_ms: [1, 5, 10, 50, 100, 500]
-
-runs_per_config: 3
-output_dir: "results/exp-002"
+[strace]
+syscalls = "openat,read,write,socket,connect,clone,fork,execve"

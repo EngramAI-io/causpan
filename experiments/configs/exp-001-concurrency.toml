@@ -7,19 +7,25 @@
 // Hypothesis: As concurrency increases, baselines degrade because
 // multiple RPCs share PIDs/TIDs and temporal proximity becomes ambiguous.
 
-name: "exp-001-concurrency-scaling"
-description: "Scale concurrent logical requests from 1 to 64 and measure attribution accuracy."
-tags: ["concurrency", "baseline", "scaling"]
+[experiment]
+name = "exp-001-concurrency-scaling"
+description = "Scale concurrent logical requests from 1 to 64 and measure attribution accuracy."
+tags = ["concurrency", "baseline", "scaling"]
+runs_per_config = 5
+output_dir = "results/exp-001"
 
-workload:
-  concurrency: [1, 2, 4, 8, 16, 32, 64]
-  operations_per_rpc: 4
-  scenario: "mixed"
-  seed: 42
-  worker_threads: 2
+[workload]
+concurrency = [1, 2, 4, 8, 16, 32, 64]
+operations_per_rpc = 4
+scenario = "mixed"
+seed = 42
+worker_threads = 2
+net_host = "127.0.0.1"
+net_port = 9999
+data_dir = "/tmp/causpan"
 
-evaluator:
-  time_windows_ms: [1, 5, 10, 50, 100, 500, 1000]
+[evaluator]
+time_windows_ms = [1, 5, 10, 50, 100, 500, 1000]
 
-runs_per_config: 5
-output_dir: "results/exp-001"
+[strace]
+syscalls = "openat,read,write,socket,connect,clone,fork,execve"

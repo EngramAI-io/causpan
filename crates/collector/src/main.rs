@@ -201,14 +201,20 @@ fn collect_strace(input: PathBuf, output: PathBuf) -> Result<(), CauspanError> {
         let entry = entry.map_err(CauspanError::Io)?;
         let path = entry.path();
 
-        // strace -ff writes one file per thread; each file is named
-        // `strace.<tid>` or `strace.<pid>` depending on the kernel version.
-        // We only process files whose stem is purely numeric.
-        if !path.file_stem().and_then(|s| s.to_str()).map(|s| s.parse::<u32>().is_ok()).unwrap_or(false) {
+        // strace -ff writes files named <prefix>.<tid> (or <prefix>.<pid>.<tid>).
+        // Extract the last numeric component as the TID/PID.
+        let Some(file_stem) = path.file_stem().and_then(|s| s.to_str()) else {
             continue;
-        }
+        };
 
-        let base_pid = pid_from_filename(&path).unwrap_or(0);
+        // Find the last dot-separated numeric component.
+        let numeric_part = file_stem.rsplit('.').next();
+        let tid_from_name: u32 = match numeric_part.and_then(|s| s.parse().ok()) {
+            Some(n) => n,
+            None => continue,
+        };
+
+        let base_pid = pid_from_filename(&path).unwrap_or(tid_from_name);
         let file = File::open(&path)?;
         let reader = BufReader::new(file);
 
