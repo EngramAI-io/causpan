@@ -23,6 +23,7 @@
 use causpan_core::{FileTarget, GroundTruthEvent, NetworkTarget, OperationKind, OperationTarget, OperationId, RpcId};
 use causpan_core::identity::OperationIdGenerator;
 use clap::{Parser, ValueEnum};
+use rand::SeedableRng;
 use std::fs;
 use std::path::PathBuf;
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -318,8 +319,8 @@ async fn async_main(cli: Cli) {
     // Pre-create per-RPC files so reads don't create new files (which would
     // add extra openat events not attributed to any specific RPC).
     for rpc_id in 1..=cli.concurrency {
-        let read_path = rpc_file_path(&cli.data_dir, rpc_id, "read");
-        let write_path = rpc_file_path(&cli.data_dir, rpc_id, "write");
+        let read_path = rpc_file_path(&cli.data_dir, rpc_id as u64, "read");
+        let write_path = rpc_file_path(&cli.data_dir, rpc_id as u64, "write");
         let _ = fs::write(&read_path, format!("rpc-{}-seed\n", rpc_id));
         let _ = fs::write(&write_path, format!("rpc-{}-seed\n", rpc_id));
     }
@@ -333,7 +334,7 @@ async fn async_main(cli: Cli) {
     // Build per-RPC operations.
     let mut rng = match cli.seed {
         Some(s) => rand::rngs::StdRng::seed_from_u64(s),
-        None => rand::rngs::StdRng::from_entropy(),
+        None => rand::rngs::StdRng::from_os_rng(),
     };
 
     let mut handles = Vec::with_capacity(cli.concurrency);
@@ -347,7 +348,7 @@ async fn async_main(cli: Cli) {
         handles.push(tokio::spawn(async move {
             let mut op_gen = OperationIdGenerator::new(((rpc_id as u64) << 32) | 1);
             logical_request(
-                rpc_id,
+                rpc_id as u64,
                 &mut op_gen,
                 &ops,
                 data_dir,

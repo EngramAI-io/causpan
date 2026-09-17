@@ -64,7 +64,7 @@ impl crate::strategies::AttributionStrategy for TimeWindowStrategy {
         }
     }
 
-    fn attribute(&self, event: &KernelEvent) -> Option<RpcId> {
+    fn attribute(&mut self, event: &KernelEvent) -> Option<RpcId> {
         let key = (event.pid, event.tid);
         let Some(timeline) = self.timeline.get(&key) else {
             return None;

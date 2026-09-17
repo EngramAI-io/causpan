@@ -16,6 +16,9 @@ use serde::{Deserialize, Serialize};
 use std::error::Error;
 use thiserror::Error;
 
+pub mod identity;
+pub mod event;
+
 // ---------------------------------------------------------------------------
 // Errors
 // ---------------------------------------------------------------------------

@@ -172,8 +172,8 @@ fn syscall_name_to_event(name: &str) -> KernelEventType {
 
 /// Split the comma-separated argument string into individual values.
 fn parse_args(s: &str) -> KernelEventArgs {
-    let mut parts = s.split(',').map(|p| p.trim().to_string());
-    KernelEventArgs::from_vec(parts.collect())
+    let parts: Vec<&str> = s.split(',').map(|p| p.trim()).collect();
+    KernelEventArgs::from_vec(&parts)
 }
 
 // ---------------------------------------------------------------------------

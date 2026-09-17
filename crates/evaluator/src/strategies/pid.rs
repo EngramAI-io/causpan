@@ -29,7 +29,7 @@ impl crate::strategies::AttributionStrategy for PidStrategy {
         }
     }
 
-    fn attribute(&self, event: &KernelEvent) -> Option<RpcId> {
+    fn attribute(&mut self, event: &KernelEvent) -> Option<RpcId> {
         self.pid_to_rpc.get(&event.pid).copied()
     }
 }

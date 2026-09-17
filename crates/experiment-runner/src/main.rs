@@ -17,6 +17,7 @@ use thiserror::Error;
 
 // External deps used in main().
 use tracing::info;
+use clap::Parser;
 use tracing_subscriber::EnvFilter;
 
 // ---------------------------------------------------------------------------
@@ -404,9 +405,7 @@ impl ExperimentRunner {
         let status = Command::new(Self::binary_path("collector"))
             .arg("--format")
             .arg("straces")
-            .arg("--input")
             .arg(strace_dir)
-            .arg("--output")
             .arg(output)
             .status()
             .map_err(|e| RunnerError::CommandFailed("collector".into(), e.to_string()))?;
@@ -611,7 +610,7 @@ struct Cli {
     config: PathBuf,
 }
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
     let cli = Cli::parse();
 
     tracing_subscriber::fmt()

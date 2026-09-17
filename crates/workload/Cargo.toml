@@ -6,11 +6,12 @@ rust-version.workspace = true
 description = "Controlled Tokio workload that generates ground-truth and kernel-visible side effects"
 
 [dependencies]
-causpan-core = { path = "../../causpan-core" }
+causpan-core = { path = "../causpan-core" }
 tokio.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 clap.workspace = true
 tracing.workspace = true
-tracing-subscriber.workspace = true
-rand = "0.8"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+rand = { version = "0.9", features = ["os_rng", "std_rng"] }
+libc = "0.2"

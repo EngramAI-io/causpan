@@ -97,8 +97,8 @@ for CONC in "${CONCURRENCIES[@]}"; do
         echo "  [collector] normalising strace..."
         ./target/release/collector \
             --format straces \
-            --input "$STRACE_FILE" \
-            --output "$KE_FILE"
+            "$STRACE_FILE" \
+            "$KE_FILE"
 
         # 4. Evaluate.
         echo "  [evaluator] running strategies..."

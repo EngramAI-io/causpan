@@ -1,0 +1,11 @@
+22:09:23.373114 openat(AT_FDCWD, "/dev/null", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 9
+22:09:23.373315 openat(AT_FDCWD, "/tmp/causpan/rpc-1-read.bin", O_RDONLY|O_CLOEXEC) = 10
+22:09:23.373443 read(10, "rpc-1-seed\n", 11) = 11
+22:09:23.373501 read(10, "", 32)        = 0
+22:09:23.373588 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+22:09:23.375140 openat(AT_FDCWD, "/tmp/causpan/rpc-1-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 10
+22:09:23.375281 write(10, "rpc-1-op-4294967298\n", 20) = 20
+22:09:23.376633 write(4, "\1\0\0\0\0\0\0\0", 8) = 8
+22:09:23.376733 write(9, "\n", 1)       = 1
+22:09:23.377188 write(9, "\n", 1)       = 1
+22:09:23.379310 +++ exited with 0 +++

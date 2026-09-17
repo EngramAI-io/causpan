@@ -12,7 +12,7 @@
 //! ```
 
 use causpan_core::{GroundTruthEvent, KernelEvent, RpcId};
-use causpan_evaluator::{AttributionStrategy, EventMatcher, EvaluationResults, StrategyResults};
+use evaluator::{AttributionStrategy, EventMatcher, EvaluationResults, StrategyResults};
 use clap::{Parser, ValueEnum};
 use std::collections::HashSet;
 use std::fs::File;
@@ -21,9 +21,9 @@ use std::path::PathBuf;
 use tracing::{error, info};
 
 // Re-export strategies.
-use causpan_evaluator::strategies::pid::PidStrategy;
-use causpan_evaluator::strategies::tid::PidTidStrategy;
-use causpan_evaluator::strategies::time_window::TimeWindowStrategy;
+use evaluator::strategies::pid::PidStrategy;
+use evaluator::strategies::tid::PidTidStrategy;
+use evaluator::strategies::time_window::TimeWindowStrategy;
 
 // ---------------------------------------------------------------------------
 // CLI
@@ -173,11 +173,11 @@ fn evaluate(cli: &Cli) -> Result<EvaluationResults, String> {
     });
 
     Ok(EvaluationResults {
+        matched_events: matched,
+        unmatched_events: unmatched,
         strategies: strategy_results,
         total_kernel_events: kernel_events.len(),
         total_ground_truth_events: gt_events.len(),
-        matched,
-        unmatched,
     })
 }
 
@@ -221,8 +221,8 @@ fn print_summary(results: &EvaluationResults) {
         "Ground-truth events: {} | Kernel events: {} | Matched: {} | Unmatched: {}",
         results.total_ground_truth_events,
         results.total_kernel_events,
-        results.matched,
-        results.unmatched,
+        results.matched_events,
+        results.unmatched_events,
     );
 
     eprintln!("\n{:<30} {:>6} {:>8} {:>11} {:>8} {:>8} {:>8}",

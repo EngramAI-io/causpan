@@ -58,8 +58,8 @@ echo "  Strace files: $(ls "$STRACE_DIR"/ 2>/dev/null | wc -l)"
 echo "[3/4] collector: normalising strace..."
 cargo run --release --bin collector -- \
     --format straces \
-    --input "$STRACE_DIR" \
-    --output "$KE"
+    "$STRACE_DIR" \
+    "$KE"
 
 echo "  Kernel events: $(wc -l < "$KE")"
 
