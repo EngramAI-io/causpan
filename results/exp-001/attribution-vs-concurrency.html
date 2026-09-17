@@ -144,7 +144,7 @@
 <body>
 <div class="chart-container">
   <h1>Attribution Accuracy vs Concurrency</h1>
-  <p class="subtitle">Precision/recall/F1 of kernel-event-to-RPC attribution strategies under increasing logical request concurrency (5 runs per point)</p>
+  <p class="subtitle">Attribution accuracy of kernel-event-to-RPC strategies under increasing logical request concurrency, using tokio::fs file operations (5 runs per point). PID+TID fails at c=1 because tokio::fs dispatches to a different worker thread; this is a baseline artifact specific to Tokio's thread pool, not the full MCP attribution problem.</p>
   <svg viewBox="0 0 820 500" xmlns="http://www.w3.org/2000/svg">
     <g id="chart-area"></g>
     <g id="lines-layer"></g>
