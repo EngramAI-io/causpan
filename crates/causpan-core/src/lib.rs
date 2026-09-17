@@ -267,6 +267,81 @@ pub struct KernelEvent {
 }
 
 // ---------------------------------------------------------------------------
+// Semantic match key (for evaluation alignment)
+// ---------------------------------------------------------------------------
+
+/// A lightweight semantic fingerprint for aligning ground-truth and kernel
+/// events during evaluation.
+///
+/// This is **not** available to attribution strategies — it exists only in the
+/// evaluator so the two event streams can be paired up.  The strategies must
+/// attribute kernel events using only the information they would have in
+/// production (PID, TID, timestamp, syscall type, syscall args).
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub enum MatchKey {
+    /// File operation — key is the absolute path.
+    FileRead(String),
+    FileWrite(String),
+    /// Network operation — key is "host:port".
+    NetworkConnect(String),
+    /// Process spawn — key is the command string.
+    ProcessSpawn(String),
+    /// Event that cannot be semantically matched (e.g. dynamic linker noise).
+    Unmatched,
+}
+
+impl MatchKey {
+    /// Derive a match key from a ground-truth event.
+    pub fn from_ground_truth(event: &GroundTruthEvent) -> Self {
+        use OperationKind::*;
+        match &event.target {
+            OperationTarget::File(f) => match event.operation {
+                FileRead => Self::FileRead(f.path.clone()),
+                FileWrite => Self::FileWrite(f.path.clone()),
+                _ => Self::Unmatched,
+            },
+            OperationTarget::Network(n) => match event.operation {
+                NetworkConnect => Self::NetworkConnect(format!("{}:{}", n.host, n.port)),
+                _ => Self::Unmatched,
+            },
+            OperationTarget::Process { command, .. } => match event.operation {
+                ProcessSpawn => Self::ProcessSpawn(command.clone()),
+                _ => Self::Unmatched,
+            },
+            OperationTarget::Unknown => Self::Unmatched,
+        }
+    }
+
+    /// Derive a match key from a kernel event by extracting the path/host from
+    /// syscall arguments.
+    pub fn from_kernel_event(event: &KernelEvent) -> Option<Self> {
+        use KernelEventType::*;
+        match event.event_type {
+            Openat => {
+                // openat(path, ...) — arg1 is the path
+                let path = event.args.arg1.as_deref()?.to_string();
+                // We don't know if it's a read or write open from the kernel
+                // alone during matching — the evaluator will check both.
+                // Return Unmatched here and let the evaluator do fuzzy matching.
+                Some(Self::FileRead(path.clone()))
+            }
+            Read => {
+                // read(fd, ...) — we can't get the path from fd alone without
+                // /proc/self/fd.  For now, skip read events as unmatched.
+                None
+            }
+            Write => None, // same issue — can't get path from fd
+            Socket | Connect => None, // network matching deferred
+            Clone | Fork | Execve => {
+                let cmd = event.args.arg0.as_deref()?.to_string();
+                Some(Self::ProcessSpawn(cmd))
+            }
+            Unknown => None,
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
 // Attribution result
 // ---------------------------------------------------------------------------
 

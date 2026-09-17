@@ -51,8 +51,6 @@ enum InputFormat {
 /// Line-level parsed representation.
 #[derive(Debug, Clone)]
 struct ParsedLine {
-    pid: u32,
-    tid: u32,
     timestamp_ns: u64,
     event_type: KernelEventType,
     args: KernelEventArgs,
@@ -61,26 +59,26 @@ struct ParsedLine {
 
 /// Parse a single `strace -ff -ttt` line.
 ///
-/// Expected format (one PID/TID per file when `-ff` is used):
+/// With `-ttt`, each file has one thread — no PID/TID on each line:
 ///
 /// ```text
-/// 12345.678901234  4123  openat(AT_FDCWD, "/tmp/causpan/rpc-1-read.bin", O_RDONLY) = 3
-/// 12345.679012345  4123  read(3, "rpc-1-seed\n", 4096)     = 12
+/// 12345.678901234  openat(AT_FDCWD, "/tmp/causpan/rpc-1-read.bin", O_RDONLY) = 3
+/// 12345.679012345  read(3, "rpc-1-seed\n", 4096)     = 12
 /// ```
 ///
 /// The timestamp is in seconds with microsecond (or better) precision; we
 /// convert to nanoseconds.
+///
+/// With `-ttt`, the line format is:
+///
+///   `<timestamp> <syscall>(<args>) = <ret>`
+///
+/// No PID/TID column appears — each file is one thread.  We extract the
+/// TID from the filename at the call site.
 fn parse_strace_line(line: &str) -> Result<Option<ParsedLine>, CauspanError> {
-    // ── pattern ────────────────────────────────────────────────────────────
-    //   <seconds>.<micro>  <tid>  <syscall>(<args>) = <ret>
-    // or
-    //   <seconds>.<micro>  <tid>  <syscall>(<args>) <unfinished ...>
-    // or
-    //   <seconds>.<micro>  <tid>  <syscall>(<args>) <no return>
-    // ────────────────────────────────────────────────────────────────────────
-
+    // Optional PID/TID group (for `-f` + `-tt` format); not present with `-ttt`.
     let re = Regex::new(
-        r#"^(?P<ts>\d+\.\d+)\s+(?P<tid>\d+)\s+(?P<name>\w+)\((?P<args>[^)]*)\)(?:\s+=\s+(?P<ret>-?\d+|[a-fx0-9]+))?"#,
+        r#"^(?P<ts>\d+\.\d+)(?:\s+(?P<pid_tid>\d+))?\s+(?P<name>\w+)\((?P<args>[^)]*)\)(?:\s+=\s+(?P<ret>-?\d+|[a-fx0-9]+))?"#,
     )
     .expect("valid regex");
 
@@ -92,15 +90,7 @@ fn parse_strace_line(line: &str) -> Result<Option<ParsedLine>, CauspanError> {
     let ts_str = caps.name("ts").expect("timestamp group").as_str();
     let timestamp_ns = parse_timestamp_ns(ts_str)?;
 
-    let tid: u32 = caps
-        .name("tid")
-        .expect("tid group")
-        .as_str()
-        .parse()
-        .map_err(|e| CauspanError::StraceParse {
-            line: 0,
-            source: Box::new(e),
-        })?;
+    let _pid_tid = caps.name("pid_tid").and_then(|m| m.as_str().parse::<u32>().ok());
 
     let name = caps.name("name").expect("name group").as_str();
     let event_type = syscall_name_to_event(name);
@@ -117,15 +107,7 @@ fn parse_strace_line(line: &str) -> Result<Option<ParsedLine>, CauspanError> {
         }
     });
 
-    // PID — strace -ff writes one file per PID when both PID and TID differ,
-    // but when PID=TID (single-threaded) it writes a single file.  We
-    // extract PID from the filename when available: `strace.<pid>`.
-    // Otherwise fall back to TID (single-threaded case).
-    let pid = tid; // will be overwritten by caller from filename
-
     Ok(Some(ParsedLine {
-        pid,
-        tid,
         timestamp_ns,
         event_type,
         args,
@@ -172,7 +154,10 @@ fn syscall_name_to_event(name: &str) -> KernelEventType {
 
 /// Split the comma-separated argument string into individual values.
 fn parse_args(s: &str) -> KernelEventArgs {
-    let parts: Vec<&str> = s.split(',').map(|p| p.trim()).collect();
+    let parts: Vec<&str> = s
+        .split(',')
+        .map(|p| p.trim().trim_matches('"'))
+        .collect();
     KernelEventArgs::from_vec(&parts)
 }
 
@@ -180,12 +165,14 @@ fn parse_args(s: &str) -> KernelEventArgs {
 // PID extraction from filename
 // ---------------------------------------------------------------------------
 
-/// strace -ff names files `strace.<pid>`.  Extract the PID.
-fn pid_from_filename(path: &std::path::Path) -> Option<u32> {
-    path.file_stem()
-        .and_then(|s| s.to_str())
-        .and_then(|s| s.rsplit('.').next())
-        .and_then(|s| s.parse().ok())
+/// strace -ff names files `strace.<tid>`.  Extract the TID.
+fn tid_from_filename(path: &std::path::Path) -> Option<u32> {
+    path.file_name()?
+        .to_str()?
+        .rsplit('.')
+        .next()?
+        .parse()
+        .ok()
 }
 
 // ---------------------------------------------------------------------------
@@ -201,20 +188,10 @@ fn collect_strace(input: PathBuf, output: PathBuf) -> Result<(), CauspanError> {
         let entry = entry.map_err(CauspanError::Io)?;
         let path = entry.path();
 
-        // strace -ff writes files named <prefix>.<tid> (or <prefix>.<pid>.<tid>).
-        // Extract the last numeric component as the TID/PID.
-        let Some(file_stem) = path.file_stem().and_then(|s| s.to_str()) else {
-            continue;
-        };
-
-        // Find the last dot-separated numeric component.
-        let numeric_part = file_stem.rsplit('.').next();
-        let tid_from_name: u32 = match numeric_part.and_then(|s| s.parse().ok()) {
-            Some(n) => n,
-            None => continue,
-        };
-
-        let base_pid = pid_from_filename(&path).unwrap_or(tid_from_name);
+        // strace -ff writes files named <prefix>.<tid>.  Extract the TID from
+        // the filename extension.  PID defaults to the same value (single-
+        // threaded case); the per-line TID from strace is authoritative.
+        let tid_from_name = tid_from_filename(&path).unwrap_or(0);
         let file = File::open(&path)?;
         let reader = BufReader::new(file);
 
@@ -223,10 +200,11 @@ fn collect_strace(input: PathBuf, output: PathBuf) -> Result<(), CauspanError> {
             let Some(parsed) = parse_strace_line(&line)? else {
                 continue;
             };
-            // PID from filename is the base PID; TID from the line itself.
+            // PID = TID from filename (same for single-threaded processes).
+            // TID = TID from the strace line itself.
             events.push(KernelEvent {
-                pid: base_pid,
-                tid: parsed.tid,
+                pid: tid_from_name,
+                tid: tid_from_name,
                 timestamp_ns: parsed.timestamp_ns,
                 event_type: parsed.event_type,
                 args: parsed.args,

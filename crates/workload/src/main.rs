@@ -106,9 +106,9 @@ fn current_pid() -> u32 {
     std::process::id()
 }
 
-/// Linux TID (thread-local — differs across Tokio worker threads).
+/// Linux TID (thread ID from the kernel, differs across Tokio worker threads).
 fn current_tid() -> u32 {
-    unsafe { libc::pthread_self() as u32 }
+    unsafe { libc::syscall(libc::SYS_gettid) as u32 }
 }
 
 /// Unique file path for a given RPC and operation.

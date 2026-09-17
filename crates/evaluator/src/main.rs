@@ -95,7 +95,7 @@ fn evaluate(cli: &Cli) -> Result<EvaluationResults, String> {
     );
 
     // Build the matcher that pairs kernel events with ground-truth RPC IDs.
-    let matcher = EventMatcher::new(&gt_events);
+    let matcher = EventMatcher::new(&gt_events, &kernel_events);
 
     // Build strategies.
     let mut strategies: Vec<Box<dyn AttributionStrategy>> = Vec::new();
@@ -113,24 +113,18 @@ fn evaluate(cli: &Cli) -> Result<EvaluationResults, String> {
         s.load_ground_truth(&gt_events);
     }
 
-    // Match kernel events to ground-truth RPC IDs.
-    let mut matched = 0usize;
-    let mut unmatched = 0usize;
+    // Match kernel events to ground-truth RPC IDs via semantic fingerprinting.
+    let matcher = EventMatcher::new(&gt_events, &kernel_events);
+    let pairs = matcher.pairs();
 
-    // Pre-compute the actual RPC ID for each matched kernel event.
-    let mut actual_rpc_ids: Vec<Option<RpcId>> = Vec::with_capacity(kernel_events.len());
-    for ke in &kernel_events {
-        match matcher.match_event(ke) {
-            Some(rpc) => {
-                matched += 1;
-                actual_rpc_ids.push(Some(rpc));
-            }
-            None => {
-                unmatched += 1;
-                actual_rpc_ids.push(None);
-            }
-        }
+    // Build a fast lookup: ke_index → RpcId
+    let mut actual_rpc_ids: Vec<Option<RpcId>> = vec![None; kernel_events.len()];
+    for pair in pairs {
+        actual_rpc_ids[pair.ke_index] = Some(pair.rpc_id);
     }
+
+    let matched = pairs.len();
+    let unmatched = matcher.unmatched_count();
 
     info!(matched, unmatched, "matching complete");
 

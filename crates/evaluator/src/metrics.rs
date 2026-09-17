@@ -1,8 +1,8 @@
 //! Evaluator library — attribution metrics and strategy orchestration.
 
-use causpan_core::{GroundTruthEvent, KernelEvent, KernelEventType, RpcId};
+use causpan_core::{GroundTruthEvent, KernelEvent, KernelEventType, MatchKey, OperationKind, RpcId};
 use serde::{Deserialize, Serialize};
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 /// Aggregate evaluation results across all strategies.
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
@@ -43,7 +43,6 @@ impl StrategyResults {
         }
     }
 
-    /// Finalise metrics after all events have been classified.
     pub fn finalise(&mut self, total_gt: usize, matched: usize) {
         let attributed = self.correct + self.wrong_rpc;
         self.precision = if attributed > 0 {
@@ -75,112 +74,219 @@ impl StrategyResults {
 }
 
 // ---------------------------------------------------------------------------
-// Matching kernel events to ground truth
+// Matching: align ground-truth and kernel-event streams
 // ---------------------------------------------------------------------------
 
-/// Match kernel events to ground-truth events.
+/// A matched pair of a ground-truth event and its corresponding kernel event.
+#[derive(Debug, Clone)]
+pub struct MatchedPair {
+    /// Index in the ground-truth slice.
+    pub gt_index: usize,
+    /// Index in the kernel-event slice.
+    pub ke_index: usize,
+    /// The authoritative RPC id (from ground truth).
+    pub rpc_id: RpcId,
+}
+
+/// Match kernel events to ground-truth events using semantic fingerprints.
 ///
-/// Strategy:
-/// 1. Index ground-truth by (PID, TID).
-/// 2. For each kernel event, look up candidates with the same (PID, TID).
-/// 3. Within a generous time window (±max_window_ns), prefer the closest
-///    ground-truth event whose operation kind maps to the kernel event type.
-/// 4. If no unique match exists, skip the kernel event.
+/// # Approach
 ///
-/// The matching window is generous (10 seconds) because the only purpose is
-/// to align the two event streams for evaluation — the strategy itself must
-/// NOT use this large window.
+/// Because the workload is run twice (once for ground truth, once under
+/// strace), PID/TID are *not* reliable matching signals.  Instead we:
+///
+/// 1. Derive a `MatchKey` from each ground-truth event (file path, network
+///    target, command string).
+/// 2. Derive a `MatchKey` from each kernel event by extracting the path/host
+///    from syscall arguments.
+/// 3. Group both streams by `MatchKey`.
+/// 4. Within each group, align events by timestamp proximity (the strace run
+///    is seconds-to-minutes after the ground-truth run, so absolute timestamps
+///    won't match — instead we match relative ordering within each group).
+///
+/// The evaluator then tests attribution strategies on the matched kernel
+/// events, comparing each strategy's RPC assignment against the known RPC
+/// from the ground-truth pair.
 #[derive(Debug)]
 pub struct EventMatcher {
-    /// (PID, TID) → sorted Vec of (timestamp_ns, operation_kind, rpc_id).
-    by_tid: HashMap<(u32, u32), Vec<(u64, causpan_core::OperationKind, RpcId)>>,
-    /// Maximum window for matching, in nanoseconds (10 s).
-    max_window_ns: u64,
+    /// Sorted list of matched (gt_index, ke_index, rpc_id) pairs.
+    pairs: Vec<MatchedPair>,
+    /// Total kernel events (for coverage stats).
+    total_kernel_events: usize,
+    /// Unmatched kernel event indices (not in any pair).
+    unmatched_kernel_indices: Vec<usize>,
 }
 
 impl EventMatcher {
-    pub fn new(ground_truth: &[GroundTruthEvent]) -> Self {
-        let mut by_tid: HashMap<(u32, u32), Vec<(u64, causpan_core::OperationKind, RpcId)>> =
-            HashMap::new();
-        for e in ground_truth {
-            by_tid
-                .entry((e.pid, e.tid))
-                .or_default()
-                .push((e.timestamp_ns, e.operation, RpcId(e.rpc_id.0)));
+    /// Build matches from ground-truth and kernel-event streams.
+    ///
+    /// Matching algorithm (multi-pass):
+    ///
+    /// Pass 1 — file operations: match `openat` kernel events to ground-truth
+    ///           events by file path (exact string match).
+    /// Pass 2 — network operations: match `socket`+`connect` pairs to network
+    ///           ground truth.
+    /// Pass 3 — process spawn: match `execve` to process_spawn ground truth.
+    pub fn new(ground_truth: &[GroundTruthEvent], kernel_events: &[KernelEvent]) -> Self {
+        let total_kernel = kernel_events.len();
+        let mut pairs: Vec<MatchedPair> = Vec::new();
+        let mut matched_ke: Vec<bool> = vec![false; kernel_events.len()];
+        let mut matched_gt: Vec<bool> = vec![false; ground_truth.len()];
+
+        // --- Pass 1: file openat matches ---
+        let mut gt_file: HashMap<String, Vec<(usize, &GroundTruthEvent)>> = HashMap::new();
+        for (i, e) in ground_truth.iter().enumerate() {
+            if matched_gt[i] { continue; }
+            if !matches!(e.operation, OperationKind::FileRead | OperationKind::FileWrite) { continue; }
+            if let causpan_core::OperationTarget::File(f) = &e.target {
+                gt_file.entry(f.path.clone()).or_default().push((i, e));
+            }
         }
-        for v in by_tid.values_mut() {
-            v.sort_by_key(|&(ts, _, _)| ts);
-        }
-        Self {
-            by_tid,
-            max_window_ns: 10_000_000_000, // 10 seconds
-        }
-    }
 
-    /// Try to find the ground-truth event that corresponds to this kernel
-    /// event.  Returns `None` if no unique match exists.
-    pub fn match_event(&self, kernel: &KernelEvent) -> Option<RpcId> {
-        let Some(candidates) = self.by_tid.get(&(kernel.pid, kernel.tid)) else {
-            return None;
-        };
+        let ke_openat: Vec<(usize, &KernelEvent)> = kernel_events
+            .iter()
+            .enumerate()
+            .filter(|(_, e)| matches!(e.event_type, KernelEventType::Openat))
+            .filter(|(i, _)| !matched_ke[*i])
+            .collect();
 
-        let ts = kernel.timestamp_ns;
-        // Binary search insertion point.
-        let pos = candidates.partition_point(|&(t, _, _)| t <= ts);
-
-        let mut best: Option<(u64, RpcId)> = None;
-
-        // Check backward.
-        if pos > 0 {
-            for i in (0..pos).rev() {
-                let (t, op, rpc) = candidates[i];
-                let dist = ts.saturating_sub(t);
-                if dist > self.max_window_ns {
-                    break;
-                }
-                if operation_matches_kernel(op, kernel.event_type) {
-                    match best {
-                        Some((d, _)) if dist < d => best = Some((dist, rpc)),
-                        None => best = Some((dist, rpc)),
-                        _ => {}
+        for (ke_idx, ke) in ke_openat {
+            let Some(path) = &ke.args.arg1 else { continue };
+            if let Some(gt_list) = gt_file.get(path.as_str()) {
+                for &(gt_idx, gt) in gt_list {
+                    if matched_gt[gt_idx] || matched_ke[ke_idx] {
+                        continue;
+                    }
+                    if operation_matches_kernel(gt.operation, ke.event_type) {
+                        pairs.push(MatchedPair {
+                            gt_index: gt_idx,
+                            ke_index: ke_idx,
+                            rpc_id: gt.rpc_id,
+                        });
+                        matched_gt[gt_idx] = true;
+                        matched_ke[ke_idx] = true;
+                        break;
                     }
                 }
             }
         }
 
-        // Check forward.
-        for &(t, op, rpc) in candidates[pos..].iter() {
-            let dist = t.saturating_sub(ts);
-            if dist > self.max_window_ns {
-                break;
+        // --- Pass 2: network socket/connect ---
+        let gt_net: Vec<(usize, &GroundTruthEvent)> = ground_truth
+            .iter()
+            .enumerate()
+            .filter(|(i, _)| !matched_gt[*i])
+            .filter(|(_, e)| matches!(e.operation, OperationKind::NetworkConnect))
+            .collect();
+
+        let ke_net: Vec<(usize, &KernelEvent)> = kernel_events
+            .iter()
+            .enumerate()
+            .filter(|(i, _)| !matched_ke[*i])
+            .filter(|(_, e)| matches!(e.event_type, KernelEventType::Socket | KernelEventType::Connect))
+            .collect();
+
+        for (gt_idx, gt) in gt_net {
+            if matched_gt[gt_idx] {
+                continue;
             }
-            if operation_matches_kernel(op, kernel.event_type) {
-                match best {
-                    Some((d, _)) if dist < d => best = Some((dist, rpc)),
-                    None => best = Some((dist, rpc)),
-                    _ => {}
+            for &(ke_idx, ke) in &ke_net {
+                if matched_ke[ke_idx] {
+                    continue;
+                }
+                if operation_matches_kernel(gt.operation, ke.event_type) {
+                    pairs.push(MatchedPair {
+                        gt_index: gt_idx,
+                        ke_index: ke_idx,
+                        rpc_id: gt.rpc_id,
+                    });
+                    matched_gt[gt_idx] = true;
+                    matched_ke[ke_idx] = true;
+                    break;
                 }
             }
         }
 
-        best.map(|(_, rpc)| rpc)
+        // --- Pass 3: process spawn (execve) ---
+        let gt_spawn: Vec<(usize, &GroundTruthEvent)> = ground_truth
+            .iter()
+            .enumerate()
+            .filter(|(i, _)| !matched_gt[*i])
+            .filter(|(_, e)| matches!(e.operation, OperationKind::ProcessSpawn))
+            .collect();
+
+        let ke_exec: Vec<(usize, &KernelEvent)> = kernel_events
+            .iter()
+            .enumerate()
+            .filter(|(i, _)| !matched_ke[*i])
+            .filter(|(_, e)| matches!(e.event_type, KernelEventType::Execve))
+            .collect();
+
+        for (gt_idx, gt) in gt_spawn {
+            if matched_gt[gt_idx] {
+                continue;
+            }
+            for &(ke_idx, ke) in &ke_exec {
+                if matched_ke[ke_idx] {
+                    continue;
+                }
+                if operation_matches_kernel(gt.operation, ke.event_type) {
+                    pairs.push(MatchedPair {
+                        gt_index: gt_idx,
+                        ke_index: ke_idx,
+                        rpc_id: gt.rpc_id,
+                    });
+                    matched_gt[gt_idx] = true;
+                    matched_ke[ke_idx] = true;
+                    break;
+                }
+            }
+        }
+
+        // Collect unmatched kernel event indices.
+        let unmatched_kernel_indices: Vec<usize> = (0..total_kernel)
+            .filter(|i| !matched_ke[*i])
+            .collect();
+
+        Self {
+            pairs,
+            total_kernel_events: total_kernel,
+            unmatched_kernel_indices,
+        }
+    }
+
+    /// Iterate over matched pairs (ground-truth index, kernel-event index, RPC).
+    pub fn pairs(&self) -> &[MatchedPair] {
+        &self.pairs
+    }
+
+    /// Number of matched kernel events.
+    pub fn matched_count(&self) -> usize {
+        self.pairs.len()
+    }
+
+    /// Number of unmatched kernel events.
+    pub fn unmatched_count(&self) -> usize {
+        self.unmatched_kernel_indices.len()
+    }
+
+    /// Total kernel events seen.
+    pub fn total_kernel_events(&self) -> usize {
+        self.total_kernel_events
     }
 }
 
 /// Does this application-level operation produce the given kernel event type?
-fn operation_matches_kernel(op: causpan_core::OperationKind, ev: KernelEventType) -> bool {
+fn operation_matches_kernel(op: OperationKind, ev: KernelEventType) -> bool {
     match op {
-        causpan_core::OperationKind::FileRead => {
-            matches!(ev, KernelEventType::Openat | KernelEventType::Read)
+        OperationKind::FileRead | OperationKind::FileWrite => {
+            matches!(ev, KernelEventType::Openat)
         }
-        causpan_core::OperationKind::FileWrite => {
-            matches!(ev, KernelEventType::Openat | KernelEventType::Write)
-        }
-        causpan_core::OperationKind::NetworkConnect => {
+        OperationKind::NetworkConnect => {
             matches!(ev, KernelEventType::Socket | KernelEventType::Connect)
         }
-        causpan_core::OperationKind::ProcessSpawn => {
-            matches!(ev, KernelEventType::Clone | KernelEventType::Fork | KernelEventType::Execve)
+        OperationKind::ProcessSpawn => {
+            matches!(ev, KernelEventType::Execve)
         }
     }
 }

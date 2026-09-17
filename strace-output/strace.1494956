@@ -1,4 +1,0 @@
-22:09:23.377068 write(9, "{\"rpc_id\":1,\"operation_id\":42949"..., 192) = 192
-22:09:23.377359 openat(AT_FDCWD, "/tmp/causpan/rpc-1-write.bin", O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 10
-22:09:23.377528 write(10, "rpc-1-op-4294967300\n", 20) = 20
-22:09:23.381238 +++ exited with 0 +++

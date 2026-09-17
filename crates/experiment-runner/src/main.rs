@@ -260,7 +260,8 @@ impl ExperimentRunner {
         Ok(all_results)
     }
 
-    /// Run a single configuration: workload → strace → collector → evaluator.
+    /// Run a single configuration: strace captures both kernel events AND
+    /// ground truth in one execution (same PIDs/TIDs).
     fn run_single(&self, concurrency: usize, run: usize, tag: &str) -> Result<Vec<RunResult>> {
         let cfg = &self.config.workload;
         let gt_dir = self.output_dir.join("ground-truth");
@@ -271,27 +272,27 @@ impl ExperimentRunner {
         fs::create_dir_all(&strace_subdir)?;
 
         let gt_file = gt_dir.join(format!("{}.jsonl", tag));
-        let strace_base = strace_subdir.join("trace");  // strace adds .<tid> suffix
+        let strace_base = strace_subdir.join("trace");
         let ke_file = ke_dir.join(format!("{}.jsonl", tag));
 
-        // Step 1: Run workload.
-        self.run_workload(concurrency, &gt_file)?;
-
-        // Step 2: Run strace (if available).
+        // Step 1: Run workload under strace (single execution — ground truth
+        // and kernel events share the same PIDs/TIDs).
         if self.strace_available {
-            self.run_strace(concurrency, &strace_base)?;
+            self.run_strace(concurrency, &strace_base, &gt_file)?;
 
-            // Step 3: Collect kernel events from strace.
+            // Step 2: Collect kernel events from strace.
             self.run_collector(&strace_subdir, &ke_file)?;
         } else {
+            // Fallback: run workload without strace.
+            self.run_workload(concurrency, &gt_file)?;
             fs::write(&ke_file, "")?;
         }
 
-        // Step 4: Run evaluator.
+        // Step 3: Run evaluator.
         let eval_output = self.output_dir.join(format!("eval-{}.csv", tag));
         self.run_evaluator(&gt_file, &ke_file, &eval_output)?;
 
-        // Step 5: Read per-run results.
+        // Step 4: Read per-run results.
         Self::read_results_csv(&eval_output, concurrency, run)
     }
 
@@ -345,7 +346,12 @@ impl ExperimentRunner {
         Ok(())
     }
 
-    fn run_strace(&self, concurrency: usize, output: &Path) -> Result<()> {
+    fn run_strace(
+        &self,
+        concurrency: usize,
+        output: &Path,
+        gt_path: &Path,
+    ) -> Result<()> {
         let cfg = &self.config.workload;
         let scenario = match cfg.scenario.as_str() {
             "file_only" => "file_only",
@@ -357,7 +363,7 @@ impl ExperimentRunner {
 
         let status = Command::new("strace")
             .arg("-ff")          // one file per thread
-            .arg("-tt")          // relative timestamps (seconds.microseconds)
+            .arg("-ttt")         // absolute timestamps (seconds.microseconds)
             .arg("-e")
             .arg(&self.config.strace.syscalls)
             .arg("-o")
@@ -370,7 +376,7 @@ impl ExperimentRunner {
             .arg("--seed")
             .arg(cfg.seed.to_string())
             .arg("--output")
-            .arg("/dev/null")    // don't write GT under strace
+            .arg(gt_path)        // write ground truth during this execution
             .arg("--data-dir")
             .arg(&cfg.data_dir)
             .arg("--net-host")
