@@ -47,6 +47,7 @@ echo "  Strace files: $(ls "$STRACE_DIR"/ 2>/dev/null | wc -l)"
 echo "[2/3] collector: normalising strace..."
 cargo run --release --bin collector -- \
     --format straces \
+    --data-dir /tmp/causpan \
     "$STRACE_DIR" \
     "$KE"
 

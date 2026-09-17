@@ -26,11 +26,15 @@ use tracing::{error, info, warn};
 #[derive(Debug, Parser)]
 #[command(name = "collector", about = "Causpan kernel-event collector")]
 struct Cli {
-    /// Input file (raw strace output, or JSONL of KernelEvents to sort).
+    /// Input directory containing strace output files (for `straces` format).
     input: PathBuf,
 
     /// Output file (JSONL of KernelEvents).
     output: PathBuf,
+
+    /// Data directory where the workload wrote `workload.pid`.
+    #[arg(long)]
+    data_dir: Option<PathBuf>,
 
     /// Input format.
     #[arg(long, value_enum, default_value = "strace")]
@@ -194,7 +198,16 @@ fn tid_from_filename(path: &std::path::Path) -> Option<u32> {
 // Collection
 // ---------------------------------------------------------------------------
 
-fn collect_strace(input: PathBuf, output: PathBuf) -> Result<(), CauspanError> {
+fn collect_strace(input: PathBuf, output: PathBuf, data_dir: Option<PathBuf>) -> Result<(), CauspanError> {
+    // Read the workload's PID from the pid file if available.  This is the
+    // authoritative PID — /proc/<tid>/status is not available after the
+    // traced process has exited.
+    let workload_pid: Option<u32> = data_dir
+        .as_ref()
+        .and_then(|d| std::fs::read_to_string(d.join("workload.pid")).ok())
+        .and_then(|s| s.trim().parse().ok());
+
+    info!(?workload_pid, "collecting kernel events");
     let entries = std::fs::read_dir(&input).map_err(|e| CauspanError::Io(e))?;
 
     let mut events: Vec<KernelEvent> = Vec::new();
@@ -217,12 +230,13 @@ fn collect_strace(input: PathBuf, output: PathBuf) -> Result<(), CauspanError> {
                 continue;
             };
             // TID from the filename (strace.<tid> with -ff).
-            // PID (thread-group ID / Tgid) from /proc/<tid>/status.
+            // PID from the workload's pid file (written before any threads
+            // exit), or /proc/<tid>/status Tgid as fallback.
             let tid = match tid_from_name {
                 Some(t) => t,
-                None => continue, // can't identify this thread
+                None => continue,
             };
-            let pid = tgid_for_tid(tid);
+            let pid = workload_pid.unwrap_or_else(|| tgid_for_tid(tid));
             events.push(KernelEvent {
                 pid,
                 tid,
@@ -294,7 +308,7 @@ fn main() -> Result<(), CauspanError> {
         .init();
 
     match cli.format {
-        InputFormat::Straces => collect_strace(cli.input, cli.output),
+        InputFormat::Straces => collect_strace(cli.input, cli.output, cli.data_dir),
         InputFormat::Jsonl => collect_jsonl(cli.input, cli.output),
     }
 }

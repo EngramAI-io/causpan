@@ -313,6 +313,12 @@ async fn async_main(cli: Cli) {
         "starting workload"
     );
 
+    // Record the workload PID so the collector can attribute kernel events
+    // to the correct process even after this process has exited (when
+    // /proc/<tid>/status entries are no longer available).
+    let pid_file = cli.data_dir.join("workload.pid");
+    let _ = fs::write(&pid_file, std::process::id().to_string());
+
     // Prepare data directory.
     fs::create_dir_all(&cli.data_dir).expect("create data dir");
 

@@ -281,7 +281,7 @@ impl ExperimentRunner {
             self.run_strace(concurrency, &strace_base, &gt_file)?;
 
             // Step 2: Collect kernel events from strace.
-            self.run_collector(&strace_subdir, &ke_file)?;
+            self.run_collector(&strace_subdir, &ke_file, &self.config.workload.data_dir)?;
         } else {
             // Fallback: run workload without strace.
             self.run_workload(concurrency, &gt_file)?;
@@ -408,10 +408,12 @@ impl ExperimentRunner {
         Ok(())
     }
 
-    fn run_collector(&self, strace_dir: &Path, output: &Path) -> Result<()> {
+    fn run_collector(&self, strace_dir: &Path, output: &Path, data_dir: &str) -> Result<()> {
         let status = Command::new(Self::binary_path("collector"))
             .arg("--format")
             .arg("straces")
+            .arg("--data-dir")
+            .arg(data_dir)
             .arg(strace_dir)
             .arg(output)
             .status()
