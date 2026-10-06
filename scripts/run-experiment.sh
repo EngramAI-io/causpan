@@ -64,23 +64,15 @@ for CONC in "${CONCURRENCIES[@]}"; do
         CURRENT=$((CURRENT + 1))
         TAG="${EXPERIMENT_NAME}-c${CONC}-r${RUN}"
         GT_FILE="${GT_DIR}/${TAG}.jsonl"
-        STRACE_FILE="${KE_DIR}/${TAG}.strace"
+        STRACE_DIR="${KE_DIR}/${TAG}-traces"
+        STRACE_FILE="${STRACE_DIR}/strace"
         KE_FILE="${KE_DIR}/${TAG}.jsonl"
 
         echo "[${CURRENT}/${TOTAL}] concurrency=${CONC} run=${RUN}"
 
-        # 1. Run workload.
-        echo "  [workload] generating ground truth..."
-        ./target/release/workload \
-            --concurrency "$CONC" \
-            --operations-per-rpc "$OPS_PER_RPC" \
-            --seed "$SEED" \
-            --output "$GT_FILE" \
-            --scenario "$SCENARIO" \
-            --worker-threads 2
-
-        # 2. Run strace.
-        echo "  [strace] capturing kernel events..."
+        # Capture and ground truth must describe the same execution.
+        mkdir "$STRACE_DIR"
+        echo "  [strace] capturing kernel events and ground truth..."
         strace -ff -ttt \
             -e trace=openat,read,write,socket,connect,clone,fork,execve \
             -o "$STRACE_FILE" \
@@ -88,16 +80,15 @@ for CONC in "${CONCURRENCIES[@]}"; do
             --concurrency "$CONC" \
             --operations-per-rpc "$OPS_PER_RPC" \
             --seed "$SEED" \
-            --output /dev/null \
+            --output "$GT_FILE" \
             --scenario "$SCENARIO" \
-            --worker-threads 2 \
-            2>/dev/null || true
+            --worker-threads 2
 
         # 3. Collect kernel events from strace.
         echo "  [collector] normalising strace..."
         ./target/release/collector \
             --format straces \
-            "$STRACE_FILE" \
+            "$STRACE_DIR" \
             "$KE_FILE"
 
         # 4. Evaluate.

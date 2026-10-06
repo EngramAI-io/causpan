@@ -1,0 +1,61 @@
+{
+  "source_run": "results/mcp/concurrent",
+  "manifest": {
+    "mode": "replay",
+    "concurrency": 8,
+    "shared": false,
+    "model": null,
+    "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+    "versions": {
+      "node": "v24.20.0",
+      "strace": "strace -- version 5.14"
+    },
+    "server": {
+      "@modelcontextprotocol/server-filesystem": "2026.8.31"
+    },
+    "status": "complete"
+  },
+  "report": {
+    "tool_calls": 32,
+    "incomplete_calls": 0,
+    "tool_errors": 0,
+    "server_pid": 2817559,
+    "parser": {
+      "lifecycle_lines": 21,
+      "parsed": 3241
+    },
+    "sandbox_events": 128,
+    "sandbox_tids": [
+      2817963,
+      2817971,
+      2817975,
+      2817979
+    ],
+    "sandbox_syscalls": {
+      "readlinkat": 32,
+      "openat": 32,
+      "read": 32,
+      "close": 32
+    },
+    "oracle_labelled": 128,
+    "baselines": {
+      "pid": {
+        "events": 128,
+        "ambiguous": 128,
+        "oracle_labelled": 128,
+        "correct_singleton": 0,
+        "wrong_singleton": 0,
+        "truth_in_candidates": 128
+      },
+      "request_window": {
+        "events": 128,
+        "ambiguous": 128,
+        "oracle_labelled": 128,
+        "correct_singleton": 0,
+        "wrong_singleton": 0,
+        "truth_in_candidates": 128
+      }
+    },
+    "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+  }
+}

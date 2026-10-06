@@ -13,12 +13,12 @@
 
 use causpan_core::{GroundTruthEvent, KernelEvent, RpcId};
 use evaluator::{AttributionStrategy, EventMatcher, EvaluationResults, MatchedPair, StrategyResults};
-use clap::{Parser, ValueEnum};
+use clap::Parser;
 use std::collections::HashSet;
 use std::fs::File;
 use std::io::{BufRead, BufReader, Write};
 use std::path::PathBuf;
-use tracing::{error, info};
+use tracing::{error, info, warn};
 
 // Re-export strategies.
 use evaluator::strategies::pid::PidStrategy;
@@ -82,6 +82,10 @@ fn read_jsonl<T: serde::de::DeserializeOwned>(path: &PathBuf) -> Result<Vec<T>, 
 // ---------------------------------------------------------------------------
 
 fn evaluate(cli: &Cli) -> Result<EvaluationResults, String> {
+    warn!("Legacy evaluator uses oracle-assisted strategies and heuristic matching. Its scores are not independent attribution accuracy; use experiments/mcp for isolated inference and scoring.");
+    if cli.majority_vote {
+        return Err("--majority-vote is not implemented".into());
+    }
     let gt_events: Vec<GroundTruthEvent> = read_jsonl(&cli.ground_truth)?;
     let kernel_events: Vec<KernelEvent> = read_jsonl(&cli.kernel_events)?;
 
@@ -97,9 +101,6 @@ fn evaluate(cli: &Cli) -> Result<EvaluationResults, String> {
         kernel_events = kernel_events.len(),
         "loaded events"
     );
-
-    // Build the matcher that pairs kernel events with ground-truth RPC IDs.
-    let matcher = EventMatcher::new(&gt_events, &kernel_events);
 
     // Build strategies.
     let mut strategies: Vec<Box<dyn AttributionStrategy>> = Vec::new();
@@ -148,7 +149,8 @@ fn evaluate(cli: &Cli) -> Result<EvaluationResults, String> {
         // Reset mutable state.
         s.load_ground_truth(&gt_events);
 
-        let mut results = StrategyResults::new(s.name());
+        // Keep the limitation visible in exported CSVs, not only stderr.
+        let mut results = StrategyResults::new(format!("oracle_assisted_{}", s.name()));
         let mut correct_set: HashSet<RpcId> = HashSet::new();
         let mut wrong_set: HashSet<RpcId> = HashSet::new();
 

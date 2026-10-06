@@ -1,0 +1,12 @@
+[package]
+name = "causpan-runtime"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Trusted tracing-context to Linux execution-context bridge for Causpan experiments"
+
+[dependencies]
+tracing.workspace = true
+tracing-subscriber = { version = "0.3", features = ["registry"] }
+serde_json.workspace = true
+libc = "0.2"

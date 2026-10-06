@@ -37,8 +37,7 @@ strace -f -ff -ttt \
     --seed 42 \
     --output "$GT" \
     --scenario mixed \
-    --worker-threads 2 \
-    2>/dev/null || true
+    --worker-threads 2
 
 echo "  Ground truth lines: $(wc -l < "$GT")"
 echo "  Strace files: $(ls "$STRACE_DIR"/ 2>/dev/null | wc -l)"

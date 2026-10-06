@@ -1,0 +1,54 @@
+{
+  "source_run": "results/mcp/shared",
+  "manifest": {
+    "mode": "replay",
+    "concurrency": 8,
+    "shared": true,
+    "model": null,
+    "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+    "versions": {
+      "node": "v24.20.0",
+      "strace": "strace -- version 5.14"
+    },
+    "server": {
+      "@modelcontextprotocol/server-filesystem": "2026.8.31"
+    },
+    "status": "complete"
+  },
+  "report": {
+    "tool_calls": 32,
+    "incomplete_calls": 0,
+    "tool_errors": 0,
+    "server_pid": 2817544,
+    "parser": {
+      "lifecycle_lines": 21,
+      "parsed": 3217
+    },
+    "sandbox_events": 128,
+    "sandbox_tids": [
+      2817968,
+      2817972,
+      2817976,
+      2817980
+    ],
+    "sandbox_syscalls": {
+      "readlinkat": 32,
+      "openat": 32,
+      "read": 32,
+      "close": 32
+    },
+    "oracle_labelled": 0,
+    "baselines": {
+      "pid": {
+        "events": 128,
+        "ambiguous": 128
+      },
+      "request_window": {
+        "events": 128,
+        "ambiguous": 127,
+        "singleton": 1
+      }
+    },
+    "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+  }
+}

@@ -6,6 +6,8 @@ members = [
     "crates/collector",
     "crates/evaluator",
     "crates/experiment-runner",
+    "crates/causpan-runtime",
+    "crates/causpan-tokio-server",
 ]
 
 [workspace.package]

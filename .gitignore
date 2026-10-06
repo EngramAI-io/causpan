@@ -2,8 +2,7 @@
 /target/
 **/target/
 
-# Cargo
-Cargo.lock
+# Track Cargo.lock for reproducible runtime instrumentation experiments.
 
 # Ground-truth and kernel event output (generated during experiments)
 ground-truth.jsonl
@@ -29,3 +28,11 @@ results/*.pdf
 .DS_Store
 Thumbs.db
 strace-output/
+
+# MCP experiment dependencies and raw captures
+experiments/mcp/node_modules/
+experiments/mcp/__pycache__/
+results/mcp/
+experiments/mcp/native/*.node
+experiments/mcp/native/*.tmp
+experiments/mcp/native/build.json

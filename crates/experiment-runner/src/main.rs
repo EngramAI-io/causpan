@@ -392,17 +392,10 @@ impl ExperimentRunner {
             .map_err(|e| RunnerError::CommandFailed("strace".into(), e.to_string()))?;
 
         if !status.success() {
-            // strace often returns non-zero when tracing certain syscalls;
-            // check that output files were produced before erroring.
-            let has_output = fs::read_dir(output.parent().unwrap_or(Path::new(".")))
-                .map(|entries| entries.filter(|e| e.is_ok()).count() > 0)
-                .unwrap_or(false);
-            if !has_output {
-                return Err(RunnerError::CommandFailed(
-                    "strace".into(),
-                    format!("exit code: {:?}", status.code()),
-                ));
-            }
+            return Err(RunnerError::CommandFailed(
+                "strace".into(),
+                format!("exit code: {:?}; capture is incomplete", status.code()),
+            ));
         }
 
         Ok(())

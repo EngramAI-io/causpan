@@ -61,26 +61,20 @@ causpan/
 cargo build --release
 ```
 
-### Run a workload
-
-```bash
-./target/release/workload --concurrency 8 --operations-per-rpc 4 --output ground-truth.jsonl
-```
-
-### Capture strace
+### Capture strace and ground truth in the same execution
 
 ```bash
 strace -ff -ttt \
   -e trace=openat,read,write,socket,connect,clone,fork,execve \
   -o strace \
   ./target/release/workload \
-  --concurrency 8 --operations-per-rpc 4 --output /dev/null
+  --concurrency 8 --operations-per-rpc 4 --output ground-truth.jsonl
 ```
 
 ### Normalise strace
 
 ```bash
-./target/release/collector --format straces --input strace --output kernel-events.jsonl
+./target/release/collector --format straces . kernel-events.jsonl
 ```
 
 ### Evaluate
@@ -124,10 +118,10 @@ attribution.csv  (precision, recall, F1 per strategy)
 
 ## Key Design Decisions
 
-1. **Ground truth is authoritative and isolated.**  Attribution strategies never see RPC IDs during "inference" — the evaluator assigns them after the fact.
+1. **Isolate scoring from inference.** The MCP pipeline implements this separation. The legacy Rust evaluator still loads ground truth into its strategies and labels its exports `oracle_assisted_*`; those scores are diagnostic only.
 2. **Unique resources per RPC.**  Each request uses distinct file paths and network targets so the evaluator can independently verify correctness.
-3. **No predetermined solution.**  The project measures failure modes first; the attribution mechanism is designed only after the problem is quantified.
-4. **Rust/Tokio first.**  Multi-runtime support (Python asyncio, Go, etc.) is out of scope for v0.1.
+3. **Measure failure modes first.** The runtime mechanism follows from controlled counterexamples and independent evaluation.
+4. **Node and Rust/Tokio experiments.** Python asyncio, Go, and arbitrary custom schedulers are not covered by the current bridges.
 
 ## Development Philosophy
 
@@ -147,3 +141,18 @@ attribution.csv  (precision, recall, F1 per strategy)
 ## License
 
 MIT
+
+## MCP experiment with a real LLM agent
+
+A separate [MCP experiment guide](docs/mcp-experiment.md) sets up Codex, the official
+filesystem MCP server, a JSON-RPC recorder, and per-thread syscall capture. It includes
+sequential, concurrent, and shared-file controls with oracle labels kept separate from
+attribution. See [runtime findings and reproduction](docs/runtime-findings.md) for
+the implemented Node/libuv and Rust/Tokio bridges, 168 passing matrix runs,
+multi-parent provenance, measured overhead, and remaining limitations. The
+[initial findings](docs/mcp-initial-findings.md) preserve the baseline experiments;
+the [attribution design](docs/attribution-design.md) explains the Node prototype.
+
+The original workload/evaluator above is an early scaffold: its oracle isolation
+still needs correction, and separately executed workload/capture runs cannot be
+joined by PID and time. Use the MCP pipeline for the validated experiments.

@@ -1,0 +1,14 @@
+[package]
+name = "causpan-tokio-server"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Concurrent MCP stdio server for portable Tokio provenance experiments"
+
+[dependencies]
+causpan-runtime = { path = "../causpan-runtime" }
+tokio = { workspace = true, features = ["tracing"] }
+tracing.workspace = true
+tracing-subscriber = { version = "0.3", features = ["registry"] }
+serde_json.workspace = true
+clap.workspace = true

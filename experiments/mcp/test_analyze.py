@@ -1,0 +1,70 @@
+import contextlib
+import io
+import json
+import tempfile
+import unittest
+from pathlib import Path
+from analyze import analyze, parse_traces
+
+class TraceTests(unittest.TestCase):
+    def test_threads_children_resumed_and_payload_paths(self):
+        with tempfile.TemporaryDirectory() as directory:
+            d = Path(directory)
+            (d/'strace.100').write_text(
+                '10.000001 clone(child_stack=NULL, flags=CLONE_VM|CLONE_THREAD) = 101\n'
+                '10.000002 clone(child_stack=NULL, flags=SIGCHLD) = 102\n')
+            (d/'strace.101').write_text(
+                '10.000003 openat(AT_FDCWD, "/tmp/fixture", O_RDONLY <unfinished ...>\n'
+                '10.000005 <... openat resumed>) = 7</tmp/fixture> <0.000002>\n'
+                '10.000006 read(7</tmp/fixture>, "payload /tmp/other", 64) = 18 <0.000001>\n'
+                '10.000007 write(1<pipe:[123]>, "/tmp/fixture", 12) = 12\n')
+            (d/'strace.102').write_text('10.000008 close(3</tmp/child>) = 0\n')
+            events, quality = parse_traces(d)
+            self.assertEqual(quality['rejoined'], 1)
+            self.assertEqual(events[2]['timestamp_ns'], 10000003000)
+            self.assertEqual(events[2]['pid'], 100)
+            self.assertEqual(events[3]['paths'], ['/tmp/fixture'])
+            self.assertEqual(events[4]['paths'], ['pipe:[123]'])
+            self.assertEqual(events[5]['pid'], 102)
+
+class ReturnTests(unittest.TestCase):
+    def test_interrupted_and_pointer_return(self):
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)
+            (path/'strace.10').write_text(
+                '1.000001 read(4<pipe:[42]>, 0xffffee, 4) = ? ERESTARTSYS (To be restarted) <0.001>\n'
+                '1.000002 mmap(NULL, 4096, PROT_READ, MAP_PRIVATE, -1, 0) = 0xffff0000\n')
+            events,quality=parse_traces(path)
+            self.assertIsNone(events[0]['return_value'])
+            self.assertEqual(events[0]['completion'],'restart')
+            self.assertEqual(events[1]['return_value'],0xffff0000)
+            self.assertFalse(quality.get('unparsed'))
+
+class OracleTests(unittest.TestCase):
+    def test_shared_paths_remove_labels_without_changing_candidates(self):
+        with tempfile.TemporaryDirectory() as directory:
+            run = Path(directory)
+            (run/'traces').mkdir()
+            path = str(run/'sandbox/a.txt')
+            (run/'traces/strace.100').write_text(
+                '1.000000 execve("/bin/node", ["node", "server-filesystem/dist/index.js"], []) = 0\n'
+                f'1.500000 openat(AT_FDCWD, "{path}", O_RDONLY) = 7<{path}>\n')
+            def evaluate(second_path):
+                rows = [dict(wall_ns=1_100_000_000, direction='request', message={
+                    'id':i, 'method':'tools/call', 'params':{'name':'read_text_file',
+                    'arguments':{'path':p}}}) for i,p in [(1,path),(2,second_path)]]
+                rows += [dict(wall_ns=1_900_000_000, direction='response',
+                              message={'id':i,'result':{}}) for i in [1,2]]
+                (run/'protocol.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in rows))
+                with contextlib.redirect_stdout(io.StringIO()): report=analyze(run)
+                event=json.loads((run/'attribution.jsonl').read_text())
+                return report,event
+            unique,u=evaluate(str(run/'sandbox/b.txt'))
+            shared,s=evaluate(path)
+            self.assertEqual(unique['oracle_labelled'],1)
+            self.assertEqual(shared['oracle_labelled'],0)
+            self.assertEqual(u['candidates'],s['candidates'])
+            self.assertEqual(s['candidates']['request_window'],[1,2])
+
+if __name__ == '__main__': unittest.main()
+

@@ -1,0 +1,64 @@
+{
+  "source_run": "results/mcp/agent-complete",
+  "manifest": {
+    "mode": "agent",
+    "concurrency": 8,
+    "shared": false,
+    "model": null,
+    "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+    "versions": {
+      "node": "v24.20.0",
+      "strace": "strace -- version 5.14",
+      "codex": "codex-cli 0.160.1"
+    },
+    "server": {
+      "@modelcontextprotocol/server-filesystem": "2026.8.31"
+    },
+    "status": "complete"
+  },
+  "report": {
+    "tool_calls": 4,
+    "incomplete_calls": 0,
+    "tool_errors": 0,
+    "server_pid": 2880919,
+    "parser": {
+      "lifecycle_lines": 13,
+      "parsed": 2682
+    },
+    "sandbox_events": 16,
+    "sandbox_tids": [
+      2882145,
+      2882149,
+      2882152,
+      2882154
+    ],
+    "sandbox_syscalls": {
+      "readlinkat": 4,
+      "openat": 4,
+      "read": 3,
+      "close": 4,
+      "write": 1
+    },
+    "oracle_labelled": 8,
+    "baselines": {
+      "pid": {
+        "events": 16,
+        "ambiguous": 16,
+        "oracle_labelled": 8,
+        "correct_singleton": 0,
+        "wrong_singleton": 0,
+        "truth_in_candidates": 8
+      },
+      "request_window": {
+        "events": 16,
+        "ambiguous": 8,
+        "oracle_labelled": 8,
+        "correct_singleton": 0,
+        "wrong_singleton": 0,
+        "truth_in_candidates": 8,
+        "singleton": 8
+      }
+    },
+    "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+  }
+}
