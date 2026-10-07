@@ -1,0 +1,722 @@
+{
+  "source_run": "results/mcp/worker-wrong-response-c8",
+  "rejected_responses": 16,
+  "maximum_call_seconds": 0.453734879,
+  "regression_runs": [
+    {
+      "name": "worker-cancel-c16-p4-s0-r0-i1",
+      "scenario": "worker-cancel",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "concurrency": 16,
+      "pool_size": 4,
+      "shared": false,
+      "repeat": 0,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 5.075769777875394,
+      "report": {
+        "tool_calls": 33,
+        "incomplete_calls": 0,
+        "tool_errors": 0,
+        "server_pid": 2057418,
+        "parser": {
+          "lifecycle_lines": 26,
+          "parsed": 7041
+        },
+        "sandbox_events": 106,
+        "sandbox_tids": [
+          2057698,
+          2057702,
+          2057704,
+          2057705,
+          2057722,
+          2058009
+        ],
+        "sandbox_syscalls": {
+          "openat": 2,
+          "pwrite64": 86,
+          "pread64": 16,
+          "close": 2
+        },
+        "oracle_labelled": 0,
+        "baselines": {
+          "pid": {
+            "events": 106,
+            "ambiguous": 72,
+            "unattributed": 34
+          },
+          "request_window": {
+            "events": 106,
+            "unattributed": 39,
+            "ambiguous": 64,
+            "singleton": 3
+          }
+        },
+        "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+      },
+      "causal-report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 33,
+        "joins": 0,
+        "operations": 72,
+        "operations_started": 72,
+        "operations_cancelled": 0,
+        "ipc_jobs": 32,
+        "ipc_cancelled": 16,
+        "inherited_processes": 1,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 2056,
+        "parser": {
+          "lifecycle_lines": 26,
+          "parsed": 7041
+        },
+        "all_event_status": {
+          "unknown": 2571,
+          "no_request_context": 2278,
+          "bound": 98
+        },
+        "fixture_score": {
+          "events": 106,
+          "no_request_context": 74,
+          "bound": 32
+        },
+        "fixture_events_per_request": {
+          "3": 2,
+          "5": 2,
+          "7": 2,
+          "9": 2,
+          "11": 2,
+          "13": 2,
+          "15": 2,
+          "17": 2,
+          "19": 2,
+          "21": 2,
+          "23": 2,
+          "25": 2,
+          "27": 2,
+          "29": 2,
+          "31": 2,
+          "33": 2
+        },
+        "analysis_id": "50afd0588d80431da797e97518317bbe",
+        "output_sha256": {
+          "causal-attribution.jsonl": "439bb5ca86fad73a3c526e11b4e74bd10bbf916d97bd3d246808eacaae9619ff",
+          "provenance.jsonl": "f5fa22ebe3535c6362f5b246df115a0cf58d53734fb93b4a80b414f0562dad86"
+        }
+      },
+      "control-score": {
+        "valid": true,
+        "counts": {
+          "background": 70,
+          "correct": 102,
+          "request_events": 32,
+          "after_response": 0,
+          "cancelled_requests": 16
+        },
+        "mismatches": [],
+        "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; socketpair scenario also uses complete message tokens; neither is used during inference"
+      },
+      "manifest": {
+        "session_id": "7d1e874dd9724a909733e128220dd326",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": true,
+        "code_sha256": {
+          "analyze.py": "c8250de5f7073a7f985a946584f0e66c4c8bce6ded661342eb8a0c7033512961",
+          "attribute.py": "778ac3a877f2f25fee4bae94e8d42307df30f52330b95a9ce14a343077f47937",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "persistent_worker.py": "4a3d7b524fc22280549678146a8768695fdc540f0494b8d0b9c30b5b319420fa",
+          "proxy.py": "8685fb1d0118e8a3e48eb45b50d3c0f1c5b6386348ec40879027230a52dd9dfe",
+          "query.py": "d00ee0d2074082faafc8443f01bf68e3b0e391bf8b881006a779b644b491b95d",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "aee13ee359dae576dad13adcc70464c8702c7b8995ef946dee5a9d328bfbb76f",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "9dd45571b6f1b1ca94770c680d4c3c5a0ae8957b546ed470a6ce1cb3ee9d22f8",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "test_analyze.py": "7875e0675c318eb773de3d0f1747fc978a115eb183b196bcdb128f57fbe4d754",
+          "test_attribute.py": "27cdeffa858307049fe2aa67ce425eaeb1a16c95486f4b5aea7773a5b06e7a03",
+          "test_ipc.py": "2a062df384acf3d70e57523030af49b971f364f103ae46ea8495081f55ea3c14",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "61ef9c20ac0e477dfe63057a140bdd557dbd4cad39691b05a7385a8883396af9",
+          "control-server.mjs": "8fffac3411f4358847e23a8d3cbb76c69c114681cf76f6721c1957b86eaf65d7",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 16,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "worker-cancel",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "complete",
+        "execution_seconds": 4.1138088658917695
+      }
+    },
+    {
+      "name": "worker-relay-c16-p4-s0-r0-i1",
+      "scenario": "worker-relay",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "concurrency": 16,
+      "pool_size": 4,
+      "shared": false,
+      "repeat": 0,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 6.07727064890787,
+      "report": {
+        "tool_calls": 33,
+        "incomplete_calls": 0,
+        "tool_errors": 0,
+        "server_pid": 2057464,
+        "parser": {
+          "lifecycle_lines": 45,
+          "parsed": 9994
+        },
+        "sandbox_events": 238,
+        "sandbox_tids": [
+          2057699,
+          2057700,
+          2057701,
+          2057703,
+          2057723,
+          2057989,
+          2058010,
+          2058011,
+          2058017,
+          2058018,
+          2058391,
+          2058396,
+          2058406,
+          2058468
+        ],
+        "sandbox_syscalls": {
+          "openat": 3,
+          "pwrite64": 168,
+          "pread64": 64,
+          "close": 3
+        },
+        "oracle_labelled": 0,
+        "baselines": {
+          "pid": {
+            "events": 238,
+            "ambiguous": 138,
+            "unattributed": 100
+          },
+          "request_window": {
+            "events": 238,
+            "unattributed": 106,
+            "ambiguous": 128,
+            "singleton": 4
+          }
+        },
+        "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+      },
+      "causal-report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 33,
+        "joins": 0,
+        "operations": 138,
+        "operations_started": 138,
+        "operations_cancelled": 0,
+        "ipc_jobs": 64,
+        "ipc_cancelled": 0,
+        "inherited_processes": 2,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 2678,
+        "parser": {
+          "lifecycle_lines": 45,
+          "parsed": 9994
+        },
+        "all_event_status": {
+          "unknown": 2575,
+          "no_request_context": 4506,
+          "bound": 195
+        },
+        "fixture_score": {
+          "events": 238,
+          "no_request_context": 142,
+          "bound": 96
+        },
+        "fixture_events_per_request": {
+          "3": 3,
+          "4": 3,
+          "5": 3,
+          "6": 3,
+          "8": 3,
+          "7": 3,
+          "9": 3,
+          "10": 3,
+          "11": 3,
+          "13": 3,
+          "12": 3,
+          "14": 3,
+          "15": 3,
+          "16": 3,
+          "18": 3,
+          "17": 3,
+          "19": 3,
+          "20": 3,
+          "21": 3,
+          "22": 3,
+          "23": 3,
+          "24": 3,
+          "25": 3,
+          "26": 3,
+          "28": 3,
+          "27": 3,
+          "29": 3,
+          "30": 3,
+          "31": 3,
+          "32": 3,
+          "33": 3,
+          "34": 3
+        },
+        "analysis_id": "6a7d9443663a4a32939ab245dcefa863",
+        "output_sha256": {
+          "causal-attribution.jsonl": "5c97ef04cdcc408b8366950c4fb740ff0cd3e1ae81eb98c37d608f788b670f72",
+          "provenance.jsonl": "45a3a35b22c1908c16fa41f1b317487fd2cb38633d5ea95ee684f9fc8ca0b47b"
+        }
+      },
+      "control-score": {
+        "valid": true,
+        "counts": {
+          "background": 136,
+          "correct": 232,
+          "request_events": 96,
+          "after_response": 0
+        },
+        "mismatches": [],
+        "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; socketpair scenario also uses complete message tokens; neither is used during inference"
+      },
+      "manifest": {
+        "session_id": "341ea7d4f48f4121be0cf1fa7c58b66b",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": true,
+        "code_sha256": {
+          "analyze.py": "c8250de5f7073a7f985a946584f0e66c4c8bce6ded661342eb8a0c7033512961",
+          "attribute.py": "778ac3a877f2f25fee4bae94e8d42307df30f52330b95a9ce14a343077f47937",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "persistent_worker.py": "4a3d7b524fc22280549678146a8768695fdc540f0494b8d0b9c30b5b319420fa",
+          "proxy.py": "8685fb1d0118e8a3e48eb45b50d3c0f1c5b6386348ec40879027230a52dd9dfe",
+          "query.py": "d00ee0d2074082faafc8443f01bf68e3b0e391bf8b881006a779b644b491b95d",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "aee13ee359dae576dad13adcc70464c8702c7b8995ef946dee5a9d328bfbb76f",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "9dd45571b6f1b1ca94770c680d4c3c5a0ae8957b546ed470a6ce1cb3ee9d22f8",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "test_analyze.py": "7875e0675c318eb773de3d0f1747fc978a115eb183b196bcdb128f57fbe4d754",
+          "test_attribute.py": "27cdeffa858307049fe2aa67ce425eaeb1a16c95486f4b5aea7773a5b06e7a03",
+          "test_ipc.py": "2a062df384acf3d70e57523030af49b971f364f103ae46ea8495081f55ea3c14",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "61ef9c20ac0e477dfe63057a140bdd557dbd4cad39691b05a7385a8883396af9",
+          "control-server.mjs": "8fffac3411f4358847e23a8d3cbb76c69c114681cf76f6721c1957b86eaf65d7",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 16,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "worker-relay",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "complete",
+        "execution_seconds": 5.038914090022445
+      }
+    },
+    {
+      "name": "worker-context-c16-p4-s0-r0-i1",
+      "scenario": "worker-context",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "concurrency": 16,
+      "pool_size": 4,
+      "shared": false,
+      "repeat": 0,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.775185041129589,
+      "report": {
+        "tool_calls": 33,
+        "incomplete_calls": 0,
+        "tool_errors": 0,
+        "server_pid": 2060067,
+        "parser": {
+          "lifecycle_lines": 32,
+          "parsed": 6906
+        },
+        "sandbox_events": 121,
+        "sandbox_tids": [
+          2060893,
+          2060897,
+          2060901,
+          2060907,
+          2060945,
+          2061866,
+          2061892,
+          2061907,
+          2061936
+        ],
+        "sandbox_syscalls": {
+          "openat": 2,
+          "pwrite64": 85,
+          "pread64": 32,
+          "close": 2
+        },
+        "oracle_labelled": 0,
+        "baselines": {
+          "pid": {
+            "events": 121,
+            "ambiguous": 55,
+            "unattributed": 66
+          },
+          "request_window": {
+            "events": 121,
+            "unattributed": 71,
+            "ambiguous": 46,
+            "singleton": 4
+          }
+        },
+        "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+      },
+      "causal-report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 33,
+        "joins": 0,
+        "operations": 55,
+        "operations_started": 55,
+        "operations_cancelled": 0,
+        "ipc_jobs": 32,
+        "ipc_cancelled": 0,
+        "inherited_processes": 1,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 1969,
+        "parser": {
+          "lifecycle_lines": 32,
+          "parsed": 6906
+        },
+        "all_event_status": {
+          "unknown": 2572,
+          "no_request_context": 2198,
+          "bound": 129
+        },
+        "fixture_score": {
+          "events": 121,
+          "no_request_context": 57,
+          "bound": 64
+        },
+        "fixture_events_per_request": {
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "8": 2,
+          "7": 2,
+          "9": 2,
+          "10": 2,
+          "11": 2,
+          "13": 2,
+          "12": 2,
+          "14": 2,
+          "15": 2,
+          "16": 2,
+          "17": 2,
+          "18": 2,
+          "19": 2,
+          "20": 2,
+          "21": 2,
+          "22": 2,
+          "23": 2,
+          "24": 2,
+          "25": 2,
+          "26": 2,
+          "28": 2,
+          "27": 2,
+          "29": 2,
+          "30": 2,
+          "31": 2,
+          "33": 2,
+          "32": 2,
+          "34": 2
+        },
+        "analysis_id": "ba8899f6aca2470391de9fa06044f61d",
+        "output_sha256": {
+          "causal-attribution.jsonl": "7a593a6283cca73274dc7b21aa7f2aaa9239f10bea2482ca84e548d05cf1cb44",
+          "provenance.jsonl": "06d4a6bf60ea9b9b1dcbc8a51781474923ec226718f759e4653065eef80819f7"
+        }
+      },
+      "control-score": {
+        "valid": true,
+        "counts": {
+          "background": 53,
+          "correct": 117,
+          "request_events": 64,
+          "after_response": 0
+        },
+        "mismatches": [],
+        "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; socketpair scenario also uses complete message tokens; neither is used during inference"
+      },
+      "manifest": {
+        "session_id": "965f24e47f31406682af4279b397aad8",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": true,
+        "code_sha256": {
+          "analyze.py": "c8250de5f7073a7f985a946584f0e66c4c8bce6ded661342eb8a0c7033512961",
+          "attribute.py": "778ac3a877f2f25fee4bae94e8d42307df30f52330b95a9ce14a343077f47937",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "persistent_worker.py": "4a3d7b524fc22280549678146a8768695fdc540f0494b8d0b9c30b5b319420fa",
+          "proxy.py": "8685fb1d0118e8a3e48eb45b50d3c0f1c5b6386348ec40879027230a52dd9dfe",
+          "query.py": "d00ee0d2074082faafc8443f01bf68e3b0e391bf8b881006a779b644b491b95d",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "aee13ee359dae576dad13adcc70464c8702c7b8995ef946dee5a9d328bfbb76f",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "9dd45571b6f1b1ca94770c680d4c3c5a0ae8957b546ed470a6ce1cb3ee9d22f8",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "test_analyze.py": "7875e0675c318eb773de3d0f1747fc978a115eb183b196bcdb128f57fbe4d754",
+          "test_attribute.py": "27cdeffa858307049fe2aa67ce425eaeb1a16c95486f4b5aea7773a5b06e7a03",
+          "test_ipc.py": "2a062df384acf3d70e57523030af49b971f364f103ae46ea8495081f55ea3c14",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "61ef9c20ac0e477dfe63057a140bdd557dbd4cad39691b05a7385a8883396af9",
+          "control-server.mjs": "8fffac3411f4358847e23a8d3cbb76c69c114681cf76f6721c1957b86eaf65d7",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 16,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "worker-context",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "complete",
+        "execution_seconds": 2.9220878831110895
+      }
+    }
+  ],
+  "manifest": {
+    "session_id": "0722b075e14d4bb68900451130916396",
+    "runtime": "node",
+    "runtime_workers": 2,
+    "capture": "strace",
+    "seccomp": true,
+    "code_sha256": {
+      "analyze.py": "c8250de5f7073a7f985a946584f0e66c4c8bce6ded661342eb8a0c7033512961",
+      "attribute.py": "778ac3a877f2f25fee4bae94e8d42307df30f52330b95a9ce14a343077f47937",
+      "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+      "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+      "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+      "persistent_worker.py": "7ecd243f5224e43f9526374c8bf0f977e6fc27bca78c684ff878ad8fad722b1d",
+      "proxy.py": "8685fb1d0118e8a3e48eb45b50d3c0f1c5b6386348ec40879027230a52dd9dfe",
+      "query.py": "d00ee0d2074082faafc8443f01bf68e3b0e391bf8b881006a779b644b491b95d",
+      "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+      "run.py": "6fdb199cb7cbbd050e48a4db701812c9999d51b469691855e95b4465577695bc",
+      "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+      "score_control.py": "9dd45571b6f1b1ca94770c680d4c3c5a0ae8957b546ed470a6ce1cb3ee9d22f8",
+      "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+      "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+      "test_analyze.py": "7875e0675c318eb773de3d0f1747fc978a115eb183b196bcdb128f57fbe4d754",
+      "test_attribute.py": "27cdeffa858307049fe2aa67ce425eaeb1a16c95486f4b5aea7773a5b06e7a03",
+      "test_ipc.py": "2a062df384acf3d70e57523030af49b971f364f103ae46ea8495081f55ea3c14",
+      "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+      "test_query.py": "61ef9c20ac0e477dfe63057a140bdd557dbd4cad39691b05a7385a8883396af9",
+      "control-server.mjs": "7e8342502e68d376e0304151724aa4374747bd3ea44bd999c6386c350430db3d",
+      "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+      "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+      "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+      "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+      "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+      "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+    },
+    "mode": "replay",
+    "concurrency": 8,
+    "shared": false,
+    "instrumented": true,
+    "pool_size": 4,
+    "string_ids": false,
+    "spoof_context": false,
+    "scenario": "worker-wrong-response",
+    "batches": 2,
+    "model": null,
+    "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+    "versions": {
+      "node": "v24.20.0",
+      "strace": "strace -- version 5.14"
+    },
+    "server": {
+      "@modelcontextprotocol/server-filesystem": "2026.8.31"
+    },
+    "status": "failed",
+    "execution_seconds": 2.094336135080084,
+    "error": "Command '['/usr/bin/python3.11', '/u/kdhande/causpan/experiments/mcp/analyze.py', '/u/kdhande/causpan/results/mcp/worker-wrong-response-c8']' returned non-zero exit status 1."
+  },
+  "causal_report": {
+    "valid": true,
+    "errors": [],
+    "attribution_model": "causal-context-v2",
+    "requests": 17,
+    "joins": 0,
+    "operations": 30,
+    "operations_started": 30,
+    "operations_cancelled": 0,
+    "ipc_jobs": 8,
+    "ipc_cancelled": 0,
+    "inherited_processes": 1,
+    "runtime_spans": 0,
+    "retroactive_socket_reads": 0,
+    "migrating_request_spans": 0,
+    "markers": 946,
+    "parser": {
+      "lifecycle_lines": 32,
+      "parsed": 5596
+    },
+    "all_event_status": {
+      "unknown": 2570,
+      "no_request_context": 2016,
+      "bound": 42
+    },
+    "fixture_score": {
+      "events": 48,
+      "no_request_context": 32,
+      "bound": 16
+    },
+    "fixture_events_per_request": {
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "8": 2,
+      "7": 2,
+      "9": 2,
+      "10": 2
+    },
+    "analysis_id": "58f5ca7fd2d143e583fd62abd2ab2167",
+    "output_sha256": {
+      "causal-attribution.jsonl": "d85b8514526f92657db49954e2d8f8133458514f1d2059bbb3e37c537fc48a0f",
+      "provenance.jsonl": "e3b10db34028fb9e9dee30542998004215b8ccca4114a2db9dc008dc56eea237"
+    }
+  },
+  "report": {
+    "tool_calls": 17,
+    "incomplete_calls": 0,
+    "tool_errors": 16,
+    "server_pid": 2070217,
+    "parser": {
+      "lifecycle_lines": 32,
+      "parsed": 5596
+    },
+    "sandbox_events": 48,
+    "sandbox_tids": [
+      2070668,
+      2070669,
+      2070670,
+      2070671,
+      2070679,
+      2070775,
+      2070776,
+      2070779,
+      2070781
+    ],
+    "sandbox_syscalls": {
+      "openat": 2,
+      "pwrite64": 36,
+      "pread64": 8,
+      "close": 2
+    },
+    "oracle_labelled": 0,
+    "baselines": {
+      "pid": {
+        "events": 48,
+        "ambiguous": 30,
+        "unattributed": 18
+      },
+      "request_window": {
+        "events": 48,
+        "unattributed": 23,
+        "ambiguous": 23,
+        "singleton": 2
+      }
+    },
+    "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+  }
+}

@@ -14,9 +14,12 @@ const root=process.argv[2];
 const file=await fs.open(`${root}/slots.bin`,'r+');
 const pending=new Set();
 const errors=[];
+const SLOT_BYTE_WIDTH = 128; // Bytes per slot; matches the 128-byte record layout of slots.bin.
+const MAX_SLOT = 99999;       // Highest valid slot index; the file holds slots 0..99999.
+const BACKGROUND_SLOT_INDEX = 100000; // Dedicated background-write slot past the normal slot range.
+const UV_ECANCELED = -125;    // libuv cancellation status code returned by uv_cancel().
+
 let backgroundPromise=Promise.resolve();
-const stride=128;
-const backgroundSlot=100000;
 let tick=0;
 const server=new McpServer({name:'causpan-control',version:'1.0.0'});
 const sharedMode=process.env.CAUSPAN_SCENARIO==='network-shared';
@@ -127,7 +130,7 @@ const without=fn=>globalThis.causpanContext ? globalThis.causpanContext.withoutR
 // Intentionally outside any request and on the same file descriptor as request work.
 const background=setInterval(()=>without(()=>{
   backgroundPromise=backgroundPromise.then(async()=>{
-    await file.write(Buffer.from(`background:${tick++}`),0,12,backgroundSlot*stride);
+    await file.write(Buffer.from(`background:${tick++}`),0,12,BACKGROUND_SLOT_INDEX * SLOT_BYTE_WIDTH);
   }).catch(e=>errors.push(String(e)));
 }),10);
 const io=async({slot,rounds,delay_ms,nested})=>{
@@ -140,9 +143,9 @@ const io=async({slot,rounds,delay_ms,nested})=>{
       resource.runInAsyncScope(()=>fsSync.statSync(`${root}/slots.bin`));
       resource.emitDestroy();
     }
-    await file.write(content,0,content.length,slot*stride);
+    await file.write(content,0,content.length,slot*SLOT_BYTE_WIDTH);
     const read=Buffer.alloc(content.length);
-    await file.read(read,0,read.length,slot*stride);
+    await file.read(read,0,read.length,slot*SLOT_BYTE_WIDTH);
     if(!read.equals(content))throw new Error(`slot ${slot} read-back mismatch`);
   }
   return {content:[{type:'text',text:`verified slot ${slot}`} ]};
@@ -233,9 +236,9 @@ server.registerTool('batch_io',{inputSchema:{slot:z.number().int().min(0).max(99
     const entries=batchQueue.splice(0).sort((a,b)=>a.slot-b.slot);
     try{
       if(entries.some((entry,i)=>entry.slot!==entries[0].slot+i))throw new Error('batch oracle needs contiguous slots');
-      const buffer=Buffer.alloc(entries.length*stride);
-      entries.forEach((entry,i)=>buffer.write(`slot:${entry.slot}`,i*stride));
-      const perform=()=>file.write(buffer,0,buffer.length,entries[0].slot*stride);
+      const buffer=Buffer.alloc(entries.length*SLOT_BYTE_WIDTH);
+      entries.forEach((entry,i)=>buffer.write(`slot:${entry.slot}`,i*SLOT_BYTE_WIDTH));
+      const perform=()=>file.write(buffer,0,buffer.length,entries[0].slot*SLOT_BYTE_WIDTH);
       if(entries[0].joined){
         if(!globalThis.causpanContext?.withParents)throw new Error('join instrumentation unavailable');
         await globalThis.causpanContext.withParents(entries.map(entry=>entry.context),perform);
@@ -247,14 +250,14 @@ server.registerTool('batch_io',{inputSchema:{slot:z.number().int().min(0).max(99
 server.registerTool('fail_probe',{inputSchema:{slot:z.number().int().min(0).max(99999)}},async({slot})=>{
   const readonly=await fs.open(`${root}/slots.bin`,'r');
   try{
-    const result=await globalThis.causpanContext.queueProbe(readonly.fd,slot*stride,0,false);
+    const result=await globalThis.causpanContext.queueProbe(readonly.fd,slot*SLOT_BYTE_WIDTH,0,false);
     if(result.bytes!==-1)throw new Error('expected a rejected write to readonly descriptor');
     return {content:[{type:'text',text:JSON.stringify(result)}],structuredContent:result};
   }finally{await readonly.close();}
 });
 server.registerTool('cancel_probe',{inputSchema:{slot:z.number().int().min(0).max(99999),cancel:z.boolean()}},async({slot,cancel})=>{
   if(!globalThis.causpanContext)throw new Error('cancel_probe requires instrumentation addon');
-  const result=await globalThis.causpanContext.queueProbe(file.fd,slot*stride,25,cancel);
+  const result=await globalThis.causpanContext.queueProbe(file.fd,slot*SLOT_BYTE_WIDTH,25,cancel);
   return {content:[{type:'text',text:JSON.stringify(result)}],structuredContent:result};
 });
 server.registerTool('barrier',{inputSchema:{}},async()=>{

@@ -13,7 +13,12 @@ CALL = re.compile(r'^(\w+)\((.*)\)\s+=\s+(0x[0-9a-f]+|-?\d+|\?)(.*)$')
 FD_OPS = {'read','write','readv','writev','pread64','pwrite64','close','fstat','fchmod','fchown','ftruncate','fsync','fdatasync','getdents64','fcntl','dup','dup2','dup3','recvfrom','recvmsg','sendto','sendmsg'}
 PATH_OPS = {'openat','open','stat','lstat','newfstatat','statx','access','faccessat',
             'faccessat2','chmod','fchmodat','fchownat','mkdir','mkdirat','rmdir','link','linkat','symlink','symlinkat','utimensat','readlink','readlinkat','rename','renameat','renameat2','unlink','unlinkat'}
-CLONE_FLAG_BITS={'CLONE_FILES':0x400,'CLONE_THREAD':0x10000}
+CLONE_FILES = 0x400      # Linux clone(2) flag: child shares parent's file descriptor table.
+CLONE_THREAD = 0x10000   # Linux clone(2) flag: child is placed in same thread group (like pthread_create).
+CLONE_FLAG_BITS = {
+    'CLONE_FILES': CLONE_FILES,
+    'CLONE_THREAD': CLONE_THREAD,
+}
 
 def clone_has_flag(args,flag):
     if flag in args:return True

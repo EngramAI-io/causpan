@@ -19,6 +19,12 @@ use tokio::{
 use tracing::Instrument;
 use tracing_subscriber::prelude::*;
 
+// Slot layout constants — shared across the Python control server and this Rust server
+// so both write to byte-exact offsets on the same slots.bin file.
+const SLOT_BYTE_WIDTH: u64 = 128;                  // Bytes reserved per slot.
+const MAX_SLOT: u64 = 99999;                        // Highest valid slot index (0..99999).
+const BACKGROUND_SLOT_OFFSET: u64 = 100000 * 128;   // Byte offset for background-write slot.
+
 #[derive(Parser)]
 #[command(version)]
 struct Args {
@@ -71,13 +77,13 @@ async fn flush_batch(state: Arc<State>, mut entries: Vec<BatchItem>) {
             } else {
                 None
             };
-            let mut bytes = vec![0_u8; group.len() * 128];
+            let mut bytes = vec![0_u8; group.len() * SLOT_BYTE_WIDTH as usize];
             for (i, entry) in group.iter().enumerate() {
                 let label = format!("slot:{}", entry.slot);
-                bytes[i * 128..i * 128 + label.len()].copy_from_slice(label.as_bytes());
+                bytes[i * SLOT_BYTE_WIDTH as usize..i * SLOT_BYTE_WIDTH as usize + label.len()].copy_from_slice(label.as_bytes());
             }
             let file = state.file.clone();
-            let offset = group[0].slot * 128;
+            let offset = group[0].slot * SLOT_BYTE_WIDTH;
             let perform = async move {
                 tokio::task::spawn_blocking(move || file.write_all_at(&bytes, offset))
                     .await
@@ -122,7 +128,7 @@ async fn slot_io(state: Arc<State>, args: Value) -> Result<(), String> {
     let slot = args["slot"].as_u64().ok_or("slot must be an integer")?;
     let rounds = args["rounds"].as_u64().unwrap_or(3);
     let delay = args["delay_ms"].as_u64().unwrap_or(1);
-    if slot > 99999 || rounds == 0 || rounds > 20 || delay > 100 {
+    if slot > MAX_SLOT || rounds == 0 || rounds > 20 || delay > 100 {
         return Err("argument out of range".into());
     }
     for _ in 0..rounds {
@@ -137,10 +143,10 @@ async fn slot_io(state: Arc<State>, args: Value) -> Result<(), String> {
                     .map_err(|e| e.to_string())?;
             }
             let payload = format!("{:.<32}", format!("slot:{slot}"));
-            file.write_all_at(payload.as_bytes(), slot * 128)
+            file.write_all_at(payload.as_bytes(), slot * SLOT_BYTE_WIDTH)
                 .map_err(|e| e.to_string())?;
             let mut read = vec![0; payload.len()];
-            file.read_exact_at(&mut read, slot * 128)
+            file.read_exact_at(&mut read, slot * SLOT_BYTE_WIDTH)
                 .map_err(|e| e.to_string())?;
             if read != payload.as_bytes() {
                 return Err(format!("slot {slot} read-back mismatch"));
@@ -162,7 +168,7 @@ async fn tool(
         "batch_io" => {
             let slot = args["slot"]
                 .as_u64()
-                .filter(|slot| *slot < 100000)
+                .filter(|slot| *slot < MAX_SLOT)
                 .ok_or("invalid slot")?;
             let (reply, receive) = oneshot::channel();
             let mut batch = state.batch.lock().await;
@@ -221,7 +227,7 @@ async fn tool(
         }
         "spawn_slot" => {
             let slot = args["slot"].as_u64().ok_or("slot required")?;
-            if slot > 99999 {
+            if slot > MAX_SLOT {
                 return Err("slot out of range".into());
             }
             let program="import os,sys; f=os.open(sys.argv[1],os.O_RDWR); os.pwrite(f,(\"child:\"+sys.argv[2]).encode(),int(sys.argv[2])*128); os.close(f)";
@@ -242,13 +248,13 @@ async fn tool(
         }
         "cancel_probe" => {
             let slot = args["slot"].as_u64().ok_or("slot required")?;
-            if slot > 99999 {
+            if slot > MAX_SLOT {
                 return Err("slot out of range".into());
             }
             let file = state.file.clone();
             let handle = tokio::task::spawn_blocking(move || {
                 std::thread::sleep(Duration::from_millis(25));
-                file.write_all_at(b"tokio probe", slot * 128)
+                file.write_all_at(b"tokio probe", slot * SLOT_BYTE_WIDTH)
             });
             if args["cancel"].as_bool().unwrap_or(false) {
                 handle.abort();
@@ -265,13 +271,13 @@ async fn tool(
         }
         "fail_probe" => {
             let slot = args["slot"].as_u64().ok_or("slot required")?;
-            if slot > 99999 {
+            if slot > MAX_SLOT {
                 return Err("slot out of range".into());
             }
             let root = state.root.clone();
             tokio::task::spawn_blocking(move || -> Result<(), String> {
                 let readonly = File::open(root.join("slots.bin")).map_err(|e| e.to_string())?;
-                if readonly.write_at(b"rejected", slot * 128).is_ok() {
+                if readonly.write_at(b"rejected", slot * SLOT_BYTE_WIDTH).is_ok() {
                     return Err("readonly write unexpectedly succeeded".into());
                 }
                 Ok(())
@@ -347,7 +353,7 @@ async fn serve(args: Args, instrumented: bool) -> Result<(), Box<dyn std::error:
         loop {
             tokio::time::sleep(Duration::from_millis(10)).await;
             let file = background_file.clone();
-            tokio::task::spawn_blocking(move || file.write_all_at(b"background", 100000 * 128))
+            tokio::task::spawn_blocking(move || file.write_all_at(b"background", BACKGROUND_SLOT_OFFSET))
                 .await
                 .unwrap()
                 .unwrap();

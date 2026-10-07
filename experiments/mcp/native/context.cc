@@ -16,6 +16,29 @@
 #include <unordered_map>
 #include <atomic>
 
+// AArch64 branch-and-link instruction encodings.
+// ldr x16, [pc,#8] ; br x16 — x16 is a caller-safe scratch register per the
+// procedure-call standard.  Used to install an absolute trampoline in place of
+// the first 8 bytes of uv__work_submit / uv_queue_work.
+#define TRAMPOLINE_LDR_X16 0x58000050u
+#define TRAMPOLINE_BR_X16  0xd61f0200u
+
+// Expected prologue of uv__work_submit on the pinned Node 24.20.0 / libuv 1.52.1
+// AArch64 binary.  Verified at build time; any mismatch rejects installation
+// so we never instrument an unexpected ABI.
+#define UV_SUBMIT_PROLOGUE_W0 0xa9bc7bfdu  // stp x28, x27, [sp, #-64]!
+#define UV_SUBMIT_PROLOGUE_W1 0x910003fdu  // mov x29, sp
+#define UV_SUBMIT_PROLOGUE_W2 0xa90153f3u  // stp x19, x20, [sp, #32]
+#define UV_SUBMIT_PROLOGUE_W3 0xaa0103f4u  // mov x20, x1
+
+// Expected prologue of uv_queue_work on the pinned binary (compiler inlining
+// bypasses uv__work_submit, so we hook the next matching prologue instead).
+// We offset +4 to skip the initial cbz instruction, preserving it intact.
+#define UV_QUEUE_PROLOGUE_W0 0xa9bd7bfdu  // stp x29, x27, [sp, #-64]!
+#define UV_QUEUE_PROLOGUE_W1 0x910003fdu  // mov x29, sp
+#define UV_QUEUE_PROLOGUE_W2 0xa90153f3u  // stp x19, x20, [sp, #32]
+#define UV_QUEUE_PROLOGUE_W3 0xaa0103f3u  // mov x20, x0
+
 struct Work;
 using WorkFn = void (*)(Work*);
 using DoneFn = void (*)(Work*, int);
@@ -24,6 +47,13 @@ struct Record { uint64_t request, operation; WorkFn work; DoneFn done; };
 static std::mutex records_mutex;
 static std::unordered_map<Work*, Record> records;
 static std::atomic<uint64_t> next_operation{1};
+// _exit() from a libuv thread-pool callback is signal-unsafe and can deadlock
+// if libuv or the filesystem layer holds an internal lock (e.g. io_uring
+// completion locks, stdio mutexes).  We funnel all fatal exits through this
+// flag: the worker thread sets it and returns normally, releasing all held
+// locks; the main-thread entry point (wrapped_submit) performs the actual
+// _exit() on a safe thread after all internal locks have been released.
+static std::atomic<int> fatal_code{0};
 static thread_local uint64_t current_request = 0;
 static thread_local uint64_t current_operation = 0;
 static int output_fd = -1;
@@ -37,14 +67,28 @@ static void emit(const char* kind, uint64_t request, uint64_t operation, uintptr
   if (output_fd < 0) return;
   int saved = errno;
   if(!cached_tid)cached_tid=syscall(SYS_gettid);
-  char line[320];
-  int len = snprintf(line, sizeof(line), "{\"csp\":1,\"kind\":\"%s\",\"request\":%llu,\"operation\":%llu,\"pointer\":%llu,\"tid\":%ld,\"status\":%d}\n",
+  // Dynamic allocation: snprintf's return value can exceed the stack buffer,
+  // so we measure first (NULL, 0) and then allocate. A fixed 320-byte buffer
+  // would silently truncate or cause write() to read past the stack.
+  int needed = snprintf(NULL, 0, "{\"csp\":1,\"kind\":\"%s\",\"request\":%llu,\"operation\":%llu,\"pointer\":%llu,\"tid\":%ld,\"status\":%d}\n",
+    kind, (unsigned long long)request, (unsigned long long)operation,
+    (unsigned long long)pointer, cached_tid, status);
+  if (needed < 0) { fatal_code.store(86); return; }
+  char* line = (char*)malloc(needed + 1);
+  if (!line) {
+    const char marker[] = "OOM\n";
+    ssize_t result;
+    do { result = write(output_fd, marker, sizeof(marker) - 1); } while (result < 0 && errno == EINTR);
+    fatal_code.store(86); return;
+  }
+  snprintf(line, needed + 1, "{\"csp\":1,\"kind\":\"%s\",\"request\":%llu,\"operation\":%llu,\"pointer\":%llu,\"tid\":%ld,\"status\":%d}\n",
     kind, (unsigned long long)request, (unsigned long long)operation,
     (unsigned long long)pointer, cached_tid, status);
   // One bounded write per record. Capture failure is fatal, never silently lose context.
   ssize_t result;
-  do { result = write(output_fd, line, len); } while (result < 0 && errno == EINTR);
-  if (result != len) _exit(86);
+  do { result = write(output_fd, line, needed); } while (result < 0 && errno == EINTR);
+  if (result != needed) { fatal_code.store(86); return; }
+  free(line);
   errno = saved;
 }
 static void set_context(uint64_t request, uint64_t operation, const char* kind) {
@@ -55,7 +99,15 @@ static void set_context(uint64_t request, uint64_t operation, const char* kind) 
 static Record lookup(Work* work, bool erase) {
   std::lock_guard<std::mutex> lock(records_mutex);
   auto it = records.find(work);
-  if (it == records.end()) { emit("INVARIANT_FAILURE", 0, 0, (uintptr_t)work); _exit(87); }
+  if (it == records.end()) {
+    // Fatal: cannot attribute an unknown work pointer.  Set the flag and
+    // return; the lock_guard releases records_mutex when this scope exits,
+    // then the next main-thread entry point (wrapped_submit / wrapped_queue)
+    // performs the actual _exit() on a safe thread.
+    emit("INVARIANT_FAILURE", 0, 0, (uintptr_t)work);
+    fatal_code.store(87);
+    return Record{};
+  }
   Record record = it->second;
   if (erase) records.erase(it);
   return record;
@@ -79,6 +131,11 @@ static void wrapped_done(Work* work, int status) {
   set_context(previous_request, previous_operation, "DONE_LEAVE");
 }
 static void wrapped_submit(void* loop, Work* work, int kind, WorkFn fn, DoneFn done) {
+  // Deferred-exit check: if a thread-pool callback hit a fatal invariant,
+  // it set fatal_code and returned normally (releasing all locks).  We are
+  // on the main libuv thread here, so _exit() is signal-safe.
+  if (int code = fatal_code.load(std::memory_order_acquire))
+    _exit(code);
   Record record{current_request, next_operation.fetch_add(1), fn, done};
   {
     std::lock_guard<std::mutex> lock(records_mutex);
@@ -90,6 +147,8 @@ static void wrapped_submit(void* loop, Work* work, int kind, WorkFn fn, DoneFn d
 static void queued_work(uv_work_t* work) { wrapped_work(reinterpret_cast<Work*>(work)); }
 static void queued_done(uv_work_t* work,int status) { wrapped_done(reinterpret_cast<Work*>(work),status); }
 static int wrapped_queue(uv_loop_t* loop,uv_work_t* work,uv_work_cb fn,uv_after_work_cb done) {
+  if (int code = fatal_code.load(std::memory_order_acquire))
+    _exit(code);
   auto key=reinterpret_cast<Work*>(work);
   Record record{current_request,next_operation.fetch_add(1),reinterpret_cast<WorkFn>(fn),reinterpret_cast<DoneFn>(done)};
   {
@@ -113,7 +172,8 @@ static napi_value install(napi_env env, napi_callback_info info) {
   if(napi_get_value_string_utf8(env,args[1],path,sizeof(path),&length)!=napi_ok || length>=sizeof(path)-1)
     return fail(env,"invalid output path");
   // The first 16 bytes contain no PC-relative instructions in this exact prologue.
-  const uint32_t expected[4]={0xa9bc7bfd,0x910003fd,0xa90153f3,0xaa0103f4};
+  const uint32_t expected[4]={UV_SUBMIT_PROLOGUE_W0, UV_SUBMIT_PROLOGUE_W1,
+                              UV_SUBMIT_PROLOGUE_W2, UV_SUBMIT_PROLOGUE_W3};
   void* target=(void*)address;
   if(memcmp(target,expected,sizeof(expected))) return fail(env,"uv__work_submit prologue mismatch: unsupported binary");
   output_fd=open(path,O_WRONLY|O_CREAT|O_EXCL|O_APPEND|O_CLOEXEC,0600);
@@ -123,7 +183,7 @@ static napi_value install(napi_env env, napi_callback_info info) {
   if(trampoline==MAP_FAILED) return fail(env,"mmap failed");
   memcpy(trampoline,target,16);
   // ldr x16, .+8 ; br x16 ; absolute target. x16 is ABI scratch.
-  uint32_t jump[2]={0x58000050,0xd61f0200};
+  uint32_t jump[2]={TRAMPOLINE_LDR_X16, TRAMPOLINE_BR_X16};
   memcpy(trampoline+16,jump,8);
   uint64_t resume=address+16;
   memcpy(trampoline+24,&resume,8);
@@ -142,7 +202,8 @@ static napi_value install(napi_env env, napi_callback_info info) {
   // Compiler inlining bypasses uv__work_submit inside uv_queue_work in this binary.
   // Leave its initial cbz instruction intact and hook the following prologue.
   uint64_t queue_address=(uintptr_t)&uv_queue_work+4;
-  const uint32_t queue_expected[4]={0xa9bd7bfd,0x910003fd,0xa90153f3,0xaa0103f3};
+  const uint32_t queue_expected[4]={UV_QUEUE_PROLOGUE_W0, UV_QUEUE_PROLOGUE_W1,
+                                    UV_QUEUE_PROLOGUE_W2, UV_QUEUE_PROLOGUE_W3};
   if(memcmp((void*)queue_address,queue_expected,16))return fail(env,"uv_queue_work prologue mismatch");
   auto queue_trampoline=(unsigned char*)mmap(nullptr,page,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0);
   if(queue_trampoline==MAP_FAILED)return fail(env,"queue trampoline mmap failed");

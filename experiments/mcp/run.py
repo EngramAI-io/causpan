@@ -40,6 +40,11 @@ async def replay(run, concurrency, shared, scenario="read", batches=4, string_id
     batch_extra={"batch_width":concurrency} if json.loads((run/"run-config.json").read_text()).get("runtime")=="tokio" else {}
     seq = 0
     pending = {}
+    # Inject a deliberately unmapped context ID to verify the instrumentation
+    # does not accept client-supplied context as authority. The real context
+    # comes from AsyncLocalStorage, assigned by the _onrequest wrapper.
+    SPOOF_CONTEXT = 999999
+    SPOOF_REQUEST = 1
     async def receive():
         while line := await child.stdout.readline():
             msg = json.loads(line)
@@ -54,7 +59,7 @@ async def replay(run, concurrency, shared, scenario="read", batches=4, string_id
         f = asyncio.get_running_loop().create_future()
         request_id=f'request-{seq}' if string_ids else seq
         pending[request_id] = f
-        if spoof_context and method=='tools/call':params={**params,'_meta':{'org.causpan/context':999999,'org.causpan/request':1}}
+        if spoof_context and method=='tools/call':params={**params,'_meta':{'org.causpan/context':SPOOF_CONTEXT,'org.causpan/request':SPOOF_REQUEST}}
         child.stdin.write((json.dumps({'jsonrpc':'2.0', 'id':request_id, 'method':method,
                                       'params':params})+'\n').encode())
         await child.stdin.drain()
@@ -66,6 +71,32 @@ async def replay(run, concurrency, shared, scenario="read", batches=4, string_id
         if 'error' in result or result.get('result', {}).get('isError'):
             raise RuntimeError(result)
         return result
+
+    def _tool_name_for(scenario):
+        if scenario == "spawn": return "spawn_slot"
+        if scenario == "clone-files": return "clone_files_slot"
+        if scenario in {"worker-context","worker-unscoped","worker-failure","worker-crash",
+                        "worker-cancel","worker-spawn","worker-grandchild","worker-socketpair",
+                        "worker-fatal","worker-relay","worker-relay-fatal","worker-wrong-response"}:
+            return "worker_slot"
+        if scenario == "cancel": return "cancel_probe"
+        if scenario == "failure": return "fail_probe"
+        if scenario in {"batch","batch-joined"}: return "batch_io"
+        return "slot_io"
+
+    def _arguments_for(scenario, batch, concurrency, i, batch_extra):
+        slot = batch * concurrency + i
+        if scenario in {"batch","batch-joined"}:
+            return {"slot": slot, "joined": scenario == "batch-joined", **batch_extra}
+        if scenario == "cancel":
+            return {"slot": slot, "cancel": bool(i % 2)}
+        if scenario in {"spawn","failure","clone-files","worker-context","worker-unscoped",
+                        "worker-failure","worker-crash","worker-cancel","worker-spawn",
+                        "worker-grandchild","worker-socketpair","worker-fatal","worker-relay",
+                        "worker-relay-fatal","worker-wrong-response"}:
+            return {"slot": slot}
+        return {"slot": slot, "rounds": 3, "delay_ms": 2,
+                "nested": scenario == "nested", "detached": scenario == "detached"}
     try:
         await call('initialize', {'protocolVersion':'2024-11-05','capabilities':{},
                                  'clientInfo':{'name':'causpan-control','version':'1'}})
@@ -125,9 +156,9 @@ async def replay(run, concurrency, shared, scenario="read", batches=4, string_id
                     if (run/'sandbox'/f'work-{batch}-{i}.txt').exists():raise RuntimeError('move_file left source behind')
                 continue
             if scenario != "read":
-                await asyncio.gather(*(call("tools/call", {"name":"spawn_slot" if scenario=="spawn" else "clone_files_slot" if scenario=="clone-files" else "worker_slot" if scenario in {"worker-context","worker-unscoped","worker-failure","worker-crash","worker-cancel","worker-spawn","worker-grandchild","worker-socketpair","worker-fatal","worker-relay","worker-relay-fatal","worker-wrong-response"} else "cancel_probe" if scenario=="cancel" else "fail_probe" if scenario=="failure" else "batch_io" if scenario in {"batch","batch-joined"} else "slot_io",
-                    "arguments":{"slot":batch*concurrency+i, **({"joined":scenario=="batch-joined",**batch_extra} if scenario in {"batch","batch-joined"} else {"cancel":bool(i%2)} if scenario=="cancel" else {} if scenario in {"spawn","failure","clone-files","worker-context","worker-unscoped","worker-failure","worker-crash","worker-cancel","worker-spawn","worker-grandchild","worker-socketpair","worker-fatal","worker-relay","worker-relay-fatal","worker-wrong-response"} else
-                    {"rounds":3,"delay_ms":2,"nested":scenario=="nested","detached":scenario=="detached"})}})
+                await asyncio.gather(*(call("tools/call", {
+                    "name": _tool_name_for(scenario),
+                    "arguments": _arguments_for(scenario, batch, concurrency, i, batch_extra)})
                     for i in range(concurrency)))
                 continue
             await asyncio.gather(*(call('tools/call', {'name':'read_text_file', 'arguments':{

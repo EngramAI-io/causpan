@@ -12,8 +12,10 @@ import threading
 import time
 import uuid
 
-fd = os.open(sys.argv[1], os.O_RDWR)
-markers = os.open(Path(os.environ['CAUSPAN_RUN']) / 'native-events.jsonl', os.O_WRONLY | os.O_APPEND)
+SLOT_BYTE_WIDTH = 128      # Bytes per slot; matches the 128-byte record layout of slots.bin.
+BACKGROUND_SLOT_INDEX = 100000  # Dedicated background-write slot past the normal slot range.
+EXIT_CRASH = 23            # Deliberate bypass of finally; leaves IPC bracket open.
+EXIT_FATAL = 24            # Fatal task failure exit code; bypasses normal cleanup.
 cancel_mode = os.environ['CAUSPAN_SCENARIO'] == 'worker-cancel'
 failure_mode = os.environ['CAUSPAN_SCENARIO'] == 'worker-failure'
 propagate = os.environ['CAUSPAN_SCENARIO'] != 'worker-unscoped'
@@ -110,17 +112,17 @@ def execute(message):
         if relay:
             delegate(context,slot)
         elif os.environ['CAUSPAN_SCENARIO'] in {'worker-spawn','worker-grandchild'}:
-            program='import os,sys; f=os.open(sys.argv[1],os.O_RDWR); p=("worker:"+sys.argv[2]).encode(); assert os.pwrite(f,p,int(sys.argv[2])*128)==len(p); os.close(f)'
+            program='import os,sys; f=os.open(sys.argv[1],os.O_RDWR); p=("worker:"+sys.argv[2]).encode(); assert os.pwrite(f,p,int(sys.argv[2])*SLOT_BYTE_WIDTH)==len(p); os.close(f)'
             command=[sys.executable,'-c',program,sys.argv[1],str(slot)]
             if os.environ['CAUSPAN_SCENARIO']=='worker-grandchild':
                 command=[sys.executable,'-c','import subprocess,sys; subprocess.run(sys.argv[1:],check=True)',*command]
             subprocess.run(command,check=True)
-        elif os.pwrite(target, payload, slot * 128) != len(payload):
+        elif os.pwrite(target, payload, slot * SLOT_BYTE_WIDTH) != len(payload):
             raise RuntimeError('short worker write')
         if os.environ['CAUSPAN_SCENARIO']=='worker-crash':
-            os._exit(23)  # Deliberately bypass finally and leave the IPC bracket open.
+            os._exit(EXIT_CRASH)  # Deliberately bypass finally and leave the IPC bracket open.
         time.sleep(0.003)
-        if os.pread(fd, len(payload), slot * 128) != payload:
+        if os.pread(fd, len(payload), slot * SLOT_BYTE_WIDTH) != payload:
             raise RuntimeError('worker payload mismatch')
         response = dict(slot=slot)
     except Exception as error:
@@ -136,7 +138,7 @@ def execute(message):
         mark(0)
     # Independent background effect on the SAME worker TID after every job.
     if failure_mode:
-        if os.pwrite(fd, b'worker-background', 100000 * 128) != 17:
+        if os.pwrite(fd, b'worker-background', BACKGROUND_SLOT_INDEX * SLOT_BYTE_WIDTH) != 17:
             raise RuntimeError('short background write')
     response['job'] = message['job']
     if os.environ['CAUSPAN_SCENARIO']=='worker-wrong-response':
@@ -155,7 +157,7 @@ def check_task_failure(future):
         try:
             os.write(2, f'fatal worker task: {type(error).__name__}: {error}\n'.encode()[:2048])
         finally:
-            os._exit(24)
+            os._exit(EXIT_FATAL)
 
 
 with concurrent.futures.ThreadPoolExecutor(max_workers=1 if cancel_mode else 4) as pool:

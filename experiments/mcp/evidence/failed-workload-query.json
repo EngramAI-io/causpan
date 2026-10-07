@@ -1,0 +1,135 @@
+{
+  "source_run": "results/mcp/worker-wrong-response-c8",
+  "example": {
+    "workload_status": "failed",
+    "workload_error": "Command '['/usr/bin/python3.11', '/u/kdhande/causpan/experiments/mcp/analyze.py', '/u/kdhande/causpan/results/mcp/worker-wrong-response-c8']' returned non-zero exit status 1.",
+    "attribution_valid": true,
+    "events": [
+      {
+        "timestamp_ns": 1791403008247506000,
+        "tid": 2070775,
+        "syscall": "pwrite64",
+        "args": "3</u/kdhande/causpan/results/mcp/worker-wrong-response-c8/sandbox/slots.bin>, \"worker:0\", 8, 0",
+        "return_value": 8,
+        "completion": "returned",
+        "paths": [
+          "/u/kdhande/causpan/results/mcp/worker-wrong-response-c8/sandbox/slots.bin"
+        ],
+        "source": "strace.2070775:4",
+        "pid": 2070679,
+        "context": 1,
+        "request_ids": [
+          3
+        ],
+        "request_id": 3,
+        "ipc_job": "e805b2b2-fe7e-4219-9be7-e12f90891335/1",
+        "operation": 0,
+        "origin": "ipc_worker",
+        "context_evidence": "strace.2070775:3",
+        "connection_id": null,
+        "candidate_request_ids": [],
+        "attribution": "bound"
+      },
+      {
+        "timestamp_ns": 1791403008256892000,
+        "tid": 2070775,
+        "syscall": "pread64",
+        "args": "3</u/kdhande/causpan/results/mcp/worker-wrong-response-c8/sandbox/slots.bin>, \"worker:0\", 8, 0",
+        "return_value": 8,
+        "completion": "returned",
+        "paths": [
+          "/u/kdhande/causpan/results/mcp/worker-wrong-response-c8/sandbox/slots.bin"
+        ],
+        "source": "strace.2070775:5",
+        "pid": 2070679,
+        "context": 1,
+        "request_ids": [
+          3
+        ],
+        "request_id": 3,
+        "ipc_job": "e805b2b2-fe7e-4219-9be7-e12f90891335/1",
+        "operation": 0,
+        "origin": "ipc_worker",
+        "context_evidence": "strace.2070775:3",
+        "connection_id": null,
+        "candidate_request_ids": [],
+        "attribution": "bound"
+      }
+    ],
+    "provenance": [
+      {
+        "type": "node",
+        "id": "0722b075e14d4bb68900451130916396:request:1",
+        "kind": "mcp_request",
+        "context": 1,
+        "rpc_id": 3,
+        "method": "tools/call",
+        "tool": "worker_slot",
+        "session_id": "0722b075e14d4bb68900451130916396"
+      },
+      {
+        "type": "node",
+        "id": "0722b075e14d4bb68900451130916396:ipc:e805b2b2-fe7e-4219-9be7-e12f90891335/1",
+        "kind": "ipc_job",
+        "request_context": 1,
+        "sender_pid": 2070217,
+        "sender_tid": 2070217,
+        "send_evidence": "strace.2070217:2693",
+        "session_id": "0722b075e14d4bb68900451130916396"
+      },
+      {
+        "type": "edge",
+        "source": "0722b075e14d4bb68900451130916396:request:1",
+        "target": "0722b075e14d4bb68900451130916396:ipc:e805b2b2-fe7e-4219-9be7-e12f90891335/1",
+        "kind": "ipc_sent",
+        "evidence": "strace.2070217:2693",
+        "session_id": "0722b075e14d4bb68900451130916396"
+      },
+      {
+        "type": "node",
+        "id": "0722b075e14d4bb68900451130916396:syscall:strace.2070775:4",
+        "kind": "syscall",
+        "timestamp_ns": 1791403008247506000,
+        "pid": 2070679,
+        "tid": 2070775,
+        "syscall": "pwrite64",
+        "paths": [
+          "/u/kdhande/causpan/results/mcp/worker-wrong-response-c8/sandbox/slots.bin"
+        ],
+        "return_value": 8,
+        "session_id": "0722b075e14d4bb68900451130916396"
+      },
+      {
+        "type": "edge",
+        "source": "0722b075e14d4bb68900451130916396:ipc:e805b2b2-fe7e-4219-9be7-e12f90891335/1",
+        "target": "0722b075e14d4bb68900451130916396:syscall:strace.2070775:4",
+        "kind": "executed",
+        "evidence": "strace.2070775:3",
+        "session_id": "0722b075e14d4bb68900451130916396"
+      },
+      {
+        "type": "node",
+        "id": "0722b075e14d4bb68900451130916396:syscall:strace.2070775:5",
+        "kind": "syscall",
+        "timestamp_ns": 1791403008256892000,
+        "pid": 2070679,
+        "tid": 2070775,
+        "syscall": "pread64",
+        "paths": [
+          "/u/kdhande/causpan/results/mcp/worker-wrong-response-c8/sandbox/slots.bin"
+        ],
+        "return_value": 8,
+        "session_id": "0722b075e14d4bb68900451130916396"
+      },
+      {
+        "type": "edge",
+        "source": "0722b075e14d4bb68900451130916396:ipc:e805b2b2-fe7e-4219-9be7-e12f90891335/1",
+        "target": "0722b075e14d4bb68900451130916396:syscall:strace.2070775:5",
+        "kind": "executed",
+        "evidence": "strace.2070775:3",
+        "session_id": "0722b075e14d4bb68900451130916396"
+      }
+    ]
+  },
+  "invalid_capture_rejection": "Capture invalid: unfinished IPC jobs"
+}
