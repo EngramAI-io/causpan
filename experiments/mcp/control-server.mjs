@@ -7,6 +7,7 @@ import fsSync from 'node:fs';
 import { AsyncResource } from 'node:async_hooks';
 import { spawn } from 'node:child_process';
 import net from 'node:net';
+import { randomUUID } from 'node:crypto';
 import { setTimeout as sleep } from 'node:timers/promises';
 
 const root=process.argv[2];
@@ -163,6 +164,65 @@ server.registerTool('spawn_slot',{inputSchema:{slot:z.number().int().min(0).max(
   });
   return {content:[{type:'text',text:`spawned slot ${slot}`} ]};
 });
+server.registerTool('clone_files_slot',{inputSchema:{slot:z.number().int().min(0).max(99999)}},async({slot})=>{
+  const helper=process.env.CAUSPAN_CLONE_FILES_BIN;
+  if(!helper)throw new Error('CLONE_FILES probe binary was not configured');
+  const output=await new Promise((resolve,reject)=>{
+    const child=spawn(helper,[`${root}/slots.bin`,String(slot)],{stdio:['ignore','pipe','pipe']});
+    let stdout='',stderr='';
+    child.stdout.setEncoding('utf8').on('data',chunk=>stdout+=chunk);
+    child.stderr.setEncoding('utf8').on('data',chunk=>stderr+=chunk);
+    child.on('error',reject);
+    child.on('close',code=>code===0?resolve(stdout.trim()):reject(new Error(`CLONE_FILES helper exit ${code}: ${stderr.trim()}`)));
+  });
+  return {content:[{type:'text',text:output}]};
+});
+// Start outside any MCP request: process ancestry cannot label later jobs.
+let persistentWorker=null;
+let workerFailure=null;
+const workerWaiters=new Map();
+const workerDispatcher=randomUUID();
+let nextWorkerJob=1n;
+let workerMarkerFd=null;
+if(['worker-context','worker-unscoped','worker-failure','worker-crash','worker-cancel','worker-spawn','worker-grandchild','worker-socketpair','worker-fatal','worker-relay','worker-relay-fatal','worker-wrong-response'].includes(process.env.CAUSPAN_SCENARIO)){
+  workerMarkerFd=fsSync.openSync(`${process.env.CAUSPAN_RUN}/native-events.jsonl`,'a');
+  persistentWorker=spawn('python3.11',[new URL('./persistent_worker.py',import.meta.url).pathname,`${root}/slots.bin`],{stdio:['pipe','pipe','inherit']});
+  let buffer='';
+  const fail=error=>{workerFailure=error;for(const waiter of workerWaiters.values())waiter.reject(error);workerWaiters.clear();};
+  persistentWorker.on('error',fail);
+  persistentWorker.on('close',code=>fail(new Error(`persistent worker closed: ${code}`)));
+  persistentWorker.stdin.on('error',fail);
+  persistentWorker.stdout.setEncoding('utf8').on('data',chunk=>{
+    buffer+=chunk;
+    for(;;){
+      const newline=buffer.indexOf('\n');if(newline<0)break;
+      const line=buffer.slice(0,newline);buffer=buffer.slice(newline+1);
+      try{
+        const response=JSON.parse(line),waiter=workerWaiters.get(response.job);
+        if(!waiter)throw new Error('unexpected worker response');
+        if(response.slot!==waiter.slot)throw new Error('worker response slot mismatch');
+        workerWaiters.delete(response.job);
+        if(response.error)waiter.reject(new Error(response.error));else waiter.resolve(response);
+      }catch(error){fail(error);}
+    }
+  });
+}
+server.registerTool('worker_slot',{inputSchema:{slot:z.number().int().min(0).max(99999)}},async({slot})=>{
+  if(!persistentWorker)throw new Error('worker scenario required');
+  if(workerFailure)throw workerFailure;
+  if([...workerWaiters.values()].some(waiter=>waiter.slot===slot))throw new Error('duplicate active slot');
+  const context=String(globalThis.causpanContext.current());
+  const response=await new Promise((resolve,reject)=>{
+    const job=`${workerDispatcher}/${nextWorkerJob++}`;
+    workerWaiters.set(job,{resolve,reject,slot});
+    const marker=JSON.stringify({csp:1,kind:'IPC_SEND',request:Number(context),operation:0,pointer:0,tid:process.pid,status:0,job})+'\n';
+    const propagate=process.env.CAUSPAN_SCENARIO!=='worker-unscoped';
+    if(propagate)fsSync.writeSync(workerMarkerFd,marker);
+    persistentWorker.stdin.write(JSON.stringify(propagate?{slot,context,job}:{slot,job})+'\n');
+  });
+  if(Boolean(response.expected_failure)!==(process.env.CAUSPAN_SCENARIO==='worker-failure'&&slot%2===1))throw new Error('unexpected worker failure status');
+  return {content:[{type:'text',text:JSON.stringify(response)}],structuredContent:response};
+});
 let batchQueue=[];
 let batchTimer=null;
 server.registerTool('batch_io',{inputSchema:{slot:z.number().int().min(0).max(99999),joined:z.boolean().default(false)}},({slot,joined})=>new Promise((resolve,reject)=>{
@@ -205,6 +265,7 @@ server.registerTool('barrier',{inputSchema:{}},async()=>{
 });
 process.stdin.on('end',async()=>{
   clearInterval(background);
+  if(persistentWorker)persistentWorker.stdin.end();
   if(inboundServer){
     inboundServer.close();
     for(const socket of inboundLiveSockets)socket.destroy();

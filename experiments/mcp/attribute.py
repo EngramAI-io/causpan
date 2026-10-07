@@ -10,12 +10,33 @@ import re
 from analyze import parse_traces, clone_has_flag
 
 TRANSITIONS={'JS_CONTEXT','WORK_ENTER','WORK_LEAVE','DONE_ENTER','DONE_LEAVE'}
+MARKER_KINDS=TRANSITIONS|{'INSTALL','INSTALL_QUEUE','SUBMIT','COMPLETE','INVARIANT_FAILURE','DUPLICATE_WORK','IPC_SEND','IPC_ENTER','IPC_LEAVE','IPC_CANCEL'}
+
+def unique_json_object(pairs):
+    result={}
+    for key,value in pairs:
+        if key in result:raise ValueError(f'duplicate marker field {key}')
+        result[key]=value
+    return result
 
 def marker(event, run):
     if event['syscall']!='write' or event['paths']!=[str(run/'native-events.jsonl')]: return None
     quoted=re.match(r'\d+<[^>]+>,\s*("(?:\\.|[^"\\])*")',event['args'])
     if not quoted: raise ValueError(f'truncated marker at {event["source"]}')
-    data=json.loads(json.loads(quoted[1]))
+    payload=json.loads(quoted[1])
+    count=re.fullmatch(r',\s*(\d+)\s*',event['args'][quoted.end():])
+    length=len(payload.encode('utf-8'))
+    if not count or int(count[1])!=length or event.get('return_value')!=length:
+        raise ValueError(f'incomplete or failed marker write at {event["source"]}')
+    data=json.loads(payload,object_pairs_hook=unique_json_object)
+    if not isinstance(data,dict):raise ValueError('marker must be an object')
+    integers=('csp','tid','request','operation','pointer','status')
+    if any(type(data.get(key)) is not int for key in integers):
+        raise ValueError(f'invalid marker integer field at {event["source"]}')
+    if any(not 0<=data[key]<2**64 for key in ('request','operation','pointer')) or data['tid']<=0:
+        raise ValueError(f'invalid marker identity range at {event["source"]}')
+    if not isinstance(data.get('kind'),str) or data['kind'] not in MARKER_KINDS:
+        raise ValueError(f'unknown marker kind at {event["source"]}')
     if data.get('csp')!=1 or data.get('tid')!=event['tid']:
         raise ValueError(f'invalid marker at {event["source"]}')
     return data
@@ -29,12 +50,35 @@ def close_range_has_flag(args,flag):
     match=re.match(r'\s*\d+\s*,\s*\d+\s*,\s*(0x[0-9a-fA-F]+|\d+)',args)
     return bool(match and int(match[1],0)&{'CLOSE_RANGE_CLOEXEC':4,'CLOSE_RANGE_UNSHARE':2}[flag])
 
+def load_request_mapping(path):
+    records=[]
+    seen=set()
+    for line in path.read_text().splitlines():
+        record=json.loads(line,object_pairs_hook=unique_json_object)
+        if not isinstance(record,dict):raise ValueError('request mapping must be an object')
+        context=record.get('context')
+        if type(context) is not int or not 0<context<2**64 or context in seen:
+            raise ValueError('invalid or duplicate context identity')
+        kind=record.get('kind','request')
+        if kind=='join':
+            parents=record.get('parents')
+            if not isinstance(parents,list) or not parents or any(type(parent) is not int or parent not in seen for parent in parents):
+                raise ValueError('invalid or unobserved join parent')
+            if len(parents)!=len(set(parents)):raise ValueError('duplicate join parent')
+        elif kind!='request':raise ValueError('unknown mapping kind')
+        seen.add(context)
+        records.append(record)
+    return records
+
+
 def _attribute(run):
     events,quality=parse_traces(run/'traces')
-    raw_mapping=list(map(json.loads,(run/'request-map.jsonl').read_text().splitlines()))
+    raw_mapping=load_request_mapping(run/'request-map.jsonl')
     mapping={r['context']:r for r in raw_mapping}
     state={}
     operations={}
+    ipc_jobs={}
+    ipc_active={}
     inherited={}
     active_work=defaultdict(list)
     runtime_spans={}
@@ -100,7 +144,44 @@ def _attribute(run):
             seen[tid].append(note)
             kind=note['kind']; op=note['operation']; req=note['request']
             if req and req not in mapping: errors.append(f'unknown request context {req}')
-            if kind=='SUBMIT':
+            if kind=='IPC_SEND':
+                job=note.get('job')
+                sender=state.get(tid,inherited.get(event['pid'],{}))
+                if sender.get('request')!=req:
+                    errors.append(f'IPC sender context mismatch for {job}')
+                if not isinstance(job,str) or not job or job in ipc_jobs:
+                    errors.append(f'invalid or duplicate IPC job {job}')
+                else:
+                    ipc_jobs[job]=dict(request=req,started=False,finished=False,sender_pid=event['pid'],sender_tid=tid)
+                    graph.append(dict(type='node',id=f'ipc:{job}',kind='ipc_job',request_context=req,sender_pid=event['pid'],sender_tid=tid,send_evidence=event['source']))
+                    if req:
+                        parent=f'ipc:{sender["ipc_job"]}' if sender.get('origin')=='ipc_worker' else context_node(req)
+                        graph.append(dict(type='edge',source=parent,target=f'ipc:{job}',kind='ipc_sent',evidence=event['source']))
+            elif kind=='IPC_CANCEL':
+                job=note.get('job');work=ipc_jobs.get(job)
+                if not work or work['started'] or work['finished'] or work['request']!=req:
+                    errors.append(f'invalid IPC cancellation {job}')
+                else:
+                    work.update(finished=True,cancelled=True)
+                    graph.append(dict(type='node',id=f'ipc_cancel:{job}',kind='ipc_cancellation',tid=tid,evidence=event['source']))
+                    graph.append(dict(type='edge',source=f'ipc:{job}',target=f'ipc_cancel:{job}',kind='cancelled_before_execution'))
+            elif kind=='IPC_ENTER':
+                job=note.get('job');work=ipc_jobs.get(job)
+                if not work or work['started'] or work['finished'] or work['request']!=req or tid in ipc_active:
+                    errors.append(f'invalid IPC entry {job}')
+                else:
+                    work.update(started=True,worker_tid=tid)
+                    ipc_active[tid]=job
+                state[tid]=dict(request=req,operation=0,origin='ipc_worker',ipc_job=job,marker_source=event['source'])
+            elif kind=='IPC_LEAVE':
+                job=note.get('job');work=ipc_jobs.get(job)
+                if not work or ipc_active.get(tid)!=job or state.get(tid,{}).get('request')!=req:
+                    errors.append(f'invalid IPC leave {job}')
+                else:
+                    work['finished']=True
+                    del ipc_active[tid]
+                state[tid]=dict(request=0,operation=0,origin='async_context',marker_source=event['source'])
+            elif kind=='SUBMIT':
                 if op in operations: errors.append(f'duplicate operation {op}')
                 operations[op]=dict(request=req,started=False,finished=False,completed=False,worker_tid=None)
                 unit=note.get('unit','libuv_work')
@@ -133,6 +214,7 @@ def _attribute(run):
             elif kind in {'INVARIANT_FAILURE','DUPLICATE_WORK'}:
                 errors.append(kind)
             if kind in TRANSITIONS:
+                if tid in ipc_active:errors.append(f'context transition inside IPC job {ipc_active[tid]}')
                 state[tid]=dict(request=req,operation=op,origin='worker' if kind=='WORK_ENTER' else
                                'completion' if kind=='DONE_ENTER' else 'async_context',marker_source=event['source'])
             continue
@@ -251,14 +333,15 @@ def _attribute(run):
             inherited[child]=dict(request=context.get('request',0),operation=0,origin='process_inheritance',marker_source=event['source'])
             graph.append(dict(type='node',id=f'process:{child}',kind='child_process',pid=child))
             if context.get('request'):
-                graph.append(dict(type='edge',source=context_node(context['request']),target=f'process:{child}',kind='spawned',evidence=event['source']))
+                spawn_parent=f'ipc:{context["ipc_job"]}' if context.get('origin')=='ipc_worker' else f'process:{event["pid"]}' if context.get('origin')=='process_inheritance' else f'work:{context["operation"]}' if context.get('operation') else context_node(context['request'])
+                graph.append(dict(type='edge',source=spawn_parent,target=f'process:{child}',kind='spawned',evidence=event['source']))
         request=request or context.get('request',0)
         request_ids=[roots[parent]['rpc_id'] for parent in sorted(owners.get(request,set()))]
         candidate_ids=[]
         if socket_state and len(socket_state['requests'])>1 and not context.get('request'):
             candidate_ids=[roots[parent]['rpc_id'] for parent in sorted(socket_state['requests'])]
         row=dict(**event,context=request,request_ids=request_ids,request_id=request_ids[0] if len(request_ids)==1 else None,
-                 operation=context.get('operation',0),origin=context.get('origin','unobserved'),
+                 ipc_job=context.get('ipc_job'),operation=context.get('operation',0),origin=context.get('origin','unobserved'),
                  context_evidence=context.get('marker_source'),
                  connection_id=socket_state['id'] if socket_state else None,
                  candidate_request_ids=candidate_ids,
@@ -270,7 +353,7 @@ def _attribute(run):
                               pid=event['pid'],tid=tid,syscall=event['syscall'],paths=event['paths'],
                               return_value=event['return_value']))
             if request and event_id not in executed_syscalls:
-                parent=f'process:{event["pid"]}' if row['origin']=='process_inheritance' else f'work:{row["operation"]}' if row['operation'] else context_node(request)
+                parent=f'ipc:{row["ipc_job"]}' if row['origin']=='ipc_worker' else f'process:{event["pid"]}' if row['origin']=='process_inheritance' else f'work:{row["operation"]}' if row['operation'] else context_node(request)
                 graph.append(dict(type='edge',source=parent,target=event_id,kind='executed',
                                   evidence=row['context_evidence']))
                 executed_syscalls.add(event_id)
@@ -282,7 +365,9 @@ def _attribute(run):
         connection_id=row.get('connection_id')
         if not connection_id or row['syscall'] not in {'read','readv','recvfrom','recvmsg'}:
             continue
-        if row['context'] or row['attribution'] not in {'no_request_context','unknown'}:
+        if row['context'] and row['origin']!='socket_lifecycle':
+            continue
+        if row['attribution'] not in {'no_request_context','unknown','ambiguous_resource'} and row['origin']!='socket_lifecycle':
             continue
         connection=connections_by_id.get(connection_id)
         request_contexts=sorted(connection['requests']) if connection else []
@@ -298,10 +383,15 @@ def _attribute(run):
             row['request_id']=request_ids[0]
             row['attribution']='bound'
         else:
+            row['context']=0
             row['request_ids']=[]
             row['request_id']=None
             row['candidate_request_ids']=request_ids
             row['attribution']='ambiguous_resource'
+    lifecycle_events={'syscall:'+row['source'] for row in tagged if row['origin']=='socket_lifecycle'}
+    # Socket-effect edges retain ownership evidence; discard any earlier singleton
+    # execution edge that a later shared owner has made unjustified.
+    graph=[record for record in graph if not (record.get('kind')=='executed' and record.get('target') in lifecycle_events)]
     for row in tagged:
         if row.get('connection_id'):
             row['connection_id']=session_id+':'+row['connection_id']
@@ -315,6 +405,7 @@ def _attribute(run):
     for op,work in operations.items():
         if work.get('status')==0 and not (work['started'] and work['finished']):errors.append(f'operation {op} completed without observed execution bracket')
         if work.get('status')==-125 and work['started']:errors.append(f'cancelled operation {op} was executed')
+    if ipc_active or any(not job['finished'] for job in ipc_jobs.values()):errors.append('unfinished IPC jobs')
     if any(active_work.values()):errors.append('unclosed worker execution context')
     unfinished=[op for op,w in operations.items() if not w['completed']]
     if unfinished: errors.append(f'{len(unfinished)} operations lack completion')
@@ -335,7 +426,7 @@ def _attribute(run):
     report=dict(valid=not errors,errors=errors,attribution_model='causal-context-v2',requests=len(roots),joins=len(mapping)-len(roots),operations=len(operations),
                 operations_started=sum(w['started'] for w in operations.values()),
                 operations_cancelled=sum(w.get('status')==-125 for w in operations.values()),
-                inherited_processes=len(inherited),runtime_spans=len(runtime_spans),
+                ipc_jobs=len(ipc_jobs),ipc_cancelled=sum(w.get('cancelled',False) for w in ipc_jobs.values()),inherited_processes=len(inherited),runtime_spans=len(runtime_spans),
                 retroactive_socket_reads=retroactive,
                 migrating_request_spans=sum(req!=0 and len(tids)>1 for (req,span),tids in span_threads.items()),
                 markers=sum(map(len,seen.values())),parser=quality,
@@ -357,7 +448,7 @@ def _attribute(run):
                 resources[path]=rid
                 graph.append(dict(type='node',id=rid,kind='observed_resource',name=path,identity='pathname_or_fd_annotation'))
             syscall=node['syscall'];success=node['return_value'] is not None and node['return_value']>=0
-            kind='read_from' if syscall in {'read','pread64','readv'} and success else 'wrote_to' if syscall in {'write','pwrite64','writev'} and success else 'referenced' if success else 'attempted_access'
+            kind='read_from' if syscall in {'read','pread64','readv','recvfrom','recvmsg'} and success else 'wrote_to' if syscall in {'write','pwrite64','writev','sendto','sendmsg'} and success else 'referenced' if success else 'attempted_access'
             graph.append(dict(type='edge',source=node['id'],target=rid,kind=kind,semantics='resource_observation_not_data_dependency'))
     for record in graph:
         for field in ['id','source','target']:

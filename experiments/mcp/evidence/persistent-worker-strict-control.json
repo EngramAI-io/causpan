@@ -1,0 +1,572 @@
+{
+  "description": "Same analyzer invariant for both workloads: every recorded IPC entry must exactly match sent context. Negative control sends no context or job and emits no IPC lifecycle markers.",
+  "runs": [
+    {
+      "source_run": "results/mcp/worker-unscoped-no-handoff",
+      "manifest": {
+        "session_id": "5fb4a0e4077a445a973bc77e8449fa34",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": true,
+        "code_sha256": {
+          "analyze.py": "b1d483d9bb8dde5fd9f96225f12af811e02b4daed2677b6e63d6a5a539d895d9",
+          "attribute.py": "4e08b358a4ee02ba2b7c0fa5f7a508e95eede1471c76c548b1c5e8712b2bd6a2",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "persistent_worker.py": "fcf03fe37a1585e2196e955ec0179961585454264a91fbd0d0a89dda2f8ac2a0",
+          "proxy.py": "8685fb1d0118e8a3e48eb45b50d3c0f1c5b6386348ec40879027230a52dd9dfe",
+          "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "4c6b03f61a18ba05d7891a6ddfd4421acf3c34a4038fb3e1c0e7e24650c9ddf5",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "44a6667d0c4e628ed4107604bce7e3840cb2dbbf187dceadb8c81d329b36211e",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "test_analyze.py": "1c5e488714cab3e788342c1ad3177a09729d18b4d20295944f8c7820d6864fb7",
+          "test_attribute.py": "85ddc4ee2461aa6dd5c9e7134ad554128a220b867354e09a90bdb5dcb62a6946",
+          "test_ipc.py": "f327065f0258cc154456d674b397dc6d7aba33455684f02b947483f816b939b0",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+          "control-server.mjs": "675c1bd39d1fde9cf98330f1b3b8c16072bfdbc708196d5943f1e77f8ff0ab7b",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 16,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "worker-unscoped",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "failed",
+        "execution_seconds": 2.606465131044388,
+        "error": "Command '['/usr/bin/python3.11', '/u/kdhande/causpan/experiments/mcp/score_control.py', '/u/kdhande/causpan/results/mcp/worker-unscoped-no-handoff']' returned non-zero exit status 1."
+      },
+      "causal_report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 33,
+        "joins": 0,
+        "operations": 40,
+        "operations_started": 40,
+        "operations_cancelled": 0,
+        "ipc_jobs": 0,
+        "inherited_processes": 1,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 1800,
+        "parser": {
+          "lifecycle_lines": 32,
+          "parsed": 6392
+        },
+        "all_event_status": {
+          "unknown": 2572,
+          "no_request_context": 1916,
+          "bound": 66
+        },
+        "fixture_score": {
+          "events": 106,
+          "no_request_context": 106
+        },
+        "fixture_events_per_request": {},
+        "analysis_id": "e8eceb1fe9e24b8789268e249af7d48a",
+        "output_sha256": {
+          "causal-attribution.jsonl": "10ed29af44409d05a030adc44ce795e23363ada86395e76bc65cdd3913f620bf",
+          "provenance.jsonl": "e10fb18ca2d75d83a4574cd8054b3248d07c8ec6f2ea20c511991c86ab458ea8"
+        }
+      },
+      "control_score": {
+        "valid": false,
+        "counts": {
+          "background": 38,
+          "correct": 38,
+          "request_events": 64,
+          "wrong": 64,
+          "after_response": 0
+        },
+        "mismatches": [
+          {
+            "source": "strace.2069964:4",
+            "expected": 3,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:5",
+            "expected": 3,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:4",
+            "expected": 4,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:5",
+            "expected": 4,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:9",
+            "expected": 5,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:10",
+            "expected": 5,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:4",
+            "expected": 6,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:4",
+            "expected": 8,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:5",
+            "expected": 6,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:14",
+            "expected": 9,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:5",
+            "expected": 8,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:9",
+            "expected": 7,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:15",
+            "expected": 9,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:10",
+            "expected": 7,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:9",
+            "expected": 10,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:10",
+            "expected": 10,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:9",
+            "expected": 11,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:14",
+            "expected": 13,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:19",
+            "expected": 12,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:10",
+            "expected": 11,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:15",
+            "expected": 13,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:20",
+            "expected": 12,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:14",
+            "expected": 14,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:15",
+            "expected": 14,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:14",
+            "expected": 15,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:15",
+            "expected": 15,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:19",
+            "expected": 18,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:19",
+            "expected": 16,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:20",
+            "expected": 18,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:20",
+            "expected": 16,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:24",
+            "expected": 17,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:25",
+            "expected": 17,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:19",
+            "expected": 19,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:20",
+            "expected": 19,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:24",
+            "expected": 20,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:25",
+            "expected": 20,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:24",
+            "expected": 21,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:25",
+            "expected": 21,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:24",
+            "expected": 23,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:29",
+            "expected": 22,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:25",
+            "expected": 23,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:29",
+            "expected": 24,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:30",
+            "expected": 24,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:30",
+            "expected": 22,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:29",
+            "expected": 25,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:30",
+            "expected": 25,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:29",
+            "expected": 26,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:34",
+            "expected": 28,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:30",
+            "expected": 26,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:34",
+            "expected": 27,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:35",
+            "expected": 28,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:34",
+            "expected": 29,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:35",
+            "expected": 27,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:35",
+            "expected": 29,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:34",
+            "expected": 30,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:35",
+            "expected": 30,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:39",
+            "expected": 31,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:39",
+            "expected": 33,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:39",
+            "expected": 32,
+            "actual": []
+          },
+          {
+            "source": "strace.2069964:40",
+            "expected": 31,
+            "actual": []
+          },
+          {
+            "source": "strace.2069965:40",
+            "expected": 33,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:39",
+            "expected": 34,
+            "actual": []
+          },
+          {
+            "source": "strace.2069966:40",
+            "expected": 32,
+            "actual": []
+          },
+          {
+            "source": "strace.2069968:40",
+            "expected": 34,
+            "actual": []
+          }
+        ],
+        "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+      }
+    },
+    {
+      "source_run": "results/mcp/worker-context-strict-handoff",
+      "manifest": {
+        "session_id": "7f08a82d33ab4520a588f74ccc697f3a",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": true,
+        "code_sha256": {
+          "analyze.py": "b1d483d9bb8dde5fd9f96225f12af811e02b4daed2677b6e63d6a5a539d895d9",
+          "attribute.py": "4e08b358a4ee02ba2b7c0fa5f7a508e95eede1471c76c548b1c5e8712b2bd6a2",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "persistent_worker.py": "fcf03fe37a1585e2196e955ec0179961585454264a91fbd0d0a89dda2f8ac2a0",
+          "proxy.py": "8685fb1d0118e8a3e48eb45b50d3c0f1c5b6386348ec40879027230a52dd9dfe",
+          "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "4c6b03f61a18ba05d7891a6ddfd4421acf3c34a4038fb3e1c0e7e24650c9ddf5",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "44a6667d0c4e628ed4107604bce7e3840cb2dbbf187dceadb8c81d329b36211e",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "test_analyze.py": "1c5e488714cab3e788342c1ad3177a09729d18b4d20295944f8c7820d6864fb7",
+          "test_attribute.py": "85ddc4ee2461aa6dd5c9e7134ad554128a220b867354e09a90bdb5dcb62a6946",
+          "test_ipc.py": "f327065f0258cc154456d674b397dc6d7aba33455684f02b947483f816b939b0",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+          "control-server.mjs": "675c1bd39d1fde9cf98330f1b3b8c16072bfdbc708196d5943f1e77f8ff0ab7b",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 16,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "worker-context",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "complete",
+        "execution_seconds": 2.428924910025671
+      },
+      "causal_report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 33,
+        "joins": 0,
+        "operations": 33,
+        "operations_started": 33,
+        "operations_cancelled": 0,
+        "ipc_jobs": 32,
+        "inherited_processes": 1,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 1815,
+        "parser": {
+          "lifecycle_lines": 32,
+          "parsed": 6357
+        },
+        "all_event_status": {
+          "unknown": 2572,
+          "no_request_context": 1802,
+          "bound": 130
+        },
+        "fixture_score": {
+          "events": 99,
+          "no_request_context": 35,
+          "bound": 64
+        },
+        "fixture_events_per_request": {
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "8": 2,
+          "7": 2,
+          "9": 2,
+          "10": 2,
+          "11": 2,
+          "13": 2,
+          "12": 2,
+          "14": 2,
+          "15": 2,
+          "16": 2,
+          "17": 2,
+          "18": 2,
+          "19": 2,
+          "20": 2,
+          "21": 2,
+          "23": 2,
+          "22": 2,
+          "24": 2,
+          "25": 2,
+          "26": 2,
+          "28": 2,
+          "27": 2,
+          "29": 2,
+          "30": 2,
+          "31": 2,
+          "33": 2,
+          "32": 2,
+          "34": 2
+        },
+        "analysis_id": "71cb537687ea4c0cb4d8d555b6199d45",
+        "output_sha256": {
+          "causal-attribution.jsonl": "85d8a7019faa1f75bf31df302cc780460d90902d1c07c8c9b9e43e231cbddc0b",
+          "provenance.jsonl": "d9b8408946b6f76192dfc761128a73037a88271419b08cfffbc0f130bf729d0f"
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 31,
+          "correct": 95,
+          "request_events": 64,
+          "after_response": 0
+        },
+        "mismatches": [],
+        "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+      }
+    }
+  ]
+}

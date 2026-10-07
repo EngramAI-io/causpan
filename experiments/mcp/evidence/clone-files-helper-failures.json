@@ -1,0 +1,31 @@
+{
+  "description": "Helper success and failure paths; each invocation bounded by a five-second timeout. /dev/full forces the cloned child pwrite to fail while the parent retains the shared pipe writer.",
+  "checks": [
+    {
+      "name": "success",
+      "returncode": 0,
+      "stdout": "verified clone-files slot 0; shared descriptor fd=6\n",
+      "stderr": ""
+    },
+    {
+      "name": "child_write_failure",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "child failed before reporting socket fd\n"
+    },
+    {
+      "name": "empty_slot",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "invalid slot\n"
+    },
+    {
+      "name": "overflow_slot",
+      "returncode": 2,
+      "stdout": "",
+      "stderr": "invalid slot\n"
+    }
+  ],
+  "source_sha256": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+  "binary_sha256": "4ae79d6be10b6468f9828b2dac0e2e5b8b104ff299fafc30ba11650d6480e32a"
+}

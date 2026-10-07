@@ -47,8 +47,9 @@ infer such identity from syscall timing or payload text.
   unsupported runtimes, and less common descriptor producers need explicit
   adapters or remain ambiguous/unknown. Basic socket descriptor copy/share
   semantics for process creation and `CLONE_FILES` are modeled, but the latter
-  currently has synthetic trace regression coverage rather than a live MCP
-  workload.
+  has both synthetic regressions and a live MCP workload with a separate helper
+  per request. A persistent Python worker also has a tested explicit context adapter;
+  arbitrary worker protocols and IPC message provenance remain unsupported.
 
 These boundaries define the next experiments: compare a kernel provenance
 collector with the same request-level fixtures, test application-context handoff

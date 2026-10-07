@@ -10,7 +10,7 @@ import re
 
 LINE = re.compile(r'^(\d+\.\d+)\s+(.*)$')
 CALL = re.compile(r'^(\w+)\((.*)\)\s+=\s+(0x[0-9a-f]+|-?\d+|\?)(.*)$')
-FD_OPS = {'read','write','readv','writev','pread64','pwrite64','close','fstat','fchmod','fchown','ftruncate','fsync','fdatasync','getdents64','fcntl','dup','dup3'}
+FD_OPS = {'read','write','readv','writev','pread64','pwrite64','close','fstat','fchmod','fchown','ftruncate','fsync','fdatasync','getdents64','fcntl','dup','dup2','dup3','recvfrom','recvmsg','sendto','sendmsg'}
 PATH_OPS = {'openat','open','stat','lstat','newfstatat','statx','access','faccessat',
             'faccessat2','chmod','fchmodat','fchownat','mkdir','mkdirat','rmdir','link','linkat','symlink','symlinkat','utimensat','readlink','readlinkat','rename','renameat','renameat2','unlink','unlinkat'}
 CLONE_FLAG_BITS={'CLONE_FILES':0x400,'CLONE_THREAD':0x10000}
@@ -62,7 +62,7 @@ def parse_traces(directory):
             # Only path arguments and FD annotations, never paths embedded in read/write payloads.
             paths = []
             if name in FD_OPS:
-                fd = re.match(r'\d+<([^>]+)>', args)
+                fd = re.match(r'\d+<((?:[A-Za-z0-9_-]+|\(null\)):\[.*?\]|[^>]+)>', args)
                 if fd: paths.append(fd[1])
             elif name in PATH_OPS:
                 paths = re.findall(r'"([^"\\]*)"', args)

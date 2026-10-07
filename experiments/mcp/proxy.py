@@ -43,6 +43,7 @@ async def main():
                                                 env={**os.environ,'CAUSPAN_RUN':str(run),'CAUSPAN_INSTRUMENTED':'1' if settings.get('instrumented') else '0',
                                                      'UV_THREADPOOL_SIZE':str(settings.get('pool_size',4)),
                                                      'CAUSPAN_SCENARIO':settings.get('scenario','read'),
+                                                     'CAUSPAN_CLONE_FILES_BIN':settings.get('clone_files_binary',''),
                                                      'CAUSPAN_NETWORK_PORT':str(network_fixture.get('port','')),
                                                      'CAUSPAN_INBOUND_PORT':str(network_fixture.get('port',''))})
     loop = asyncio.get_running_loop()

@@ -124,7 +124,7 @@ class AttributionTests(unittest.TestCase):
                 stream.write(json.dumps({'kind':'request','context':2,'rpc_id':'second','tool':'test'})+'\n')
             report=self.invoke(run)
             self.assertTrue(report['valid'],report['errors'])
-            self.assertEqual(report['retroactive_socket_reads'],1)
+            self.assertEqual(report['retroactive_socket_reads'],4)
             rows=list(map(json.loads,(run/'causal-attribution.jsonl').read_text().splitlines()))
             read=next(row for row in rows if row['syscall']=='read' and 'reply-token' in row['args'])
             self.assertEqual(read['request_ids'],['opaque-id'])
@@ -133,7 +133,8 @@ class AttributionTests(unittest.TestCase):
             duplicate=next(row for row in rows if row['syscall']=='fcntl')
             self.assertEqual(duplicate['connection_id'],read['connection_id'])
             later=next(row for row in rows if row['syscall']=='read' and 'later-token' in row['args'])
-            self.assertEqual(later['request_ids'],['opaque-id'])
+            self.assertEqual(later['request_ids'],[])
+            self.assertEqual(later['candidate_request_ids'],['opaque-id','second'])
             ambiguous=next(row for row in rows if row['syscall']=='read' and 'ambiguous-token' in row['args'])
             self.assertEqual(ambiguous['request_ids'],[])
             self.assertEqual(ambiguous['candidate_request_ids'],['opaque-id','second'])
@@ -168,7 +169,7 @@ class AttributionTests(unittest.TestCase):
             with (run/'request-map.jsonl').open('a') as stream:
                 stream.write(json.dumps({'kind':'request','context':2,'rpc_id':'second','tool':'test'})+'\n')
             report=self.invoke(run)
-            self.assertEqual(report['retroactive_socket_reads'],1)
+            self.assertEqual(report['retroactive_socket_reads'],4)
             rows=list(map(json.loads,(run/'causal-attribution.jsonl').read_text().splitlines()))
             read=next(row for row in rows if row['syscall']=='read' and 'response-token' in row['args'])
             self.assertEqual(read['request_ids'],[])
@@ -292,7 +293,10 @@ class AttributionTests(unittest.TestCase):
             run=Path(d);self.fixture(run)
             with (run/'request-map.jsonl').open('a') as stream:
                 stream.write(json.dumps({'kind':'join','context':2,'parents':[999]})+'\n')
-            with self.assertRaises(RuntimeError):self.invoke(run)
+            with self.assertRaisesRegex(ValueError,"unobserved join parent"):self.invoke(run)
+            self.assertFalse(json.loads((run/'causal-report.json').read_text())['valid'])
+            self.assertEqual((run/'provenance.jsonl').read_text(),'')
+
     def test_missing_trace_marker_invalidates_entire_capture(self):
         with tempfile.TemporaryDirectory() as d:
             run=Path(d);self.fixture(run,drop='WORK_ENTER')

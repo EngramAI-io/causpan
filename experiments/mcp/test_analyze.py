@@ -15,6 +15,28 @@ class CloneFlagTests(unittest.TestCase):
         self.assertTrue(clone_has_flag('{flags=CLONE_FILES, exit_signal=SIGCHLD}', 'CLONE_FILES'))
 
 class TraceTests(unittest.TestCase):
+    def test_socket_endpoint_arrows_are_not_annotation_terminators(self):
+        with tempfile.TemporaryDirectory() as directory:
+            d=Path(directory)
+            endpoint='TCP:[127.0.0.1:1234->127.0.0.1:5678]'
+            (d/'strace.100').write_text(
+                f'1.000001 read(4<{endpoint}>, "payload > /tmp/not-a-path", 64) = 23\n'
+                '1.000002 read(5<TCPv6:[[::1]:1234->[::1]:5678]>, "x", 1) = 1\n')
+            events,quality=parse_traces(d)
+            self.assertEqual(events[0]['paths'],[endpoint])
+            self.assertEqual(events[1]['paths'],['TCPv6:[[::1]:1234->[::1]:5678]'])
+
+    def test_message_syscalls_keep_fd_annotation_not_payload_path(self):
+        with tempfile.TemporaryDirectory() as directory:
+            d=Path(directory)
+            calls=['sendto','recvfrom','sendmsg','recvmsg']
+            (d/'strace.100').write_text(''.join(
+                f'1.00000{i} {call}(3<(null):[11->12]>, "payload /tmp/not-resource", 64, 0) = 25\n'
+                for i,call in enumerate(calls,1)))
+            events,_=parse_traces(d)
+            self.assertEqual(len(events),4)
+            self.assertTrue(all(e['paths']==['(null):[11->12]'] for e in events))
+
     def test_threads_children_resumed_and_payload_paths(self):
         with tempfile.TemporaryDirectory() as directory:
             d = Path(directory)

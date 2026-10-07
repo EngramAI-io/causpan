@@ -17,6 +17,7 @@ HERE = Path(__file__).resolve().parent
 
 async def replay(run, concurrency, shared, scenario="read", batches=4, string_ids=False, spoof_context=False):
     echo_server=None
+    shared_peer=None
     echo_port=None
     if scenario in {'network','network-shared'}:
         async def echo(reader,writer):
@@ -58,6 +59,10 @@ async def replay(run, concurrency, shared, scenario="read", batches=4, string_id
                                       'params':params})+'\n').encode())
         await child.stdin.drain()
         result = await asyncio.wait_for(f, 60)
+        if scenario in {'worker-crash','worker-fatal','worker-relay-fatal','worker-wrong-response'} and params.get('name')=='worker_slot':
+            if not result.get('result',{}).get('isError'):
+                raise RuntimeError('crashed worker unexpectedly succeeded')
+            return result
         if 'error' in result or result.get('result', {}).get('isError'):
             raise RuntimeError(result)
         return result
@@ -72,7 +77,9 @@ async def replay(run, concurrency, shared, scenario="read", batches=4, string_id
                     'arguments':{'slot':batch*concurrency+i,'port':echo_port}}) for i in range(concurrency)))
                 continue
             if scenario=='network-inbound-shared':
-                peer_reader,writer=await asyncio.open_connection('127.0.0.1',echo_port)
+                if shared_peer is None:
+                    shared_peer=await asyncio.open_connection('127.0.0.1',echo_port)
+                peer_reader,writer=shared_peer
                 requests=[asyncio.create_task(call('tools/call',{'name':'tcp_accept','arguments':{'slot':batch*concurrency+i}}))
                           for i in range(concurrency)]
                 await asyncio.sleep(0.05)
@@ -81,7 +88,6 @@ async def replay(run, concurrency, shared, scenario="read", batches=4, string_id
                 replies=set()
                 for _ in range(concurrency):
                     replies.add(await asyncio.wait_for(peer_reader.readline(),5))
-                writer.close();await writer.wait_closed()
                 if replies!={token.encode() for token in tokens}:raise RuntimeError('inbound shared TCP response mismatch')
                 await asyncio.gather(*requests)
                 continue
@@ -119,8 +125,8 @@ async def replay(run, concurrency, shared, scenario="read", batches=4, string_id
                     if (run/'sandbox'/f'work-{batch}-{i}.txt').exists():raise RuntimeError('move_file left source behind')
                 continue
             if scenario != "read":
-                await asyncio.gather(*(call("tools/call", {"name":"spawn_slot" if scenario=="spawn" else "cancel_probe" if scenario=="cancel" else "fail_probe" if scenario=="failure" else "batch_io" if scenario in {"batch","batch-joined"} else "slot_io",
-                    "arguments":{"slot":batch*concurrency+i, **({"joined":scenario=="batch-joined",**batch_extra} if scenario in {"batch","batch-joined"} else {"cancel":bool(i%2)} if scenario=="cancel" else {} if scenario in {"spawn","failure"} else
+                await asyncio.gather(*(call("tools/call", {"name":"spawn_slot" if scenario=="spawn" else "clone_files_slot" if scenario=="clone-files" else "worker_slot" if scenario in {"worker-context","worker-unscoped","worker-failure","worker-crash","worker-cancel","worker-spawn","worker-grandchild","worker-socketpair","worker-fatal","worker-relay","worker-relay-fatal","worker-wrong-response"} else "cancel_probe" if scenario=="cancel" else "fail_probe" if scenario=="failure" else "batch_io" if scenario in {"batch","batch-joined"} else "slot_io",
+                    "arguments":{"slot":batch*concurrency+i, **({"joined":scenario=="batch-joined",**batch_extra} if scenario in {"batch","batch-joined"} else {"cancel":bool(i%2)} if scenario=="cancel" else {} if scenario in {"spawn","failure","clone-files","worker-context","worker-unscoped","worker-failure","worker-crash","worker-cancel","worker-spawn","worker-grandchild","worker-socketpair","worker-fatal","worker-relay","worker-relay-fatal","worker-wrong-response"} else
                     {"rounds":3,"delay_ms":2,"nested":scenario=="nested","detached":scenario=="detached"})}})
                     for i in range(concurrency)))
                 continue
@@ -129,6 +135,9 @@ async def replay(run, concurrency, shared, scenario="read", batches=4, string_id
                 for i in range(concurrency)))
         if scenario not in {"read","fileops"}: await call("tools/call", {"name":"barrier","arguments":{}})
     finally:
+        if shared_peer:
+            shared_peer[1].close()
+            await shared_peer[1].wait_closed()
         if echo_server:
             echo_server.close()
             await echo_server.wait_closed()
@@ -178,7 +187,7 @@ def main():
     p.add_argument('--shared', action='store_true')
     p.add_argument('--instrumented', action='store_true')
     p.add_argument('--pool-size', type=int, default=4)
-    p.add_argument('--scenario',choices=['read','fileops','slots','nested','detached','spawn','cancel','failure','batch','batch-joined','network','network-shared','network-inbound','network-inbound-shared'],default='read')
+    p.add_argument('--scenario',choices=['read','fileops','slots','nested','detached','spawn','clone-files','worker-context','worker-unscoped','worker-failure','worker-crash','worker-cancel','worker-spawn','worker-grandchild','worker-socketpair','worker-fatal','worker-relay','worker-relay-fatal','worker-wrong-response','cancel','failure','batch','batch-joined','network','network-shared','network-inbound','network-inbound-shared'],default='read')
     p.add_argument('--batches',type=int,default=4)
     p.add_argument('--seccomp',action='store_true',help='Use strace seccomp filtering to reduce ptrace stops')
     p.add_argument('--string-ids',action='store_true')
@@ -192,8 +201,9 @@ def main():
     if args.runtime=='tokio' and args.scenario not in {'read','slots','nested','detached','spawn','cancel','failure','batch','batch-joined'}:p.error('Tokio does not yet support this scenario')
     if args.mode=='agent' and (args.scenario!='read' or args.batches<2):p.error('agent mode requires read scenario and at least two fixture batches')
     if args.scenario in {'cancel','failure'} and not args.instrumented:p.error('cancel scenario requires --instrumented')
+    if args.scenario in {'clone-files','worker-context','worker-unscoped','worker-failure','worker-crash','worker-cancel','worker-spawn','worker-grandchild','worker-socketpair','worker-fatal','worker-relay','worker-relay-fatal','worker-wrong-response'} and (args.runtime!='node' or not args.instrumented):p.error('clone-files and worker scenarios require the instrumented Node runtime')
     if args.instrumented and args.runtime=='node' and not (HERE/'native/context.node').exists():p.error('build addon first: python3.11 experiments/mcp/native/build.py')
-    for exe in ['strace'] + (['node'] if args.runtime=='node' else ['rustc']) + (['codex'] if args.mode == 'agent' else []):
+    for exe in ['strace'] + (['node'] if args.runtime=='node' else ['rustc']) + (['gcc'] if args.scenario=='clone-files' else []) + (['codex'] if args.mode == 'agent' else []):
         if not shutil.which(exe): p.error(f'missing {exe}')
     if args.runtime=='node' and not (HERE / 'node_modules').exists(): p.error('run npm ci --prefix experiments/mcp')
     tokio_binary=(args.tokio_binary or HERE.parent.parent/'target/tokio-provenance/debug/causpan-tokio-server').resolve()
@@ -212,11 +222,12 @@ def main():
            f'{time.time_ns()}-{args.mode}-c{args.concurrency}').resolve()
     run.mkdir(parents=True, exist_ok=False)
     session_id=uuid.uuid4().hex
-    (run/'run-config.json').write_text(json.dumps({'session_id':session_id,'runtime':args.runtime,'tokio_binary':str(tokio_binary),'tokio_binary_sha256':tokio_digest,'runtime_workers':args.runtime_workers,'instrumented':args.instrumented,'pool_size':args.pool_size,'scenario':args.scenario,'capture':args.capture,'seccomp':args.seccomp}))
+    helper_binary=run/'clone_files_probe'
+    (run/'run-config.json').write_text(json.dumps({'session_id':session_id,'runtime':args.runtime,'tokio_binary':str(tokio_binary),'tokio_binary_sha256':tokio_digest,'clone_files_binary':str(helper_binary),'runtime_workers':args.runtime_workers,'instrumented':args.instrumented,'pool_size':args.pool_size,'scenario':args.scenario,'capture':args.capture,'seccomp':args.seccomp}))
     snapshot=run/'code';snapshot.mkdir()
     if build_provenance is not None:
         (snapshot/'tokio-build.json').write_text(json.dumps(build_provenance,indent=2)+'\n')
-    sources=[*HERE.glob('*.py'),*HERE.glob('*.mjs'),HERE/'native/context.cc',HERE/'native/build.py',HERE/'native/build.json',HERE/'package-lock.json']
+    sources=[*HERE.glob('*.py'),*HERE.glob('*.mjs'),HERE/'clone_files_probe.c',HERE/'native/context.cc',HERE/'native/build.py',HERE/'native/build.json',HERE/'package-lock.json']
     hashes={}
     for source in sources:
         if source.exists():
@@ -243,7 +254,7 @@ def main():
     (sandbox / 'shared.txt').write_text('shared fixture\n' * 512)
     (sandbox/'link.txt').symlink_to('shared.txt')
     versions = {x:subprocess.check_output([x,'--version'], text=True).splitlines()[0]
-                for x in (['node','strace'] if args.runtime=='node' else ['rustc','strace']) + (['codex'] if args.mode == 'agent' else [])}
+                for x in (['node','strace'] if args.runtime=='node' else ['rustc','strace']) + (['gcc'] if args.scenario=='clone-files' else []) + (['codex'] if args.mode == 'agent' else [])}
     manifest = dict(session_id=session_id,runtime=args.runtime,runtime_workers=args.runtime_workers,capture=args.capture,seccomp=args.seccomp,code_sha256=hashes,mode=args.mode, concurrency=args.concurrency, shared=args.shared,
                     instrumented=args.instrumented,pool_size=args.pool_size,string_ids=args.string_ids,spoof_context=args.spoof_context,scenario=args.scenario,batches=args.batches,
                     model=args.model, platform=platform.platform(), versions=versions,
@@ -252,6 +263,9 @@ def main():
     print(f'Run: {run}', flush=True)
     started=time.monotonic()
     try:
+        if args.scenario=='clone-files':
+            subprocess.run(['gcc','-Wall','-Wextra','-O2',str(HERE/'clone_files_probe.c'),'-o',str(helper_binary)],check=True)
+            manifest['clone_files_probe_sha256']=hashlib.sha256(helper_binary.read_bytes()).hexdigest()
         if args.mode == 'replay':
             asyncio.run(replay(run, args.concurrency, args.shared,args.scenario,args.batches,args.string_ids,args.spoof_context))
         else:

@@ -1,0 +1,52 @@
+{
+  "source_run": "results/mcp/worker-cancel-c32",
+  "cancelled_request_chains_checked": 32,
+  "example": {
+    "events": [],
+    "provenance": [
+      {
+        "type": "node",
+        "id": "410ee389698f455ea83fd318704e5fcb:request:2",
+        "kind": "mcp_request",
+        "context": 2,
+        "rpc_id": 4,
+        "method": "tools/call",
+        "tool": "worker_slot",
+        "session_id": "410ee389698f455ea83fd318704e5fcb"
+      },
+      {
+        "type": "node",
+        "id": "410ee389698f455ea83fd318704e5fcb:ipc:2ec9739e-b4f4-4f3b-ba90-fe6015df3314/2",
+        "kind": "ipc_job",
+        "request_context": 2,
+        "sender_pid": 2123291,
+        "sender_tid": 2123291,
+        "send_evidence": "strace.2123291:3006",
+        "session_id": "410ee389698f455ea83fd318704e5fcb"
+      },
+      {
+        "type": "edge",
+        "source": "410ee389698f455ea83fd318704e5fcb:request:2",
+        "target": "410ee389698f455ea83fd318704e5fcb:ipc:2ec9739e-b4f4-4f3b-ba90-fe6015df3314/2",
+        "kind": "ipc_sent",
+        "evidence": "strace.2123291:3006",
+        "session_id": "410ee389698f455ea83fd318704e5fcb"
+      },
+      {
+        "type": "node",
+        "id": "410ee389698f455ea83fd318704e5fcb:ipc_cancel:2ec9739e-b4f4-4f3b-ba90-fe6015df3314/2",
+        "kind": "ipc_cancellation",
+        "tid": 2123378,
+        "evidence": "strace.2123378:1473",
+        "session_id": "410ee389698f455ea83fd318704e5fcb"
+      },
+      {
+        "type": "edge",
+        "source": "410ee389698f455ea83fd318704e5fcb:ipc:2ec9739e-b4f4-4f3b-ba90-fe6015df3314/2",
+        "target": "410ee389698f455ea83fd318704e5fcb:ipc_cancel:2ec9739e-b4f4-4f3b-ba90-fe6015df3314/2",
+        "kind": "cancelled_before_execution",
+        "session_id": "410ee389698f455ea83fd318704e5fcb"
+      }
+    ]
+  }
+}

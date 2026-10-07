@@ -1,0 +1,843 @@
+{
+  "description": "One child started before MCP calls; four reused Python threads. Trusted context adapter passes internal context separately from oracle slot over stdin, installs/restores markers on execution TID. Unscoped comparison intentionally fails exact-attribution oracle, while capture remains valid.",
+  "runs": [
+    {
+      "source_run": "results/mcp/worker-unscoped-c16",
+      "manifest": {
+        "session_id": "b37d8ce48f3f425998cc27a2425ff060",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": true,
+        "code_sha256": {
+          "analyze.py": "b1d483d9bb8dde5fd9f96225f12af811e02b4daed2677b6e63d6a5a539d895d9",
+          "attribute.py": "1176b8a5e51cc8635fc4edcc910007bfe292114a16a4f9fa2e725313bd6469d8",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "persistent_worker.py": "ce3144aeebc4744a3bc2d5221412f4d91ef11a27f7d4c434394036cc24daa883",
+          "proxy.py": "8685fb1d0118e8a3e48eb45b50d3c0f1c5b6386348ec40879027230a52dd9dfe",
+          "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "62889c7eadd31b663fa31eb0a63a2b40de0e80ab3bfb8cb9337bef2213e1ab87",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "4f967c9c92270b866b6b80c214ccb1604f1acab272cc786ef618d8ab895ea3f1",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "test_analyze.py": "1c5e488714cab3e788342c1ad3177a09729d18b4d20295944f8c7820d6864fb7",
+          "test_attribute.py": "85ddc4ee2461aa6dd5c9e7134ad554128a220b867354e09a90bdb5dcb62a6946",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+          "control-server.mjs": "3d4460f69542c46ab8fcd0f685bae9fad9c0e3bddec2afef01097c23d1f7ad9d",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 16,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "worker-unscoped",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "failed",
+        "execution_seconds": 2.575674539897591,
+        "error": "Command '['/usr/bin/python3.11', '/u/kdhande/causpan/experiments/mcp/score_control.py', '/u/kdhande/causpan/results/mcp/worker-unscoped-c16']' returned non-zero exit status 1."
+      },
+      "causal_report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 33,
+        "joins": 0,
+        "operations": 30,
+        "operations_started": 30,
+        "operations_cancelled": 0,
+        "inherited_processes": 1,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 1730,
+        "parser": {
+          "lifecycle_lines": 32,
+          "parsed": 6264
+        },
+        "all_event_status": {
+          "unknown": 2573,
+          "no_request_context": 1858,
+          "bound": 66
+        },
+        "fixture_score": {
+          "events": 96,
+          "no_request_context": 96
+        },
+        "fixture_events_per_request": {},
+        "analysis_id": "c77df2bb4722407bb05287a25d32fd62",
+        "output_sha256": {
+          "causal-attribution.jsonl": "7cc84ed6115da5426f4d63b56e6bc94d8ab16425d209ee7316a6bb7c714e6b01",
+          "provenance.jsonl": "f4eefe85abd8f1af34eb549247c4035214f1d1cab2d4f500f69fddfa00926153"
+        }
+      },
+      "control_score": {
+        "valid": false,
+        "counts": {
+          "background": 28,
+          "correct": 28,
+          "request_events": 64,
+          "wrong": 64,
+          "after_response": 0
+        },
+        "mismatches": [
+          {
+            "source": "strace.1979348:4",
+            "expected": 3,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:5",
+            "expected": 3,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:4",
+            "expected": 4,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:5",
+            "expected": 4,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:4",
+            "expected": 5,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:5",
+            "expected": 5,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:9",
+            "expected": 6,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:9",
+            "expected": 8,
+            "actual": []
+          },
+          {
+            "source": "strace.1979358:4",
+            "expected": 7,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:10",
+            "expected": 8,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:10",
+            "expected": 6,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:9",
+            "expected": 9,
+            "actual": []
+          },
+          {
+            "source": "strace.1979358:5",
+            "expected": 7,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:10",
+            "expected": 9,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:14",
+            "expected": 10,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:15",
+            "expected": 10,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:14",
+            "expected": 11,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:14",
+            "expected": 13,
+            "actual": []
+          },
+          {
+            "source": "strace.1979358:9",
+            "expected": 12,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:15",
+            "expected": 11,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:15",
+            "expected": 13,
+            "actual": []
+          },
+          {
+            "source": "strace.1979358:10",
+            "expected": 12,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:19",
+            "expected": 14,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:20",
+            "expected": 14,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:19",
+            "expected": 15,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:24",
+            "expected": 18,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:19",
+            "expected": 16,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:20",
+            "expected": 15,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:25",
+            "expected": 18,
+            "actual": []
+          },
+          {
+            "source": "strace.1979358:14",
+            "expected": 17,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:20",
+            "expected": 16,
+            "actual": []
+          },
+          {
+            "source": "strace.1979358:15",
+            "expected": 17,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:24",
+            "expected": 19,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:25",
+            "expected": 19,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:24",
+            "expected": 20,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:25",
+            "expected": 20,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:29",
+            "expected": 21,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:29",
+            "expected": 23,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:30",
+            "expected": 21,
+            "actual": []
+          },
+          {
+            "source": "strace.1979358:19",
+            "expected": 22,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:30",
+            "expected": 23,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:29",
+            "expected": 24,
+            "actual": []
+          },
+          {
+            "source": "strace.1979358:20",
+            "expected": 22,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:30",
+            "expected": 24,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:34",
+            "expected": 25,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:35",
+            "expected": 25,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:34",
+            "expected": 26,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:34",
+            "expected": 28,
+            "actual": []
+          },
+          {
+            "source": "strace.1979358:24",
+            "expected": 27,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:35",
+            "expected": 28,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:35",
+            "expected": 26,
+            "actual": []
+          },
+          {
+            "source": "strace.1979358:25",
+            "expected": 27,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:39",
+            "expected": 29,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:40",
+            "expected": 29,
+            "actual": []
+          },
+          {
+            "source": "strace.1979358:29",
+            "expected": 30,
+            "actual": []
+          },
+          {
+            "source": "strace.1979358:30",
+            "expected": 30,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:44",
+            "expected": 33,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:39",
+            "expected": 31,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:39",
+            "expected": 32,
+            "actual": []
+          },
+          {
+            "source": "strace.1979355:40",
+            "expected": 31,
+            "actual": []
+          },
+          {
+            "source": "strace.1979353:45",
+            "expected": 33,
+            "actual": []
+          },
+          {
+            "source": "strace.1979358:34",
+            "expected": 34,
+            "actual": []
+          },
+          {
+            "source": "strace.1979348:40",
+            "expected": 32,
+            "actual": []
+          },
+          {
+            "source": "strace.1979358:35",
+            "expected": 34,
+            "actual": []
+          }
+        ],
+        "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+      },
+      "worker_observations": {
+        "pids": [
+          1979296
+        ],
+        "thread_request_counts": {
+          "1979348": 0,
+          "1979353": 0,
+          "1979355": 0,
+          "1979358": 0
+        },
+        "request_event_status": {
+          "no_request_context": 64
+        }
+      }
+    },
+    {
+      "source_run": "results/mcp/worker-context-c16",
+      "manifest": {
+        "session_id": "49e15062d59a4213b413093d0f501bd7",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": true,
+        "code_sha256": {
+          "analyze.py": "b1d483d9bb8dde5fd9f96225f12af811e02b4daed2677b6e63d6a5a539d895d9",
+          "attribute.py": "1176b8a5e51cc8635fc4edcc910007bfe292114a16a4f9fa2e725313bd6469d8",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "persistent_worker.py": "ce3144aeebc4744a3bc2d5221412f4d91ef11a27f7d4c434394036cc24daa883",
+          "proxy.py": "8685fb1d0118e8a3e48eb45b50d3c0f1c5b6386348ec40879027230a52dd9dfe",
+          "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "62889c7eadd31b663fa31eb0a63a2b40de0e80ab3bfb8cb9337bef2213e1ab87",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "4f967c9c92270b866b6b80c214ccb1604f1acab272cc786ef618d8ab895ea3f1",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "test_analyze.py": "1c5e488714cab3e788342c1ad3177a09729d18b4d20295944f8c7820d6864fb7",
+          "test_attribute.py": "85ddc4ee2461aa6dd5c9e7134ad554128a220b867354e09a90bdb5dcb62a6946",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+          "control-server.mjs": "3d4460f69542c46ab8fcd0f685bae9fad9c0e3bddec2afef01097c23d1f7ad9d",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 16,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "worker-context",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "complete",
+        "execution_seconds": 2.8166973278857768
+      },
+      "causal_report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 33,
+        "joins": 0,
+        "operations": 36,
+        "operations_started": 36,
+        "operations_cancelled": 0,
+        "inherited_processes": 1,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 1772,
+        "parser": {
+          "lifecycle_lines": 32,
+          "parsed": 6337
+        },
+        "all_event_status": {
+          "unknown": 2570,
+          "no_request_context": 1828,
+          "bound": 130
+        },
+        "fixture_score": {
+          "events": 102,
+          "no_request_context": 38,
+          "bound": 64
+        },
+        "fixture_events_per_request": {
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "8": 2,
+          "7": 2,
+          "9": 2,
+          "10": 2,
+          "11": 2,
+          "13": 2,
+          "12": 2,
+          "14": 2,
+          "15": 2,
+          "16": 2,
+          "18": 2,
+          "17": 2,
+          "19": 2,
+          "20": 2,
+          "21": 2,
+          "23": 2,
+          "22": 2,
+          "24": 2,
+          "25": 2,
+          "26": 2,
+          "28": 2,
+          "27": 2,
+          "29": 2,
+          "30": 2,
+          "31": 2,
+          "33": 2,
+          "32": 2,
+          "34": 2
+        },
+        "analysis_id": "565804f12e454783acc83fcc858134db",
+        "output_sha256": {
+          "causal-attribution.jsonl": "956787b8907a7f5f2556e9c7c9521992e79793e588deb97f3c31109b50cc7a84",
+          "provenance.jsonl": "efd94b5e8628771c9ef05609d0f06567007428321fbd1962e3939d695eb03a90"
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 34,
+          "correct": 98,
+          "request_events": 64,
+          "after_response": 0
+        },
+        "mismatches": [],
+        "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+      },
+      "worker_observations": {
+        "pids": [
+          1977299
+        ],
+        "thread_request_counts": {
+          "1977385": 8,
+          "1977386": 8,
+          "1977389": 8,
+          "1977390": 8
+        },
+        "request_event_status": {
+          "bound": 64
+        }
+      }
+    },
+    {
+      "source_run": "results/mcp/worker-context-c64-spoof",
+      "manifest": {
+        "session_id": "65fa75f7d48146c1929dbe7e0bf941a8",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": true,
+        "code_sha256": {
+          "analyze.py": "b1d483d9bb8dde5fd9f96225f12af811e02b4daed2677b6e63d6a5a539d895d9",
+          "attribute.py": "1176b8a5e51cc8635fc4edcc910007bfe292114a16a4f9fa2e725313bd6469d8",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "persistent_worker.py": "ce3144aeebc4744a3bc2d5221412f4d91ef11a27f7d4c434394036cc24daa883",
+          "proxy.py": "8685fb1d0118e8a3e48eb45b50d3c0f1c5b6386348ec40879027230a52dd9dfe",
+          "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "62889c7eadd31b663fa31eb0a63a2b40de0e80ab3bfb8cb9337bef2213e1ab87",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "4f967c9c92270b866b6b80c214ccb1604f1acab272cc786ef618d8ab895ea3f1",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "test_analyze.py": "1c5e488714cab3e788342c1ad3177a09729d18b4d20295944f8c7820d6864fb7",
+          "test_attribute.py": "85ddc4ee2461aa6dd5c9e7134ad554128a220b867354e09a90bdb5dcb62a6946",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+          "control-server.mjs": "3d4460f69542c46ab8fcd0f685bae9fad9c0e3bddec2afef01097c23d1f7ad9d",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 64,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": true,
+        "spoof_context": true,
+        "scenario": "worker-context",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "complete",
+        "execution_seconds": 6.952536690048873
+      },
+      "causal_report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 129,
+        "joins": 0,
+        "operations": 16,
+        "operations_started": 16,
+        "operations_cancelled": 0,
+        "inherited_processes": 1,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 6048,
+        "parser": {
+          "lifecycle_lines": 32,
+          "parsed": 11107
+        },
+        "all_event_status": {
+          "unknown": 2572,
+          "no_request_context": 1840,
+          "bound": 514
+        },
+        "fixture_score": {
+          "events": 274,
+          "no_request_context": 18,
+          "bound": 256
+        },
+        "fixture_events_per_request": {
+          "request-3": 2,
+          "request-4": 2,
+          "request-5": 2,
+          "request-6": 2,
+          "request-8": 2,
+          "request-7": 2,
+          "request-9": 2,
+          "request-10": 2,
+          "request-13": 2,
+          "request-11": 2,
+          "request-12": 2,
+          "request-14": 2,
+          "request-15": 2,
+          "request-16": 2,
+          "request-17": 2,
+          "request-18": 2,
+          "request-19": 2,
+          "request-20": 2,
+          "request-21": 2,
+          "request-23": 2,
+          "request-22": 2,
+          "request-24": 2,
+          "request-25": 2,
+          "request-26": 2,
+          "request-28": 2,
+          "request-29": 2,
+          "request-27": 2,
+          "request-30": 2,
+          "request-31": 2,
+          "request-33": 2,
+          "request-32": 2,
+          "request-34": 2,
+          "request-35": 2,
+          "request-36": 2,
+          "request-38": 2,
+          "request-37": 2,
+          "request-39": 2,
+          "request-40": 2,
+          "request-41": 2,
+          "request-43": 2,
+          "request-42": 2,
+          "request-44": 2,
+          "request-45": 2,
+          "request-46": 2,
+          "request-47": 2,
+          "request-48": 2,
+          "request-49": 2,
+          "request-50": 2,
+          "request-53": 2,
+          "request-51": 2,
+          "request-52": 2,
+          "request-54": 2,
+          "request-55": 2,
+          "request-58": 2,
+          "request-56": 2,
+          "request-57": 2,
+          "request-59": 2,
+          "request-60": 2,
+          "request-63": 2,
+          "request-61": 2,
+          "request-62": 2,
+          "request-64": 2,
+          "request-65": 2,
+          "request-66": 2,
+          "request-68": 2,
+          "request-67": 2,
+          "request-69": 2,
+          "request-70": 2,
+          "request-71": 2,
+          "request-73": 2,
+          "request-72": 2,
+          "request-74": 2,
+          "request-75": 2,
+          "request-76": 2,
+          "request-78": 2,
+          "request-77": 2,
+          "request-79": 2,
+          "request-80": 2,
+          "request-81": 2,
+          "request-83": 2,
+          "request-82": 2,
+          "request-84": 2,
+          "request-85": 2,
+          "request-88": 2,
+          "request-86": 2,
+          "request-87": 2,
+          "request-89": 2,
+          "request-90": 2,
+          "request-91": 2,
+          "request-92": 2,
+          "request-93": 2,
+          "request-94": 2,
+          "request-95": 2,
+          "request-96": 2,
+          "request-98": 2,
+          "request-97": 2,
+          "request-99": 2,
+          "request-100": 2,
+          "request-101": 2,
+          "request-103": 2,
+          "request-102": 2,
+          "request-104": 2,
+          "request-105": 2,
+          "request-106": 2,
+          "request-107": 2,
+          "request-108": 2,
+          "request-109": 2,
+          "request-110": 2,
+          "request-113": 2,
+          "request-111": 2,
+          "request-112": 2,
+          "request-114": 2,
+          "request-115": 2,
+          "request-116": 2,
+          "request-118": 2,
+          "request-117": 2,
+          "request-119": 2,
+          "request-120": 2,
+          "request-121": 2,
+          "request-123": 2,
+          "request-122": 2,
+          "request-124": 2,
+          "request-125": 2,
+          "request-126": 2,
+          "request-128": 2,
+          "request-127": 2,
+          "request-129": 2,
+          "request-130": 2
+        },
+        "analysis_id": "06f44e6a037740759d8f2de095a76ccc",
+        "output_sha256": {
+          "causal-attribution.jsonl": "329ea8d826a5ba1c9897c951f66a02ee1a30e8496e8d895284af880b5b894ecf",
+          "provenance.jsonl": "ef5b60049a15cb3a562153198cc8db5de77bdf0120f2f7f6f83f5e75391b8a55"
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 14,
+          "correct": 270,
+          "request_events": 256,
+          "after_response": 0
+        },
+        "mismatches": [],
+        "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+      },
+      "worker_observations": {
+        "pids": [
+          1980957
+        ],
+        "thread_request_counts": {
+          "1981057": 30,
+          "1981058": 29,
+          "1981059": 34,
+          "1981060": 35
+        },
+        "request_event_status": {
+          "bound": 256
+        }
+      }
+    }
+  ]
+}

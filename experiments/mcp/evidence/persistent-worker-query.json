@@ -1,0 +1,133 @@
+{
+  "source_run": "results/mcp/worker-sender-checked-c32",
+  "syscall_chains_checked": 128,
+  "all_reach_exact_expected_request": true,
+  "example": {
+    "events": [
+      {
+        "timestamp_ns": 1791342167418077000,
+        "tid": 2089092,
+        "syscall": "pwrite64",
+        "args": "3</u/kdhande/causpan/results/mcp/worker-sender-checked-c32/sandbox/slots.bin>, \"worker:0\", 8, 0",
+        "return_value": 8,
+        "completion": "returned",
+        "paths": [
+          "/u/kdhande/causpan/results/mcp/worker-sender-checked-c32/sandbox/slots.bin"
+        ],
+        "source": "strace.2089092:4",
+        "pid": 2088736,
+        "context": 1,
+        "request_ids": [
+          "request-3"
+        ],
+        "request_id": "request-3",
+        "ipc_job": "c34d35b3-758f-4788-af00-96a881ad635a/1",
+        "operation": 0,
+        "origin": "ipc_worker",
+        "context_evidence": "strace.2089092:3",
+        "connection_id": null,
+        "candidate_request_ids": [],
+        "attribution": "bound"
+      },
+      {
+        "timestamp_ns": 1791342167427534000,
+        "tid": 2089092,
+        "syscall": "pread64",
+        "args": "3</u/kdhande/causpan/results/mcp/worker-sender-checked-c32/sandbox/slots.bin>, \"worker:0\", 8, 0",
+        "return_value": 8,
+        "completion": "returned",
+        "paths": [
+          "/u/kdhande/causpan/results/mcp/worker-sender-checked-c32/sandbox/slots.bin"
+        ],
+        "source": "strace.2089092:5",
+        "pid": 2088736,
+        "context": 1,
+        "request_ids": [
+          "request-3"
+        ],
+        "request_id": "request-3",
+        "ipc_job": "c34d35b3-758f-4788-af00-96a881ad635a/1",
+        "operation": 0,
+        "origin": "ipc_worker",
+        "context_evidence": "strace.2089092:3",
+        "connection_id": null,
+        "candidate_request_ids": [],
+        "attribution": "bound"
+      }
+    ],
+    "provenance": [
+      {
+        "type": "node",
+        "id": "d225aa4f77014a0da03d140f3da74c31:request:1",
+        "kind": "mcp_request",
+        "context": 1,
+        "rpc_id": "request-3",
+        "method": "tools/call",
+        "tool": "worker_slot",
+        "session_id": "d225aa4f77014a0da03d140f3da74c31"
+      },
+      {
+        "type": "node",
+        "id": "d225aa4f77014a0da03d140f3da74c31:ipc:c34d35b3-758f-4788-af00-96a881ad635a/1",
+        "kind": "ipc_job",
+        "request_context": 1,
+        "sender_pid": 2088628,
+        "sender_tid": 2088628,
+        "send_evidence": "strace.2088628:3003",
+        "session_id": "d225aa4f77014a0da03d140f3da74c31"
+      },
+      {
+        "type": "edge",
+        "source": "d225aa4f77014a0da03d140f3da74c31:request:1",
+        "target": "d225aa4f77014a0da03d140f3da74c31:ipc:c34d35b3-758f-4788-af00-96a881ad635a/1",
+        "kind": "ipc_sent",
+        "evidence": "strace.2088628:3003",
+        "session_id": "d225aa4f77014a0da03d140f3da74c31"
+      },
+      {
+        "type": "node",
+        "id": "d225aa4f77014a0da03d140f3da74c31:syscall:strace.2089092:4",
+        "kind": "syscall",
+        "timestamp_ns": 1791342167418077000,
+        "pid": 2088736,
+        "tid": 2089092,
+        "syscall": "pwrite64",
+        "paths": [
+          "/u/kdhande/causpan/results/mcp/worker-sender-checked-c32/sandbox/slots.bin"
+        ],
+        "return_value": 8,
+        "session_id": "d225aa4f77014a0da03d140f3da74c31"
+      },
+      {
+        "type": "edge",
+        "source": "d225aa4f77014a0da03d140f3da74c31:ipc:c34d35b3-758f-4788-af00-96a881ad635a/1",
+        "target": "d225aa4f77014a0da03d140f3da74c31:syscall:strace.2089092:4",
+        "kind": "executed",
+        "evidence": "strace.2089092:3",
+        "session_id": "d225aa4f77014a0da03d140f3da74c31"
+      },
+      {
+        "type": "node",
+        "id": "d225aa4f77014a0da03d140f3da74c31:syscall:strace.2089092:5",
+        "kind": "syscall",
+        "timestamp_ns": 1791342167427534000,
+        "pid": 2088736,
+        "tid": 2089092,
+        "syscall": "pread64",
+        "paths": [
+          "/u/kdhande/causpan/results/mcp/worker-sender-checked-c32/sandbox/slots.bin"
+        ],
+        "return_value": 8,
+        "session_id": "d225aa4f77014a0da03d140f3da74c31"
+      },
+      {
+        "type": "edge",
+        "source": "d225aa4f77014a0da03d140f3da74c31:ipc:c34d35b3-758f-4788-af00-96a881ad635a/1",
+        "target": "d225aa4f77014a0da03d140f3da74c31:syscall:strace.2089092:5",
+        "kind": "executed",
+        "evidence": "strace.2089092:3",
+        "session_id": "d225aa4f77014a0da03d140f3da74c31"
+      }
+    ]
+  }
+}

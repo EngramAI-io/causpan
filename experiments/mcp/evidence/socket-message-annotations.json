@@ -1,0 +1,66 @@
+{
+  "source_run": "results/mcp/socket-message-annotations",
+  "scope": "Live standalone socketpair parser probe, not MCP attribution or socketpair lifecycle support.",
+  "probe_source": "import socket\nleft,right=socket.socketpair()\npayload=b\"payload /tmp/not-a-resource\"\nassert left.send(payload)==len(payload)\nassert right.recv(128)==payload\nassert left.sendmsg([payload])==len(payload)\nassert right.recvmsg(128)[0]==payload\nleft.close();right.close()\n",
+  "trace_sha256": {
+    "strace.1951399": "217acf52153622746fb3a43288a6a658a3dc6923c77fbfb5f99124fc58de7d27"
+  },
+  "events": [
+    {
+      "timestamp_ns": 1791360297673034000,
+      "tid": 1951399,
+      "syscall": "sendto",
+      "args": "3<(null):[1287923232->1287923233]>, \"payload /tmp/not-a-resource\", 27, 0, NULL, 0",
+      "return_value": 27,
+      "completion": "returned",
+      "paths": [
+        "(null):[1287923232->1287923233]"
+      ],
+      "source": "strace.1951399:1",
+      "pid": 1951399
+    },
+    {
+      "timestamp_ns": 1791360297674716000,
+      "tid": 1951399,
+      "syscall": "recvfrom",
+      "args": "4<(null):[1287923233->1287923232]>, \"payload /tmp/not-a-resource\", 128, 0, NULL, NULL",
+      "return_value": 27,
+      "completion": "returned",
+      "paths": [
+        "(null):[1287923233->1287923232]"
+      ],
+      "source": "strace.1951399:2",
+      "pid": 1951399
+    },
+    {
+      "timestamp_ns": 1791360297675135000,
+      "tid": 1951399,
+      "syscall": "sendmsg",
+      "args": "3<(null):[1287923232->1287923233]>, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base=\"payload /tmp/not-a-resource\", iov_len=27}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0",
+      "return_value": 27,
+      "completion": "returned",
+      "paths": [
+        "(null):[1287923232->1287923233]"
+      ],
+      "source": "strace.1951399:3",
+      "pid": 1951399
+    },
+    {
+      "timestamp_ns": 1791360297675199000,
+      "tid": 1951399,
+      "syscall": "recvmsg",
+      "args": "4<(null):[1287923233->1287923232]>, {msg_name=0xffffe1e5c6b8, msg_namelen=110 => 0, msg_iov=[{iov_base=\"payload /tmp/not-a-resource\", iov_len=128}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0",
+      "return_value": 27,
+      "completion": "returned",
+      "paths": [
+        "(null):[1287923233->1287923232]"
+      ],
+      "source": "strace.1951399:4",
+      "pid": 1951399
+    }
+  ],
+  "parser": {
+    "lifecycle_lines": 1,
+    "parsed": 4
+  }
+}

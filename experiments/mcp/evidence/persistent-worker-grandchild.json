@@ -1,0 +1,207 @@
+{
+  "source_run": "results/mcp/worker-grandchild-c8",
+  "grandchild_write_chains_verified": 16,
+  "example": [
+    {
+      "type": "node",
+      "id": "577df961ed5448b98a36e2c0eb2a769a:request:4",
+      "kind": "mcp_request",
+      "context": 4,
+      "rpc_id": 6,
+      "method": "tools/call",
+      "tool": "worker_slot",
+      "session_id": "577df961ed5448b98a36e2c0eb2a769a"
+    },
+    {
+      "type": "node",
+      "id": "577df961ed5448b98a36e2c0eb2a769a:ipc:b7d651b9-f6b3-457f-a79f-cccb11cefaa8/4",
+      "kind": "ipc_job",
+      "request_context": 4,
+      "sender_pid": 1685464,
+      "sender_tid": 1685464,
+      "send_evidence": "strace.1685464:2706",
+      "session_id": "577df961ed5448b98a36e2c0eb2a769a"
+    },
+    {
+      "type": "edge",
+      "source": "577df961ed5448b98a36e2c0eb2a769a:request:4",
+      "target": "577df961ed5448b98a36e2c0eb2a769a:ipc:b7d651b9-f6b3-457f-a79f-cccb11cefaa8/4",
+      "kind": "ipc_sent",
+      "evidence": "strace.1685464:2706",
+      "session_id": "577df961ed5448b98a36e2c0eb2a769a"
+    },
+    {
+      "type": "node",
+      "id": "577df961ed5448b98a36e2c0eb2a769a:process:1686490",
+      "kind": "child_process",
+      "pid": 1686490,
+      "session_id": "577df961ed5448b98a36e2c0eb2a769a"
+    },
+    {
+      "type": "edge",
+      "source": "577df961ed5448b98a36e2c0eb2a769a:ipc:b7d651b9-f6b3-457f-a79f-cccb11cefaa8/4",
+      "target": "577df961ed5448b98a36e2c0eb2a769a:process:1686490",
+      "kind": "spawned",
+      "evidence": "strace.1686488:5",
+      "session_id": "577df961ed5448b98a36e2c0eb2a769a"
+    },
+    {
+      "type": "node",
+      "id": "577df961ed5448b98a36e2c0eb2a769a:process:1686967",
+      "kind": "child_process",
+      "pid": 1686967,
+      "session_id": "577df961ed5448b98a36e2c0eb2a769a"
+    },
+    {
+      "type": "edge",
+      "source": "577df961ed5448b98a36e2c0eb2a769a:process:1686490",
+      "target": "577df961ed5448b98a36e2c0eb2a769a:process:1686967",
+      "kind": "spawned",
+      "evidence": "strace.1686490:909",
+      "session_id": "577df961ed5448b98a36e2c0eb2a769a"
+    },
+    {
+      "type": "node",
+      "id": "577df961ed5448b98a36e2c0eb2a769a:syscall:strace.1686967:331",
+      "kind": "syscall",
+      "timestamp_ns": 1791359849342481000,
+      "pid": 1686967,
+      "tid": 1686967,
+      "syscall": "pwrite64",
+      "paths": [
+        "/u/kdhande/causpan/results/mcp/worker-grandchild-c8/sandbox/slots.bin"
+      ],
+      "return_value": 8,
+      "session_id": "577df961ed5448b98a36e2c0eb2a769a"
+    },
+    {
+      "type": "edge",
+      "source": "577df961ed5448b98a36e2c0eb2a769a:process:1686967",
+      "target": "577df961ed5448b98a36e2c0eb2a769a:syscall:strace.1686967:331",
+      "kind": "executed",
+      "evidence": "strace.1686490:909",
+      "session_id": "577df961ed5448b98a36e2c0eb2a769a"
+    }
+  ],
+  "manifest": {
+    "session_id": "577df961ed5448b98a36e2c0eb2a769a",
+    "runtime": "node",
+    "runtime_workers": 2,
+    "capture": "strace",
+    "seccomp": true,
+    "code_sha256": {
+      "analyze.py": "b1d483d9bb8dde5fd9f96225f12af811e02b4daed2677b6e63d6a5a539d895d9",
+      "attribute.py": "fae7c82f5b65681eb639b4f2a241b50314fdebcda770d1dbdda20d3c3ec4bae2",
+      "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+      "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+      "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+      "persistent_worker.py": "94fc2fd905f7a7566c32bbbee35dbe009f8d3688e6bc62815b61c133733a13e1",
+      "proxy.py": "8685fb1d0118e8a3e48eb45b50d3c0f1c5b6386348ec40879027230a52dd9dfe",
+      "query.py": "d00ee0d2074082faafc8443f01bf68e3b0e391bf8b881006a779b644b491b95d",
+      "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+      "run.py": "1532542fba56f71eaa9c318842e4209176d81cc54b3d52aa801c5055cefaab69",
+      "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+      "score_control.py": "2489bc43c8cb5225ab6830089967ea3a166c0327b5d5944147aac8346365ed63",
+      "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+      "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+      "test_analyze.py": "1c5e488714cab3e788342c1ad3177a09729d18b4d20295944f8c7820d6864fb7",
+      "test_attribute.py": "85ddc4ee2461aa6dd5c9e7134ad554128a220b867354e09a90bdb5dcb62a6946",
+      "test_ipc.py": "f397b00dfb36a63ebcda907625f60d524d3936c0094fb9ec9646e837b65418e0",
+      "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+      "test_query.py": "61ef9c20ac0e477dfe63057a140bdd557dbd4cad39691b05a7385a8883396af9",
+      "control-server.mjs": "01fb6dc37f669c4f297c2058b15ee0a8af41e42334c8213a238769b81d760e2a",
+      "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+      "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+      "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+      "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+      "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+      "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+    },
+    "mode": "replay",
+    "concurrency": 8,
+    "shared": false,
+    "instrumented": true,
+    "pool_size": 4,
+    "string_ids": false,
+    "spoof_context": false,
+    "scenario": "worker-grandchild",
+    "batches": 2,
+    "model": null,
+    "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+    "versions": {
+      "node": "v24.20.0",
+      "strace": "strace -- version 5.14"
+    },
+    "server": {
+      "@modelcontextprotocol/server-filesystem": "2026.8.31"
+    },
+    "status": "complete",
+    "execution_seconds": 5.262160239042714
+  },
+  "causal_report": {
+    "valid": true,
+    "errors": [],
+    "attribution_model": "causal-context-v2",
+    "requests": 17,
+    "joins": 0,
+    "operations": 332,
+    "operations_started": 332,
+    "operations_cancelled": 0,
+    "ipc_jobs": 16,
+    "ipc_cancelled": 0,
+    "inherited_processes": 33,
+    "runtime_spans": 0,
+    "retroactive_socket_reads": 0,
+    "migrating_request_spans": 0,
+    "markers": 3140,
+    "parser": {
+      "lifecycle_lines": 127,
+      "parsed": 29581
+    },
+    "all_event_status": {
+      "unknown": 2572,
+      "no_request_context": 3782,
+      "bound": 20065
+    },
+    "fixture_score": {
+      "events": 398,
+      "no_request_context": 334,
+      "bound": 64
+    },
+    "fixture_events_per_request": {
+      "6": 4,
+      "5": 4,
+      "4": 4,
+      "3": 4,
+      "8": 4,
+      "7": 4,
+      "9": 4,
+      "10": 4,
+      "14": 4,
+      "12": 4,
+      "13": 4,
+      "11": 4,
+      "16": 4,
+      "15": 4,
+      "17": 4,
+      "18": 4
+    },
+    "analysis_id": "f6d486aea133474e8c1b1147c4560cf2",
+    "output_sha256": {
+      "causal-attribution.jsonl": "2842bc52e6545a472d55c8045f79bf053ad05d153e8ad57da3bf54b39d8888af",
+      "provenance.jsonl": "3e989cd38635b7c97013cdc4cc35c222efdf40fd6707d3c592a3e13ea8c934b4"
+    }
+  },
+  "control_score": {
+    "valid": true,
+    "counts": {
+      "background": 330,
+      "correct": 362,
+      "request_events": 32,
+      "after_response": 0
+    },
+    "mismatches": [],
+    "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+  }
+}

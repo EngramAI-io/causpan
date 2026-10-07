@@ -1,0 +1,353 @@
+{
+  "runs": [
+    {
+      "source_run": "results/mcp/worker-spawn-c16",
+      "manifest": {
+        "session_id": "ab9fb8c5587a42dca2a606194331c682",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": true,
+        "code_sha256": {
+          "analyze.py": "b1d483d9bb8dde5fd9f96225f12af811e02b4daed2677b6e63d6a5a539d895d9",
+          "attribute.py": "3c5ea9849494bd9c4e37a4e91e15ea3447dd7b216d44bcda18dca52dc85270d6",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "persistent_worker.py": "80f81cd70dba0a63bfc3dd178fa1c066dabfe8d4ac6eb2565ffe1de35953751d",
+          "proxy.py": "8685fb1d0118e8a3e48eb45b50d3c0f1c5b6386348ec40879027230a52dd9dfe",
+          "query.py": "d00ee0d2074082faafc8443f01bf68e3b0e391bf8b881006a779b644b491b95d",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "13973d1cc21c1f209dc9aa4e12acf3e17005f42d02bc95a5254e8458482ba494",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "2489bc43c8cb5225ab6830089967ea3a166c0327b5d5944147aac8346365ed63",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "test_analyze.py": "1c5e488714cab3e788342c1ad3177a09729d18b4d20295944f8c7820d6864fb7",
+          "test_attribute.py": "85ddc4ee2461aa6dd5c9e7134ad554128a220b867354e09a90bdb5dcb62a6946",
+          "test_ipc.py": "f397b00dfb36a63ebcda907625f60d524d3936c0094fb9ec9646e837b65418e0",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "61ef9c20ac0e477dfe63057a140bdd557dbd4cad39691b05a7385a8883396af9",
+          "control-server.mjs": "6b76e8790d79f584361e9f5d792f56269ee40dee083bd175fb554a510fa07e0f",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 16,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "worker-spawn",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "complete",
+        "execution_seconds": 4.5986410852056
+      },
+      "causal_report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 33,
+        "joins": 0,
+        "operations": 143,
+        "operations_started": 143,
+        "operations_cancelled": 0,
+        "ipc_jobs": 32,
+        "ipc_cancelled": 0,
+        "inherited_processes": 33,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 2585,
+        "parser": {
+          "lifecycle_lines": 127,
+          "parsed": 18755
+        },
+        "all_event_status": {
+          "unknown": 2571,
+          "no_request_context": 2648,
+          "bound": 10913
+        },
+        "fixture_score": {
+          "events": 273,
+          "no_request_context": 145,
+          "bound": 128
+        },
+        "fixture_events_per_request": {
+          "6": 4,
+          "5": 4,
+          "4": 4,
+          "3": 4,
+          "9": 4,
+          "7": 4,
+          "8": 4,
+          "10": 4,
+          "14": 4,
+          "13": 4,
+          "12": 4,
+          "11": 4,
+          "18": 4,
+          "17": 4,
+          "16": 4,
+          "15": 4,
+          "22": 4,
+          "21": 4,
+          "20": 4,
+          "19": 4,
+          "24": 4,
+          "23": 4,
+          "26": 4,
+          "25": 4,
+          "30": 4,
+          "29": 4,
+          "27": 4,
+          "28": 4,
+          "32": 4,
+          "34": 4,
+          "33": 4,
+          "31": 4
+        },
+        "analysis_id": "4515eb4b9f9b4cc2af129acd28548338",
+        "output_sha256": {
+          "causal-attribution.jsonl": "47242ec5511fc9f7d9da875821c68a3bcdbb0c411c4fec983d8a97687f0ca57f",
+          "provenance.jsonl": "c5109ffc5d2e8eb5d29323e654534d67fe09e9900e66112bb41c0c2b01c379c3"
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 141,
+          "correct": 205,
+          "request_events": 64,
+          "after_response": 0
+        },
+        "mismatches": [],
+        "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+      }
+    },
+    {
+      "source_run": "results/mcp/worker-spawn-chain-c16",
+      "manifest": {
+        "session_id": "b7dde661e2034c1f862426866919dcbd",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": true,
+        "code_sha256": {
+          "analyze.py": "b1d483d9bb8dde5fd9f96225f12af811e02b4daed2677b6e63d6a5a539d895d9",
+          "attribute.py": "f335e5381db5fc55757031fb0c52b3b03e0fa3dad0b764bfdf2027a338dbd91c",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "persistent_worker.py": "80f81cd70dba0a63bfc3dd178fa1c066dabfe8d4ac6eb2565ffe1de35953751d",
+          "proxy.py": "8685fb1d0118e8a3e48eb45b50d3c0f1c5b6386348ec40879027230a52dd9dfe",
+          "query.py": "d00ee0d2074082faafc8443f01bf68e3b0e391bf8b881006a779b644b491b95d",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "13973d1cc21c1f209dc9aa4e12acf3e17005f42d02bc95a5254e8458482ba494",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "2489bc43c8cb5225ab6830089967ea3a166c0327b5d5944147aac8346365ed63",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "test_analyze.py": "1c5e488714cab3e788342c1ad3177a09729d18b4d20295944f8c7820d6864fb7",
+          "test_attribute.py": "85ddc4ee2461aa6dd5c9e7134ad554128a220b867354e09a90bdb5dcb62a6946",
+          "test_ipc.py": "f397b00dfb36a63ebcda907625f60d524d3936c0094fb9ec9646e837b65418e0",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "61ef9c20ac0e477dfe63057a140bdd557dbd4cad39691b05a7385a8883396af9",
+          "control-server.mjs": "6b76e8790d79f584361e9f5d792f56269ee40dee083bd175fb554a510fa07e0f",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 16,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "worker-spawn",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "complete",
+        "execution_seconds": 4.408846308942884
+      },
+      "causal_report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 33,
+        "joins": 0,
+        "operations": 187,
+        "operations_started": 187,
+        "operations_cancelled": 0,
+        "ipc_jobs": 32,
+        "ipc_cancelled": 0,
+        "inherited_processes": 33,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 2893,
+        "parser": {
+          "lifecycle_lines": 128,
+          "parsed": 19267
+        },
+        "all_event_status": {
+          "unknown": 2570,
+          "no_request_context": 2853,
+          "bound": 10913
+        },
+        "fixture_score": {
+          "events": 317,
+          "no_request_context": 189,
+          "bound": 128
+        },
+        "fixture_events_per_request": {
+          "6": 4,
+          "5": 4,
+          "4": 4,
+          "3": 4,
+          "10": 4,
+          "9": 4,
+          "8": 4,
+          "7": 4,
+          "13": 4,
+          "12": 4,
+          "14": 4,
+          "11": 4,
+          "16": 4,
+          "15": 4,
+          "17": 4,
+          "18": 4,
+          "22": 4,
+          "21": 4,
+          "20": 4,
+          "19": 4,
+          "25": 4,
+          "24": 4,
+          "23": 4,
+          "26": 4,
+          "30": 4,
+          "27": 4,
+          "28": 4,
+          "29": 4,
+          "32": 4,
+          "34": 4,
+          "33": 4,
+          "31": 4
+        },
+        "analysis_id": "9bcd9e6e9f7a44afb02e3a22db46b16e",
+        "output_sha256": {
+          "causal-attribution.jsonl": "fac38134e0c3b4d5ee7fcf46c3fdb3de785c8d660323084a5e71abacc04a1367",
+          "provenance.jsonl": "561dd6b995212b3cb7ed40f828f50ad65bb659b87661fc5c067f614efff12152"
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 185,
+          "correct": 249,
+          "request_events": 64,
+          "after_response": 0
+        },
+        "mismatches": [],
+        "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+      }
+    }
+  ],
+  "child_write_chains_verified": 32,
+  "chain": "MCP request -> IPC job -> child process -> pwrite64",
+  "example": [
+    {
+      "type": "node",
+      "id": "b7dde661e2034c1f862426866919dcbd:request:4",
+      "kind": "mcp_request",
+      "context": 4,
+      "rpc_id": 6,
+      "method": "tools/call",
+      "tool": "worker_slot",
+      "session_id": "b7dde661e2034c1f862426866919dcbd"
+    },
+    {
+      "type": "node",
+      "id": "b7dde661e2034c1f862426866919dcbd:ipc:2059a3b0-62a8-45c7-8223-6ae0b7d190d7/4",
+      "kind": "ipc_job",
+      "request_context": 4,
+      "sender_pid": 1641433,
+      "sender_tid": 1641433,
+      "send_evidence": "strace.1641433:2805",
+      "session_id": "b7dde661e2034c1f862426866919dcbd"
+    },
+    {
+      "type": "edge",
+      "source": "b7dde661e2034c1f862426866919dcbd:request:4",
+      "target": "b7dde661e2034c1f862426866919dcbd:ipc:2059a3b0-62a8-45c7-8223-6ae0b7d190d7/4",
+      "kind": "ipc_sent",
+      "evidence": "strace.1641433:2805",
+      "session_id": "b7dde661e2034c1f862426866919dcbd"
+    },
+    {
+      "type": "node",
+      "id": "b7dde661e2034c1f862426866919dcbd:process:1642403",
+      "kind": "child_process",
+      "pid": 1642403,
+      "session_id": "b7dde661e2034c1f862426866919dcbd"
+    },
+    {
+      "type": "edge",
+      "source": "b7dde661e2034c1f862426866919dcbd:ipc:2059a3b0-62a8-45c7-8223-6ae0b7d190d7/4",
+      "target": "b7dde661e2034c1f862426866919dcbd:process:1642403",
+      "kind": "spawned",
+      "evidence": "strace.1642401:5",
+      "session_id": "b7dde661e2034c1f862426866919dcbd"
+    },
+    {
+      "type": "node",
+      "id": "b7dde661e2034c1f862426866919dcbd:syscall:strace.1642403:331",
+      "kind": "syscall",
+      "timestamp_ns": 1791359793586230000,
+      "pid": 1642403,
+      "tid": 1642403,
+      "syscall": "pwrite64",
+      "paths": [
+        "/u/kdhande/causpan/results/mcp/worker-spawn-chain-c16/sandbox/slots.bin"
+      ],
+      "return_value": 8,
+      "session_id": "b7dde661e2034c1f862426866919dcbd"
+    },
+    {
+      "type": "edge",
+      "source": "b7dde661e2034c1f862426866919dcbd:process:1642403",
+      "target": "b7dde661e2034c1f862426866919dcbd:syscall:strace.1642403:331",
+      "kind": "executed",
+      "evidence": "strace.1642401:5",
+      "session_id": "b7dde661e2034c1f862426866919dcbd"
+    }
+  ]
+}

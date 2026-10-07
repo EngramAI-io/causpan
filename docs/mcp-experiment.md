@@ -77,13 +77,17 @@ The standalone live descriptor-sharing probe can be reproduced with:
 
 ```bash
 gcc -Wall -Wextra -O2 experiments/mcp/clone_files_probe.c -o /tmp/clone_files_probe
-strace -ff -ttt -yy -s 128 -e trace=clone3,socket,fcntl,close,pipe,read,write,wait4 \
-  -o /tmp/clone-files-trace /tmp/clone_files_probe
+truncate -s 128 /tmp/clone-files-slots.bin
+strace -ff -ttt -yy -s 128 -e trace=clone3,socket,fcntl,close,pipe,read,write,pread64,pwrite64,wait4 \
+  -o /tmp/clone-files-trace /tmp/clone_files_probe /tmp/clone-files-slots.bin 0
 ```
 
 It verifies that `clone3(CLONE_FILES)` lets the parent observe a UDP socket opened
 by the child. This validates the kernel and strace behavior used by the lifecycle
-model; attribution behavior is additionally covered by synthetic trace tests.
+model. The `clone-files` MCP scenario additionally checks child writes and parent
+reads against the request-offset oracle; see [runtime findings](runtime-findings.md).
+Each call launches its own helper, so this does not establish context handoff into
+a persistent worker shared by different requests.
 
 ## Existing repo issues affecting interpretation
 
