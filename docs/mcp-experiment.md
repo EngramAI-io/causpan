@@ -43,7 +43,7 @@ flowchart LR
     T --> E
 ```
 
-Only the MCP server and its descendants are traced. Fixture creation and the proxy's logging writes are outside the trace. Node startup, module loading, IPC, and runtime activity remain in the raw traces, so attribution can later examine background activity as well. Current scoring focuses on a conservative subset of syscalls explicitly naming files under the fixture directory.
+Only the MCP server and its descendants are traced. Fixture creation and the proxy's logging writes are outside the trace. Node startup, module loading, IPC, and runtime activity remain in the raw traces. The default syscall filter is %file,%process,%desc,%network; pass --capture strace-all to capture every syscall class. Both captures use per-thread strace -ff -yy output.
 
 | Artifact | Meaning |
 | --- | --- |
@@ -71,24 +71,36 @@ The protocol log includes tool arguments and returned fixture contents. Captures
 
 **Oracle:** a path used by exactly one tool request can label direct path/FD operations for this restricted workload. The oracle is applied only after candidate generation. Shared or reused paths are deliberately unlabelled. It is not authoritative ground truth for arbitrary applications, caching, malicious servers, directory traversals, or unrelated background access. In particular, writing and then reading the same summary file does not give unique path labels. Precision/recall over all syscalls would be unjustified, so the report gives candidate ambiguity and correct/wrong singletons on the labelled subset instead.
 
-The parser reassembles unfinished/resumed calls within each TID, reconstructs thread groups from `CLONE_THREAD`, retains source lines, and records unparsed/incomplete input. It uses FD annotations for read/write targets, never file-looking text inside payload buffers. Its supported path syntax is intentionally conservative: escaped/truncated paths, relative path resolution, unusual syscalls, shared-memory operations, mmap effects, and io_uring completions need further work. PID reuse and exec from a nonleader thread are outside these short-lived runs. Do not treat the normalized file as a lossless trace; keep the raw data.
+The parser reassembles unfinished/resumed calls within each TID, reconstructs thread groups from `CLONE_THREAD`, retains source lines, and records unparsed/incomplete input. A pending syscall followed by an explicit tracee termination is counted separately as `terminal_interrupted`; it is not mistaken for a truncated trace file. It uses FD annotations for read/write targets, never file-looking text inside payload buffers. Its supported path syntax is intentionally conservative: escaped/truncated paths, relative path resolution, unusual syscalls, shared-memory operations, mmap effects, and io_uring completions need further work. PID reuse and exec from a nonleader thread are outside these short-lived runs. Do not treat the normalized file as a lossless trace; keep the raw data.
+
+The standalone live descriptor-sharing probe can be reproduced with:
+
+```bash
+gcc -Wall -Wextra -O2 experiments/mcp/clone_files_probe.c -o /tmp/clone_files_probe
+strace -ff -ttt -yy -s 128 -e trace=clone3,socket,fcntl,close,pipe,read,write,wait4 \
+  -o /tmp/clone-files-trace /tmp/clone_files_probe
+```
+
+It verifies that `clone3(CLONE_FILES)` lets the parent observe a UDP socket opened
+by the child. This validates the kernel and strace behavior used by the lifecycle
+model; attribution behavior is additionally covered by synthetic trace tests.
 
 ## Existing repo issues affecting interpretation
 
 These are observations about this repository, not changes to the Rust experiment:
 
-1. `TimeWindowStrategy::load_ground_truth` loads per-event ground-truth request identities and timestamps for inference. This differs from README's stated isolation of ground truth. Those scores measure an oracle-assisted baseline, not attribution from kernel observations alone.
+1. TimeWindowStrategy::load_ground_truth loads per-event ground-truth request identities and timestamps for inference. This differs from README's stated isolation of ground truth. The evaluator now labels those CSV strategies oracle_assisted_*; the scores remain diagnostic, not attribution from kernel observations alone.
 2. The Rust collector queries `/proc/<tid>/status` after execution, when threads may no longer exist. Its `--data-dir` workaround supplies one workload PID for all events; this cannot correctly represent arbitrary subprocess descendants.
-3. The README quick start captures ground truth and syscalls in separate workload executions. Those runs cannot be directly joined by PID and time. The smoke script uses one execution but suppresses workload failure with `|| true`.
+3. The README quick start now captures ground truth and syscalls in the same workload execution. The smoke script also uses one execution and propagates workload failures.
 4. The collector's generic comma splitting and syscall regex are insufficient for general MCP traces, decoded FDs, and unfinished/resumed records.
 
-The new experiment uses its own schema and analyzer to avoid silently changing existing Rust results.
+The MCP pipeline has its own schema and analyzer. The legacy evaluator remains separate and now labels its oracle-assisted strategy exports.
 
-## What remains before claiming a provenance solution
+## Implemented bridge and remaining work
 
-The useful hypothesis is that request identity must survive **dispatch → async work submission → worker execution → syscall**, and be removed/restored correctly when execution changes requests. A thread-local tag at MCP handler entry alone cannot establish this for work that later runs on libuv workers.
+The bridge now propagates identity from **dispatch → async work submission → worker execution → syscall** for tested Node/libuv and Rust/Tokio cases. It restores nested scopes, records joins, observes one-shot child inheritance, and follows exclusive TCP connection ownership. The measured results, reproduction commands, and precise boundaries are in the runtime findings document.
 
-Next experiments should add instrumented dispatch and async-work IDs as a separate ground-truth channel, then test shared files, background work, cancellation, retries, delayed effects, and subprocesses. A proposed mechanism could propagate context through runtime work queues and expose a trusted binding at syscall time. It must be evaluated on events without unique paths, with explicit unknown/ambiguous cases and measured coverage and overhead. App-provided identities are trusted only under the current instrumentation threat model; forging them is a later adversarial test.
+Further work must cover multiplexed network protocols, long-lived child servers, more runtimes, lower-overhead syscall capture, and unprivileged/privileged eBPF collectors. No eBPF implementation ran on this host. The bridges trust runtime/application instrumentation and do not prove data-flow lineage. A security deployment would also need adversarial tests for forged or omitted records.
 
 No CamFlow, SPADE, Tetragon, Tracee, Audit, or OpenTelemetry deployment was benchmarked here. The experiment establishes failures of the tested metadata baselines; it does not establish that every configuration of those systems fails. [CamFlow](https://camflow.org/) captures whole-system provenance and supports application integration; [OpenTelemetry context propagation](https://opentelemetry.io/docs/concepts/context-propagation/) preserves execution context across instrumented boundaries. The research question is the additional binding from logical request context to individual kernel effects under shared execution, which must be tested rather than inferred from product categories.
 

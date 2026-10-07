@@ -16943,5 +16943,2090 @@
         }
       }
     ]
+  },
+  "tokio-joins-matrix-v1": {
+    "runs": 6,
+    "passed": 6,
+    "cases": [
+      {
+        "name": "batch-joined-c1-p1-s0-r0-i1",
+        "scenario": "batch-joined",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 1,
+        "pool_size": 1,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 3,
+          "joins": 2,
+          "operations": 87,
+          "operations_started": 87,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 26,
+          "migrating_request_spans": 3,
+          "markers": 348,
+          "parser": {
+            "lifecycle_lines": 12,
+            "parsed": 852
+          },
+          "all_event_status": {
+            "unknown": 249,
+            "background": 87,
+            "bound": 2
+          },
+          "fixture_score": {
+            "events": 15,
+            "background": 13,
+            "bound": 2
+          },
+          "fixture_events_per_request": {
+            "3": 1,
+            "4": 1
+          },
+          "analysis_id": "781d8ae84ee448d4b4a4b35aa8de64c2",
+          "output_sha256": {
+            "causal-attribution.jsonl": "285d58aef9b5a66031a5bf3d8bd9b8178cb4d135a705d4149e5c00487dc53b5d",
+            "provenance.jsonl": "54b3e35efd1996483d083de7062c34419cc2c9b4dc6ddf7ebdf73d9c2de4a20c"
+          }
+        },
+        "batch-score": {
+          "valid": true,
+          "counts": {
+            "background_events": 10,
+            "expected_parent_edges": 2,
+            "correct_parent_edges": 2,
+            "false_parent_edges": 0,
+            "missing_parent_edges": 0,
+            "request_events": 2,
+            "multi_parent_events": 0
+          },
+          "mismatches": [],
+          "oracle": "batch offset and byte count determine contributing request slots; not used during inference"
+        }
+      },
+      {
+        "name": "batch-joined-c1-p4-s0-r0-i1",
+        "scenario": "batch-joined",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 1,
+        "pool_size": 4,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 3,
+          "joins": 2,
+          "operations": 92,
+          "operations_started": 92,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 27,
+          "migrating_request_spans": 6,
+          "markers": 368,
+          "parser": {
+            "lifecycle_lines": 14,
+            "parsed": 881
+          },
+          "all_event_status": {
+            "unknown": 251,
+            "background": 92,
+            "bound": 4
+          },
+          "fixture_score": {
+            "events": 16,
+            "background": 14,
+            "bound": 2
+          },
+          "fixture_events_per_request": {
+            "3": 1,
+            "4": 1
+          },
+          "analysis_id": "ab5414d98bd1482787f0367142c70a32",
+          "output_sha256": {
+            "causal-attribution.jsonl": "f209947b728c2cac8d6522ce76cdb9356e99d5fada36fb4bd57f2bf2c3efe6a7",
+            "provenance.jsonl": "016fa203cfbf4883141cab81cabc3223c4493b5db56feb416e6d6c0163815832"
+          }
+        },
+        "batch-score": {
+          "valid": true,
+          "counts": {
+            "background_events": 11,
+            "expected_parent_edges": 2,
+            "correct_parent_edges": 2,
+            "false_parent_edges": 0,
+            "missing_parent_edges": 0,
+            "request_events": 2,
+            "multi_parent_events": 0
+          },
+          "mismatches": [],
+          "oracle": "batch offset and byte count determine contributing request slots; not used during inference"
+        }
+      },
+      {
+        "name": "batch-joined-c8-p1-s0-r0-i1",
+        "scenario": "batch-joined",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 1,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 17,
+          "joins": 2,
+          "operations": 255,
+          "operations_started": 255,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 75,
+          "migrating_request_spans": 6,
+          "markers": 1020,
+          "parser": {
+            "lifecycle_lines": 12,
+            "parsed": 2233
+          },
+          "all_event_status": {
+            "unknown": 265,
+            "background": 220,
+            "multi_parent": 2
+          },
+          "fixture_score": {
+            "events": 36,
+            "background": 34,
+            "multi_parent": 2
+          },
+          "fixture_events_per_request": {
+            "3": 1,
+            "4": 1,
+            "5": 1,
+            "6": 1,
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "11": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1,
+            "15": 1,
+            "16": 1,
+            "17": 1,
+            "18": 1
+          },
+          "analysis_id": "d58d8386c60a424ba8be8bb03d6e3ef5",
+          "output_sha256": {
+            "causal-attribution.jsonl": "4a9ec91264e014a017d5402f08231ed8009e23b6c689b59feb83f382e37e642b",
+            "provenance.jsonl": "a5fb24aedef0c319c799e55e60d4b17cc8da74c66c9d1a4693ba7e9a1a49984c"
+          }
+        },
+        "batch-score": {
+          "valid": true,
+          "counts": {
+            "background_events": 31,
+            "expected_parent_edges": 16,
+            "correct_parent_edges": 16,
+            "false_parent_edges": 0,
+            "missing_parent_edges": 0,
+            "request_events": 2,
+            "multi_parent_events": 2
+          },
+          "mismatches": [],
+          "oracle": "batch offset and byte count determine contributing request slots; not used during inference"
+        }
+      },
+      {
+        "name": "batch-joined-c8-p4-s0-r0-i1",
+        "scenario": "batch-joined",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 4,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 17,
+          "joins": 2,
+          "operations": 256,
+          "operations_started": 256,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 75,
+          "migrating_request_spans": 14,
+          "markers": 1024,
+          "parser": {
+            "lifecycle_lines": 14,
+            "parsed": 2248
+          },
+          "all_event_status": {
+            "unknown": 267,
+            "background": 229,
+            "multi_parent": 2
+          },
+          "fixture_score": {
+            "events": 36,
+            "background": 34,
+            "multi_parent": 2
+          },
+          "fixture_events_per_request": {
+            "3": 1,
+            "4": 1,
+            "5": 1,
+            "6": 1,
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "11": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1,
+            "15": 1,
+            "16": 1,
+            "17": 1,
+            "18": 1
+          },
+          "analysis_id": "d199f2cd66e741adb2b7ef0e3f638d4a",
+          "output_sha256": {
+            "causal-attribution.jsonl": "2e9fa460e79a640f3573ff52f5ea61226b08cefe3e651a6e5d18ea2f8e616b74",
+            "provenance.jsonl": "c8860c7e9c1614b813d88784cad76e1da44cb974c4393088dc7083759e77003f"
+          }
+        },
+        "batch-score": {
+          "valid": true,
+          "counts": {
+            "background_events": 31,
+            "expected_parent_edges": 16,
+            "correct_parent_edges": 16,
+            "false_parent_edges": 0,
+            "missing_parent_edges": 0,
+            "request_events": 2,
+            "multi_parent_events": 2
+          },
+          "mismatches": [],
+          "oracle": "batch offset and byte count determine contributing request slots; not used during inference"
+        }
+      },
+      {
+        "name": "batch-joined-c32-p1-s0-r0-i1",
+        "scenario": "batch-joined",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 32,
+        "pool_size": 1,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 65,
+          "joins": 2,
+          "operations": 819,
+          "operations_started": 819,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 240,
+          "migrating_request_spans": 42,
+          "markers": 3276,
+          "parser": {
+            "lifecycle_lines": 12,
+            "parsed": 6935
+          },
+          "all_event_status": {
+            "unknown": 314,
+            "background": 696,
+            "multi_parent": 2,
+            "bound": 1
+          },
+          "fixture_score": {
+            "events": 105,
+            "background": 103,
+            "multi_parent": 2
+          },
+          "fixture_events_per_request": {
+            "3": 1,
+            "4": 1,
+            "5": 1,
+            "6": 1,
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "11": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1,
+            "15": 1,
+            "16": 1,
+            "17": 1,
+            "18": 1,
+            "19": 1,
+            "20": 1,
+            "21": 1,
+            "22": 1,
+            "23": 1,
+            "24": 1,
+            "25": 1,
+            "26": 1,
+            "27": 1,
+            "28": 1,
+            "29": 1,
+            "30": 1,
+            "31": 1,
+            "32": 1,
+            "33": 1,
+            "34": 1,
+            "35": 1,
+            "36": 1,
+            "37": 1,
+            "38": 1,
+            "39": 1,
+            "40": 1,
+            "41": 1,
+            "42": 1,
+            "43": 1,
+            "44": 1,
+            "45": 1,
+            "46": 1,
+            "47": 1,
+            "48": 1,
+            "49": 1,
+            "50": 1,
+            "51": 1,
+            "52": 1,
+            "53": 1,
+            "54": 1,
+            "55": 1,
+            "56": 1,
+            "57": 1,
+            "58": 1,
+            "59": 1,
+            "60": 1,
+            "61": 1,
+            "62": 1,
+            "63": 1,
+            "64": 1,
+            "65": 1,
+            "66": 1
+          },
+          "analysis_id": "fac7f67f41524250ae2c7921c0eb7d16",
+          "output_sha256": {
+            "causal-attribution.jsonl": "af937abbfe54bcc4a8f3719a36b78d476551ada4640171a5763293de4676c973",
+            "provenance.jsonl": "e2c42f705796e9d63247ac219b4f40cda7ce26a699eb870e2f72672111a4e652"
+          }
+        },
+        "batch-score": {
+          "valid": true,
+          "counts": {
+            "background_events": 100,
+            "expected_parent_edges": 64,
+            "correct_parent_edges": 64,
+            "false_parent_edges": 0,
+            "missing_parent_edges": 0,
+            "request_events": 2,
+            "multi_parent_events": 2
+          },
+          "mismatches": [],
+          "oracle": "batch offset and byte count determine contributing request slots; not used during inference"
+        }
+      },
+      {
+        "name": "batch-joined-c32-p4-s0-r0-i1",
+        "scenario": "batch-joined",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 32,
+        "pool_size": 4,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 65,
+          "joins": 2,
+          "operations": 796,
+          "operations_started": 796,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 234,
+          "migrating_request_spans": 38,
+          "markers": 3184,
+          "parser": {
+            "lifecycle_lines": 14,
+            "parsed": 6824
+          },
+          "all_event_status": {
+            "unknown": 316,
+            "background": 674,
+            "multi_parent": 4
+          },
+          "fixture_score": {
+            "events": 99,
+            "background": 97,
+            "multi_parent": 2
+          },
+          "fixture_events_per_request": {
+            "3": 1,
+            "4": 1,
+            "5": 1,
+            "6": 1,
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "11": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1,
+            "15": 1,
+            "16": 1,
+            "17": 1,
+            "18": 1,
+            "19": 1,
+            "20": 1,
+            "21": 1,
+            "22": 1,
+            "23": 1,
+            "24": 1,
+            "25": 1,
+            "26": 1,
+            "27": 1,
+            "28": 1,
+            "29": 1,
+            "30": 1,
+            "31": 1,
+            "32": 1,
+            "33": 1,
+            "34": 1,
+            "35": 1,
+            "36": 1,
+            "37": 1,
+            "38": 1,
+            "39": 1,
+            "40": 1,
+            "41": 1,
+            "42": 1,
+            "43": 1,
+            "44": 1,
+            "45": 1,
+            "46": 1,
+            "47": 1,
+            "48": 1,
+            "49": 1,
+            "50": 1,
+            "51": 1,
+            "52": 1,
+            "53": 1,
+            "54": 1,
+            "55": 1,
+            "56": 1,
+            "57": 1,
+            "58": 1,
+            "59": 1,
+            "60": 1,
+            "61": 1,
+            "62": 1,
+            "63": 1,
+            "64": 1,
+            "65": 1,
+            "66": 1
+          },
+          "analysis_id": "7f6ebc9dbcf54c53b1a23dd62712cd40",
+          "output_sha256": {
+            "causal-attribution.jsonl": "c53223f20432852ddb9c74e92d73f0cd122ce701dd09c3380df75e274d87d990",
+            "provenance.jsonl": "4cf59390d9cb2641c01d08b2a129d09f2d083f63716deae77c21011d79a76336"
+          }
+        },
+        "batch-score": {
+          "valid": true,
+          "counts": {
+            "background_events": 94,
+            "expected_parent_edges": 64,
+            "correct_parent_edges": 64,
+            "false_parent_edges": 0,
+            "missing_parent_edges": 0,
+            "request_events": 2,
+            "multi_parent_events": 2
+          },
+          "mismatches": [],
+          "oracle": "batch offset and byte count determine contributing request slots; not used during inference"
+        }
+      }
+    ]
+  },
+  "tokio-registry-regression-v1": {
+    "runs": 14,
+    "passed": 14,
+    "cases": [
+      {
+        "name": "read-c8-p1-s1-r0-i1",
+        "scenario": "read",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 1,
+        "shared": true,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 16,
+          "joins": 0,
+          "operations": 282,
+          "operations_started": 282,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 87,
+          "migrating_request_spans": 11,
+          "markers": 1128,
+          "parser": {
+            "lifecycle_lines": 12,
+            "parsed": 2426
+          },
+          "all_event_status": {
+            "unknown": 263,
+            "background": 199,
+            "bound": 224
+          },
+          "fixture_score": {
+            "events": 102,
+            "background": 22,
+            "bound": 80
+          },
+          "fixture_events_per_request": {
+            "3": 5,
+            "4": 5,
+            "5": 5,
+            "6": 5,
+            "7": 5,
+            "8": 5,
+            "9": 5,
+            "10": 5,
+            "11": 5,
+            "12": 5,
+            "13": 5,
+            "14": 5,
+            "15": 5,
+            "16": 5,
+            "17": 5,
+            "18": 5
+          },
+          "analysis_id": "73b88bdcb59f4d9da5ccf1595ca6733a",
+          "output_sha256": {
+            "causal-attribution.jsonl": "4abaef4ea01362bc88aceb2085d377226a224b9c19d5e40dca792ae5a207e07e",
+            "provenance.jsonl": "ff1856496df786f685299ab683da49f0b96ddd43cc8b86436868b78d7736aaab"
+          }
+        }
+      },
+      {
+        "name": "read-c8-p1-s0-r0-i1",
+        "scenario": "read",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 1,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 16,
+          "joins": 0,
+          "operations": 275,
+          "operations_started": 275,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 85,
+          "migrating_request_spans": 13,
+          "markers": 1100,
+          "parser": {
+            "lifecycle_lines": 12,
+            "parsed": 2401
+          },
+          "all_event_status": {
+            "unknown": 263,
+            "background": 202,
+            "bound": 224
+          },
+          "fixture_score": {
+            "events": 100,
+            "background": 20,
+            "bound": 80,
+            "oracle_labelled": 80,
+            "oracle_correct": 80
+          },
+          "fixture_events_per_request": {
+            "3": 5,
+            "4": 5,
+            "5": 5,
+            "6": 5,
+            "7": 5,
+            "8": 5,
+            "9": 5,
+            "10": 5,
+            "11": 5,
+            "12": 5,
+            "13": 5,
+            "14": 5,
+            "15": 5,
+            "16": 5,
+            "17": 5,
+            "18": 5
+          },
+          "analysis_id": "78522d898d244250b51532e8146a7180",
+          "output_sha256": {
+            "causal-attribution.jsonl": "b640480b52950936ef1b28bb084bc19d0836bc58d38d74898daeaf9d701dbf17",
+            "provenance.jsonl": "71928f72e090d509d6f8bbe0aa6f2009549bd9599d3ab8bf5c93cf84d2bd7bcc"
+          }
+        }
+      },
+      {
+        "name": "read-c8-p4-s0-r0-i1",
+        "scenario": "read",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 4,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 16,
+          "joins": 0,
+          "operations": 299,
+          "operations_started": 299,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 91,
+          "migrating_request_spans": 15,
+          "markers": 1196,
+          "parser": {
+            "lifecycle_lines": 18,
+            "parsed": 2453
+          },
+          "all_event_status": {
+            "unknown": 269,
+            "background": 148,
+            "bound": 228
+          },
+          "fixture_score": {
+            "events": 106,
+            "background": 26,
+            "bound": 80,
+            "oracle_labelled": 80,
+            "oracle_correct": 80
+          },
+          "fixture_events_per_request": {
+            "3": 5,
+            "4": 5,
+            "5": 5,
+            "6": 5,
+            "7": 5,
+            "8": 5,
+            "9": 5,
+            "10": 5,
+            "11": 5,
+            "12": 5,
+            "13": 5,
+            "14": 5,
+            "15": 5,
+            "16": 5,
+            "17": 5,
+            "18": 5
+          },
+          "analysis_id": "71de4f9cc72e4d279d93353f7473e0a9",
+          "output_sha256": {
+            "causal-attribution.jsonl": "d78abcec988255cf1d3821b3e904a55cd80471bb037a9d293328ae6d6ccd418e",
+            "provenance.jsonl": "fa2056d2a94954a692781e12fa310fb09cb3019585a1e98428d751ce5ce8a601"
+          }
+        }
+      },
+      {
+        "name": "read-c8-p4-s1-r0-i1",
+        "scenario": "read",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 4,
+        "shared": true,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 16,
+          "joins": 0,
+          "operations": 291,
+          "operations_started": 291,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 89,
+          "migrating_request_spans": 11,
+          "markers": 1164,
+          "parser": {
+            "lifecycle_lines": 18,
+            "parsed": 2424
+          },
+          "all_event_status": {
+            "unknown": 269,
+            "background": 153,
+            "bound": 226
+          },
+          "fixture_score": {
+            "events": 104,
+            "background": 24,
+            "bound": 80
+          },
+          "fixture_events_per_request": {
+            "3": 5,
+            "4": 5,
+            "5": 5,
+            "6": 5,
+            "7": 5,
+            "8": 5,
+            "9": 5,
+            "10": 5,
+            "11": 5,
+            "12": 5,
+            "13": 5,
+            "14": 5,
+            "15": 5,
+            "16": 5,
+            "17": 5,
+            "18": 5
+          },
+          "analysis_id": "296a0bf0889843e6aab7dd7d1ba22d59",
+          "output_sha256": {
+            "causal-attribution.jsonl": "d462237e61fc7ee4c35d4668c37ba7ac386f16ab52c9f3120b330381da070250",
+            "provenance.jsonl": "45757ce239101d2265ee6a94676f3ad18a44a87ff93a52efbbc853e9079e071d"
+          }
+        }
+      },
+      {
+        "name": "nested-c8-p1-s0-r0-i1",
+        "scenario": "nested",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 1,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 17,
+          "joins": 0,
+          "operations": 587,
+          "operations_started": 587,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 116,
+          "migrating_request_spans": 16,
+          "markers": 2348,
+          "parser": {
+            "lifecycle_lines": 12,
+            "parsed": 3644
+          },
+          "all_event_status": {
+            "unknown": 265,
+            "background": 196,
+            "bound": 185
+          },
+          "fixture_score": {
+            "events": 129,
+            "background": 33,
+            "bound": 96
+          },
+          "fixture_events_per_request": {
+            "3": 6,
+            "4": 6,
+            "5": 6,
+            "6": 6,
+            "7": 6,
+            "9": 6,
+            "8": 6,
+            "10": 6,
+            "11": 6,
+            "12": 6,
+            "13": 6,
+            "14": 6,
+            "15": 6,
+            "16": 6,
+            "18": 6,
+            "17": 6
+          },
+          "analysis_id": "3245720f05c4441ca31be0c1c1aca7fd",
+          "output_sha256": {
+            "causal-attribution.jsonl": "510d4dddf541a46740fe22783f60f28bd0581c49d5d967dc596ae2cad3858bb4",
+            "provenance.jsonl": "d99ca74525bed5bff55183d21781626ae8f191f51a6e320bd7a8ce8d45b6ec2d"
+          }
+        },
+        "control-score": {
+          "valid": true,
+          "counts": {
+            "background": 30,
+            "correct": 126,
+            "request_events": 96,
+            "after_response": 0
+          },
+          "mismatches": [],
+          "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+        }
+      },
+      {
+        "name": "nested-c8-p4-s0-r0-i1",
+        "scenario": "nested",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 4,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 17,
+          "joins": 0,
+          "operations": 584,
+          "operations_started": 584,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 115,
+          "migrating_request_spans": 15,
+          "markers": 2336,
+          "parser": {
+            "lifecycle_lines": 16,
+            "parsed": 3622
+          },
+          "all_event_status": {
+            "unknown": 269,
+            "background": 191,
+            "bound": 176
+          },
+          "fixture_score": {
+            "events": 128,
+            "background": 32,
+            "bound": 96
+          },
+          "fixture_events_per_request": {
+            "3": 6,
+            "4": 6,
+            "5": 6,
+            "6": 6,
+            "7": 6,
+            "8": 6,
+            "9": 6,
+            "10": 6,
+            "11": 6,
+            "12": 6,
+            "13": 6,
+            "14": 6,
+            "16": 6,
+            "15": 6,
+            "17": 6,
+            "18": 6
+          },
+          "analysis_id": "d193b016102a4d38bd85bdd895ba052c",
+          "output_sha256": {
+            "causal-attribution.jsonl": "67c613931977b1c249d119235a2993e24cd131884cc9fa7a5181a2e5627870b2",
+            "provenance.jsonl": "89ea9027213f68d203c982aef9b3ab0ad1a00984a48ec2f77b9ba4d97ae686e4"
+          }
+        },
+        "control-score": {
+          "valid": true,
+          "counts": {
+            "background": 29,
+            "correct": 125,
+            "request_events": 96,
+            "after_response": 0
+          },
+          "mismatches": [],
+          "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+        }
+      },
+      {
+        "name": "detached-c8-p1-s0-r0-i1",
+        "scenario": "detached",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 1,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 17,
+          "joins": 0,
+          "operations": 440,
+          "operations_started": 440,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 120,
+          "migrating_request_spans": 17,
+          "markers": 1760,
+          "parser": {
+            "lifecycle_lines": 12,
+            "parsed": 2939
+          },
+          "all_event_status": {
+            "unknown": 265,
+            "background": 131,
+            "bound": 133
+          },
+          "fixture_score": {
+            "events": 117,
+            "background": 21,
+            "bound": 96
+          },
+          "fixture_events_per_request": {
+            "3": 6,
+            "4": 6,
+            "5": 6,
+            "6": 6,
+            "9": 6,
+            "8": 6,
+            "7": 6,
+            "10": 6,
+            "12": 6,
+            "11": 6,
+            "13": 6,
+            "15": 6,
+            "17": 6,
+            "16": 6,
+            "14": 6,
+            "18": 6
+          },
+          "analysis_id": "214968ea994045f6ad7250b01eee3611",
+          "output_sha256": {
+            "causal-attribution.jsonl": "68a83a43ff943874cf58197068b050368598ba90deb00e5dbc3522825b804728",
+            "provenance.jsonl": "b857bd98ff8c9ada62c4c431cfefc26f57c4a1e5e3aa170dcd194cddae246694"
+          }
+        },
+        "control-score": {
+          "valid": true,
+          "counts": {
+            "background": 18,
+            "correct": 114,
+            "request_events": 96,
+            "after_response": 96
+          },
+          "mismatches": [],
+          "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+        }
+      },
+      {
+        "name": "detached-c8-p4-s0-r0-i1",
+        "scenario": "detached",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 4,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 17,
+          "joins": 0,
+          "operations": 438,
+          "operations_started": 438,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 121,
+          "migrating_request_spans": 17,
+          "markers": 1752,
+          "parser": {
+            "lifecycle_lines": 18,
+            "parsed": 2923
+          },
+          "all_event_status": {
+            "unknown": 271,
+            "background": 114,
+            "bound": 136
+          },
+          "fixture_score": {
+            "events": 118,
+            "background": 22,
+            "bound": 96
+          },
+          "fixture_events_per_request": {
+            "3": 6,
+            "4": 6,
+            "5": 6,
+            "6": 6,
+            "7": 6,
+            "9": 6,
+            "8": 6,
+            "10": 6,
+            "11": 6,
+            "14": 6,
+            "13": 6,
+            "12": 6,
+            "15": 6,
+            "16": 6,
+            "17": 6,
+            "18": 6
+          },
+          "analysis_id": "1c8d774a4bae47ae85fcf6442f73cb17",
+          "output_sha256": {
+            "causal-attribution.jsonl": "66e57f125370089c4a462e88e9173aa3b4f79b10a22e25612b08f5c5ada4f735",
+            "provenance.jsonl": "8406164d97fc3ea1ebec1a55a721b4256542f0aadd2508a29a0fa53ec8e1a876"
+          }
+        },
+        "control-score": {
+          "valid": true,
+          "counts": {
+            "background": 19,
+            "correct": 115,
+            "request_events": 96,
+            "after_response": 96
+          },
+          "mismatches": [],
+          "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+        }
+      },
+      {
+        "name": "spawn-c8-p1-s0-r0-i1",
+        "scenario": "spawn",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 1,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 17,
+          "joins": 0,
+          "operations": 192,
+          "operations_started": 192,
+          "operations_cancelled": 0,
+          "inherited_processes": 16,
+          "runtime_spans": 57,
+          "migrating_request_spans": 6,
+          "markers": 768,
+          "parser": {
+            "lifecycle_lines": 59,
+            "parsed": 8335
+          },
+          "all_event_status": {
+            "unknown": 265,
+            "background": 140,
+            "bound": 6512
+          },
+          "fixture_score": {
+            "events": 70,
+            "background": 22,
+            "bound": 48
+          },
+          "fixture_events_per_request": {
+            "5": 3,
+            "4": 3,
+            "6": 3,
+            "3": 3,
+            "8": 3,
+            "7": 3,
+            "9": 3,
+            "10": 3,
+            "12": 3,
+            "13": 3,
+            "11": 3,
+            "14": 3,
+            "15": 3,
+            "16": 3,
+            "17": 3,
+            "18": 3
+          },
+          "analysis_id": "82fccd1b463a4bbe87fbb873800d0a29",
+          "output_sha256": {
+            "causal-attribution.jsonl": "12ec91b9d472913ecd49efb7d1ac8aaab47164e019fe7f38d17da159bb4efa6a",
+            "provenance.jsonl": "26885c28243ad1a8849c12d3cb3cd0974f5cb231d15d6ba38feb578b48815028"
+          }
+        },
+        "control-score": {
+          "valid": true,
+          "counts": {
+            "background": 19,
+            "correct": 35,
+            "request_events": 16,
+            "after_response": 0
+          },
+          "mismatches": [],
+          "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+        }
+      },
+      {
+        "name": "spawn-c8-p4-s0-r0-i1",
+        "scenario": "spawn",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 4,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 17,
+          "joins": 0,
+          "operations": 196,
+          "operations_started": 196,
+          "operations_cancelled": 0,
+          "inherited_processes": 16,
+          "runtime_spans": 58,
+          "migrating_request_spans": 11,
+          "markers": 784,
+          "parser": {
+            "lifecycle_lines": 60,
+            "parsed": 8360
+          },
+          "all_event_status": {
+            "unknown": 265,
+            "background": 149,
+            "bound": 6512
+          },
+          "fixture_score": {
+            "events": 71,
+            "background": 23,
+            "bound": 48
+          },
+          "fixture_events_per_request": {
+            "5": 3,
+            "4": 3,
+            "3": 3,
+            "6": 3,
+            "7": 3,
+            "9": 3,
+            "8": 3,
+            "10": 3,
+            "12": 3,
+            "13": 3,
+            "11": 3,
+            "15": 3,
+            "14": 3,
+            "16": 3,
+            "17": 3,
+            "18": 3
+          },
+          "analysis_id": "47191f077c7b42e9acaeeed7eaeae63d",
+          "output_sha256": {
+            "causal-attribution.jsonl": "a8490e4938894f017f5f55596d542a455fe020c7123d13d8ada60622a2bbb101",
+            "provenance.jsonl": "b352edc9951049d4857a66288888bd6ba05a9e6667211ebe8b9cf9c961f74631"
+          }
+        },
+        "control-score": {
+          "valid": true,
+          "counts": {
+            "background": 20,
+            "correct": 36,
+            "request_events": 16,
+            "after_response": 0
+          },
+          "mismatches": [],
+          "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+        }
+      },
+      {
+        "name": "cancel-c8-p1-s0-r0-i1",
+        "scenario": "cancel",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 1,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 17,
+          "joins": 0,
+          "operations": 223,
+          "operations_started": 223,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 75,
+          "migrating_request_spans": 5,
+          "markers": 892,
+          "parser": {
+            "lifecycle_lines": 12,
+            "parsed": 1978
+          },
+          "all_event_status": {
+            "unknown": 265,
+            "background": 163,
+            "bound": 8
+          },
+          "fixture_score": {
+            "events": 32,
+            "background": 24,
+            "bound": 8
+          },
+          "fixture_events_per_request": {
+            "3": 1,
+            "5": 1,
+            "7": 1,
+            "9": 1,
+            "11": 1,
+            "13": 1,
+            "15": 1,
+            "17": 1
+          },
+          "analysis_id": "bb96217e98ca49f2bf8f4b3dadfdd3f6",
+          "output_sha256": {
+            "causal-attribution.jsonl": "d8292cf60702f2026612c2eb593a10280b5651abe0dd456929e2e12bba526da1",
+            "provenance.jsonl": "a75d1fcb314ee87928b1fafae54dab5fb5f1032f4302a4d8073c981073523304"
+          }
+        },
+        "control-score": {
+          "valid": true,
+          "counts": {
+            "background": 21,
+            "correct": 29,
+            "request_events": 8,
+            "after_response": 0,
+            "cancelled_requests": 8
+          },
+          "mismatches": [],
+          "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+        }
+      },
+      {
+        "name": "cancel-c8-p4-s0-r0-i1",
+        "scenario": "cancel",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 4,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 17,
+          "joins": 0,
+          "operations": 231,
+          "operations_started": 231,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 77,
+          "migrating_request_spans": 3,
+          "markers": 924,
+          "parser": {
+            "lifecycle_lines": 14,
+            "parsed": 2021
+          },
+          "all_event_status": {
+            "unknown": 267,
+            "background": 172,
+            "bound": 8
+          },
+          "fixture_score": {
+            "events": 34,
+            "background": 26,
+            "bound": 8
+          },
+          "fixture_events_per_request": {
+            "3": 1,
+            "5": 1,
+            "7": 1,
+            "9": 1,
+            "11": 1,
+            "13": 1,
+            "15": 1,
+            "17": 1
+          },
+          "analysis_id": "1f5a5b3385ff4d5bb13d3460abdd46fe",
+          "output_sha256": {
+            "causal-attribution.jsonl": "217a3f051dd1b154c13b0ab82e43f56d27baf3d2a1b3a69a89cac79bb1b569cf",
+            "provenance.jsonl": "f2558db7f6947bfc41d6f74f9d451a12a1d38c714fdd638fe6e0579a959397a9"
+          }
+        },
+        "control-score": {
+          "valid": true,
+          "counts": {
+            "background": 23,
+            "correct": 31,
+            "request_events": 8,
+            "after_response": 0,
+            "cancelled_requests": 8
+          },
+          "mismatches": [],
+          "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+        }
+      },
+      {
+        "name": "failure-c8-p1-s0-r0-i1",
+        "scenario": "failure",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 1,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 17,
+          "joins": 0,
+          "operations": 236,
+          "operations_started": 236,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 76,
+          "migrating_request_spans": 9,
+          "markers": 944,
+          "parser": {
+            "lifecycle_lines": 12,
+            "parsed": 2094
+          },
+          "all_event_status": {
+            "unknown": 265,
+            "background": 171,
+            "bound": 64
+          },
+          "fixture_score": {
+            "events": 89,
+            "background": 25,
+            "bound": 64
+          },
+          "fixture_events_per_request": {
+            "3": 4,
+            "4": 4,
+            "5": 4,
+            "6": 4,
+            "7": 4,
+            "8": 4,
+            "9": 4,
+            "10": 4,
+            "11": 4,
+            "12": 4,
+            "13": 4,
+            "14": 4,
+            "15": 4,
+            "16": 4,
+            "17": 4,
+            "18": 4
+          },
+          "analysis_id": "336e462f93fb4144ba5501018af3168b",
+          "output_sha256": {
+            "causal-attribution.jsonl": "a27211592d432bf224d4d33bf27ffec40dbd80c0cf84db3b7c96b5118ca76dd8",
+            "provenance.jsonl": "a721624d2eaa2b6350260f3de32971602d44b820b00c99854ee76cced6c01753"
+          }
+        },
+        "control-score": {
+          "valid": true,
+          "counts": {
+            "background": 22,
+            "correct": 38,
+            "request_events": 16,
+            "failed_syscalls": 16,
+            "after_response": 0
+          },
+          "mismatches": [],
+          "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+        }
+      },
+      {
+        "name": "failure-c8-p4-s0-r0-i1",
+        "scenario": "failure",
+        "runtime": "tokio",
+        "runtime_workers": 2,
+        "concurrency": 8,
+        "pool_size": 4,
+        "shared": false,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 17,
+          "joins": 0,
+          "operations": 248,
+          "operations_started": 248,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 79,
+          "migrating_request_spans": 15,
+          "markers": 992,
+          "parser": {
+            "lifecycle_lines": 14,
+            "parsed": 2160
+          },
+          "all_event_status": {
+            "unknown": 267,
+            "background": 187,
+            "bound": 64
+          },
+          "fixture_score": {
+            "events": 92,
+            "background": 28,
+            "bound": 64
+          },
+          "fixture_events_per_request": {
+            "3": 4,
+            "4": 4,
+            "5": 4,
+            "6": 4,
+            "7": 4,
+            "8": 4,
+            "9": 4,
+            "10": 4,
+            "11": 4,
+            "12": 4,
+            "13": 4,
+            "14": 4,
+            "15": 4,
+            "16": 4,
+            "17": 4,
+            "18": 4
+          },
+          "analysis_id": "4a080b50ddd04fad8d4fe176bf9a9860",
+          "output_sha256": {
+            "causal-attribution.jsonl": "ea7399387a463bc25ac3ebaa53c78b6021c7ce679f3687f266a010593b45f233",
+            "provenance.jsonl": "8f6aa50b78f9c80bf89b81f023b2d5dbf2d5255a568373c1c28b34f10b76abf3"
+          }
+        },
+        "control-score": {
+          "valid": true,
+          "counts": {
+            "background": 25,
+            "correct": 41,
+            "request_events": 16,
+            "failed_syscalls": 16,
+            "after_response": 0
+          },
+          "mismatches": [],
+          "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+        }
+      }
+    ]
+  },
+  "network-matrix-v1": {
+    "runs": 6,
+    "passed": 6,
+    "cases": [
+      {
+        "name": "network-c1-p1-s0-r0-i1",
+        "scenario": "network",
+        "concurrency": 1,
+        "pool_size": 1,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 5,
+          "joins": 0,
+          "operations": 21,
+          "operations_started": 21,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 467,
+          "parser": {
+            "lifecycle_lines": 15,
+            "parsed": 3228
+          },
+          "all_event_status": {
+            "unknown": 2566,
+            "background": 155,
+            "bound": 33
+          },
+          "fixture_score": {
+            "events": 21,
+            "background": 21
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "7fa3884127a54a7c97af078dab302226",
+          "output_sha256": {
+            "causal-attribution.jsonl": "c5eb3ee5e8c08f67509f06e38dc172942ec5b373fb2d89f377cf5497ca645039",
+            "provenance.jsonl": "c01316f2ae4756dfd3c63924a2278782f2ef2d430ed35f4d151113d2fdc65679"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "counts": {
+            "write_events": 4,
+            "correct": 8,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-c1-p4-s0-r0-i1",
+        "scenario": "network",
+        "concurrency": 1,
+        "pool_size": 4,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 5,
+          "joins": 0,
+          "operations": 21,
+          "operations_started": 21,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 467,
+          "parser": {
+            "lifecycle_lines": 21,
+            "parsed": 3235
+          },
+          "all_event_status": {
+            "unknown": 2570,
+            "background": 158,
+            "bound": 33
+          },
+          "fixture_score": {
+            "events": 21,
+            "background": 21
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "350e4908bcda4182b9a70587d8db2d48",
+          "output_sha256": {
+            "causal-attribution.jsonl": "8c376ab6922c8fd3c05c71ad1f0b41ba5a4f2b60b1da03693fe0e0e924240376",
+            "provenance.jsonl": "a810bf32be51085010d8a1c28a9ae6ccf3358dacbad09e560199dd8270574453"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "counts": {
+            "write_events": 4,
+            "correct": 8,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-c8-p4-s0-r0-i1",
+        "scenario": "network",
+        "concurrency": 8,
+        "pool_size": 4,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 33,
+          "joins": 0,
+          "operations": 21,
+          "operations_started": 21,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 2371,
+          "parser": {
+            "lifecycle_lines": 21,
+            "parsed": 5452
+          },
+          "all_event_status": {
+            "unknown": 2571,
+            "background": 218,
+            "bound": 257
+          },
+          "fixture_score": {
+            "events": 21,
+            "background": 21
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "835085db31ad469592fc34e474e90b40",
+          "output_sha256": {
+            "causal-attribution.jsonl": "305eba9cc25aca664ccce58969e72803d1f1be59103ddfd349095223e0d3acff",
+            "provenance.jsonl": "45c6ed199b03b865f153494a53ebc9f85f557b016eb852a03599ccee080ec99e"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "counts": {
+            "write_events": 32,
+            "correct": 64,
+            "read_events": 32
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-c8-p1-s0-r0-i1",
+        "scenario": "network",
+        "concurrency": 8,
+        "pool_size": 1,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 33,
+          "joins": 0,
+          "operations": 21,
+          "operations_started": 21,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 2371,
+          "parser": {
+            "lifecycle_lines": 15,
+            "parsed": 5442
+          },
+          "all_event_status": {
+            "unknown": 2565,
+            "background": 212,
+            "bound": 259
+          },
+          "fixture_score": {
+            "events": 21,
+            "background": 21
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "5f23cd7ceda242279a399fdfe7d0f306",
+          "output_sha256": {
+            "causal-attribution.jsonl": "8d2397d897b6ba293abb04e7be4561869990f81ef542cc164fb38b351e615bec",
+            "provenance.jsonl": "3a45d7cd25bf8199ea363bbf6716d7ce4e62a3fe45f8f43b24625a237142b788"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "counts": {
+            "write_events": 32,
+            "correct": 64,
+            "read_events": 32
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-c32-p4-s0-r0-i1",
+        "scenario": "network",
+        "concurrency": 32,
+        "pool_size": 4,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 129,
+          "joins": 0,
+          "operations": 21,
+          "operations_started": 21,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 8899,
+          "parser": {
+            "lifecycle_lines": 21,
+            "parsed": 13034
+          },
+          "all_event_status": {
+            "unknown": 2571,
+            "background": 408,
+            "bound": 1025
+          },
+          "fixture_score": {
+            "events": 21,
+            "background": 21
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "ae8a25b6cbc542088e3e9bc329ef1612",
+          "output_sha256": {
+            "causal-attribution.jsonl": "b80c5b33829968087eb64116826bdaf168f2b8d36baa6244efeebc64a9b5b7ec",
+            "provenance.jsonl": "ed2b0c8151b2aca86d14f11ec228c16e311d83aa4ed4cb6db491c27d8380e641"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "counts": {
+            "write_events": 128,
+            "correct": 256,
+            "read_events": 128
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-c32-p1-s0-r0-i1",
+        "scenario": "network",
+        "concurrency": 32,
+        "pool_size": 1,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 129,
+          "joins": 0,
+          "operations": 21,
+          "operations_started": 21,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 8899,
+          "parser": {
+            "lifecycle_lines": 15,
+            "parsed": 13027
+          },
+          "all_event_status": {
+            "unknown": 2566,
+            "background": 405,
+            "bound": 1026
+          },
+          "fixture_score": {
+            "events": 21,
+            "background": 21
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "4ab376641b08417991ca09107d5bbe42",
+          "output_sha256": {
+            "causal-attribution.jsonl": "ef9ec76f67c10dd82c14b68204577cc2f1d0e418b2a2ff5ccaa55ceb9a9d3d8e",
+            "provenance.jsonl": "6cdedbbb1e768e1774da429437cf2a462e05c36a5bed860def0fb56f33d62445"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "counts": {
+            "write_events": 128,
+            "correct": 256,
+            "read_events": 128
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      }
+    ]
+  },
+  "network-shared-matrix-v2": {
+    "runs": 6,
+    "passed": 6,
+    "cases": [
+      {
+        "name": "network-shared-c1-p1-s0-r0-i1",
+        "concurrency": 1,
+        "pool_size": 1,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "attribution_model": "causal-context-v2",
+          "requests": 5,
+          "joins": 0,
+          "operations": 13,
+          "operations_started": 13,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 323,
+          "parser": {
+            "lifecycle_lines": 15,
+            "parsed": 3016
+          },
+          "all_event_status": {
+            "unknown": 2566,
+            "no_request_context": 106,
+            "bound": 10,
+            "ambiguous_resource": 4
+          },
+          "fixture_score": {
+            "events": 13,
+            "no_request_context": 13
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "cfd52159493d4a16b74bd9c247606fa5",
+          "output_sha256": {
+            "causal-attribution.jsonl": "667927ea0a4970d82997fa604b945747da526a7c7cbf2cc4d7be21930292ce06",
+            "provenance.jsonl": "59c57af52a5f32160b529f6fed08667cbb07c041911103fd4ec0b29795a4ebf2"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "mode": "candidate_coverage",
+          "counts": {
+            "write_events": 4,
+            "covered_events": 8,
+            "exact_events": 5,
+            "extra_candidate_edges": 6,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-shared-c1-p4-s0-r0-i1",
+        "concurrency": 1,
+        "pool_size": 4,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "attribution_model": "causal-context-v2",
+          "requests": 5,
+          "joins": 0,
+          "operations": 13,
+          "operations_started": 13,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 323,
+          "parser": {
+            "lifecycle_lines": 21,
+            "parsed": 3021
+          },
+          "all_event_status": {
+            "unknown": 2571,
+            "no_request_context": 106,
+            "bound": 10,
+            "ambiguous_resource": 4
+          },
+          "fixture_score": {
+            "events": 13,
+            "no_request_context": 13
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "d10c52c578cd4af0913cd8e3b89d4c75",
+          "output_sha256": {
+            "causal-attribution.jsonl": "8c5dea15db15f362b7321cb301e548d46c6b14676bb059860373290b15bf153e",
+            "provenance.jsonl": "80c3588d6fa641df1f5c3871b97800bc7a4a6e51a978b9791b4f80d4bca8a1bc"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "mode": "candidate_coverage",
+          "counts": {
+            "write_events": 4,
+            "covered_events": 8,
+            "exact_events": 5,
+            "extra_candidate_edges": 6,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-shared-c8-p1-s0-r0-i1",
+        "concurrency": 8,
+        "pool_size": 1,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "attribution_model": "causal-context-v2",
+          "requests": 33,
+          "joins": 0,
+          "operations": 12,
+          "operations_started": 12,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 1604,
+          "parser": {
+            "lifecycle_lines": 15,
+            "parsed": 4384
+          },
+          "all_event_status": {
+            "unknown": 2567,
+            "no_request_context": 108,
+            "bound": 65,
+            "ambiguous_resource": 5
+          },
+          "fixture_score": {
+            "events": 12,
+            "no_request_context": 12
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "fbd968d6ed6748f5a3f8ad8821e0e1aa",
+          "output_sha256": {
+            "causal-attribution.jsonl": "93c3cd4a1c010561f6375303d84c0e0a73f42d761fe910100f43ea3a83eb1199",
+            "provenance.jsonl": "092dd81f918b27cbc9f685b8fa186c897a2297239f78d32f144f7c362f8b5444"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "mode": "candidate_coverage",
+          "counts": {
+            "write_events": 32,
+            "covered_events": 36,
+            "exact_events": 33,
+            "extra_candidate_edges": 48,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-shared-c8-p4-s0-r0-i1",
+        "concurrency": 8,
+        "pool_size": 4,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "attribution_model": "causal-context-v2",
+          "requests": 33,
+          "joins": 0,
+          "operations": 13,
+          "operations_started": 13,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 1611,
+          "parser": {
+            "lifecycle_lines": 21,
+            "parsed": 4394
+          },
+          "all_event_status": {
+            "unknown": 2572,
+            "no_request_context": 106,
+            "bound": 65,
+            "ambiguous_resource": 5
+          },
+          "fixture_score": {
+            "events": 13,
+            "no_request_context": 13
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "ba66797b9f3747a2b5fa9cd39cc6ab93",
+          "output_sha256": {
+            "causal-attribution.jsonl": "e2f6803886ac9ba8fef1bce9063b4bccdefad6f1d54c3b5a45f2f91112dffad4",
+            "provenance.jsonl": "840e801a2fced9e8a545903e325181b1735a62cc95b10828094429849bd80d6e"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "mode": "candidate_coverage",
+          "counts": {
+            "write_events": 32,
+            "covered_events": 36,
+            "exact_events": 33,
+            "extra_candidate_edges": 48,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-shared-c32-p1-s0-r0-i1",
+        "concurrency": 32,
+        "pool_size": 1,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "attribution_model": "causal-context-v2",
+          "requests": 129,
+          "joins": 0,
+          "operations": 13,
+          "operations_started": 13,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 6027,
+          "parser": {
+            "lifecycle_lines": 15,
+            "parsed": 9096
+          },
+          "all_event_status": {
+            "unknown": 2566,
+            "no_request_context": 110,
+            "bound": 257,
+            "ambiguous_resource": 5
+          },
+          "fixture_score": {
+            "events": 13,
+            "no_request_context": 13
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "5a6b666ab37a442fa0b55bf76c8992ac",
+          "output_sha256": {
+            "causal-attribution.jsonl": "7e898a5a00957a219731d061ab091896a660550d622c6e35969871f87583f2fd",
+            "provenance.jsonl": "1c3db57694ca2e6a29d6f5cba135105ba17c543bcba0832fa1106abd9607a6cb"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "mode": "candidate_coverage",
+          "counts": {
+            "write_events": 128,
+            "covered_events": 132,
+            "exact_events": 129,
+            "extra_candidate_edges": 192,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-shared-c32-p4-s0-r0-i1",
+        "concurrency": 32,
+        "pool_size": 4,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "attribution_model": "causal-context-v2",
+          "requests": 129,
+          "joins": 0,
+          "operations": 13,
+          "operations_started": 13,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 6027,
+          "parser": {
+            "lifecycle_lines": 21,
+            "parsed": 9100
+          },
+          "all_event_status": {
+            "unknown": 2571,
+            "no_request_context": 109,
+            "bound": 257,
+            "ambiguous_resource": 5
+          },
+          "fixture_score": {
+            "events": 13,
+            "no_request_context": 13
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "314afa2e591146f9a4eb788d8285b017",
+          "output_sha256": {
+            "causal-attribution.jsonl": "ee906b5d9c0df20b1b8da50790e69098b4ed503cf20ff6d2591182f0c595bb1c",
+            "provenance.jsonl": "7ab4b0b4118b32bff3713d1a369190a9ba69605d9a8e139549845570957b60aa"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "mode": "candidate_coverage",
+          "counts": {
+            "write_events": 128,
+            "covered_events": 132,
+            "exact_events": 129,
+            "extra_candidate_edges": 192,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      }
+    ]
   }
 }

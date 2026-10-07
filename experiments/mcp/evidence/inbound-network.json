@@ -1,0 +1,981 @@
+{
+  "description": "Live MCP-over-stdio calls caused the traced Node MCP server to accept separate inbound TCP sockets. The parent harness sent independent slot tokens and checked server-side reads and response writes.",
+  "runs": {
+    "single_before": {
+      "run-config": {
+        "runtime": "node",
+        "tokio_binary_sha256": null,
+        "runtime_workers": 2,
+        "instrumented": true,
+        "pool_size": 4,
+        "scenario": "network-inbound",
+        "capture": "strace",
+        "seccomp": true
+      },
+      "report": {
+        "tool_calls": 2,
+        "incomplete_calls": 0,
+        "tool_errors": 0,
+        "server_pid": 699668,
+        "parser": {
+          "lifecycle_lines": 21,
+          "parsed": 2871
+        },
+        "sandbox_events": 10,
+        "sandbox_tids": [
+          699725,
+          699727,
+          699728,
+          699729
+        ],
+        "sandbox_syscalls": {
+          "openat": 1,
+          "pwrite64": 8,
+          "close": 1
+        },
+        "oracle_labelled": 0,
+        "baselines": {
+          "pid": {
+            "events": 10,
+            "ambiguous": 10
+          },
+          "request_window": {
+            "events": 10,
+            "unattributed": 3,
+            "singleton": 7
+          }
+        },
+        "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+      },
+      "causal-report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 2,
+        "joins": 0,
+        "operations": 10,
+        "operations_started": 10,
+        "operations_cancelled": 0,
+        "inherited_processes": 0,
+        "runtime_spans": 0,
+        "migrating_request_spans": 0,
+        "markers": 170,
+        "parser": {
+          "lifecycle_lines": 21,
+          "parsed": 2871
+        },
+        "all_event_status": {
+          "unknown": 2571,
+          "no_request_context": 122,
+          "bound": 4
+        },
+        "fixture_score": {
+          "events": 10,
+          "no_request_context": 10
+        },
+        "fixture_events_per_request": {},
+        "output_sha256": {
+          "causal-attribution.jsonl": "bf40b8b0f61213c910d96207146e2bb3b65dcef4028a1d22bbb0ecb9bacd1f32",
+          "provenance.jsonl": "4474ec80ac1d62b2d87d0b8b4afeb97ba764f86f05322123ca782f76506ed22e"
+        }
+      },
+      "network-score": {
+        "valid": false,
+        "mode": "exact_single_connection",
+        "counts": {
+          "read_events": 1,
+          "covered_events": 1,
+          "exact_events": 1,
+          "extra_candidate_edges": 0,
+          "write_events": 1
+        },
+        "mismatches": [
+          {
+            "source": "strace.699668:2625",
+            "direction": "read",
+            "expected": [
+              3
+            ],
+            "actual": [],
+            "origin": "async_context"
+          }
+        ],
+        "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference",
+        "expected_server_directions": [
+          "read",
+          "write"
+        ],
+        "scenario": "network-inbound"
+      },
+      "manifest": {
+        "status": "failed",
+        "error": "Command '['/usr/bin/python3.11', '/u/kdhande/causpan/experiments/mcp/score_network.py', '/u/kdhande/causpan/results/mcp/network-inbound-current-c1-r2']' returned non-zero exit status 1.",
+        "runtime": "node",
+        "scenario": "network-inbound",
+        "concurrency": 1,
+        "pool_size": 4,
+        "batches": 1,
+        "instrumented": true,
+        "seccomp": true,
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "code_sha256": {
+          "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+          "attribute.py": "0d62a63c2c2e0a7f2ab94687b1c47dfd12342991b30214f1d62c3592da3330de",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+          "query.py": "1a65ea5e50e3d863c8dcf708fdc3c4e8ce6e891bc58a38e4b004951bbe2579ff",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "28acf8361c68256110d15158a641942bc1464af9d3899a4060c97bf65c86da8a",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "2e5964c1e22873d37b03f5818a7d6ee56a54b604b58dae92d75b9b6d34caaa2b",
+          "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+          "test_attribute.py": "cc1ce583c9c96e9ece4ad7a783de6ea95a69b4993ce44c7d0baeed40f3415f9d",
+          "test_oracles.py": "e9a6382a8150f937f20f4d9bf3111c96fee8b4e117362e2d811f4622e41d07dd",
+          "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+          "control-server.mjs": "dd4f04f3759fa4f88887e098d49afabf50a139ddb967314a90ea845bf08bae49",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        }
+      },
+      "artifacts": "results/mcp/network-inbound-current-c1-r2"
+    },
+    "single_after": {
+      "run-config": {
+        "runtime": "node",
+        "tokio_binary_sha256": null,
+        "runtime_workers": 2,
+        "instrumented": true,
+        "pool_size": 4,
+        "scenario": "network-inbound",
+        "capture": "strace",
+        "seccomp": true
+      },
+      "report": {
+        "tool_calls": 2,
+        "incomplete_calls": 0,
+        "tool_errors": 0,
+        "server_pid": 704241,
+        "parser": {
+          "lifecycle_lines": 21,
+          "parsed": 2879
+        },
+        "sandbox_events": 11,
+        "sandbox_tids": [
+          704267,
+          704268,
+          704269,
+          704277
+        ],
+        "sandbox_syscalls": {
+          "openat": 1,
+          "pwrite64": 9,
+          "close": 1
+        },
+        "oracle_labelled": 0,
+        "baselines": {
+          "pid": {
+            "events": 11,
+            "ambiguous": 11
+          },
+          "request_window": {
+            "events": 11,
+            "unattributed": 4,
+            "singleton": 7
+          }
+        },
+        "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+      },
+      "causal-report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 2,
+        "joins": 0,
+        "operations": 11,
+        "operations_started": 11,
+        "operations_cancelled": 0,
+        "inherited_processes": 0,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 1,
+        "migrating_request_spans": 0,
+        "markers": 177,
+        "parser": {
+          "lifecycle_lines": 21,
+          "parsed": 2879
+        },
+        "all_event_status": {
+          "unknown": 2570,
+          "no_request_context": 123,
+          "bound": 5
+        },
+        "fixture_score": {
+          "events": 11,
+          "no_request_context": 11
+        },
+        "fixture_events_per_request": {},
+        "output_sha256": {
+          "causal-attribution.jsonl": "78ddeec565aa69b60b9b9e365e5bc666ccd4d5f41158cdf05f4cb70045c37cd3",
+          "provenance.jsonl": "269e00a66b0ad0d8b0e5ad8c7dfe902ad75fd8a7de73ffb186be911e46de1673"
+        }
+      },
+      "network-score": {
+        "valid": true,
+        "mode": "exact_single_connection",
+        "counts": {
+          "read_events": 1,
+          "covered_events": 2,
+          "exact_events": 2,
+          "extra_candidate_edges": 0,
+          "write_events": 1
+        },
+        "mismatches": [],
+        "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference",
+        "expected_server_directions": [
+          "read",
+          "write"
+        ],
+        "scenario": "network-inbound"
+      },
+      "manifest": {
+        "status": "complete",
+        "error": null,
+        "runtime": "node",
+        "scenario": "network-inbound",
+        "concurrency": 1,
+        "pool_size": 4,
+        "batches": 1,
+        "instrumented": true,
+        "seccomp": true,
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "code_sha256": {
+          "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+          "attribute.py": "0852f563d7bf38d443115a03fb3159938c720b6e98bf5bac52e6030169145a1b",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+          "query.py": "1a65ea5e50e3d863c8dcf708fdc3c4e8ce6e891bc58a38e4b004951bbe2579ff",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "28acf8361c68256110d15158a641942bc1464af9d3899a4060c97bf65c86da8a",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "2e5964c1e22873d37b03f5818a7d6ee56a54b604b58dae92d75b9b6d34caaa2b",
+          "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+          "test_attribute.py": "cc1ce583c9c96e9ece4ad7a783de6ea95a69b4993ce44c7d0baeed40f3415f9d",
+          "test_oracles.py": "e9a6382a8150f937f20f4d9bf3111c96fee8b4e117362e2d811f4622e41d07dd",
+          "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+          "control-server.mjs": "dd4f04f3759fa4f88887e098d49afabf50a139ddb967314a90ea845bf08bae49",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        }
+      },
+      "artifacts": "results/mcp/network-inbound-current-c1-r3"
+    },
+    "concurrency_8": {
+      "run-config": {
+        "runtime": "node",
+        "tokio_binary_sha256": null,
+        "runtime_workers": 2,
+        "instrumented": true,
+        "pool_size": 4,
+        "scenario": "network-inbound",
+        "capture": "strace",
+        "seccomp": true
+      },
+      "report": {
+        "tool_calls": 9,
+        "incomplete_calls": 0,
+        "tool_errors": 0,
+        "server_pid": 704992,
+        "parser": {
+          "lifecycle_lines": 21,
+          "parsed": 3354
+        },
+        "sandbox_events": 15,
+        "sandbox_tids": [
+          705030,
+          705031,
+          705032,
+          705033
+        ],
+        "sandbox_syscalls": {
+          "openat": 1,
+          "pwrite64": 13,
+          "close": 1
+        },
+        "oracle_labelled": 0,
+        "baselines": {
+          "pid": {
+            "events": 15,
+            "ambiguous": 15
+          },
+          "request_window": {
+            "events": 15,
+            "unattributed": 3,
+            "ambiguous": 9,
+            "singleton": 3
+          }
+        },
+        "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+      },
+      "causal-report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 9,
+        "joins": 0,
+        "operations": 15,
+        "operations_started": 15,
+        "operations_cancelled": 0,
+        "inherited_processes": 0,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 8,
+        "migrating_request_spans": 0,
+        "markers": 569,
+        "parser": {
+          "lifecycle_lines": 21,
+          "parsed": 3354
+        },
+        "all_event_status": {
+          "unknown": 2570,
+          "no_request_context": 170,
+          "bound": 34
+        },
+        "fixture_score": {
+          "events": 15,
+          "no_request_context": 15
+        },
+        "fixture_events_per_request": {},
+        "output_sha256": {
+          "causal-attribution.jsonl": "843809aba4ec6278704c39fa978e10ade759b4bdf4f84166307afc33ee2932c5",
+          "provenance.jsonl": "1bd5ae850c4717cd183388b797eeb43ece4fb6272ce46a72bd6056b25a50e82d"
+        }
+      },
+      "network-score": {
+        "valid": true,
+        "mode": "exact_single_connection",
+        "counts": {
+          "read_events": 8,
+          "covered_events": 16,
+          "exact_events": 16,
+          "extra_candidate_edges": 0,
+          "write_events": 8
+        },
+        "mismatches": [],
+        "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference",
+        "expected_server_directions": [
+          "read",
+          "write"
+        ],
+        "scenario": "network-inbound"
+      },
+      "manifest": {
+        "status": "complete",
+        "error": null,
+        "runtime": "node",
+        "scenario": "network-inbound",
+        "concurrency": 8,
+        "pool_size": 4,
+        "batches": 1,
+        "instrumented": true,
+        "seccomp": true,
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "code_sha256": {
+          "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+          "attribute.py": "0852f563d7bf38d443115a03fb3159938c720b6e98bf5bac52e6030169145a1b",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+          "query.py": "1a65ea5e50e3d863c8dcf708fdc3c4e8ce6e891bc58a38e4b004951bbe2579ff",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "28acf8361c68256110d15158a641942bc1464af9d3899a4060c97bf65c86da8a",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "2e5964c1e22873d37b03f5818a7d6ee56a54b604b58dae92d75b9b6d34caaa2b",
+          "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+          "test_attribute.py": "cc1ce583c9c96e9ece4ad7a783de6ea95a69b4993ce44c7d0baeed40f3415f9d",
+          "test_oracles.py": "e9a6382a8150f937f20f4d9bf3111c96fee8b4e117362e2d811f4622e41d07dd",
+          "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+          "control-server.mjs": "dd4f04f3759fa4f88887e098d49afabf50a139ddb967314a90ea845bf08bae49",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        }
+      },
+      "artifacts": "results/mcp/network-inbound-current-c8"
+    },
+    "concurrency_32": {
+      "run-config": {
+        "runtime": "node",
+        "tokio_binary_sha256": null,
+        "runtime_workers": 2,
+        "instrumented": true,
+        "pool_size": 8,
+        "scenario": "network-inbound",
+        "capture": "strace",
+        "seccomp": true
+      },
+      "report": {
+        "tool_calls": 33,
+        "incomplete_calls": 0,
+        "tool_errors": 0,
+        "server_pid": 706452,
+        "parser": {
+          "lifecycle_lines": 29,
+          "parsed": 5115
+        },
+        "sandbox_events": 39,
+        "sandbox_tids": [
+          706580,
+          706581,
+          706582,
+          706583,
+          706587,
+          706588,
+          706589,
+          706590
+        ],
+        "sandbox_syscalls": {
+          "openat": 1,
+          "pwrite64": 37,
+          "close": 1
+        },
+        "oracle_labelled": 0,
+        "baselines": {
+          "pid": {
+            "events": 39,
+            "ambiguous": 39
+          },
+          "request_window": {
+            "events": 39,
+            "unattributed": 3,
+            "ambiguous": 33,
+            "singleton": 3
+          }
+        },
+        "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+      },
+      "causal-report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 33,
+        "joins": 0,
+        "operations": 39,
+        "operations_started": 39,
+        "operations_cancelled": 0,
+        "inherited_processes": 0,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 32,
+        "migrating_request_spans": 0,
+        "markers": 1985,
+        "parser": {
+          "lifecycle_lines": 29,
+          "parsed": 5115
+        },
+        "all_event_status": {
+          "unknown": 2578,
+          "no_request_context": 388,
+          "bound": 129
+        },
+        "fixture_score": {
+          "events": 39,
+          "no_request_context": 39
+        },
+        "fixture_events_per_request": {},
+        "output_sha256": {
+          "causal-attribution.jsonl": "8fbf3897d1059d1592fdf7400d4c5463a58aa6c005d160a5a91a71519bd5737e",
+          "provenance.jsonl": "717696690445dfad2791e945ab0a7f88c4f6c1df39e69e57e23dd80968bce7e4"
+        }
+      },
+      "network-score": {
+        "valid": true,
+        "mode": "exact_single_connection",
+        "counts": {
+          "read_events": 32,
+          "covered_events": 64,
+          "exact_events": 64,
+          "extra_candidate_edges": 0,
+          "write_events": 32
+        },
+        "mismatches": [],
+        "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference",
+        "expected_server_directions": [
+          "read",
+          "write"
+        ],
+        "scenario": "network-inbound"
+      },
+      "manifest": {
+        "status": "complete",
+        "error": null,
+        "runtime": "node",
+        "scenario": "network-inbound",
+        "concurrency": 32,
+        "pool_size": 8,
+        "batches": 1,
+        "instrumented": true,
+        "seccomp": true,
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "code_sha256": {
+          "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+          "attribute.py": "0852f563d7bf38d443115a03fb3159938c720b6e98bf5bac52e6030169145a1b",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+          "query.py": "1a65ea5e50e3d863c8dcf708fdc3c4e8ce6e891bc58a38e4b004951bbe2579ff",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "28acf8361c68256110d15158a641942bc1464af9d3899a4060c97bf65c86da8a",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "2e5964c1e22873d37b03f5818a7d6ee56a54b604b58dae92d75b9b6d34caaa2b",
+          "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+          "test_attribute.py": "cc1ce583c9c96e9ece4ad7a783de6ea95a69b4993ce44c7d0baeed40f3415f9d",
+          "test_oracles.py": "e9a6382a8150f937f20f4d9bf3111c96fee8b4e117362e2d811f4622e41d07dd",
+          "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+          "control-server.mjs": "dd4f04f3759fa4f88887e098d49afabf50a139ddb967314a90ea845bf08bae49",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        }
+      },
+      "artifacts": "results/mcp/network-inbound-current-c32"
+    },
+    "current_session_scoped_c8": {
+      "run-config": {
+        "runtime": "node",
+        "tokio_binary_sha256": null,
+        "runtime_workers": 2,
+        "instrumented": true,
+        "pool_size": 4,
+        "scenario": "network-inbound",
+        "capture": "strace",
+        "seccomp": true
+      },
+      "report": {
+        "tool_calls": 9,
+        "incomplete_calls": 0,
+        "tool_errors": 0,
+        "server_pid": 738994,
+        "parser": {
+          "lifecycle_lines": 21,
+          "parsed": 3353
+        },
+        "sandbox_events": 15,
+        "sandbox_tids": [
+          739043,
+          739044,
+          739045,
+          739046
+        ],
+        "sandbox_syscalls": {
+          "openat": 1,
+          "pwrite64": 13,
+          "close": 1
+        },
+        "oracle_labelled": 0,
+        "baselines": {
+          "pid": {
+            "events": 15,
+            "ambiguous": 15
+          },
+          "request_window": {
+            "events": 15,
+            "unattributed": 3,
+            "ambiguous": 9,
+            "singleton": 3
+          }
+        },
+        "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+      },
+      "causal-report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 9,
+        "joins": 0,
+        "operations": 15,
+        "operations_started": 15,
+        "operations_cancelled": 0,
+        "inherited_processes": 0,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 8,
+        "migrating_request_spans": 0,
+        "markers": 569,
+        "parser": {
+          "lifecycle_lines": 21,
+          "parsed": 3353
+        },
+        "all_event_status": {
+          "unknown": 2571,
+          "no_request_context": 168,
+          "bound": 34
+        },
+        "fixture_score": {
+          "events": 15,
+          "no_request_context": 15
+        },
+        "fixture_events_per_request": {},
+        "output_sha256": {
+          "causal-attribution.jsonl": "52e4d72335306344ff1295793ed8f22fc3572d30bddd02f5aea6d8ddf668a1f5",
+          "provenance.jsonl": "98ada5917f66dc42060c23a8b3e3d6034e3aae7932f675a18a814bb364dbb82d"
+        }
+      },
+      "network-score": {
+        "valid": true,
+        "mode": "exact_single_connection",
+        "counts": {
+          "read_events": 8,
+          "covered_events": 16,
+          "exact_events": 16,
+          "extra_candidate_edges": 0,
+          "write_events": 8
+        },
+        "mismatches": [],
+        "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference",
+        "expected_server_directions": [
+          "read",
+          "write"
+        ],
+        "scenario": "network-inbound"
+      },
+      "manifest": {
+        "status": "complete",
+        "scenario": "network-inbound",
+        "concurrency": 8,
+        "pool_size": 4,
+        "instrumented": true,
+        "seccomp": true,
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "code_sha256": {
+          "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+          "attribute.py": "fa316a1b63e1d6463ca0280934877f7781bb60e45e185f61a73f26aefe728b49",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+          "query.py": "1a65ea5e50e3d863c8dcf708fdc3c4e8ce6e891bc58a38e4b004951bbe2579ff",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "f683ba9b59869463c648d790abebcdea780de2f458bcabf832b5597fceb10577",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "2e5964c1e22873d37b03f5818a7d6ee56a54b604b58dae92d75b9b6d34caaa2b",
+          "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+          "test_attribute.py": "f3eac2ed1134cc76c4b92c49f0699b768be06e469a12500f3fd9263ebc28d243",
+          "test_oracles.py": "7324d2ab281b2a40a23d20f07fddd17d7360e03687010aca4d1487cb19b900af",
+          "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+          "control-server.mjs": "d1f8272967bee4a2a6e72a9191a044c489a4753937ad6b97fa6217d5473681e7",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        }
+      },
+      "artifacts": "results/mcp/network-inbound-current-final-c8",
+      "query_verification": {
+        "selected_tcp_events": [
+          {
+            "syscall": "read",
+            "attribution": "bound",
+            "origin": "socket_lifecycle",
+            "connection_id": "a0988c323029447da2caf70b412b8857:connection:738994:25:2"
+          },
+          {
+            "syscall": "write",
+            "attribution": "bound",
+            "origin": "async_context",
+            "connection_id": "a0988c323029447da2caf70b412b8857:connection:738994:25:2"
+          },
+          {
+            "syscall": "write",
+            "attribution": "bound",
+            "origin": "async_context",
+            "connection_id": null
+          },
+          {
+            "syscall": "read",
+            "attribution": "bound",
+            "origin": "socket_lifecycle",
+            "connection_id": "a0988c323029447da2caf70b412b8857:connection:738994:25:2"
+          }
+        ],
+        "network_connection_nodes": [
+          "a0988c323029447da2caf70b412b8857:connection:738994:25:2"
+        ]
+      }
+    },
+    "graph_verified_c8": {
+      "run-config": {
+        "runtime": "node",
+        "tokio_binary_sha256": null,
+        "runtime_workers": 2,
+        "instrumented": true,
+        "pool_size": 4,
+        "scenario": "network-inbound",
+        "capture": "strace",
+        "seccomp": true
+      },
+      "report": {
+        "tool_calls": 9,
+        "incomplete_calls": 0,
+        "tool_errors": 0,
+        "server_pid": 814876,
+        "parser": {
+          "lifecycle_lines": 21,
+          "parsed": 3355
+        },
+        "sandbox_events": 15,
+        "sandbox_tids": [
+          814910,
+          814911,
+          814912,
+          814913
+        ],
+        "sandbox_syscalls": {
+          "openat": 1,
+          "pwrite64": 13,
+          "close": 1
+        },
+        "oracle_labelled": 0,
+        "baselines": {
+          "pid": {
+            "events": 15,
+            "ambiguous": 15
+          },
+          "request_window": {
+            "events": 15,
+            "unattributed": 3,
+            "ambiguous": 9,
+            "singleton": 3
+          }
+        },
+        "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+      },
+      "causal-report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "requests": 9,
+        "joins": 0,
+        "operations": 15,
+        "operations_started": 15,
+        "operations_cancelled": 0,
+        "inherited_processes": 0,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 8,
+        "migrating_request_spans": 0,
+        "markers": 569,
+        "parser": {
+          "lifecycle_lines": 21,
+          "parsed": 3355
+        },
+        "all_event_status": {
+          "unknown": 2573,
+          "no_request_context": 169,
+          "bound": 33
+        },
+        "fixture_score": {
+          "events": 15,
+          "no_request_context": 15
+        },
+        "fixture_events_per_request": {},
+        "output_sha256": {
+          "causal-attribution.jsonl": "7dfbd3155949bc800c7be38139393b5ee53bb6630cf34d491eb3b8a69ba751b3",
+          "provenance.jsonl": "f9f9c03519966d30518186125e0b98d6b09de9535eb35348e3ad23e476a225b8"
+        }
+      },
+      "network-score": {
+        "valid": true,
+        "mode": "exact_single_connection",
+        "counts": {
+          "read_events": 8,
+          "covered_events": 16,
+          "exact_events": 16,
+          "extra_candidate_edges": 0,
+          "write_events": 8
+        },
+        "mismatches": [],
+        "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference",
+        "expected_server_directions": [
+          "read",
+          "write"
+        ],
+        "scenario": "network-inbound"
+      },
+      "manifest": {
+        "status": "complete",
+        "runtime": "node",
+        "scenario": "network-inbound",
+        "concurrency": 8,
+        "pool_size": 4,
+        "batches": 1,
+        "instrumented": true,
+        "seccomp": true,
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "code_sha256": {
+          "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+          "attribute.py": "bfd7aea5dd8009507c24162de318d3c4d18fde21eb8a1937a21d369381ceb7f4",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+          "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+          "test_attribute.py": "f3eac2ed1134cc76c4b92c49f0699b768be06e469a12500f3fd9263ebc28d243",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+          "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        }
+      },
+      "artifacts": "results/mcp/network-inbound-graph-c8",
+      "query_verification": {
+        "tcp_events": [
+          {
+            "syscall": "read",
+            "attribution": "bound",
+            "origin": "socket_lifecycle",
+            "connection_id": "6206bf45dd784bbc8734536f7cf88d58:connection:814876:25:2"
+          },
+          {
+            "syscall": "write",
+            "attribution": "bound",
+            "origin": "async_context",
+            "connection_id": "6206bf45dd784bbc8734536f7cf88d58:connection:814876:25:2"
+          },
+          {
+            "syscall": "write",
+            "attribution": "bound",
+            "origin": "async_context",
+            "connection_id": null
+          },
+          {
+            "syscall": "read",
+            "attribution": "bound",
+            "origin": "socket_lifecycle",
+            "connection_id": "6206bf45dd784bbc8734536f7cf88d58:connection:814876:25:2"
+          }
+        ],
+        "accept_chain_edges": [
+          "accepted_connection",
+          "accepted"
+        ]
+      }
+    }
+  },
+  "failed_attempts": [
+    {
+      "run": "results/mcp/network-inbound-current-c1",
+      "classification": "harness token-prefix mismatch; tool rejected the payload and the peer waited for a response until timeout",
+      "server_error": "inbound payload mismatch for slot 0"
+    },
+    {
+      "run": "results/mcp/network-inbound-current-c1-r2",
+      "classification": "measured attribution gap before connection-history recovery",
+      "score": {
+        "valid": false,
+        "mode": "exact_single_connection",
+        "counts": {
+          "read_events": 1,
+          "covered_events": 1,
+          "exact_events": 1,
+          "extra_candidate_edges": 0,
+          "write_events": 1
+        },
+        "mismatches": [
+          {
+            "source": "strace.699668:2625",
+            "direction": "read",
+            "expected": [
+              3
+            ],
+            "actual": [],
+            "origin": "async_context"
+          }
+        ],
+        "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference",
+        "expected_server_directions": [
+          "read",
+          "write"
+        ],
+        "scenario": "network-inbound"
+      },
+      "unbound_read": {
+        "timestamp_ns": 1791336848539315000,
+        "tid": 699668,
+        "syscall": "read",
+        "args": "22</u/kdhande/causpan/experiments/mcp/control-server.mjs>, \"// Controlled workloads supply independent syscall-argument oracles for difficult cases.\\nimport { McpServer } from './node_modules/@modelcontextprotocol/sdk/dist/esm/server/mcp.js';\\nimport { StdioServerTransport } from './node_modules/@modelcontextprotocol/sdk/dist/esm/server/stdio.js';\\nimport { z } from './node_modules/zod/index.js';\\nimport fs from 'node:fs/promises';\\nimport fsSync from 'node:fs';\\nimport { AsyncResource } from 'node:async_hooks';\\nimport { spawn } from 'node:child_process';\\nimport net from 'node:net';\\nimport { setTimeout as sleep } from 'node:timers/promises';\\n\\nconst root=process.argv[2];\\nconst file=await fs.open(`${root}/slots.bin`,'r+');\\nconst pending=new Set();\\nconst errors=[];\\nlet backgroundPromise=Promise.resolve();\\nconst stride=128;\\nconst backgroundSlot=100000;\\nlet tick=0;\\nconst server=new McpServer({name:'causpan-control',version:'1.0.0'});\\nconst sharedMode=process.env.CAUSPAN_SCENARIO==='network-shared';\\nconst inboundMode=process.env.CAUSPAN_SCENARIO==='network-inbound';\\nlet sharedSocket=null;\\nlet sharedBuffer='';\\nconst sharedWaiters=new Map();\\nlet inboundServer=null;\\nconst inboundSockets=[];\\nconst inboundWaiters=[];\\nif(inboundMode){\\n  inboundServer=net.createServer(socket=>{\\n    const waiter=inboundWaiters.shift();\\n    if(waiter)waiter.resolve(socket);else inboundSockets.push(socket);\\n  });\\n  await new Promise((resolve,reject)=>{\\n    inboundServer.once('error',reject);\\n    inboundServer.listen(Number(process.env.CAUSPAN_INBOUND_PORT),'127.0.0.1',resolve);\\n  });\\n}\\nif(sharedMode){\\n  const port=Number(process.env.CAUSPAN_NETWORK_PORT);\\n  sharedSocket=net.createConnection({host:'127.0.0.1',port});\\n  await new Promise((resolve,reject)=>{sharedSocket.once('connect',resolve);sharedSocket.once('error',reject);});\\n  sharedSocket.setEncoding('utf8');\\n  sharedSocket.on('data',chunk=>{\\n    sharedBuffer+=chunk;\\n    for(;;){\\n      const newline=sharedBuffer.indexOf('\\\\n');\\n      if(newline<0)break;\\n      const message=sharedBuffer.slice(0,newline+1);\\n      sharedBuffer=sharedBuffer.slice(newline+1);\\n      const match=/causpan-net:(\\\\d+)\\\\n/.exec(message);\\n      const waiter=match&&sharedWaiters.get(Number(match[1]));\\n      if(waiter){sharedWaiters.delete(Number(match[1]));waiter.resolve(message);}\\n    }\\n  });\\n}\\nserver.registerTool('tcp_roundtrip',{inputSchema:{slot:z.number().int().min(0).max(99999),port:z.number().int().min(1).max(65535)}},async({slot,port})=>{\\n  const payload=`causpan-net:${slot}\\\\n`;\\n  let received;\\n  if(sharedMode){\\n    received=await new Promise((resolve,reject)=>{\\n      sharedWaiters.set(slot,{resolve,reject});\\n      sharedSocket.write(payload,error=>{if(error){sharedWaiters.delete(slot);reject(error);}});\\n    });\\n  }else received=await new Promise((resolve,reject)=>{\\n    const socket=net.createConnection({host:'127.0.0.1',port});\\n    let bytes='';\\n    socket.setEncoding('utf8');\\n    socket.on('connect',()=>socket.end(payload));\\n    socket.on('data',chunk=>{bytes+=chunk;});\\n    socket.on('error',reject);\\n    socket.on('end',()=>resolve(bytes));\\n  });\\n  if(received!==payload)throw new Error('TCP read-back mismatch');\\n  return {content:[{type:'text',text:'TCP round trip complete'}]};\\n});\\nserver.registerTool('tcp_accept',{inputSchema:{slot:z.number().int().min(0).max(99999)}},async({slot})=>{\\n  if(!inboundMode)throw new Error('tcp_accept requires network-inbound scenario');\\n  const socket=inboundSockets.shift()??await new Promise((resolve,reject)=>inboundWaiters.push({resolve,reject}));\\n  socket.setEncoding('utf8');\\n  const payload=await new Promise((resolve,reject)=>{\\n    socket.once('error',reject);\\n    socket.once('data',chunk=>resolve(chunk));\\n  });\\n  if(payload!==`causpan-in:${slot}\\\\n`)throw new Error(`inbound payload mismatch for slot ${slot}`);\\n  socket.end(`causpan-in:${slot}\\\\n`);\\n  return {content:[{type:'text',text:'Accepted TCP request complete'}]};\\n});\\nconst without=fn=>globalThis.causpanContext ? globalThis.causpanContext.withoutRequest(fn) : fn();\\n// Intentionally outside any request and on the same file descriptor as request work.\\nconst background=setInterval(()=>without(()=>{\\n \"..., 8983",
+        "return_value": 8983,
+        "completion": "returned",
+        "paths": [
+          "/u/kdhande/causpan/experiments/mcp/control-server.mjs"
+        ],
+        "source": "strace.699668:1691",
+        "pid": 699668,
+        "context": 0,
+        "request_ids": [],
+        "request_id": null,
+        "operation": 0,
+        "origin": "unobserved",
+        "context_evidence": null,
+        "candidate_request_ids": [],
+        "attribution": "unknown"
+      }
+    }
+  ]
+}

@@ -7,7 +7,7 @@ import hashlib
 import uuid
 from pathlib import Path
 import re
-from analyze import parse_traces
+from analyze import parse_traces, clone_has_flag
 
 TRANSITIONS={'JS_CONTEXT','WORK_ENTER','WORK_LEAVE','DONE_ENTER','DONE_LEAVE'}
 
@@ -19,6 +19,15 @@ def marker(event, run):
     if data.get('csp')!=1 or data.get('tid')!=event['tid']:
         raise ValueError(f'invalid marker at {event["source"]}')
     return data
+
+def fd_number(event):
+    match=re.match(r'\s*(\d+)(?:<[^>]*>)?',event['args'])
+    return int(match[1]) if match else None
+
+def close_range_has_flag(args,flag):
+    if flag in args:return True
+    match=re.match(r'\s*\d+\s*,\s*\d+\s*,\s*(0x[0-9a-fA-F]+|\d+)',args)
+    return bool(match and int(match[1],0)&{'CLOSE_RANGE_CLOEXEC':4,'CLOSE_RANGE_UNSHARE':2}[flag])
 
 def _attribute(run):
     events,quality=parse_traces(run/'traces')
@@ -53,8 +62,31 @@ def _attribute(run):
         if expected_calls!=mapped_calls:errors.append('dispatch mappings do not match observed MCP calls')
     tagged=[]
     graph=[]
+    executed_syscalls=set()
+    sockets={}
+    close_on_exec=set()
+    fd_tables={}
+    socket_generation=0
+    socket_nodes=set()
+    socket_parent_edges=set()
+    connections_by_id={}
     settings=json.loads((run/'run-config.json').read_text()) if (run/'run-config.json').exists() else {}
     session_id=settings.get('session_id',run.name)
+    fd_table_serial=0
+    def new_fd_table():
+        nonlocal fd_table_serial
+        fd_table_serial+=1
+        return f'fdtable:{session_id}:{fd_table_serial}'
+    def fd_table(pid):
+        if pid not in fd_tables:fd_tables[pid]=new_fd_table()
+        return fd_tables[pid]
+    def copy_fd_table(table):
+        copied=new_fd_table()
+        for (table_id,number),owner in list(sockets.items()):
+            if table_id==table:
+                sockets[(copied,number)]=owner
+                if (table_id,number) in close_on_exec:close_on_exec.add((copied,number))
+        return copied
     for context,r in mapping.items():
         graph.append(dict(type='node',id=context_node(context),kind='mcp_request' if context in roots else 'causal_join',
                           **{k:v for k,v in r.items() if k!='kind'}))
@@ -108,27 +140,171 @@ def _attribute(run):
         if any(path in {str(run/'request-map.jsonl'),str(run/'native-events.jsonl')} for path in event['paths']):
             continue
         context=state.get(tid,inherited.get(event['pid'],{}))
-        if event['syscall'] in {'clone','clone3','fork','vfork'} and (event['return_value'] or 0)>0 and 'CLONE_THREAD' not in event['args']:
+        request=context.get('request',0)
+        fd=fd_number(event)
+        table=fd_table(tid)
+        key=(table,fd) if fd is not None else None
+        socket_state=sockets.get(key) if key else None
+        if event['syscall']=='socket' and event['return_value'] is not None and event['return_value']>=0:
+            fd=event['return_value'];key=(table,fd)
+            socket_generation+=1
+            socket_state=dict(requests=set(),id=f'connection:{event["pid"]}:{fd}:{socket_generation}')
+            sockets[key]=socket_state
+            close_on_exec.discard(key)
+            if 'SOCK_CLOEXEC' in event['args']:close_on_exec.add(key)
+            connections_by_id[socket_state['id']]=socket_state
+            if request:socket_state['requests'].update(owners.get(request,{request}))
+        elif event['syscall'] in {'accept','accept4'} and event['return_value'] is not None and event['return_value']>=0:
+            listener=sockets.get(key) if key else None
+            fd=event['return_value'];key=(table,fd)
+            socket_generation+=1
+            socket_state=dict(requests=set(),id=f'connection:{event["pid"]}:{fd}:{socket_generation}')
+            sockets[key]=socket_state
+            close_on_exec.discard(key)
+            if event['syscall']=='accept4' and 'SOCK_CLOEXEC' in event['args']:close_on_exec.add(key)
+            connections_by_id[socket_state['id']]=socket_state
+            if request:socket_state['requests'].update(owners.get(request,{request}))
+            if listener:
+                socket_nodes.add(socket_state['id'])
+                graph.append(dict(type='node',id=socket_state['id'],kind='network_connection',pid=event['pid'],fd=fd))
+                graph.append(dict(type='edge',source=listener['id'],target=socket_state['id'],kind='accepted_connection',evidence=event['source']))
+                graph.append(dict(type='edge',source='syscall:'+event['source'],target=socket_state['id'],kind='accepted'))
+        elif event['syscall']=='connect' and fd is not None:
+            if socket_state is None:
+                socket_generation+=1
+                socket_state=dict(requests=set(),id=f'connection:{event["pid"]}:{fd}:{socket_generation}')
+                sockets[key]=socket_state
+                connections_by_id[socket_state['id']]=socket_state
+            if request:socket_state['requests'].update(owners.get(request,{request}))
+        elif event['syscall'] in {'dup','dup2','dup3'} and fd is not None and event['return_value'] is not None and event['return_value']>=0:
+            destination=(table,event['return_value'])
+            if not (event['syscall'] in {'dup2','dup3'} and fd==event['return_value']):
+                sockets.pop(destination,None)
+                close_on_exec.discard(destination)
+                if socket_state:sockets[destination]=socket_state
+                if socket_state and event['syscall']=='dup3' and 'O_CLOEXEC' in event['args']:
+                    close_on_exec.add(destination)
+        elif event['syscall']=='fcntl' and fd is not None and event['return_value'] is not None and event['return_value']>=0:
+            if 'F_DUPFD' in event['args']:
+                destination=(table,event['return_value'])
+                sockets.pop(destination,None)
+                close_on_exec.discard(destination)
+                if socket_state:sockets[destination]=socket_state
+                if socket_state and 'F_DUPFD_CLOEXEC' in event['args']:
+                    close_on_exec.add(destination)
+            elif 'F_SETFD' in event['args']:
+                if 'FD_CLOEXEC' in event['args']:close_on_exec.add(key)
+                else:close_on_exec.discard(key)
+        elif event['syscall']=='close_range' and event['return_value']==0:
+            if close_range_has_flag(event['args'],'CLOSE_RANGE_UNSHARE'):
+                table=copy_fd_table(table)
+                fd_tables[tid]=table
+            descriptor_range=re.match(r'\s*(\d+)\s*,\s*(\d+)',event['args'])
+            if descriptor_range:
+                first,last=map(int,descriptor_range.groups())
+                descriptors=[item for item in sockets if item[0]==table and first<=item[1]<=last]
+                if close_range_has_flag(event['args'],'CLOSE_RANGE_CLOEXEC'):
+                    close_on_exec.update(descriptors)
+                else:
+                    for descriptor in descriptors:
+                        sockets.pop(descriptor,None)
+                        close_on_exec.discard(descriptor)
+            socket_state=None
+        elif event['syscall'] in {'clone','clone3','fork','vfork'} and (event['return_value'] or 0)>0:
+            child=event['return_value']
+            if clone_has_flag(event['args'],'CLONE_FILES'):
+                fd_tables[child]=table
+            else:
+                fd_tables[child]=copy_fd_table(table)
+        elif event['syscall']=='unshare' and event['return_value']==0:
+            flags=event['args'].strip()
+            if 'CLONE_FILES' in flags or (re.fullmatch(r'0x[0-9a-fA-F]+|\d+',flags) and int(flags,0)&0x400):
+                fd_tables[tid]=copy_fd_table(table)
+        elif event['syscall'] in {'execve','execveat'} and event['return_value']==0:
+            table=copy_fd_table(table)
+            fd_tables[tid]=table
+            for descriptor in [item for item in close_on_exec if item[0]==table]:
+                sockets.pop(descriptor,None)
+                close_on_exec.discard(descriptor)
+        if socket_state and event['syscall'] in {'read','readv','recvfrom','recvmsg','write','writev','sendto','sendmsg'}:
+            socket_state['requests'].update(owners.get(request,{request}) if request else ())
+        if socket_state and event['syscall']=='close' and key and event['return_value']==0:
+            sockets.pop(key,None)
+            close_on_exec.discard(key)
+        if socket_state and socket_state['id'] not in socket_nodes:
+            socket_nodes.add(socket_state['id'])
+            graph.append(dict(type='node',id=socket_state['id'],kind='network_connection',pid=event['pid'],fd=fd))
+        if socket_state:
+            for parent in sorted(socket_state['requests']):
+                relation=(parent,socket_state['id'])
+                if relation not in socket_parent_edges:
+                    socket_parent_edges.add(relation)
+                    graph.append(dict(type='edge',source=context_node(parent),target=socket_state['id'],kind='connected',evidence=event['source']))
+        if socket_state:
+            if event['syscall'] in {'read','readv','recvfrom','recvmsg','write','writev','sendto','sendmsg'}:
+                graph.append(dict(type='edge',source=socket_state['id'],target='syscall:'+event['source'],kind='socket_effect',evidence=event['source']))
+            if not request and len(socket_state['requests'])==1 and event['syscall'] in {'read','readv','recvfrom','recvmsg'}:
+                request=next(iter(socket_state['requests']))
+                context=dict(request=request,operation=0,origin='socket_lifecycle',marker_source=session_id+':'+socket_state['id'])
+        if event['syscall'] in {'clone','clone3','fork','vfork'} and (event['return_value'] or 0)>0 and not clone_has_flag(event['args'],'CLONE_THREAD'):
             child=event['return_value']
             inherited[child]=dict(request=context.get('request',0),operation=0,origin='process_inheritance',marker_source=event['source'])
             graph.append(dict(type='node',id=f'process:{child}',kind='child_process',pid=child))
             if context.get('request'):
                 graph.append(dict(type='edge',source=context_node(context['request']),target=f'process:{child}',kind='spawned',evidence=event['source']))
-        request=context.get('request',0)
+        request=request or context.get('request',0)
         request_ids=[roots[parent]['rpc_id'] for parent in sorted(owners.get(request,set()))]
+        candidate_ids=[]
+        if socket_state and len(socket_state['requests'])>1 and not context.get('request'):
+            candidate_ids=[roots[parent]['rpc_id'] for parent in sorted(socket_state['requests'])]
         row=dict(**event,context=request,request_ids=request_ids,request_id=request_ids[0] if len(request_ids)==1 else None,
                  operation=context.get('operation',0),origin=context.get('origin','unobserved'),
                  context_evidence=context.get('marker_source'),
-                 attribution='multi_parent' if len(request_ids)>1 else 'bound' if request else 'background' if context else 'unknown')
+                 connection_id=socket_state['id'] if socket_state else None,
+                 candidate_request_ids=candidate_ids,
+                 attribution='ambiguous_resource' if candidate_ids else 'multi_parent' if len(request_ids)>1 else 'bound' if request else 'no_request_context' if context.get('request')==0 else 'unknown')
         tagged.append(row)
-        if request:
+        if request or socket_state:
             event_id='syscall:'+event['source']
             graph.append(dict(type='node',id=event_id,kind='syscall',timestamp_ns=event['timestamp_ns'],
                               pid=event['pid'],tid=tid,syscall=event['syscall'],paths=event['paths'],
                               return_value=event['return_value']))
-            parent=f'process:{event["pid"]}' if row['origin']=='process_inheritance' else f'work:{row["operation"]}' if row['operation'] else context_node(request)
-            graph.append(dict(type='edge',source=parent,target=event_id,kind='executed',
-                              evidence=row['context_evidence']))
+            if request and event_id not in executed_syscalls:
+                parent=f'process:{event["pid"]}' if row['origin']=='process_inheritance' else f'work:{row["operation"]}' if row['operation'] else context_node(request)
+                graph.append(dict(type='edge',source=parent,target=event_id,kind='executed',
+                                  evidence=row['context_evidence']))
+                executed_syscalls.add(event_id)
+    # A request-scoped effect later on the same accepted connection can provide
+    # ownership evidence for an earlier unscoped socket read. Shared connections
+    # stay candidate sets, since the runtime trace does not identify stream IDs.
+    retroactive=0
+    for row in tagged:
+        connection_id=row.get('connection_id')
+        if not connection_id or row['syscall'] not in {'read','readv','recvfrom','recvmsg'}:
+            continue
+        if row['context'] or row['attribution'] not in {'no_request_context','unknown'}:
+            continue
+        connection=connections_by_id.get(connection_id)
+        request_contexts=sorted(connection['requests']) if connection else []
+        if not request_contexts:
+            continue
+        request_ids=[roots[context]['rpc_id'] for context in request_contexts]
+        row['context_evidence']=session_id+':'+connection_id
+        row['origin']='socket_lifecycle'
+        retroactive+=1
+        if len(request_contexts)==1:
+            row['context']=request_contexts[0]
+            row['request_ids']=request_ids
+            row['request_id']=request_ids[0]
+            row['attribution']='bound'
+        else:
+            row['request_ids']=[]
+            row['request_id']=None
+            row['candidate_request_ids']=request_ids
+            row['attribution']='ambiguous_resource'
+    for row in tagged:
+        if row.get('connection_id'):
+            row['connection_id']=session_id+':'+row['connection_id']
     # An independent copy of every marker must match the ordered per-thread trace.
     expected=defaultdict(list)
     for note in map(json.loads,(run/'native-events.jsonl').read_text().splitlines()):
@@ -156,10 +332,11 @@ def _attribute(run):
             score['oracle_labelled']+=1
             score['oracle_correct' if event['request_id']==truth else 'oracle_wrong']+=1
     if score['oracle_wrong']:errors.append(f'{score["oracle_wrong"]} independent path-oracle disagreements')
-    report=dict(valid=not errors,errors=errors,requests=len(roots),joins=len(mapping)-len(roots),operations=len(operations),
+    report=dict(valid=not errors,errors=errors,attribution_model='causal-context-v2',requests=len(roots),joins=len(mapping)-len(roots),operations=len(operations),
                 operations_started=sum(w['started'] for w in operations.values()),
                 operations_cancelled=sum(w.get('status')==-125 for w in operations.values()),
                 inherited_processes=len(inherited),runtime_spans=len(runtime_spans),
+                retroactive_socket_reads=retroactive,
                 migrating_request_spans=sum(req!=0 and len(tids)>1 for (req,span),tids in span_threads.items()),
                 markers=sum(map(len,seen.values())),parser=quality,
                 all_event_status=dict(Counter(e['attribution'] for e in tagged)),

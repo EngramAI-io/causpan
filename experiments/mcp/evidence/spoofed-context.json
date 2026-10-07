@@ -1,0 +1,188 @@
+{
+  "description": "Concurrent Node MCP calls used string JSON-RPC IDs and deliberately supplied forged Causpan metadata. Attribution used server-assigned contexts; the byte-offset oracle was applied afterward.",
+  "run": "results/mcp/spoofed-context-string-ids-c32",
+  "run-config": {
+    "runtime": "node",
+    "tokio_binary_sha256": null,
+    "runtime_workers": 2,
+    "instrumented": true,
+    "pool_size": 8,
+    "scenario": "nested",
+    "capture": "strace",
+    "seccomp": true
+  },
+  "manifest": {
+    "status": "complete",
+    "runtime": "node",
+    "scenario": "nested",
+    "concurrency": 32,
+    "pool_size": 8,
+    "instrumented": true,
+    "spoof_context": true,
+    "string_ids": true,
+    "seccomp": true,
+    "versions": {
+      "node": "v24.20.0",
+      "strace": "strace -- version 5.14"
+    },
+    "code_sha256": {
+      "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+      "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+      "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+      "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+      "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+      "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+      "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+      "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+      "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+      "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+      "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+      "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+      "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+      "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+      "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+      "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+      "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+      "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+      "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+      "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+      "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+      "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+      "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+    }
+  },
+  "report": {
+    "tool_calls": 33,
+    "incomplete_calls": 0,
+    "tool_errors": 0,
+    "server_pid": 869264,
+    "parser": {
+      "lifecycle_lines": 29,
+      "parsed": 5427
+    },
+    "sandbox_events": 302,
+    "sandbox_tids": [
+      869264,
+      869496,
+      869497,
+      869498,
+      869501,
+      869502,
+      869503,
+      869506,
+      869508
+    ],
+    "sandbox_syscalls": {
+      "openat": 1,
+      "pwrite64": 108,
+      "statx": 96,
+      "pread64": 96,
+      "close": 1
+    },
+    "oracle_labelled": 0,
+    "baselines": {
+      "pid": {
+        "events": 302,
+        "ambiguous": 302
+      },
+      "request_window": {
+        "events": 302,
+        "unattributed": 3,
+        "ambiguous": 296,
+        "singleton": 3
+      }
+    },
+    "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+  },
+  "causal-report": {
+    "valid": true,
+    "errors": [],
+    "attribution_model": "causal-context-v2",
+    "requests": 33,
+    "joins": 0,
+    "operations": 206,
+    "operations_started": 206,
+    "operations_cancelled": 0,
+    "inherited_processes": 0,
+    "runtime_spans": 0,
+    "retroactive_socket_reads": 0,
+    "migrating_request_spans": 0,
+    "markers": 2386,
+    "parser": {
+      "lifecycle_lines": 29,
+      "parsed": 5427
+    },
+    "all_event_status": {
+      "unknown": 2580,
+      "no_request_context": 104,
+      "bound": 322
+    },
+    "fixture_score": {
+      "events": 302,
+      "no_request_context": 14,
+      "bound": 288
+    },
+    "fixture_events_per_request": {
+      "request-3": 9,
+      "request-6": 9,
+      "request-9": 9,
+      "request-12": 9,
+      "request-15": 9,
+      "request-18": 9,
+      "request-21": 9,
+      "request-24": 9,
+      "request-27": 9,
+      "request-30": 9,
+      "request-33": 9,
+      "request-4": 9,
+      "request-7": 9,
+      "request-10": 9,
+      "request-13": 9,
+      "request-16": 9,
+      "request-19": 9,
+      "request-22": 9,
+      "request-25": 9,
+      "request-28": 9,
+      "request-31": 9,
+      "request-34": 9,
+      "request-5": 9,
+      "request-8": 9,
+      "request-11": 9,
+      "request-14": 9,
+      "request-17": 9,
+      "request-20": 9,
+      "request-23": 9,
+      "request-26": 9,
+      "request-29": 9,
+      "request-32": 9
+    },
+    "output_sha256": {
+      "causal-attribution.jsonl": "53002b2d0e7a4b26226d6f030dc3ef4cf01a4b86335e53517f203ac032e6b52f",
+      "provenance.jsonl": "61c89e863413502628cefeec64fb82a05106aa921226e2d56bc71fc02f353b4e"
+    }
+  },
+  "control-score": {
+    "valid": true,
+    "counts": {
+      "background": 12,
+      "correct": 204,
+      "request_events": 192,
+      "after_response": 0
+    },
+    "mismatches": [],
+    "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+  },
+  "forged_request_metadata": {
+    "org.causpan/context": 999999,
+    "org.causpan/request": 1
+  },
+  "server_mapping_for_same_call": {
+    "kind": "request",
+    "context": 1,
+    "rpc_id": "request-3",
+    "method": "tools/call",
+    "tool": "slot_io"
+  },
+  "string_rpc_ids_preserved": true
+}

@@ -1,0 +1,26 @@
+{
+  "command": "gcc -Wall -Wextra -O2 experiments/mcp/clone_files_probe.c -o results/mcp/clone-files-live/clone_files_probe && strace -ff -ttt -yy -s 128 -e trace=clone3,socket,fcntl,close,pipe,read,write,wait4 -o results/mcp/clone-files-live/traces/strace results/mcp/clone-files-live/clone_files_probe",
+  "exit_status": 0,
+  "program_output": "CLONE_FILES shared descriptor visible in parent: fd=5",
+  "result": "clone3 created a child sharing CLONE_FILES; the child-created UDP socket fd was visible to parent fcntl(F_GETFD) and then closed by the parent.",
+  "source_sha256": "71a6e93a5aa89e951ff87aa7898e16a3d76693c692abdc41b165c6dd4a530260",
+  "binary_sha256": "ea64eb9eded4ccd85127f4df09d4b8c484c0a21a96d9adc287d5c0e3a8234cbe",
+  "trace_lines": [
+    "1791338063.965583 close(3</etc/ld.so.cache>) = 0",
+    "1791338063.965850 close(3</lib64/libc.so.6>) = 0",
+    "1791338063.966043 clone3({flags=CLONE_FILES, exit_signal=SIGCHLD, stack=NULL, stack_size=0}, 88) = 1023239",
+    "1791338063.969034 fcntl(5<UDP:[846534108]>, F_GETFD) = 0",
+    "1791338063.969226 close(5<UDP:[846534108]>) = 0",
+    "1791338063.967741 socket(AF_INET, SOCK_DGRAM, IPPROTO_IP) = 5<UDP:[846534108]>"
+  ],
+  "trace_files": [
+    {
+      "path": "results/mcp/clone-files-live/traces/strace.1023238",
+      "sha256": "adad32a2f796fa2d630ab008b355a4f6168eb794cb212965ebc072c71aee4e3a"
+    },
+    {
+      "path": "results/mcp/clone-files-live/traces/strace.1023239",
+      "sha256": "7dde953076a685cfa84f54ef5a9f5c11658620cae94dc8904cbae0ba546da294"
+    }
+  ]
+}

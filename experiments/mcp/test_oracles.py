@@ -6,8 +6,58 @@ import tempfile
 import unittest
 from score_control import score
 from analyze import analyze
+from score_network import score as score_network
 
 class OracleRegressionTests(unittest.TestCase):
+    def test_network_candidate_coverage_reports_extras_instead_of_claiming_precision(self):
+        with tempfile.TemporaryDirectory() as d:
+            run=Path(d)
+            (run/'run-config.json').write_text(json.dumps({'scenario':'network-shared'}))
+            (run/'tool-calls.jsonl').write_text(''.join(json.dumps({'id':i+3,'tool':'tcp_roundtrip','arguments':{'slot':i}})+'\n' for i in range(2)))
+            row=dict(source='line1',syscall='read',args='8<TCP:[127.0.0.1:1->127.0.0.1:2]>, "causpan-net:0\\ncauspan-net:1\\n", 64',
+                     return_value=28,request_ids=[],candidate_request_ids=[3,4,5],paths=[],origin='async_context')
+            writes=[dict(source=f'write{i}',syscall='write',args=f'8<TCP:[127.0.0.1:1->127.0.0.1:2]>, "causpan-net:{i}\\n", 14',
+                         return_value=14,request_ids=[i+3],candidate_request_ids=[],paths=[],origin='async_context') for i in range(2)]
+            (run/'causal-attribution.jsonl').write_text(''.join(json.dumps(item)+'\n' for item in [*writes,row]))
+            result=score_network(run)
+            self.assertTrue(result['valid'])
+            self.assertEqual(result['mode'],'candidate_coverage')
+            self.assertEqual(result['counts']['exact_events'],2)
+            self.assertEqual(result['counts']['extra_candidate_edges'],1)
+
+    def test_inbound_network_oracle_checks_accepted_socket_reads_and_writes(self):
+        with tempfile.TemporaryDirectory() as d:
+            run=Path(d)
+            (run/'run-config.json').write_text(json.dumps({'scenario':'network-inbound'}))
+            (run/'tool-calls.jsonl').write_text(json.dumps({'id':7,'tool':'tcp_accept','arguments':{'slot':3}})+'\n')
+            rows=[dict(source='read',syscall='read',args='11<TCP:[local]>, "causpan-in:3\\n", 64',
+                       return_value=13,request_ids=[7],candidate_request_ids=[],paths=[],origin='socket_lifecycle'),
+                  dict(source='write',syscall='write',args='11<TCP:[local]>, "causpan-in:3\\n", 13',
+                       return_value=13,request_ids=[7],candidate_request_ids=[],paths=[],origin='async_context')]
+            (run/'causal-attribution.jsonl').write_text(''.join(json.dumps(row)+'\n' for row in rows))
+            result=score_network(run)
+            self.assertTrue(result['valid'])
+            self.assertEqual(result['counts']['read_events'],1)
+            self.assertEqual(result['counts']['write_events'],1)
+            self.assertEqual(result['counts']['exact_events'],2)
+
+    def test_inbound_shared_stream_read_requires_all_request_candidates(self):
+        with tempfile.TemporaryDirectory() as d:
+            run=Path(d)
+            (run/'run-config.json').write_text(json.dumps({'scenario':'network-inbound-shared'}))
+            calls=[{'id':7+i,'tool':'tcp_accept','arguments':{'slot':i}} for i in range(2)]
+            (run/'tool-calls.jsonl').write_text(''.join(json.dumps(row)+'\n' for row in calls))
+            rows=[dict(source='read',syscall='read',args='11<TCP:[local]>, "causpan-in:0\\ncauspan-in:1\\n", 64',
+                       return_value=26,request_ids=[],candidate_request_ids=[7,8],paths=[],origin='socket_lifecycle'),
+                  *[dict(source=f'write{i}',syscall='write',args=f'11<TCP:[local]>, "causpan-in:{i}\\n", 13',
+                         return_value=13,request_ids=[7+i],candidate_request_ids=[],paths=[],origin='async_context') for i in range(2)]]
+            (run/'causal-attribution.jsonl').write_text(''.join(json.dumps(row)+'\n' for row in rows))
+            result=score_network(run)
+            self.assertTrue(result['valid'])
+            self.assertEqual(result['mode'],'candidate_coverage')
+            self.assertEqual(result['counts']['extra_candidate_edges'],0)
+            self.assertEqual(result['counts']['covered_events'],3)
+
     def test_multi_parent_background_leak_is_not_hidden_by_null_scalar_id(self):
         with tempfile.TemporaryDirectory() as d:
             run=Path(d)

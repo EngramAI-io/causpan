@@ -1,0 +1,120 @@
+{
+  "source_run": "results/mcp/agent-followup-20261006-retry",
+  "manifest": {
+    "runtime": "node",
+    "seccomp": true,
+    "mode": "agent",
+    "concurrency": 8,
+    "shared": false,
+    "instrumented": true,
+    "pool_size": 4,
+    "model": null,
+    "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+    "versions": {
+      "node": "v24.20.0",
+      "strace": "strace -- version 5.14",
+      "codex": "codex-cli 0.160.1"
+    },
+    "server": {
+      "@modelcontextprotocol/server-filesystem": "2026.8.31"
+    },
+    "status": "complete",
+    "execution_seconds": 16.344699012115598
+  },
+  "report": {
+    "tool_calls": 4,
+    "incomplete_calls": 0,
+    "tool_errors": 0,
+    "server_pid": 976832,
+    "parser": {
+      "lifecycle_lines": 13,
+      "unfinished": 1,
+      "terminal_interrupted": 1,
+      "parsed": 3218
+    },
+    "sandbox_events": 16,
+    "sandbox_tids": [
+      977486,
+      977489,
+      977492,
+      977493
+    ],
+    "sandbox_syscalls": {
+      "readlinkat": 4,
+      "openat": 4,
+      "read": 3,
+      "close": 4,
+      "write": 1
+    },
+    "oracle_labelled": 8,
+    "baselines": {
+      "pid": {
+        "events": 16,
+        "ambiguous": 16,
+        "oracle_labelled": 8,
+        "correct_singleton": 0,
+        "wrong_singleton": 0,
+        "truth_in_candidates": 8
+      },
+      "request_window": {
+        "events": 16,
+        "ambiguous": 8,
+        "oracle_labelled": 8,
+        "correct_singleton": 0,
+        "wrong_singleton": 0,
+        "truth_in_candidates": 8,
+        "singleton": 8
+      }
+    },
+    "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+  },
+  "causal_report": {
+    "valid": true,
+    "errors": [],
+    "attribution_model": "causal-context-v2",
+    "requests": 4,
+    "joins": 0,
+    "operations": 23,
+    "operations_started": 23,
+    "operations_cancelled": 0,
+    "inherited_processes": 0,
+    "runtime_spans": 0,
+    "retroactive_socket_reads": 0,
+    "migrating_request_spans": 0,
+    "markers": 219,
+    "parser": {
+      "lifecycle_lines": 13,
+      "unfinished": 1,
+      "terminal_interrupted": 1,
+      "parsed": 3218
+    },
+    "all_event_status": {
+      "unknown": 2799,
+      "no_request_context": 124,
+      "bound": 70
+    },
+    "fixture_score": {
+      "events": 16,
+      "bound": 16,
+      "oracle_labelled": 8,
+      "oracle_correct": 8
+    },
+    "fixture_events_per_request": {
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4
+    },
+    "analysis_id": "f1f503dcb0da48eda7f69f591fe3a940",
+    "output_sha256": {
+      "causal-attribution.jsonl": "30450a813c0411504e6416055388d2b1627c8f2de5de2d5fa64711a010fc8901",
+      "provenance.jsonl": "376679dd074de9000a89463571fea54569241d803da12e70f32c87159c88d8a2"
+    }
+  },
+  "prior_attempt": {
+    "source_run": "results/mcp/agent-followup-20261006",
+    "status": "failed_closed",
+    "observation": "Agent completed all four MCP calls, but strace ended while a child process was blocked in epoll_pwait and then recorded SIGTERM. The parser treated this expected terminal interruption as incomplete capture.",
+    "resolution": "Parser now records terminal_interrupted separately; the retried capture passed all structural checks and independent fixture oracle."
+  }
+}

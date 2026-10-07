@@ -4,7 +4,15 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from analyze import analyze, parse_traces
+from analyze import analyze, parse_traces, clone_has_flag
+
+class CloneFlagTests(unittest.TestCase):
+    def test_clone3_numeric_flags_are_decoded(self):
+        args='{flags=0x10400, exit_signal=SIGCHLD}'
+        self.assertTrue(clone_has_flag(args,'CLONE_FILES'))
+        self.assertTrue(clone_has_flag(args,'CLONE_THREAD'))
+        self.assertFalse(clone_has_flag('{flags=0x400}', 'CLONE_THREAD'))
+        self.assertTrue(clone_has_flag('{flags=CLONE_FILES, exit_signal=SIGCHLD}', 'CLONE_FILES'))
 
 class TraceTests(unittest.TestCase):
     def test_threads_children_resumed_and_payload_paths(self):
@@ -40,6 +48,17 @@ class ReturnTests(unittest.TestCase):
             self.assertEqual(events[1]['return_value'],0xffff0000)
             self.assertFalse(quality.get('unparsed'))
 
+    def test_blocked_syscall_at_explicit_tracee_termination_is_not_capture_truncation(self):
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)
+            (path/'strace.10').write_text(
+                '1.000001 epoll_pwait(4<anon_inode:[eventpoll]>,  <unfinished ...>) = ?\n'
+                '1.500000 +++ killed by SIGTERM +++\n')
+            events,quality=parse_traces(path)
+            self.assertEqual(events,[])
+            self.assertEqual(quality['terminal_interrupted'],1)
+            self.assertFalse(quality.get('incomplete_at_eof'))
+
 class OracleTests(unittest.TestCase):
     def test_shared_paths_remove_labels_without_changing_candidates(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -67,4 +86,3 @@ class OracleTests(unittest.TestCase):
             self.assertEqual(s['candidates']['request_window'],[1,2])
 
 if __name__ == '__main__': unittest.main()
-

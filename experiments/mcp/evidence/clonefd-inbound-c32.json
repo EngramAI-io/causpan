@@ -1,0 +1,117 @@
+{
+  "source_run": "results/mcp/clonefd-inbound-c32",
+  "manifest": {
+    "runtime": "node",
+    "seccomp": true,
+    "mode": "replay",
+    "concurrency": 32,
+    "instrumented": true,
+    "pool_size": 16,
+    "scenario": "network-inbound",
+    "batches": 1,
+    "status": "complete",
+    "execution_seconds": 3.073889303021133
+  },
+  "report": {
+    "tool_calls": 33,
+    "incomplete_calls": 0,
+    "tool_errors": 0,
+    "server_pid": 1014128,
+    "parser": {
+      "lifecycle_lines": 45,
+      "parsed": 5129
+    },
+    "sandbox_events": 39,
+    "sandbox_tids": [
+      1014190,
+      1014192,
+      1014194,
+      1014196,
+      1014198,
+      1014200,
+      1014202,
+      1014203,
+      1014205,
+      1014207,
+      1014208,
+      1014209,
+      1014210,
+      1014211,
+      1014212,
+      1014213
+    ],
+    "sandbox_syscalls": {
+      "openat": 1,
+      "pwrite64": 37,
+      "close": 1
+    },
+    "oracle_labelled": 0,
+    "baselines": {
+      "pid": {
+        "events": 39,
+        "ambiguous": 39
+      },
+      "request_window": {
+        "events": 39,
+        "unattributed": 3,
+        "ambiguous": 33,
+        "singleton": 3
+      }
+    },
+    "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+  },
+  "causal_report": {
+    "valid": true,
+    "errors": [],
+    "attribution_model": "causal-context-v2",
+    "requests": 33,
+    "joins": 0,
+    "operations": 39,
+    "operations_started": 39,
+    "operations_cancelled": 0,
+    "inherited_processes": 0,
+    "runtime_spans": 0,
+    "retroactive_socket_reads": 32,
+    "migrating_request_spans": 0,
+    "markers": 1985,
+    "parser": {
+      "lifecycle_lines": 45,
+      "parsed": 5129
+    },
+    "all_event_status": {
+      "unknown": 2595,
+      "no_request_context": 384,
+      "bound": 130
+    },
+    "fixture_score": {
+      "events": 39,
+      "no_request_context": 39
+    },
+    "fixture_events_per_request": {},
+    "analysis_id": "2b6f3198d7e140e4ae530bf29f520be9",
+    "output_sha256": {
+      "causal-attribution.jsonl": "d86cd2d45f21ff4331f9a14ad6b13c374e9e8873f191827fd26111bde358e2d1",
+      "provenance.jsonl": "b661c0d379cd8faa080d2dec8043529eac625d10f1af5254ab61d53a654abc5a"
+    }
+  },
+  "scores": {
+    "network-score.json": {
+      "valid": true,
+      "mode": "exact_single_connection",
+      "counts": {
+        "read_events": 32,
+        "covered_events": 64,
+        "exact_events": 64,
+        "extra_candidate_edges": 0,
+        "write_events": 32
+      },
+      "mismatches": [],
+      "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference",
+      "expected_server_directions": [
+        "read",
+        "write"
+      ],
+      "scenario": "network-inbound"
+    }
+  }
+}

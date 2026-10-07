@@ -43,8 +43,8 @@ Inspect `results/mcp/agent-complete/timeline.csv` alongside `tool-calls.jsonl` a
 3. **Resource names are an experimental oracle, not a general solution.** Shared-file requests produce events that a path join cannot uniquely label. Reuse occurs even in the basic agent write/read-back task.
 4. **Protocol success is not complete kernel provenance.** Background effects, delayed work, subprocesses, and events without decoded paths remain outside the scored subset.
 
-These are measured limitations of the implemented baselines. They are not claims that every existing provenance product fails, or that a new attribution design is already reliable. The [guide](mcp-experiment.md) distinguishes adjacent systems, existing Rust evaluation issues, and the next instrumentation experiments.
+These are measured limitations of the initial baselines. They are not claims that every existing provenance product fails. Later experiments have implemented a bounded attribution mechanism; see [runtime findings](runtime-findings.md).
 
-## Next experiment
+## Follow-up mechanism experiments
 
-Instrument MCP dispatch and libuv async work submission/execution with separate request IDs and work IDs. First use this only as evaluation ground truth for shared-file requests. Then evaluate a candidate context-propagation mechanism at syscall time with explicit unknown results, thread handoff, context restoration, and leakage checks. Extend to background work, cancellation, and child processes before claiming end-to-end attribution.
+The follow-up work instrumented MCP dispatch and runtime execution, tested explicit context joins, network connection ownership, background work, cancellation, and subprocesses. Results and remaining gaps are in [runtime findings](runtime-findings.md).

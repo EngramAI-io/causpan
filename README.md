@@ -28,7 +28,7 @@ The same Linux thread may execute pieces of several logical requests over a shor
 
 > Can kernel effects be reliably attributed to individual logical requests when concurrent requests share processes and execution threads?
 
-Causpan approaches this experimentally — building ground-truth workloads, capturing kernel observations, and measuring how well existing attribution baselines (PID, TID, temporal window) perform as concurrency increases.
+Causpan approaches this experimentally — building ground-truth workloads, capturing kernel observations, measuring PID/window baselines, and testing runtime context propagation from MCP dispatch through asynchronous work to observed syscalls. The current Node/libuv and Rust/Tokio bridges are experimental and depend on trusted runtime/application instrumentation; they are not a universal kernel provenance collector.
 
 ## Repository Structure
 
@@ -64,17 +64,20 @@ cargo build --release
 ### Capture strace and ground truth in the same execution
 
 ```bash
+mkdir -p /tmp/causpan-traces /tmp/causpan
 strace -ff -ttt \
-  -e trace=openat,read,write,socket,connect,clone,fork,execve \
-  -o strace \
+  -e trace=%file,%process,%desc,%network \
+  -o /tmp/causpan-traces/strace \
   ./target/release/workload \
-  --concurrency 8 --operations-per-rpc 4 --output ground-truth.jsonl
+  --data-dir /tmp/causpan --concurrency 8 --operations-per-rpc 4 \
+  --output ground-truth.jsonl
 ```
 
 ### Normalise strace
 
 ```bash
-./target/release/collector --format straces . kernel-events.jsonl
+./target/release/collector --format straces --data-dir /tmp/causpan \
+  /tmp/causpan-traces kernel-events.jsonl
 ```
 
 ### Evaluate
@@ -119,7 +122,7 @@ attribution.csv  (precision, recall, F1 per strategy)
 ## Key Design Decisions
 
 1. **Isolate scoring from inference.** The MCP pipeline implements this separation. The legacy Rust evaluator still loads ground truth into its strategies and labels its exports `oracle_assisted_*`; those scores are diagnostic only.
-2. **Unique resources per RPC.**  Each request uses distinct file paths and network targets so the evaluator can independently verify correctness.
+2. **Separate inference from its oracle.** Unique file paths, write payloads, and TCP payloads provide independent labels only after attribution in the MCP experiment.
 3. **Measure failure modes first.** The runtime mechanism follows from controlled counterexamples and independent evaluation.
 4. **Node and Rust/Tokio experiments.** Python asyncio, Go, and arbitrary custom schedulers are not covered by the current bridges.
 
@@ -131,11 +134,11 @@ attribution.csv  (precision, recall, F1 per strategy)
 3. Baseline attribution
 4. Demonstrate failure
 5. Understand failure
-6. Design Causpan mechanism  ← future work
-7. Evaluate mechanism
-8. Stress / adversarial testing
-9. MCP integration
-10. Real security workloads
+6. Build runtime identity bridges  ← experimental Node/libuv and Rust/Tokio paths implemented
+7. Evaluate with independent oracles
+8. Stress failure boundaries and ambiguous shared effects
+9. Compare kernel provenance collectors
+10. Test real security workloads
 ```
 
 ## License
@@ -148,11 +151,15 @@ A separate [MCP experiment guide](docs/mcp-experiment.md) sets up Codex, the off
 filesystem MCP server, a JSON-RPC recorder, and per-thread syscall capture. It includes
 sequential, concurrent, and shared-file controls with oracle labels kept separate from
 attribution. See [runtime findings and reproduction](docs/runtime-findings.md) for
-the implemented Node/libuv and Rust/Tokio bridges, 168 passing matrix runs,
-multi-parent provenance, measured overhead, and remaining limitations. The
-[initial findings](docs/mcp-initial-findings.md) preserve the baseline experiments;
+the implemented Node/libuv and Rust/Tokio bridges, the original 212-case runtime
+matrices plus a fresh 36-case descriptor regression matrix, multi-parent and network
+provenance (including shared inbound streams at concurrency 256), measured overhead,
+and remaining limitations. The [initial findings](docs/mcp-initial-findings.md) preserve the baseline experiments;
 the [attribution design](docs/attribution-design.md) explains the Node prototype.
 
 The original workload/evaluator above is an early scaffold: its oracle isolation
 still needs correction, and separately executed workload/capture runs cannot be
 joined by PID and time. Use the MCP pipeline for the validated experiments.
+Related kernel provenance and agent observability systems are scoped in
+[docs/related-systems.md](docs/related-systems.md); they have not been benchmarked
+in this repository.

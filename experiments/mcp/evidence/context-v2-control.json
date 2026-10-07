@@ -1,0 +1,116 @@
+{
+  "manifest": {
+    "session_id": "d28a7a825e61405b926cd995c654dfe7",
+    "runtime": "node",
+    "runtime_workers": 2,
+    "capture": "strace",
+    "seccomp": true,
+    "code_sha256": {
+      "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+      "attribute.py": "d2746168c8d183e42c8b592d7b858d05aafbff5a365b92572620582f3c0a5c1f",
+      "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+      "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+      "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+      "proxy.py": "39c0112393b6dc5e79f324301ce04e23e23299564927099b452257a4cf7879ad",
+      "query.py": "629bb6bd24dd47357df524f250d6b8d58781c3235a617c9487198a3308c9b4fd",
+      "render.py": "1c69778aa35a51c9e506acf0418c1960914b53817d7e9ed62516be5053035681",
+      "run.py": "719d1b277cb98826ce076eb6ef993c09caf6f311bd8527fd999e423501258643",
+      "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+      "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+      "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+      "score_network.py": "8a81be58268ecf1de75b37049dcab36ce24a01266ca3bae65e7008ff3a7246be",
+      "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+      "test_attribute.py": "54f42069e8b8fb6094b6277e56b77adda250d0b96ac9ee9d9d9d207f390fce46",
+      "test_oracles.py": "7a6ba3e7e65384e17bdcf71a519df24b9092fe6fe9273d4d6532e0ab1c2b796c",
+      "control-server.mjs": "c374010e729de32f7cfb4a12f2195c21b78bd14dfa09de9aa98449ba704b6977",
+      "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+      "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+      "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+      "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+      "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+    },
+    "mode": "replay",
+    "concurrency": 8,
+    "shared": false,
+    "instrumented": true,
+    "pool_size": 4,
+    "string_ids": false,
+    "spoof_context": false,
+    "scenario": "slots",
+    "batches": 2,
+    "model": null,
+    "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+    "versions": {
+      "node": "v24.20.0",
+      "strace": "strace -- version 5.14"
+    },
+    "server": {
+      "@modelcontextprotocol/server-filesystem": "2026.8.31"
+    },
+    "status": "complete",
+    "execution_seconds": 1.934313406003639
+  },
+  "causal-report": {
+    "valid": true,
+    "errors": [],
+    "attribution_model": "causal-context-v2",
+    "requests": 17,
+    "joins": 0,
+    "operations": 121,
+    "operations_started": 121,
+    "operations_cancelled": 0,
+    "inherited_processes": 0,
+    "runtime_spans": 0,
+    "migrating_request_spans": 0,
+    "markers": 1343,
+    "parser": {
+      "lifecycle_lines": 21,
+      "parsed": 4198
+    },
+    "all_event_status": {
+      "unknown": 2571,
+      "no_request_context": 152,
+      "bound": 113
+    },
+    "fixture_score": {
+      "events": 121,
+      "no_request_context": 25,
+      "bound": 96
+    },
+    "fixture_events_per_request": {
+      "3": 6,
+      "6": 6,
+      "9": 6,
+      "4": 6,
+      "7": 6,
+      "10": 6,
+      "5": 6,
+      "8": 6,
+      "12": 6,
+      "15": 6,
+      "18": 6,
+      "11": 6,
+      "14": 6,
+      "17": 6,
+      "13": 6,
+      "16": 6
+    },
+    "analysis_id": "b2fbc8d3befc441ba6f3205e5bd8469a",
+    "output_sha256": {
+      "causal-attribution.jsonl": "b003a00ed59a99f7d721d9ea6ff44531b4d45a48032b5353b37062d829c1966f",
+      "provenance.jsonl": "96b949afbc1e641f384cf3585cad91e55be4a36ab92c73f3f6a01438ffa21f82"
+    }
+  },
+  "control-score": {
+    "valid": true,
+    "counts": {
+      "background": 23,
+      "correct": 119,
+      "request_events": 96,
+      "after_response": 0
+    },
+    "mismatches": [],
+    "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; not used during inference"
+  }
+}

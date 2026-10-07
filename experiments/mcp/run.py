@@ -7,6 +7,7 @@ import hashlib
 import uuid
 import platform
 import shutil
+import socket
 import subprocess
 import sys
 import time
@@ -17,18 +18,22 @@ HERE = Path(__file__).resolve().parent
 async def replay(run, concurrency, shared, scenario="read", batches=4, string_ids=False, spoof_context=False):
     echo_server=None
     echo_port=None
-    if scenario=='network':
+    if scenario in {'network','network-shared'}:
         async def echo(reader,writer):
             try:
-                payload=await reader.readuntil(b'\n')
-                writer.write(payload)
-                await writer.drain()
+                while payload:=await reader.readline():
+                    writer.write(payload)
+                    await writer.drain()
             finally:
                 writer.close()
                 await writer.wait_closed()
         echo_server=await asyncio.start_server(echo,'127.0.0.1',0)
         echo_port=echo_server.sockets[0].getsockname()[1]
         (run/'network-fixture.json').write_text(json.dumps({'host':'127.0.0.1','port':echo_port,'traced':False}))
+    elif scenario in {'network-inbound','network-inbound-shared'}:
+        with socket.socket() as probe:
+            probe.bind(('127.0.0.1',0));echo_port=probe.getsockname()[1]
+        (run/'network-fixture.json').write_text(json.dumps({'host':'127.0.0.1','port':echo_port,'traced':True}))
     child = await asyncio.create_subprocess_exec(sys.executable, str(HERE / 'proxy.py'),
         '--run', str(run), stdin=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE, limit=16*1024*1024)
     batch_extra={"batch_width":concurrency} if json.loads((run/"run-config.json").read_text()).get("runtime")=="tokio" else {}
@@ -62,9 +67,36 @@ async def replay(run, concurrency, shared, scenario="read", batches=4, string_id
         child.stdin.write(b'{"jsonrpc":"2.0","method":"notifications/initialized"}\n')
         await call('tools/list', {})
         for batch in range(batches):
-            if scenario=='network':
+            if scenario in {'network','network-shared'}:
                 await asyncio.gather(*(call('tools/call',{'name':'tcp_roundtrip',
                     'arguments':{'slot':batch*concurrency+i,'port':echo_port}}) for i in range(concurrency)))
+                continue
+            if scenario=='network-inbound-shared':
+                peer_reader,writer=await asyncio.open_connection('127.0.0.1',echo_port)
+                requests=[asyncio.create_task(call('tools/call',{'name':'tcp_accept','arguments':{'slot':batch*concurrency+i}}))
+                          for i in range(concurrency)]
+                await asyncio.sleep(0.05)
+                tokens=[f'causpan-in:{batch*concurrency+i}\n' for i in range(concurrency)]
+                writer.write(''.join(tokens).encode());await writer.drain()
+                replies=set()
+                for _ in range(concurrency):
+                    replies.add(await asyncio.wait_for(peer_reader.readline(),5))
+                writer.close();await writer.wait_closed()
+                if replies!={token.encode() for token in tokens}:raise RuntimeError('inbound shared TCP response mismatch')
+                await asyncio.gather(*requests)
+                continue
+            if scenario=='network-inbound':
+                async def roundtrip(slot):
+                    request=asyncio.create_task(call('tools/call',{'name':'tcp_accept','arguments':{'slot':slot}}))
+                    await asyncio.sleep(0.05)
+                    reader,writer=await asyncio.open_connection('127.0.0.1',echo_port)
+                    token=f'causpan-in:{slot}\n'
+                    writer.write(token.encode());await writer.drain()
+                    response=await asyncio.wait_for(reader.readline(),5)
+                    writer.close();await writer.wait_closed()
+                    if response.decode()!=token:raise RuntimeError('inbound TCP response mismatch')
+                    await request
+                await asyncio.gather(*(roundtrip(batch*concurrency+i) for i in range(concurrency)))
                 continue
             if scenario == "fileops":
                 for step in range(6):
@@ -101,8 +133,16 @@ async def replay(run, concurrency, shared, scenario="read", batches=4, string_id
             echo_server.close()
             await echo_server.wait_closed()
         child.stdin.close()
-        await asyncio.wait_for(child.wait(), 15)
-        await reader
+        try:
+            await asyncio.wait_for(child.wait(), 5)
+        except asyncio.TimeoutError:
+            child.terminate()
+            try:
+                await asyncio.wait_for(child.wait(), 2)
+            except asyncio.TimeoutError:
+                child.kill()
+                await child.wait()
+        await asyncio.gather(reader,return_exceptions=True)
     if child.returncode: raise RuntimeError(f'proxy exited {child.returncode}')
 
 
@@ -138,12 +178,12 @@ def main():
     p.add_argument('--shared', action='store_true')
     p.add_argument('--instrumented', action='store_true')
     p.add_argument('--pool-size', type=int, default=4)
-    p.add_argument('--scenario',choices=['read','fileops','slots','nested','detached','spawn','cancel','failure','batch','batch-joined','network'],default='read')
+    p.add_argument('--scenario',choices=['read','fileops','slots','nested','detached','spawn','cancel','failure','batch','batch-joined','network','network-shared','network-inbound','network-inbound-shared'],default='read')
     p.add_argument('--batches',type=int,default=4)
     p.add_argument('--seccomp',action='store_true',help='Use strace seccomp filtering to reduce ptrace stops')
     p.add_argument('--string-ids',action='store_true')
     p.add_argument('--spoof-context',action='store_true')
-    p.add_argument('--capture',choices=['strace','off'],default='strace')
+    p.add_argument('--capture',choices=['strace','strace-all','off'],default='strace')
     p.add_argument('--model', help='Optional Codex model override')
     p.add_argument('--output', type=Path)
     args = p.parse_args()
@@ -240,13 +280,13 @@ Then read agent-summary.txt back with read_text_file. Do not delegate. Stop afte
                 subprocess.run(cmd, stdin=subprocess.DEVNULL, stdout=out, stderr=err, check=True, timeout=240)
             validate_agent(run)
         manifest['execution_seconds']=time.monotonic()-started
-        if args.capture=='strace':
+        if args.capture!='off':
             subprocess.run([sys.executable,str(HERE/'analyze.py'),str(run)], check=True)
-        if args.instrumented and args.capture=='strace':
+        if args.instrumented and args.capture!='off':
             subprocess.run([sys.executable,str(HERE/'attribute.py'),str(run)],check=True)
             if args.scenario=='fileops':subprocess.run([sys.executable,str(HERE/'score_fileops.py'),str(run)],check=True)
             if args.scenario not in {'read','fileops'}:
-                subprocess.run([sys.executable,str(HERE/('score_network.py' if args.scenario=='network' else 'score_batch.py' if args.scenario in {'batch','batch-joined'} else 'score_control.py')),str(run)],check=True)
+                subprocess.run([sys.executable,str(HERE/('score_network.py' if args.scenario in {'network','network-shared','network-inbound','network-inbound-shared'} else 'score_batch.py' if args.scenario in {'batch','batch-joined'} else 'score_control.py')),str(run)],check=True)
         manifest['status'] = 'complete'
     except Exception as e:
         manifest['status'] = 'failed'

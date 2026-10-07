@@ -1,0 +1,1962 @@
+{
+  "matrix": "matrix-postfd-v1",
+  "run_directory": "results/mcp/matrix-postfd-v1",
+  "runtime": "node",
+  "seccomp": true,
+  "dimensions": {
+    "scenarios": [
+      "read",
+      "nested",
+      "spawn",
+      "network",
+      "network-shared"
+    ],
+    "concurrency": [
+      1,
+      8,
+      32
+    ],
+    "pool_sizes": [
+      1,
+      4
+    ],
+    "batches": 2,
+    "repeats": 1,
+    "jobs": 2
+  },
+  "runs": 36,
+  "passed": 36,
+  "all_manifests_complete": true,
+  "all_causal_reports_valid": true,
+  "all_applicable_scores_valid": true,
+  "total_case_seconds": 178.497,
+  "max_case_seconds": 38.633,
+  "cases": [
+    {
+      "name": "read-c1-p1-s0-r0-i1",
+      "scenario": "read",
+      "concurrency": 1,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.2170976630877703,
+      "causal_report": {
+        "valid": true,
+        "operations": 12,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2879,
+          "no_request_context": 107,
+          "bound": 29
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "read-c1-p1-s1-r0-i1",
+      "scenario": "read",
+      "concurrency": 1,
+      "pool_size": 1,
+      "shared": true,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.2180535669904202,
+      "causal_report": {
+        "valid": true,
+        "operations": 12,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2879,
+          "no_request_context": 108,
+          "bound": 29
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "read-c1-p4-s0-r0-i1",
+      "scenario": "read",
+      "concurrency": 1,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.0176526280120015,
+      "causal_report": {
+        "valid": true,
+        "operations": 12,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2884,
+          "no_request_context": 107,
+          "bound": 31
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "read-c1-p4-s1-r0-i1",
+      "scenario": "read",
+      "concurrency": 1,
+      "pool_size": 4,
+      "shared": true,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.017930475063622,
+      "causal_report": {
+        "valid": true,
+        "operations": 12,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2885,
+          "no_request_context": 107,
+          "bound": 31
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "read-c8-p1-s0-r0-i1",
+      "scenario": "read",
+      "concurrency": 8,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.8690139441750944,
+      "causal_report": {
+        "valid": true,
+        "operations": 82,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2878,
+          "no_request_context": 136,
+          "bound": 226
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "read-c8-p1-s1-r0-i1",
+      "scenario": "read",
+      "concurrency": 8,
+      "pool_size": 1,
+      "shared": true,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.9211984288413078,
+      "causal_report": {
+        "valid": true,
+        "operations": 82,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2879,
+          "no_request_context": 147,
+          "bound": 225
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "read-c8-p4-s1-r0-i1",
+      "scenario": "read",
+      "concurrency": 8,
+      "pool_size": 4,
+      "shared": true,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.8742819619365036,
+      "causal_report": {
+        "valid": true,
+        "operations": 82,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2885,
+          "no_request_context": 109,
+          "bound": 231
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "read-c8-p4-s0-r0-i1",
+      "scenario": "read",
+      "concurrency": 8,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 2.0735132759436965,
+      "causal_report": {
+        "valid": true,
+        "operations": 82,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2884,
+          "no_request_context": 107,
+          "bound": 231
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "read-c32-p1-s0-r0-i1",
+      "scenario": "read",
+      "concurrency": 32,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 4.87372538796626,
+      "causal_report": {
+        "valid": true,
+        "operations": 322,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2886,
+          "no_request_context": 221,
+          "bound": 899
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "read-c32-p1-s1-r0-i1",
+      "scenario": "read",
+      "concurrency": 32,
+      "pool_size": 1,
+      "shared": true,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 4.873093153117225,
+      "causal_report": {
+        "valid": true,
+        "operations": 322,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2887,
+          "no_request_context": 146,
+          "bound": 897
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "read-c32-p4-s0-r0-i1",
+      "scenario": "read",
+      "concurrency": 32,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 4.8239772049710155,
+      "causal_report": {
+        "valid": true,
+        "operations": 322,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2892,
+          "no_request_context": 105,
+          "bound": 904
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "read-c32-p4-s1-r0-i1",
+      "scenario": "read",
+      "concurrency": 32,
+      "pool_size": 4,
+      "shared": true,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 4.9240094881970435,
+      "causal_report": {
+        "valid": true,
+        "operations": 322,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2891,
+          "no_request_context": 104,
+          "bound": 904
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "nested-c1-p1-s0-r0-i1",
+      "scenario": "nested",
+      "concurrency": 1,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.3680337390396744,
+      "causal_report": {
+        "valid": true,
+        "operations": 34,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2565,
+          "no_request_context": 147,
+          "bound": 21
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 20,
+          "correct": 32,
+          "request_events": 12,
+          "after_response": 0
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "nested-c1-p4-s0-r0-i1",
+      "scenario": "nested",
+      "concurrency": 1,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.417686436092481,
+      "causal_report": {
+        "valid": true,
+        "operations": 35,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2571,
+          "no_request_context": 156,
+          "bound": 21
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 21,
+          "correct": 33,
+          "request_events": 12,
+          "after_response": 0
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "nested-c8-p1-s0-r0-i1",
+      "scenario": "nested",
+      "concurrency": 8,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 2.4191166239324957,
+      "causal_report": {
+        "valid": true,
+        "operations": 120,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2566,
+          "no_request_context": 146,
+          "bound": 161
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 22,
+          "correct": 118,
+          "request_events": 96,
+          "after_response": 0
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "nested-c8-p4-s0-r0-i1",
+      "scenario": "nested",
+      "concurrency": 8,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 2.673175503965467,
+      "causal_report": {
+        "valid": true,
+        "operations": 120,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2572,
+          "no_request_context": 148,
+          "bound": 161
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 22,
+          "correct": 118,
+          "request_events": 96,
+          "after_response": 0
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "nested-c32-p1-s0-r0-i1",
+      "scenario": "nested",
+      "concurrency": 32,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 7.779519936069846,
+      "causal_report": {
+        "valid": true,
+        "operations": 409,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2566,
+          "no_request_context": 152,
+          "bound": 642
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 23,
+          "correct": 407,
+          "request_events": 384,
+          "after_response": 0
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "nested-c32-p4-s0-r0-i1",
+      "scenario": "nested",
+      "concurrency": 32,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 7.479407247155905,
+      "causal_report": {
+        "valid": true,
+        "operations": 408,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2572,
+          "no_request_context": 146,
+          "bound": 642
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 22,
+          "correct": 406,
+          "request_events": 384,
+          "after_response": 0
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "spawn-c1-p1-s0-r0-i1",
+      "scenario": "spawn",
+      "concurrency": 1,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.2676795460283756,
+      "causal_report": {
+        "valid": true,
+        "operations": 20,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2565,
+          "no_request_context": 177,
+          "bound": 821
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 18,
+          "correct": 20,
+          "request_events": 2,
+          "after_response": 0
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "spawn-c1-p4-s0-r0-i1",
+      "scenario": "spawn",
+      "concurrency": 1,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.4177850880660117,
+      "causal_report": {
+        "valid": true,
+        "operations": 27,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2572,
+          "no_request_context": 212,
+          "bound": 821
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 25,
+          "correct": 27,
+          "request_events": 2,
+          "after_response": 0
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "spawn-c8-p1-s0-r0-i1",
+      "scenario": "spawn",
+      "concurrency": 8,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 4.423264795914292,
+      "causal_report": {
+        "valid": true,
+        "operations": 26,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2568,
+          "no_request_context": 263,
+          "bound": 6536
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 24,
+          "correct": 40,
+          "request_events": 16,
+          "after_response": 0
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "spawn-c8-p4-s0-r0-i1",
+      "scenario": "spawn",
+      "concurrency": 8,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 4.622999645071104,
+      "causal_report": {
+        "valid": true,
+        "operations": 27,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2577,
+          "no_request_context": 255,
+          "bound": 6537
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 25,
+          "correct": 41,
+          "request_events": 16,
+          "after_response": 0
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "spawn-c32-p1-s0-r0-i1",
+      "scenario": "spawn",
+      "concurrency": 32,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 37.982935718027875,
+      "causal_report": {
+        "valid": true,
+        "operations": 8,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2578,
+          "no_request_context": 169,
+          "bound": 26199
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 6,
+          "correct": 70,
+          "request_events": 64,
+          "after_response": 0
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "spawn-c32-p4-s0-r0-i1",
+      "scenario": "spawn",
+      "concurrency": 32,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 38.633081272942945,
+      "causal_report": {
+        "valid": true,
+        "operations": 8,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2593,
+          "no_request_context": 174,
+          "bound": 26190
+        }
+      },
+      "control_score": {
+        "valid": true,
+        "counts": {
+          "background": 6,
+          "correct": 70,
+          "request_events": 64,
+          "after_response": 0
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "network-c1-p1-s0-r0-i1",
+      "scenario": "network",
+      "concurrency": 1,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.4177680651191622,
+      "causal_report": {
+        "valid": true,
+        "operations": 13,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2566,
+          "no_request_context": 108,
+          "bound": 18
+        }
+      },
+      "network_score": {
+        "valid": true,
+        "counts": {
+          "write_events": 2,
+          "covered_events": 4,
+          "exact_events": 4,
+          "extra_candidate_edges": 0,
+          "read_events": 2
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "network-c1-p4-s0-r0-i1",
+      "scenario": "network",
+      "concurrency": 1,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.1674745958298445,
+      "causal_report": {
+        "valid": true,
+        "operations": 13,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2572,
+          "no_request_context": 110,
+          "bound": 17
+        }
+      },
+      "network_score": {
+        "valid": true,
+        "counts": {
+          "write_events": 2,
+          "covered_events": 4,
+          "exact_events": 4,
+          "extra_candidate_edges": 0,
+          "read_events": 2
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "network-c8-p1-s0-r0-i1",
+      "scenario": "network",
+      "concurrency": 8,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 2.3691990070510656,
+      "causal_report": {
+        "valid": true,
+        "operations": 13,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2565,
+          "no_request_context": 137,
+          "bound": 130
+        }
+      },
+      "network_score": {
+        "valid": true,
+        "counts": {
+          "write_events": 16,
+          "covered_events": 32,
+          "exact_events": 32,
+          "extra_candidate_edges": 0,
+          "read_events": 16
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "network-c8-p4-s0-r0-i1",
+      "scenario": "network",
+      "concurrency": 8,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 2.5196402829606086,
+      "causal_report": {
+        "valid": true,
+        "operations": 13,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2571,
+          "no_request_context": 143,
+          "bound": 130
+        }
+      },
+      "network_score": {
+        "valid": true,
+        "counts": {
+          "write_events": 16,
+          "covered_events": 32,
+          "exact_events": 32,
+          "extra_candidate_edges": 0,
+          "read_events": 16
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "network-c32-p1-s0-r0-i1",
+      "scenario": "network",
+      "concurrency": 32,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 6.675698823062703,
+      "causal_report": {
+        "valid": true,
+        "operations": 13,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2566,
+          "no_request_context": 234,
+          "bound": 513
+        }
+      },
+      "network_score": {
+        "valid": true,
+        "counts": {
+          "write_events": 64,
+          "covered_events": 128,
+          "exact_events": 128,
+          "extra_candidate_edges": 0,
+          "read_events": 64
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "network-c32-p4-s0-r0-i1",
+      "scenario": "network",
+      "concurrency": 32,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 6.476817354094237,
+      "causal_report": {
+        "valid": true,
+        "operations": 13,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2571,
+          "no_request_context": 237,
+          "bound": 513
+        }
+      },
+      "network_score": {
+        "valid": true,
+        "counts": {
+          "write_events": 64,
+          "covered_events": 128,
+          "exact_events": 128,
+          "extra_candidate_edges": 0,
+          "read_events": 64
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "network-shared-c1-p1-s0-r0-i1",
+      "scenario": "network-shared",
+      "concurrency": 1,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.1692069231066853,
+      "causal_report": {
+        "valid": true,
+        "operations": 8,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2566,
+          "no_request_context": 88,
+          "bound": 6,
+          "ambiguous_resource": 2
+        }
+      },
+      "network_score": {
+        "valid": true,
+        "counts": {
+          "write_events": 2,
+          "covered_events": 4,
+          "exact_events": 3,
+          "extra_candidate_edges": 1,
+          "read_events": 2
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "network-shared-c1-p4-s0-r0-i1",
+      "scenario": "network-shared",
+      "concurrency": 1,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.2228074909653515,
+      "causal_report": {
+        "valid": true,
+        "operations": 9,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2571,
+          "no_request_context": 89,
+          "bound": 6,
+          "ambiguous_resource": 2
+        }
+      },
+      "network_score": {
+        "valid": true,
+        "counts": {
+          "write_events": 2,
+          "covered_events": 4,
+          "exact_events": 3,
+          "extra_candidate_edges": 1,
+          "read_events": 2
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "network-shared-c8-p1-s0-r0-i1",
+      "scenario": "network-shared",
+      "concurrency": 8,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.8731088479980826,
+      "causal_report": {
+        "valid": true,
+        "operations": 9,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2567,
+          "no_request_context": 89,
+          "bound": 33,
+          "ambiguous_resource": 3
+        }
+      },
+      "network_score": {
+        "valid": true,
+        "counts": {
+          "write_events": 16,
+          "covered_events": 18,
+          "exact_events": 17,
+          "extra_candidate_edges": 8,
+          "read_events": 2
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "network-shared-c8-p4-s0-r0-i1",
+      "scenario": "network-shared",
+      "concurrency": 8,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.8705566450953484,
+      "causal_report": {
+        "valid": true,
+        "operations": 8,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2572,
+          "no_request_context": 89,
+          "bound": 33,
+          "ambiguous_resource": 3
+        }
+      },
+      "network_score": {
+        "valid": true,
+        "counts": {
+          "write_events": 16,
+          "covered_events": 18,
+          "exact_events": 17,
+          "extra_candidate_edges": 8,
+          "read_events": 2
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "network-shared-c32-p1-s0-r0-i1",
+      "scenario": "network-shared",
+      "concurrency": 32,
+      "pool_size": 1,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 4.272811168106273,
+      "causal_report": {
+        "valid": true,
+        "operations": 9,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2565,
+          "no_request_context": 90,
+          "bound": 129,
+          "ambiguous_resource": 3
+        }
+      },
+      "network_score": {
+        "valid": true,
+        "counts": {
+          "write_events": 64,
+          "covered_events": 66,
+          "exact_events": 65,
+          "extra_candidate_edges": 32,
+          "read_events": 2
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    },
+    {
+      "name": "network-shared-c32-p4-s0-r0-i1",
+      "scenario": "network-shared",
+      "concurrency": 32,
+      "pool_size": 4,
+      "shared": false,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 4.273583014961332,
+      "causal_report": {
+        "valid": true,
+        "operations": 9,
+        "retroactive_socket_reads": 0,
+        "all_event_status": {
+          "unknown": 2573,
+          "no_request_context": 89,
+          "bound": 129,
+          "ambiguous_resource": 3
+        }
+      },
+      "network_score": {
+        "valid": true,
+        "counts": {
+          "write_events": 64,
+          "covered_events": 66,
+          "exact_events": 65,
+          "extra_candidate_edges": 32,
+          "read_events": 2
+        }
+      },
+      "source_hashes": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "420e8ede5727a100314cf6cabd5dc58eebd3845ac80968c398813f3f3911a11a",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "85ee347bef5522d9d195148daadbd94cb286fe1ec6c1bff1eb7a2416ca3e25c1",
+        "query.py": "70a264c614c83a6d6dd951ffec5a4a758e292f1d57951f9bd2fc1e7b5a8fa596",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "615d8ddd6715975cd1425fb986669671ad1780981fb0dfabad49a0a0b7d1c648",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "4bc50d494ce12f8a7cd56337424e3b5d2cdcec3e50349b7a0e70cb0f54a7c8f6",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2f6cc4793a591efaec2fc3fdeb02362e3b97367563ea1538d97828789ace1053",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      }
+    }
+  ]
+}

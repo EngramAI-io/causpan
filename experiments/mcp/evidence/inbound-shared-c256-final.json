@@ -1,0 +1,114 @@
+{
+  "source_run": "results/mcp/inbound-shared-c256-final",
+  "manifest": {
+    "runtime": "node",
+    "seccomp": true,
+    "mode": "replay",
+    "concurrency": 256,
+    "instrumented": true,
+    "pool_size": 32,
+    "scenario": "network-inbound-shared",
+    "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+    "versions": {
+      "node": "v24.20.0",
+      "strace": "strace -- version 5.14"
+    },
+    "server": {
+      "@modelcontextprotocol/server-filesystem": "2026.8.31"
+    },
+    "status": "complete",
+    "execution_seconds": 13.926992252003402
+  },
+  "report": {
+    "tool_calls": 257,
+    "incomplete_calls": 0,
+    "tool_errors": 0,
+    "server_pid": 984792,
+    "parser": {
+      "lifecycle_lines": 77,
+      "parsed": 15385
+    },
+    "sandbox_events": 7,
+    "sandbox_tids": [
+      984880,
+      984881,
+      984883,
+      984886,
+      984887,
+      984888,
+      984915
+    ],
+    "sandbox_syscalls": {
+      "openat": 1,
+      "pwrite64": 5,
+      "close": 1
+    },
+    "oracle_labelled": 0,
+    "baselines": {
+      "pid": {
+        "events": 7,
+        "ambiguous": 7
+      },
+      "request_window": {
+        "events": 7,
+        "unattributed": 3,
+        "ambiguous": 2,
+        "singleton": 2
+      }
+    },
+    "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+  },
+  "causal_report": {
+    "valid": true,
+    "errors": [],
+    "attribution_model": "causal-context-v2",
+    "requests": 257,
+    "joins": 0,
+    "operations": 7,
+    "operations_started": 7,
+    "operations_cancelled": 0,
+    "inherited_processes": 0,
+    "runtime_spans": 0,
+    "retroactive_socket_reads": 1,
+    "migrating_request_spans": 0,
+    "markers": 11873,
+    "parser": {
+      "lifecycle_lines": 77,
+      "parsed": 15385
+    },
+    "all_event_status": {
+      "unknown": 2633,
+      "no_request_context": 102,
+      "ambiguous_resource": 4,
+      "bound": 514
+    },
+    "fixture_score": {
+      "events": 7,
+      "no_request_context": 7
+    },
+    "fixture_events_per_request": {},
+    "analysis_id": "0d6eb583e3ce4ddab2c73e5af07a3479",
+    "output_sha256": {
+      "causal-attribution.jsonl": "d020660a2222b7c4e5a37481c529d990ea3e784166dc6917ad8d7a86868f8d58",
+      "provenance.jsonl": "6970c9dcb96a13c6701ab440bb3dbee883941c2222ee8707e2378c7d203bfe48"
+    }
+  },
+  "network_score": {
+    "valid": true,
+    "mode": "candidate_coverage",
+    "counts": {
+      "read_events": 1,
+      "covered_events": 257,
+      "exact_events": 257,
+      "extra_candidate_edges": 0,
+      "write_events": 256
+    },
+    "mismatches": [],
+    "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference",
+    "expected_server_directions": [
+      "read",
+      "write"
+    ],
+    "scenario": "network-inbound-shared"
+  }
+}

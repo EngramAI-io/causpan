@@ -25,9 +25,9 @@ const time=(ns,base)=>Number(BigInt(ns)-BigInt(base))/1e6;
 function draw(){
  if(!D.calls.length){Q('detail').textContent='No completed request records are available.';Q('counts').textContent='No request timeline';return}
  const call=Q('request').value===''?null:D.calls[Number(Q('request').value)];
- let events=D.events.filter(e=>call?(e.request_ids||[]).some(id=>JSON.stringify(id)===JSON.stringify(call.id)):e.request_ids.length);
+ let events=D.events.filter(e=>call?((e.request_ids||[]).concat(e.candidate_request_ids||[])).some(id=>JSON.stringify(id)===JSON.stringify(call.id)):e.request_ids.length||(e.candidate_request_ids||[]).length);
  let base=call?call.start_ns:D.calls[0].start_ns;
- if(Q('background').checked){const end=call?events.reduce((v,e)=>BigInt(e.timestamp_ns)>v?BigInt(e.timestamp_ns):v,BigInt(call.end_ns)):BigInt(D.calls[D.calls.length-1].end_ns);events=events.concat(D.events.filter(e=>!e.request_ids.length&&BigInt(e.timestamp_ns)>=BigInt(base)&&BigInt(e.timestamp_ns)<=end))}
+ if(Q('background').checked){const end=call?events.reduce((v,e)=>BigInt(e.timestamp_ns)>v?BigInt(e.timestamp_ns):v,BigInt(call.end_ns)):BigInt(D.calls[D.calls.length-1].end_ns);events=events.concat(D.events.filter(e=>!e.request_ids.length&&!(e.candidate_request_ids||[]).length&&BigInt(e.timestamp_ns)>=BigInt(base)&&BigInt(e.timestamp_ns)<=end))}
  events.sort((a,b)=>BigInt(a.timestamp_ns)<BigInt(b.timestamp_ns)?-1:1);
  Q('detail').textContent=call?call.tool+' · request '+JSON.stringify(call.id)+' · '+time(call.end_ns,call.start_ns).toFixed(3)+' ms observed interval':'Select a request to inspect its worker handoffs and effects.';
  Q('arguments').textContent=call?JSON.stringify(call.arguments,null,2):'';
@@ -35,9 +35,9 @@ function draw(){
  const canvas=Q('timeline');canvas.width=1180;canvas.height=Math.max(150,80+tids.length*32);const ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);ctx.font='12px system-ui';const x=t=>120+(t-start)/(end-start+0.1)*1010;
  for(let i=0;i<=5;i++){const t=start+(end-start)*i/5;ctx.strokeStyle='#e1e6ed';ctx.beginPath();ctx.moveTo(x(t),30);ctx.lineTo(x(t),canvas.height-30);ctx.stroke();ctx.fillStyle='#5f6d7b';ctx.fillText(t.toFixed(2)+' ms',x(t)-16,canvas.height-10)}
  tids.forEach((tid,i)=>{const y=48+i*32;ctx.fillStyle='#37465a';ctx.fillText('TID '+tid,8,y+4);if(call){ctx.fillStyle='#e8eefb';ctx.fillRect(x(0),y-12,x(time(call.end_ns,base))-x(0),24)}});
- events.forEach(e=>{const y=48+tids.indexOf(e.tid)*32;ctx.fillStyle=e.request_ids.length>1?'#923eaa':e.request_ids.length?'#176ac6':'#9da8b5';ctx.beginPath();ctx.arc(x(time(e.timestamp_ns,base)),y,4,0,Math.PI*2);ctx.fill()});
- Q('events').replaceChildren();Q('counts').textContent=events.length+' displayed events · blue: one request · purple: multiple parents · gray: background';
- for(const e of events){const tr=document.createElement('tr');const values=[time(e.timestamp_ns,base).toFixed(3),e.pid+' / '+e.tid,e.syscall+' → '+e.return_value,JSON.stringify(e.request_ids),e.paths.join('\n')];for(const value of values){const td=document.createElement('td');td.textContent=value;tr.append(td)}const td=document.createElement('td');const a=document.createElement('a');a.href='traces/'+e.source.split(':')[0];a.textContent=e.source;td.append(a);const div=document.createElement('div');div.textContent='context '+e.context+' · work '+e.operation+' · '+e.origin;td.append(div);tr.append(td);Q('events').append(tr)}
+ events.forEach(e=>{const y=48+tids.indexOf(e.tid)*32;ctx.fillStyle=e.attribution==='ambiguous_resource'?'#d38b16':e.request_ids.length>1?'#923eaa':e.request_ids.length?'#176ac6':'#9da8b5';ctx.beginPath();ctx.arc(x(time(e.timestamp_ns,base)),y,4,0,Math.PI*2);ctx.fill()});
+ Q('events').replaceChildren();Q('counts').textContent=events.length+' displayed events · blue: one request · purple: joined parents · amber: ambiguous shared resource · gray: no request context or unknown';
+ for(const e of events){const tr=document.createElement('tr');const values=[time(e.timestamp_ns,base).toFixed(3),e.pid+' / '+e.tid,e.syscall+' → '+e.return_value,JSON.stringify(e.request_ids)+(e.candidate_request_ids?.length?' candidates: '+JSON.stringify(e.candidate_request_ids):''),e.paths.join('\n')];for(const value of values){const td=document.createElement('td');td.textContent=value;tr.append(td)}const td=document.createElement('td');const a=document.createElement('a');a.href='traces/'+e.source.split(':')[0];a.textContent=e.source;td.append(a);const div=document.createElement('div');div.textContent=e.attribution+' · context '+e.context+' · work '+e.operation+' · '+e.origin;td.append(div);tr.append(td);Q('events').append(tr)}
 }
 Q('request').addEventListener('change',draw);Q('background').addEventListener('change',draw);draw();
 </script></html>'''

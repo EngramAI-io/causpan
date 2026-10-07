@@ -13,21 +13,19 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 echo "=== Causpan Smoke Test (concurrency=1) ==="
 cd "$PROJECT_ROOT"
 
-# Output paths.
-GT="ground-truth.jsonl"
-STRACE_DIR="strace-output"
-KE="kernel-events.jsonl"
-EVAL="results/smoke-test.csv"
-
-# Clean stale outputs from previous runs.
-rm -f "$KE" "$GT" "$STRACE_DIR"/strace.*
-mkdir -p "$STRACE_DIR" results
+# Preserve each run; never clean files from an earlier experiment.
+mkdir -p results/mcp
+RUN_DIR=$(mktemp -d "results/mcp/smoke-test.XXXXXX")
+GT="$RUN_DIR/ground-truth.jsonl"
+STRACE_DIR="$RUN_DIR/traces"
+KE="$RUN_DIR/kernel-events.jsonl"
+EVAL="$RUN_DIR/attribution.csv"
+DATA_DIR="$RUN_DIR/sandbox"
+mkdir -p "$STRACE_DIR" "$DATA_DIR" results
 
 # Step 1: Capture strace while the workload generates ground truth.
-# Running under strace means PID/TID will match between ground truth and
-# kernel observations (same execution, same process).
+# Ground truth and kernel observations come from the same execution.
 echo "[1/3] strace: capturing kernel events + ground truth..."
-rm -f "$KE" "$GT" "$STRACE_DIR"/strace.*
 strace -f -ff -ttt \
     -e trace=openat,read,write,socket,connect,clone,fork,execve \
     -o "$STRACE_DIR/strace" \
@@ -36,6 +34,7 @@ strace -f -ff -ttt \
     --operations-per-rpc 4 \
     --seed 42 \
     --output "$GT" \
+    --data-dir "$DATA_DIR" \
     --scenario mixed \
     --worker-threads 2
 
@@ -46,7 +45,7 @@ echo "  Strace files: $(ls "$STRACE_DIR"/ 2>/dev/null | wc -l)"
 echo "[2/3] collector: normalising strace..."
 cargo run --release --bin collector -- \
     --format straces \
-    --data-dir /tmp/causpan \
+    --data-dir "$DATA_DIR" \
     "$STRACE_DIR" \
     "$KE"
 

@@ -13,6 +13,12 @@ CALL = re.compile(r'^(\w+)\((.*)\)\s+=\s+(0x[0-9a-f]+|-?\d+|\?)(.*)$')
 FD_OPS = {'read','write','readv','writev','pread64','pwrite64','close','fstat','fchmod','fchown','ftruncate','fsync','fdatasync','getdents64','fcntl','dup','dup3'}
 PATH_OPS = {'openat','open','stat','lstat','newfstatat','statx','access','faccessat',
             'faccessat2','chmod','fchmodat','fchownat','mkdir','mkdirat','rmdir','link','linkat','symlink','symlinkat','utimensat','readlink','readlinkat','rename','renameat','renameat2','unlink','unlinkat'}
+CLONE_FLAG_BITS={'CLONE_FILES':0x400,'CLONE_THREAD':0x10000}
+
+def clone_has_flag(args,flag):
+    if flag in args:return True
+    match=re.search(r'\bflags=(0x[0-9a-fA-F]+|[0-9]+)',args)
+    return bool(match and int(match[1],0)&CLONE_FLAG_BITS[flag])
 
 def parse_traces(directory):
     events, quality = [], Counter()
@@ -39,6 +45,13 @@ def parse_traces(directory):
                 pending = None
                 quality['rejoined'] += 1
             if body.startswith(('+++', '---')) or re.match(r'exit(?:_group)?\(.*\)\s+=\s+\?', body):
+                # A tracee may be terminated while blocked in a syscall (for
+                # example, epoll_pwait during orderly process-group teardown).
+                # strace then has no syscall-exit record to resume. Preserve
+                # that fact separately from a genuinely truncated trace file.
+                if pending and (body.startswith('+++ exited with') or body.startswith('+++ killed by')):
+                    quality['terminal_interrupted'] += 1
+                    pending = None
                 quality['lifecycle_lines'] += 1
                 continue
             m = CALL.match(body)
@@ -63,7 +76,7 @@ def parse_traces(directory):
     parents = {}
     for e in events:
         if e['syscall'] in {'clone','clone3'} and (e['return_value'] or 0) > 0:
-            parents[e['return_value']] = (e['tid'], 'CLONE_THREAD' in e['args'])
+            parents[e['return_value']] = (e['tid'], clone_has_flag(e['args'],'CLONE_THREAD'))
     def tgid(tid):
         seen = set()
         while tid in parents and parents[tid][1] and tid not in seen:

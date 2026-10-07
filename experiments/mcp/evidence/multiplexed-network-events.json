@@ -1,0 +1,2729 @@
+{
+  "run": "network-shared-matrix-v2/network-shared-c32-p1-s0-r0-i1",
+  "method": "payload decoded after attribution solely for evaluator",
+  "events": [
+    {
+      "source": "strace.623950:2972",
+      "syscall": "write",
+      "payload_slots": [
+        0
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        3
+      ],
+      "request_ids": [
+        3
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 14
+    },
+    {
+      "source": "strace.623950:2975",
+      "syscall": "write",
+      "payload_slots": [
+        1
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        4
+      ],
+      "request_ids": [
+        4
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 14
+    },
+    {
+      "source": "strace.623950:2978",
+      "syscall": "write",
+      "payload_slots": [
+        2
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        5
+      ],
+      "request_ids": [
+        5
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 14
+    },
+    {
+      "source": "strace.623950:2981",
+      "syscall": "write",
+      "payload_slots": [
+        3
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        6
+      ],
+      "request_ids": [
+        6
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 14
+    },
+    {
+      "source": "strace.623950:2984",
+      "syscall": "write",
+      "payload_slots": [
+        4
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        7
+      ],
+      "request_ids": [
+        7
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 14
+    },
+    {
+      "source": "strace.623950:2987",
+      "syscall": "write",
+      "payload_slots": [
+        5
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        8
+      ],
+      "request_ids": [
+        8
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 14
+    },
+    {
+      "source": "strace.623950:2990",
+      "syscall": "write",
+      "payload_slots": [
+        6
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        9
+      ],
+      "request_ids": [
+        9
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 14
+    },
+    {
+      "source": "strace.623950:2993",
+      "syscall": "write",
+      "payload_slots": [
+        7
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        10
+      ],
+      "request_ids": [
+        10
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 14
+    },
+    {
+      "source": "strace.623950:2996",
+      "syscall": "write",
+      "payload_slots": [
+        8
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        11
+      ],
+      "request_ids": [
+        11
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 14
+    },
+    {
+      "source": "strace.623950:2999",
+      "syscall": "write",
+      "payload_slots": [
+        9
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        12
+      ],
+      "request_ids": [
+        12
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 14
+    },
+    {
+      "source": "strace.623950:3002",
+      "syscall": "write",
+      "payload_slots": [
+        10
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        13
+      ],
+      "request_ids": [
+        13
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3005",
+      "syscall": "write",
+      "payload_slots": [
+        11
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        14
+      ],
+      "request_ids": [
+        14
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3008",
+      "syscall": "write",
+      "payload_slots": [
+        12
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        15
+      ],
+      "request_ids": [
+        15
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3011",
+      "syscall": "write",
+      "payload_slots": [
+        13
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        16
+      ],
+      "request_ids": [
+        16
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3014",
+      "syscall": "write",
+      "payload_slots": [
+        14
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        17
+      ],
+      "request_ids": [
+        17
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3017",
+      "syscall": "write",
+      "payload_slots": [
+        15
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        18
+      ],
+      "request_ids": [
+        18
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3020",
+      "syscall": "write",
+      "payload_slots": [
+        16
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        19
+      ],
+      "request_ids": [
+        19
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3023",
+      "syscall": "write",
+      "payload_slots": [
+        17
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        20
+      ],
+      "request_ids": [
+        20
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3026",
+      "syscall": "write",
+      "payload_slots": [
+        18
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        21
+      ],
+      "request_ids": [
+        21
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3029",
+      "syscall": "write",
+      "payload_slots": [
+        19
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        22
+      ],
+      "request_ids": [
+        22
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3032",
+      "syscall": "write",
+      "payload_slots": [
+        20
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        23
+      ],
+      "request_ids": [
+        23
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3035",
+      "syscall": "write",
+      "payload_slots": [
+        21
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        24
+      ],
+      "request_ids": [
+        24
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3038",
+      "syscall": "write",
+      "payload_slots": [
+        22
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        25
+      ],
+      "request_ids": [
+        25
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3041",
+      "syscall": "write",
+      "payload_slots": [
+        23
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        26
+      ],
+      "request_ids": [
+        26
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3044",
+      "syscall": "write",
+      "payload_slots": [
+        24
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        27
+      ],
+      "request_ids": [
+        27
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3047",
+      "syscall": "write",
+      "payload_slots": [
+        25
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        28
+      ],
+      "request_ids": [
+        28
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3050",
+      "syscall": "write",
+      "payload_slots": [
+        26
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        29
+      ],
+      "request_ids": [
+        29
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3053",
+      "syscall": "write",
+      "payload_slots": [
+        27
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        30
+      ],
+      "request_ids": [
+        30
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3056",
+      "syscall": "write",
+      "payload_slots": [
+        28
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        31
+      ],
+      "request_ids": [
+        31
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3059",
+      "syscall": "write",
+      "payload_slots": [
+        29
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        32
+      ],
+      "request_ids": [
+        32
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3062",
+      "syscall": "write",
+      "payload_slots": [
+        30
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        33
+      ],
+      "request_ids": [
+        33
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3065",
+      "syscall": "write",
+      "payload_slots": [
+        31
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        34
+      ],
+      "request_ids": [
+        34
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:3138",
+      "syscall": "read",
+      "payload_slots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34
+      ],
+      "request_ids": [],
+      "candidate_request_ids": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34
+      ],
+      "attribution": "ambiguous_resource",
+      "return_value": 470
+    },
+    {
+      "source": "strace.623950:4557",
+      "syscall": "write",
+      "payload_slots": [
+        32
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        35
+      ],
+      "request_ids": [
+        35
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4560",
+      "syscall": "write",
+      "payload_slots": [
+        33
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        36
+      ],
+      "request_ids": [
+        36
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4563",
+      "syscall": "write",
+      "payload_slots": [
+        34
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        37
+      ],
+      "request_ids": [
+        37
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4566",
+      "syscall": "write",
+      "payload_slots": [
+        35
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        38
+      ],
+      "request_ids": [
+        38
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4569",
+      "syscall": "write",
+      "payload_slots": [
+        36
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        39
+      ],
+      "request_ids": [
+        39
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4572",
+      "syscall": "write",
+      "payload_slots": [
+        37
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        40
+      ],
+      "request_ids": [
+        40
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4575",
+      "syscall": "write",
+      "payload_slots": [
+        38
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        41
+      ],
+      "request_ids": [
+        41
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4578",
+      "syscall": "write",
+      "payload_slots": [
+        39
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        42
+      ],
+      "request_ids": [
+        42
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4581",
+      "syscall": "write",
+      "payload_slots": [
+        40
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        43
+      ],
+      "request_ids": [
+        43
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4584",
+      "syscall": "write",
+      "payload_slots": [
+        41
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        44
+      ],
+      "request_ids": [
+        44
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4587",
+      "syscall": "write",
+      "payload_slots": [
+        42
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        45
+      ],
+      "request_ids": [
+        45
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4590",
+      "syscall": "write",
+      "payload_slots": [
+        43
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        46
+      ],
+      "request_ids": [
+        46
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4593",
+      "syscall": "write",
+      "payload_slots": [
+        44
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        47
+      ],
+      "request_ids": [
+        47
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4596",
+      "syscall": "write",
+      "payload_slots": [
+        45
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        48
+      ],
+      "request_ids": [
+        48
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4599",
+      "syscall": "write",
+      "payload_slots": [
+        46
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        49
+      ],
+      "request_ids": [
+        49
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4602",
+      "syscall": "write",
+      "payload_slots": [
+        47
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        50
+      ],
+      "request_ids": [
+        50
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4605",
+      "syscall": "write",
+      "payload_slots": [
+        48
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        51
+      ],
+      "request_ids": [
+        51
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4608",
+      "syscall": "write",
+      "payload_slots": [
+        49
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        52
+      ],
+      "request_ids": [
+        52
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4611",
+      "syscall": "write",
+      "payload_slots": [
+        50
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        53
+      ],
+      "request_ids": [
+        53
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4614",
+      "syscall": "write",
+      "payload_slots": [
+        51
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        54
+      ],
+      "request_ids": [
+        54
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4617",
+      "syscall": "write",
+      "payload_slots": [
+        52
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        55
+      ],
+      "request_ids": [
+        55
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4620",
+      "syscall": "write",
+      "payload_slots": [
+        53
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        56
+      ],
+      "request_ids": [
+        56
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4623",
+      "syscall": "write",
+      "payload_slots": [
+        54
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        57
+      ],
+      "request_ids": [
+        57
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4626",
+      "syscall": "write",
+      "payload_slots": [
+        55
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        58
+      ],
+      "request_ids": [
+        58
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4629",
+      "syscall": "write",
+      "payload_slots": [
+        56
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        59
+      ],
+      "request_ids": [
+        59
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4632",
+      "syscall": "write",
+      "payload_slots": [
+        57
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        60
+      ],
+      "request_ids": [
+        60
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4635",
+      "syscall": "write",
+      "payload_slots": [
+        58
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        61
+      ],
+      "request_ids": [
+        61
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4638",
+      "syscall": "write",
+      "payload_slots": [
+        59
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        62
+      ],
+      "request_ids": [
+        62
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4641",
+      "syscall": "write",
+      "payload_slots": [
+        60
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        63
+      ],
+      "request_ids": [
+        63
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4644",
+      "syscall": "write",
+      "payload_slots": [
+        61
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        64
+      ],
+      "request_ids": [
+        64
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4647",
+      "syscall": "write",
+      "payload_slots": [
+        62
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        65
+      ],
+      "request_ids": [
+        65
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4650",
+      "syscall": "write",
+      "payload_slots": [
+        63
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        66
+      ],
+      "request_ids": [
+        66
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:4723",
+      "syscall": "read",
+      "payload_slots": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66
+      ],
+      "request_ids": [],
+      "candidate_request_ids": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66
+      ],
+      "attribution": "ambiguous_resource",
+      "return_value": 480
+    },
+    {
+      "source": "strace.623950:6142",
+      "syscall": "write",
+      "payload_slots": [
+        64
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        67
+      ],
+      "request_ids": [
+        67
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6145",
+      "syscall": "write",
+      "payload_slots": [
+        65
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        68
+      ],
+      "request_ids": [
+        68
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6148",
+      "syscall": "write",
+      "payload_slots": [
+        66
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        69
+      ],
+      "request_ids": [
+        69
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6151",
+      "syscall": "write",
+      "payload_slots": [
+        67
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        70
+      ],
+      "request_ids": [
+        70
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6154",
+      "syscall": "write",
+      "payload_slots": [
+        68
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        71
+      ],
+      "request_ids": [
+        71
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6157",
+      "syscall": "write",
+      "payload_slots": [
+        69
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        72
+      ],
+      "request_ids": [
+        72
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6160",
+      "syscall": "write",
+      "payload_slots": [
+        70
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        73
+      ],
+      "request_ids": [
+        73
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6163",
+      "syscall": "write",
+      "payload_slots": [
+        71
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        74
+      ],
+      "request_ids": [
+        74
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6166",
+      "syscall": "write",
+      "payload_slots": [
+        72
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        75
+      ],
+      "request_ids": [
+        75
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6169",
+      "syscall": "write",
+      "payload_slots": [
+        73
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        76
+      ],
+      "request_ids": [
+        76
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6172",
+      "syscall": "write",
+      "payload_slots": [
+        74
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        77
+      ],
+      "request_ids": [
+        77
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6175",
+      "syscall": "write",
+      "payload_slots": [
+        75
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        78
+      ],
+      "request_ids": [
+        78
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6178",
+      "syscall": "write",
+      "payload_slots": [
+        76
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        79
+      ],
+      "request_ids": [
+        79
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6181",
+      "syscall": "write",
+      "payload_slots": [
+        77
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        80
+      ],
+      "request_ids": [
+        80
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6184",
+      "syscall": "write",
+      "payload_slots": [
+        78
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        81
+      ],
+      "request_ids": [
+        81
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6187",
+      "syscall": "write",
+      "payload_slots": [
+        79
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        82
+      ],
+      "request_ids": [
+        82
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6190",
+      "syscall": "write",
+      "payload_slots": [
+        80
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        83
+      ],
+      "request_ids": [
+        83
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6193",
+      "syscall": "write",
+      "payload_slots": [
+        81
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        84
+      ],
+      "request_ids": [
+        84
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6196",
+      "syscall": "write",
+      "payload_slots": [
+        82
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        85
+      ],
+      "request_ids": [
+        85
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6199",
+      "syscall": "write",
+      "payload_slots": [
+        83
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        86
+      ],
+      "request_ids": [
+        86
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6202",
+      "syscall": "write",
+      "payload_slots": [
+        84
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        87
+      ],
+      "request_ids": [
+        87
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6205",
+      "syscall": "write",
+      "payload_slots": [
+        85
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        88
+      ],
+      "request_ids": [
+        88
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6208",
+      "syscall": "write",
+      "payload_slots": [
+        86
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        89
+      ],
+      "request_ids": [
+        89
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6211",
+      "syscall": "write",
+      "payload_slots": [
+        87
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        90
+      ],
+      "request_ids": [
+        90
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6214",
+      "syscall": "write",
+      "payload_slots": [
+        88
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        91
+      ],
+      "request_ids": [
+        91
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6217",
+      "syscall": "write",
+      "payload_slots": [
+        89
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        92
+      ],
+      "request_ids": [
+        92
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6220",
+      "syscall": "write",
+      "payload_slots": [
+        90
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        93
+      ],
+      "request_ids": [
+        93
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6223",
+      "syscall": "write",
+      "payload_slots": [
+        91
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        94
+      ],
+      "request_ids": [
+        94
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6226",
+      "syscall": "write",
+      "payload_slots": [
+        92
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        95
+      ],
+      "request_ids": [
+        95
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6229",
+      "syscall": "write",
+      "payload_slots": [
+        93
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        96
+      ],
+      "request_ids": [
+        96
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6232",
+      "syscall": "write",
+      "payload_slots": [
+        94
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        97
+      ],
+      "request_ids": [
+        97
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6235",
+      "syscall": "write",
+      "payload_slots": [
+        95
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        98
+      ],
+      "request_ids": [
+        98
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:6308",
+      "syscall": "read",
+      "payload_slots": [
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98
+      ],
+      "request_ids": [],
+      "candidate_request_ids": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98
+      ],
+      "attribution": "ambiguous_resource",
+      "return_value": 480
+    },
+    {
+      "source": "strace.623950:7726",
+      "syscall": "write",
+      "payload_slots": [
+        96
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        99
+      ],
+      "request_ids": [
+        99
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:7729",
+      "syscall": "write",
+      "payload_slots": [
+        97
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        100
+      ],
+      "request_ids": [
+        100
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:7732",
+      "syscall": "write",
+      "payload_slots": [
+        98
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        101
+      ],
+      "request_ids": [
+        101
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:7735",
+      "syscall": "write",
+      "payload_slots": [
+        99
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        102
+      ],
+      "request_ids": [
+        102
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 15
+    },
+    {
+      "source": "strace.623950:7738",
+      "syscall": "write",
+      "payload_slots": [
+        100
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        103
+      ],
+      "request_ids": [
+        103
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7741",
+      "syscall": "write",
+      "payload_slots": [
+        101
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        104
+      ],
+      "request_ids": [
+        104
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7744",
+      "syscall": "write",
+      "payload_slots": [
+        102
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        105
+      ],
+      "request_ids": [
+        105
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7747",
+      "syscall": "write",
+      "payload_slots": [
+        103
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        106
+      ],
+      "request_ids": [
+        106
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7750",
+      "syscall": "write",
+      "payload_slots": [
+        104
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        107
+      ],
+      "request_ids": [
+        107
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7753",
+      "syscall": "write",
+      "payload_slots": [
+        105
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        108
+      ],
+      "request_ids": [
+        108
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7756",
+      "syscall": "write",
+      "payload_slots": [
+        106
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        109
+      ],
+      "request_ids": [
+        109
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7759",
+      "syscall": "write",
+      "payload_slots": [
+        107
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        110
+      ],
+      "request_ids": [
+        110
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7762",
+      "syscall": "write",
+      "payload_slots": [
+        108
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        111
+      ],
+      "request_ids": [
+        111
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7765",
+      "syscall": "write",
+      "payload_slots": [
+        109
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        112
+      ],
+      "request_ids": [
+        112
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7768",
+      "syscall": "write",
+      "payload_slots": [
+        110
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        113
+      ],
+      "request_ids": [
+        113
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7771",
+      "syscall": "write",
+      "payload_slots": [
+        111
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        114
+      ],
+      "request_ids": [
+        114
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7774",
+      "syscall": "write",
+      "payload_slots": [
+        112
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        115
+      ],
+      "request_ids": [
+        115
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7777",
+      "syscall": "write",
+      "payload_slots": [
+        113
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        116
+      ],
+      "request_ids": [
+        116
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7780",
+      "syscall": "write",
+      "payload_slots": [
+        114
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        117
+      ],
+      "request_ids": [
+        117
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7783",
+      "syscall": "write",
+      "payload_slots": [
+        115
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        118
+      ],
+      "request_ids": [
+        118
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7786",
+      "syscall": "write",
+      "payload_slots": [
+        116
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        119
+      ],
+      "request_ids": [
+        119
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7789",
+      "syscall": "write",
+      "payload_slots": [
+        117
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        120
+      ],
+      "request_ids": [
+        120
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7792",
+      "syscall": "write",
+      "payload_slots": [
+        118
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        121
+      ],
+      "request_ids": [
+        121
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7795",
+      "syscall": "write",
+      "payload_slots": [
+        119
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        122
+      ],
+      "request_ids": [
+        122
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7798",
+      "syscall": "write",
+      "payload_slots": [
+        120
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        123
+      ],
+      "request_ids": [
+        123
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7801",
+      "syscall": "write",
+      "payload_slots": [
+        121
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        124
+      ],
+      "request_ids": [
+        124
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7804",
+      "syscall": "write",
+      "payload_slots": [
+        122
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        125
+      ],
+      "request_ids": [
+        125
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7807",
+      "syscall": "write",
+      "payload_slots": [
+        123
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        126
+      ],
+      "request_ids": [
+        126
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7810",
+      "syscall": "write",
+      "payload_slots": [
+        124
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        127
+      ],
+      "request_ids": [
+        127
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7813",
+      "syscall": "write",
+      "payload_slots": [
+        125
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        128
+      ],
+      "request_ids": [
+        128
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7816",
+      "syscall": "write",
+      "payload_slots": [
+        126
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        129
+      ],
+      "request_ids": [
+        129
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7819",
+      "syscall": "write",
+      "payload_slots": [
+        127
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        130
+      ],
+      "request_ids": [
+        130
+      ],
+      "candidate_request_ids": [],
+      "attribution": "bound",
+      "return_value": 16
+    },
+    {
+      "source": "strace.623950:7892",
+      "syscall": "read",
+      "payload_slots": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127
+      ],
+      "expected_request_ids_from_payload_oracle": [
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130
+      ],
+      "request_ids": [],
+      "candidate_request_ids": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130
+      ],
+      "attribution": "ambiguous_resource",
+      "return_value": 508
+    }
+  ],
+  "score": {
+    "valid": true,
+    "mode": "candidate_coverage",
+    "counts": {
+      "write_events": 128,
+      "covered_events": 132,
+      "exact_events": 129,
+      "extra_candidate_edges": 192,
+      "read_events": 4
+    },
+    "mismatches": [],
+    "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+  },
+  "causal_report": {
+    "valid": true,
+    "errors": [],
+    "attribution_model": "causal-context-v2",
+    "requests": 129,
+    "joins": 0,
+    "operations": 13,
+    "operations_started": 13,
+    "operations_cancelled": 0,
+    "inherited_processes": 0,
+    "runtime_spans": 0,
+    "migrating_request_spans": 0,
+    "markers": 6027,
+    "parser": {
+      "lifecycle_lines": 15,
+      "parsed": 9096
+    },
+    "all_event_status": {
+      "unknown": 2566,
+      "no_request_context": 110,
+      "bound": 257,
+      "ambiguous_resource": 5
+    },
+    "fixture_score": {
+      "events": 13,
+      "no_request_context": 13
+    },
+    "fixture_events_per_request": {},
+    "analysis_id": "5a6b666ab37a442fa0b55bf76c8992ac",
+    "output_sha256": {
+      "causal-attribution.jsonl": "7e898a5a00957a219731d061ab091896a660550d622c6e35969871f87583f2fd",
+      "provenance.jsonl": "1c3db57694ca2e6a29d6f5cba135105ba17c543bcba0832fa1106abd9607a6cb"
+    }
+  }
+}

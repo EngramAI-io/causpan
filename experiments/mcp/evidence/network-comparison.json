@@ -1,0 +1,1561 @@
+{
+  "network-v1": {
+    "manifest": {
+      "session_id": "2f13a86f8a6b47b7b1b0ca6a5e31bc3f",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "capture": "strace",
+      "seccomp": true,
+      "code_sha256": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "53406218765b822a61d40fa93d3a027ee252ae4ed0d5be2d6305336dad5958db",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "dd0975ad1d70a220f1364d82d88ff887e7917a6556d34be71648afd702b7f293",
+        "proxy.py": "68a29b171e39c199690433cda46b0e2e8f453b3abb100f4282f31b62a697f046",
+        "query.py": "dc4bc086da9c2998811bfaa56a3d43332a7339c7bed096c91f274bde462e52a1",
+        "render.py": "0803a24e54893f8e84bdb3e96d70e472d615042a0271536946d5da652f18bede",
+        "run.py": "7280f4f369602ec87a58e9b0b37ed46828d7840431c805575d8fdf9540333cb5",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "8a81be58268ecf1de75b37049dcab36ce24a01266ca3bae65e7008ff3a7246be",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "499b1c818c118d9de7e1c7c85e2c7566eb402bb807bb4708aa6b4948eb6c4c58",
+        "test_oracles.py": "7a6ba3e7e65384e17bdcf71a519df24b9092fe6fe9273d4d6532e0ab1c2b796c",
+        "control-server.mjs": "c374010e729de32f7cfb4a12f2195c21b78bd14dfa09de9aa98449ba704b6977",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      },
+      "mode": "replay",
+      "concurrency": 8,
+      "shared": false,
+      "instrumented": true,
+      "pool_size": 4,
+      "string_ids": false,
+      "spoof_context": false,
+      "scenario": "network",
+      "batches": 2,
+      "model": null,
+      "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+      "versions": {
+        "node": "v24.20.0",
+        "strace": "strace -- version 5.14"
+      },
+      "server": {
+        "@modelcontextprotocol/server-filesystem": "2026.8.31"
+      },
+      "status": "failed",
+      "execution_seconds": 2.685515900840983,
+      "error": "Command '['/usr/bin/python3.11', '/u/kdhande/causpan/experiments/mcp/score_network.py', '/u/kdhande/causpan/results/mcp/network-v1']' returned non-zero exit status 1."
+    },
+    "causal-report": {
+      "valid": true,
+      "errors": [],
+      "requests": 17,
+      "fixture_score": {
+        "events": 13,
+        "background": 13
+      },
+      "all_event_status": {
+        "unknown": 2572,
+        "background": 170,
+        "bound": 97
+      }
+    },
+    "network-score": {
+      "valid": false,
+      "counts": {
+        "write_events": 16,
+        "correct": 16,
+        "read_events": 16
+      },
+      "mismatches": [
+        {
+          "source": "strace.3421320:2812",
+          "direction": "read",
+          "expected": [
+            3
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:2817",
+          "direction": "read",
+          "expected": [
+            4
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:2822",
+          "direction": "read",
+          "expected": [
+            5
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:2827",
+          "direction": "read",
+          "expected": [
+            6
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:2832",
+          "direction": "read",
+          "expected": [
+            7
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:2837",
+          "direction": "read",
+          "expected": [
+            8
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:2842",
+          "direction": "read",
+          "expected": [
+            9
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:2847",
+          "direction": "read",
+          "expected": [
+            10
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:3477",
+          "direction": "read",
+          "expected": [
+            11
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:3482",
+          "direction": "read",
+          "expected": [
+            12
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:3487",
+          "direction": "read",
+          "expected": [
+            13
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:3492",
+          "direction": "read",
+          "expected": [
+            14
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:3497",
+          "direction": "read",
+          "expected": [
+            15
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:3502",
+          "direction": "read",
+          "expected": [
+            16
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:3507",
+          "direction": "read",
+          "expected": [
+            17
+          ],
+          "actual": [],
+          "origin": "async_context"
+        },
+        {
+          "source": "strace.3421320:3512",
+          "direction": "read",
+          "expected": [
+            18
+          ],
+          "actual": [],
+          "origin": "async_context"
+        }
+      ],
+      "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+    }
+  },
+  "network-v2": {
+    "manifest": {
+      "session_id": "f044430f623146d1a87d3c93564277fe",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "capture": "strace",
+      "seccomp": true,
+      "code_sha256": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "0fe68006fd3cabd7cdbd6df83fc65d0a8f76a1d78a40f60a15236a03b2676fd0",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "68a29b171e39c199690433cda46b0e2e8f453b3abb100f4282f31b62a697f046",
+        "query.py": "18e873d9b79c86112bd5557ce757e4688bb860ff9993ef1c840fb32cd1271aaf",
+        "render.py": "a11367aef8469ab7553c7e39bd8ef0395c73e03d2047243deffd96512c2f72bb",
+        "run.py": "7280f4f369602ec87a58e9b0b37ed46828d7840431c805575d8fdf9540333cb5",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "8a81be58268ecf1de75b37049dcab36ce24a01266ca3bae65e7008ff3a7246be",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "499b1c818c118d9de7e1c7c85e2c7566eb402bb807bb4708aa6b4948eb6c4c58",
+        "test_oracles.py": "7a6ba3e7e65384e17bdcf71a519df24b9092fe6fe9273d4d6532e0ab1c2b796c",
+        "control-server.mjs": "c374010e729de32f7cfb4a12f2195c21b78bd14dfa09de9aa98449ba704b6977",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      },
+      "mode": "replay",
+      "concurrency": 8,
+      "shared": false,
+      "instrumented": true,
+      "pool_size": 4,
+      "string_ids": false,
+      "spoof_context": false,
+      "scenario": "network",
+      "batches": 2,
+      "model": null,
+      "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+      "versions": {
+        "node": "v24.20.0",
+        "strace": "strace -- version 5.14"
+      },
+      "server": {
+        "@modelcontextprotocol/server-filesystem": "2026.8.31"
+      },
+      "status": "complete",
+      "execution_seconds": 2.498036938952282
+    },
+    "causal-report": {
+      "valid": true,
+      "errors": [],
+      "requests": 17,
+      "fixture_score": {
+        "events": 13,
+        "background": 13
+      },
+      "all_event_status": {
+        "unknown": 2572,
+        "background": 138,
+        "bound": 129
+      }
+    },
+    "network-score": {
+      "valid": true,
+      "counts": {
+        "write_events": 16,
+        "correct": 32,
+        "read_events": 16
+      },
+      "mismatches": [],
+      "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+    }
+  },
+  "network-v3": {
+    "manifest": {
+      "session_id": "28e905630f4348c9a2b55fd2f47273f5",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "capture": "strace",
+      "seccomp": true,
+      "code_sha256": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "bc73e8c131a75e528f22196d6cc42deee53fdde3fef3a060352172e20fb36d63",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "68a29b171e39c199690433cda46b0e2e8f453b3abb100f4282f31b62a697f046",
+        "query.py": "32e1fca84f66900b14e54a9ca3ed21abb189bdb87d2bb5b964172cad5ea3a1a5",
+        "render.py": "a11367aef8469ab7553c7e39bd8ef0395c73e03d2047243deffd96512c2f72bb",
+        "run.py": "7280f4f369602ec87a58e9b0b37ed46828d7840431c805575d8fdf9540333cb5",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "8a81be58268ecf1de75b37049dcab36ce24a01266ca3bae65e7008ff3a7246be",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "499b1c818c118d9de7e1c7c85e2c7566eb402bb807bb4708aa6b4948eb6c4c58",
+        "test_oracles.py": "7a6ba3e7e65384e17bdcf71a519df24b9092fe6fe9273d4d6532e0ab1c2b796c",
+        "control-server.mjs": "c374010e729de32f7cfb4a12f2195c21b78bd14dfa09de9aa98449ba704b6977",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      },
+      "mode": "replay",
+      "concurrency": 8,
+      "shared": false,
+      "instrumented": true,
+      "pool_size": 4,
+      "string_ids": false,
+      "spoof_context": false,
+      "scenario": "network",
+      "batches": 2,
+      "model": null,
+      "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+      "versions": {
+        "node": "v24.20.0",
+        "strace": "strace -- version 5.14"
+      },
+      "server": {
+        "@modelcontextprotocol/server-filesystem": "2026.8.31"
+      },
+      "status": "complete",
+      "execution_seconds": 2.190765457926318
+    },
+    "causal-report": {
+      "valid": true,
+      "errors": [],
+      "requests": 17,
+      "fixture_score": {
+        "events": 13,
+        "background": 13
+      },
+      "all_event_status": {
+        "unknown": 2571,
+        "background": 139,
+        "bound": 129
+      }
+    },
+    "network-score": {
+      "valid": true,
+      "counts": {
+        "write_events": 16,
+        "correct": 32,
+        "read_events": 16
+      },
+      "mismatches": [],
+      "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+    }
+  },
+  "network-matrix-v1": {
+    "runs": 6,
+    "passed": 6,
+    "cases": [
+      {
+        "name": "network-c1-p1-s0-r0-i1",
+        "scenario": "network",
+        "concurrency": 1,
+        "pool_size": 1,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 5,
+          "joins": 0,
+          "operations": 21,
+          "operations_started": 21,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 467,
+          "parser": {
+            "lifecycle_lines": 15,
+            "parsed": 3228
+          },
+          "all_event_status": {
+            "unknown": 2566,
+            "background": 155,
+            "bound": 33
+          },
+          "fixture_score": {
+            "events": 21,
+            "background": 21
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "7fa3884127a54a7c97af078dab302226",
+          "output_sha256": {
+            "causal-attribution.jsonl": "c5eb3ee5e8c08f67509f06e38dc172942ec5b373fb2d89f377cf5497ca645039",
+            "provenance.jsonl": "c01316f2ae4756dfd3c63924a2278782f2ef2d430ed35f4d151113d2fdc65679"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "counts": {
+            "write_events": 4,
+            "correct": 8,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-c1-p4-s0-r0-i1",
+        "scenario": "network",
+        "concurrency": 1,
+        "pool_size": 4,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 5,
+          "joins": 0,
+          "operations": 21,
+          "operations_started": 21,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 467,
+          "parser": {
+            "lifecycle_lines": 21,
+            "parsed": 3235
+          },
+          "all_event_status": {
+            "unknown": 2570,
+            "background": 158,
+            "bound": 33
+          },
+          "fixture_score": {
+            "events": 21,
+            "background": 21
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "350e4908bcda4182b9a70587d8db2d48",
+          "output_sha256": {
+            "causal-attribution.jsonl": "8c376ab6922c8fd3c05c71ad1f0b41ba5a4f2b60b1da03693fe0e0e924240376",
+            "provenance.jsonl": "a810bf32be51085010d8a1c28a9ae6ccf3358dacbad09e560199dd8270574453"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "counts": {
+            "write_events": 4,
+            "correct": 8,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-c8-p4-s0-r0-i1",
+        "scenario": "network",
+        "concurrency": 8,
+        "pool_size": 4,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 33,
+          "joins": 0,
+          "operations": 21,
+          "operations_started": 21,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 2371,
+          "parser": {
+            "lifecycle_lines": 21,
+            "parsed": 5452
+          },
+          "all_event_status": {
+            "unknown": 2571,
+            "background": 218,
+            "bound": 257
+          },
+          "fixture_score": {
+            "events": 21,
+            "background": 21
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "835085db31ad469592fc34e474e90b40",
+          "output_sha256": {
+            "causal-attribution.jsonl": "305eba9cc25aca664ccce58969e72803d1f1be59103ddfd349095223e0d3acff",
+            "provenance.jsonl": "45c6ed199b03b865f153494a53ebc9f85f557b016eb852a03599ccee080ec99e"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "counts": {
+            "write_events": 32,
+            "correct": 64,
+            "read_events": 32
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-c8-p1-s0-r0-i1",
+        "scenario": "network",
+        "concurrency": 8,
+        "pool_size": 1,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 33,
+          "joins": 0,
+          "operations": 21,
+          "operations_started": 21,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 2371,
+          "parser": {
+            "lifecycle_lines": 15,
+            "parsed": 5442
+          },
+          "all_event_status": {
+            "unknown": 2565,
+            "background": 212,
+            "bound": 259
+          },
+          "fixture_score": {
+            "events": 21,
+            "background": 21
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "5f23cd7ceda242279a399fdfe7d0f306",
+          "output_sha256": {
+            "causal-attribution.jsonl": "8d2397d897b6ba293abb04e7be4561869990f81ef542cc164fb38b351e615bec",
+            "provenance.jsonl": "3a45d7cd25bf8199ea363bbf6716d7ce4e62a3fe45f8f43b24625a237142b788"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "counts": {
+            "write_events": 32,
+            "correct": 64,
+            "read_events": 32
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-c32-p4-s0-r0-i1",
+        "scenario": "network",
+        "concurrency": 32,
+        "pool_size": 4,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 129,
+          "joins": 0,
+          "operations": 21,
+          "operations_started": 21,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 8899,
+          "parser": {
+            "lifecycle_lines": 21,
+            "parsed": 13034
+          },
+          "all_event_status": {
+            "unknown": 2571,
+            "background": 408,
+            "bound": 1025
+          },
+          "fixture_score": {
+            "events": 21,
+            "background": 21
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "ae8a25b6cbc542088e3e9bc329ef1612",
+          "output_sha256": {
+            "causal-attribution.jsonl": "b80c5b33829968087eb64116826bdaf168f2b8d36baa6244efeebc64a9b5b7ec",
+            "provenance.jsonl": "ed2b0c8151b2aca86d14f11ec228c16e311d83aa4ed4cb6db491c27d8380e641"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "counts": {
+            "write_events": 128,
+            "correct": 256,
+            "read_events": 128
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-c32-p1-s0-r0-i1",
+        "scenario": "network",
+        "concurrency": 32,
+        "pool_size": 1,
+        "returncode": 0,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "requests": 129,
+          "joins": 0,
+          "operations": 21,
+          "operations_started": 21,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 8899,
+          "parser": {
+            "lifecycle_lines": 15,
+            "parsed": 13027
+          },
+          "all_event_status": {
+            "unknown": 2566,
+            "background": 405,
+            "bound": 1026
+          },
+          "fixture_score": {
+            "events": 21,
+            "background": 21
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "4ab376641b08417991ca09107d5bbe42",
+          "output_sha256": {
+            "causal-attribution.jsonl": "ef9ec76f67c10dd82c14b68204577cc2f1d0e418b2a2ff5ccaa55ceb9a9d3d8e",
+            "provenance.jsonl": "6cdedbbb1e768e1774da429437cf2a462e05c36a5bed860def0fb56f33d62445"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "counts": {
+            "write_events": 128,
+            "correct": 256,
+            "read_events": 128
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      }
+    ]
+  },
+  "network-shared-v3": {
+    "manifest": {
+      "session_id": "a01213bd0dc243a6a499f3ff4b389cd6",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "capture": "strace",
+      "seccomp": true,
+      "code_sha256": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "460f6a87b005b3f413067ea0c0e88b6134da245f68ff356ab991e13f7cc246b3",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "b2eac6e80d54e9b9bf84c8429a0556b78373747f6d462739e9b2a0ca04f08596",
+        "query.py": "1a65ea5e50e3d863c8dcf708fdc3c4e8ce6e891bc58a38e4b004951bbe2579ff",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "39834a0fdfd11ab8e2ddbc00e3220214e0fb56ac3432d97c2597c84b9119f585",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "c2e6fc410b98d408df622746320277637718a52de53d4ff76fb6f64b4991e700",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "54f42069e8b8fb6094b6277e56b77adda250d0b96ac9ee9d9d9d207f390fce46",
+        "test_oracles.py": "7a6ba3e7e65384e17bdcf71a519df24b9092fe6fe9273d4d6532e0ab1c2b796c",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2d688ce05fe52b52b274a44200c1eb529b39db79edf9cd02dfa88aa839bef1cf",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      },
+      "mode": "replay",
+      "concurrency": 8,
+      "shared": false,
+      "instrumented": true,
+      "pool_size": 4,
+      "string_ids": false,
+      "spoof_context": false,
+      "scenario": "network-shared",
+      "batches": 2,
+      "model": null,
+      "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+      "versions": {
+        "node": "v24.20.0",
+        "strace": "strace -- version 5.14"
+      },
+      "server": {
+        "@modelcontextprotocol/server-filesystem": "2026.8.31"
+      },
+      "status": "complete",
+      "execution_seconds": 1.3122303429991007
+    },
+    "causal-report": {
+      "valid": true,
+      "errors": [],
+      "attribution_model": "causal-context-v2",
+      "requests": 17,
+      "joins": 0,
+      "operations": 9,
+      "operations_started": 9,
+      "operations_cancelled": 0,
+      "inherited_processes": 0,
+      "runtime_spans": 0,
+      "migrating_request_spans": 0,
+      "markers": 847,
+      "parser": {
+        "lifecycle_lines": 21,
+        "parsed": 3563
+      },
+      "all_event_status": {
+        "unknown": 2570,
+        "no_request_context": 91,
+        "bound": 33,
+        "ambiguous_resource": 3
+      },
+      "fixture_score": {
+        "events": 9,
+        "no_request_context": 9
+      },
+      "fixture_events_per_request": {},
+      "analysis_id": "38d3fb94b38846069c89d9bbd10cca6f",
+      "output_sha256": {
+        "causal-attribution.jsonl": "b208c412d4d63070c4d521acdb9d93314ee3179b0ac114eee4031f48c1728b9d",
+        "provenance.jsonl": "7816cd81fcc2ef8b8a8d784932b671abc20575f495e9e0b9e75d84d72cfb2546"
+      }
+    },
+    "network-score": {
+      "valid": true,
+      "mode": "candidate_coverage",
+      "counts": {
+        "write_events": 16,
+        "covered_events": 18,
+        "exact_events": 17,
+        "extra_candidate_edges": 8,
+        "read_events": 2
+      },
+      "mismatches": [],
+      "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+    }
+  },
+  "network-shared-v4": {
+    "manifest": {
+      "session_id": "af57a52bc8e749839c89eb7a74a35c96",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "capture": "strace",
+      "seccomp": true,
+      "code_sha256": {
+        "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+        "attribute.py": "b7f204e99ebc4aefefa6f42bf81244021cafca9433c978f192c3a3ed7d6d5b45",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "proxy.py": "b2eac6e80d54e9b9bf84c8429a0556b78373747f6d462739e9b2a0ca04f08596",
+        "query.py": "1a65ea5e50e3d863c8dcf708fdc3c4e8ce6e891bc58a38e4b004951bbe2579ff",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "39834a0fdfd11ab8e2ddbc00e3220214e0fb56ac3432d97c2597c84b9119f585",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "c2e6fc410b98d408df622746320277637718a52de53d4ff76fb6f64b4991e700",
+        "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+        "test_attribute.py": "eb6576988677cb2c2412c6e0cd53ac486cca3eb3d1f915ac0469dc0c2aa7c436",
+        "test_oracles.py": "7a6ba3e7e65384e17bdcf71a519df24b9092fe6fe9273d4d6532e0ab1c2b796c",
+        "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+        "control-server.mjs": "2d688ce05fe52b52b274a44200c1eb529b39db79edf9cd02dfa88aa839bef1cf",
+        "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+        "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+        "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      },
+      "mode": "replay",
+      "concurrency": 8,
+      "shared": false,
+      "instrumented": true,
+      "pool_size": 4,
+      "string_ids": false,
+      "spoof_context": false,
+      "scenario": "network-shared",
+      "batches": 2,
+      "model": null,
+      "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+      "versions": {
+        "node": "v24.20.0",
+        "strace": "strace -- version 5.14"
+      },
+      "server": {
+        "@modelcontextprotocol/server-filesystem": "2026.8.31"
+      },
+      "status": "complete",
+      "execution_seconds": 1.3499631599988788
+    },
+    "causal-report": {
+      "valid": true,
+      "errors": [],
+      "attribution_model": "causal-context-v2",
+      "requests": 17,
+      "joins": 0,
+      "operations": 9,
+      "operations_started": 9,
+      "operations_cancelled": 0,
+      "inherited_processes": 0,
+      "runtime_spans": 0,
+      "migrating_request_spans": 0,
+      "markers": 847,
+      "parser": {
+        "lifecycle_lines": 21,
+        "parsed": 3565
+      },
+      "all_event_status": {
+        "unknown": 2572,
+        "no_request_context": 91,
+        "bound": 33,
+        "ambiguous_resource": 3
+      },
+      "fixture_score": {
+        "events": 9,
+        "no_request_context": 9
+      },
+      "fixture_events_per_request": {},
+      "analysis_id": "a708f35d14e8473092afa27b7f02c418",
+      "output_sha256": {
+        "causal-attribution.jsonl": "7ef69bcf4133c4a0857707faff5feb87661a822e5fe6bc94b02997fd5781c568",
+        "provenance.jsonl": "dc1f66ff41788044a9e3116e21b6c46b223ac97fe2b7d81696df5c065bf9e98f"
+      }
+    },
+    "network-score": {
+      "valid": true,
+      "mode": "candidate_coverage",
+      "counts": {
+        "write_events": 16,
+        "covered_events": 18,
+        "exact_events": 17,
+        "extra_candidate_edges": 8,
+        "read_events": 2
+      },
+      "mismatches": [],
+      "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+    }
+  },
+  "network-shared-matrix-v2": {
+    "runs": 6,
+    "passed": 6,
+    "cases": [
+      {
+        "name": "network-shared-c1-p1-s0-r0-i1",
+        "concurrency": 1,
+        "pool_size": 1,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "attribution_model": "causal-context-v2",
+          "requests": 5,
+          "joins": 0,
+          "operations": 13,
+          "operations_started": 13,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 323,
+          "parser": {
+            "lifecycle_lines": 15,
+            "parsed": 3016
+          },
+          "all_event_status": {
+            "unknown": 2566,
+            "no_request_context": 106,
+            "bound": 10,
+            "ambiguous_resource": 4
+          },
+          "fixture_score": {
+            "events": 13,
+            "no_request_context": 13
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "cfd52159493d4a16b74bd9c247606fa5",
+          "output_sha256": {
+            "causal-attribution.jsonl": "667927ea0a4970d82997fa604b945747da526a7c7cbf2cc4d7be21930292ce06",
+            "provenance.jsonl": "59c57af52a5f32160b529f6fed08667cbb07c041911103fd4ec0b29795a4ebf2"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "mode": "candidate_coverage",
+          "counts": {
+            "write_events": 4,
+            "covered_events": 8,
+            "exact_events": 5,
+            "extra_candidate_edges": 6,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-shared-c1-p4-s0-r0-i1",
+        "concurrency": 1,
+        "pool_size": 4,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "attribution_model": "causal-context-v2",
+          "requests": 5,
+          "joins": 0,
+          "operations": 13,
+          "operations_started": 13,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 323,
+          "parser": {
+            "lifecycle_lines": 21,
+            "parsed": 3021
+          },
+          "all_event_status": {
+            "unknown": 2571,
+            "no_request_context": 106,
+            "bound": 10,
+            "ambiguous_resource": 4
+          },
+          "fixture_score": {
+            "events": 13,
+            "no_request_context": 13
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "d10c52c578cd4af0913cd8e3b89d4c75",
+          "output_sha256": {
+            "causal-attribution.jsonl": "8c5dea15db15f362b7321cb301e548d46c6b14676bb059860373290b15bf153e",
+            "provenance.jsonl": "80c3588d6fa641df1f5c3871b97800bc7a4a6e51a978b9791b4f80d4bca8a1bc"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "mode": "candidate_coverage",
+          "counts": {
+            "write_events": 4,
+            "covered_events": 8,
+            "exact_events": 5,
+            "extra_candidate_edges": 6,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-shared-c8-p1-s0-r0-i1",
+        "concurrency": 8,
+        "pool_size": 1,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "attribution_model": "causal-context-v2",
+          "requests": 33,
+          "joins": 0,
+          "operations": 12,
+          "operations_started": 12,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 1604,
+          "parser": {
+            "lifecycle_lines": 15,
+            "parsed": 4384
+          },
+          "all_event_status": {
+            "unknown": 2567,
+            "no_request_context": 108,
+            "bound": 65,
+            "ambiguous_resource": 5
+          },
+          "fixture_score": {
+            "events": 12,
+            "no_request_context": 12
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "fbd968d6ed6748f5a3f8ad8821e0e1aa",
+          "output_sha256": {
+            "causal-attribution.jsonl": "93c3cd4a1c010561f6375303d84c0e0a73f42d761fe910100f43ea3a83eb1199",
+            "provenance.jsonl": "092dd81f918b27cbc9f685b8fa186c897a2297239f78d32f144f7c362f8b5444"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "mode": "candidate_coverage",
+          "counts": {
+            "write_events": 32,
+            "covered_events": 36,
+            "exact_events": 33,
+            "extra_candidate_edges": 48,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-shared-c8-p4-s0-r0-i1",
+        "concurrency": 8,
+        "pool_size": 4,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "attribution_model": "causal-context-v2",
+          "requests": 33,
+          "joins": 0,
+          "operations": 13,
+          "operations_started": 13,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 1611,
+          "parser": {
+            "lifecycle_lines": 21,
+            "parsed": 4394
+          },
+          "all_event_status": {
+            "unknown": 2572,
+            "no_request_context": 106,
+            "bound": 65,
+            "ambiguous_resource": 5
+          },
+          "fixture_score": {
+            "events": 13,
+            "no_request_context": 13
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "ba66797b9f3747a2b5fa9cd39cc6ab93",
+          "output_sha256": {
+            "causal-attribution.jsonl": "e2f6803886ac9ba8fef1bce9063b4bccdefad6f1d54c3b5a45f2f91112dffad4",
+            "provenance.jsonl": "840e801a2fced9e8a545903e325181b1735a62cc95b10828094429849bd80d6e"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "mode": "candidate_coverage",
+          "counts": {
+            "write_events": 32,
+            "covered_events": 36,
+            "exact_events": 33,
+            "extra_candidate_edges": 48,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-shared-c32-p1-s0-r0-i1",
+        "concurrency": 32,
+        "pool_size": 1,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "attribution_model": "causal-context-v2",
+          "requests": 129,
+          "joins": 0,
+          "operations": 13,
+          "operations_started": 13,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 6027,
+          "parser": {
+            "lifecycle_lines": 15,
+            "parsed": 9096
+          },
+          "all_event_status": {
+            "unknown": 2566,
+            "no_request_context": 110,
+            "bound": 257,
+            "ambiguous_resource": 5
+          },
+          "fixture_score": {
+            "events": 13,
+            "no_request_context": 13
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "5a6b666ab37a442fa0b55bf76c8992ac",
+          "output_sha256": {
+            "causal-attribution.jsonl": "7e898a5a00957a219731d061ab091896a660550d622c6e35969871f87583f2fd",
+            "provenance.jsonl": "1c3db57694ca2e6a29d6f5cba135105ba17c543bcba0832fa1106abd9607a6cb"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "mode": "candidate_coverage",
+          "counts": {
+            "write_events": 128,
+            "covered_events": 132,
+            "exact_events": 129,
+            "extra_candidate_edges": 192,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      },
+      {
+        "name": "network-shared-c32-p4-s0-r0-i1",
+        "concurrency": 32,
+        "pool_size": 4,
+        "causal-report": {
+          "valid": true,
+          "errors": [],
+          "attribution_model": "causal-context-v2",
+          "requests": 129,
+          "joins": 0,
+          "operations": 13,
+          "operations_started": 13,
+          "operations_cancelled": 0,
+          "inherited_processes": 0,
+          "runtime_spans": 0,
+          "migrating_request_spans": 0,
+          "markers": 6027,
+          "parser": {
+            "lifecycle_lines": 21,
+            "parsed": 9100
+          },
+          "all_event_status": {
+            "unknown": 2571,
+            "no_request_context": 109,
+            "bound": 257,
+            "ambiguous_resource": 5
+          },
+          "fixture_score": {
+            "events": 13,
+            "no_request_context": 13
+          },
+          "fixture_events_per_request": {},
+          "analysis_id": "314afa2e591146f9a4eb788d8285b017",
+          "output_sha256": {
+            "causal-attribution.jsonl": "ee906b5d9c0df20b1b8da50790e69098b4ed503cf20ff6d2591182f0c595bb1c",
+            "provenance.jsonl": "7ab4b0b4118b32bff3713d1a369190a9ba69605d9a8e139549845570957b60aa"
+          }
+        },
+        "network-score": {
+          "valid": true,
+          "mode": "candidate_coverage",
+          "counts": {
+            "write_events": 128,
+            "covered_events": 132,
+            "exact_events": 129,
+            "extra_candidate_edges": 192,
+            "read_events": 4
+          },
+          "mismatches": [],
+          "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+        }
+      }
+    ]
+  },
+  "failed_attempts": {
+    "network-v1": {
+      "classification": "attribution counterexample: request-owned writes lacked request ownership on later socket reads",
+      "manifest": {
+        "session_id": "2f13a86f8a6b47b7b1b0ca6a5e31bc3f",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": true,
+        "code_sha256": {
+          "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+          "attribute.py": "53406218765b822a61d40fa93d3a027ee252ae4ed0d5be2d6305336dad5958db",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "dd0975ad1d70a220f1364d82d88ff887e7917a6556d34be71648afd702b7f293",
+          "proxy.py": "68a29b171e39c199690433cda46b0e2e8f453b3abb100f4282f31b62a697f046",
+          "query.py": "dc4bc086da9c2998811bfaa56a3d43332a7339c7bed096c91f274bde462e52a1",
+          "render.py": "0803a24e54893f8e84bdb3e96d70e472d615042a0271536946d5da652f18bede",
+          "run.py": "7280f4f369602ec87a58e9b0b37ed46828d7840431c805575d8fdf9540333cb5",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "8a81be58268ecf1de75b37049dcab36ce24a01266ca3bae65e7008ff3a7246be",
+          "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+          "test_attribute.py": "499b1c818c118d9de7e1c7c85e2c7566eb402bb807bb4708aa6b4948eb6c4c58",
+          "test_oracles.py": "7a6ba3e7e65384e17bdcf71a519df24b9092fe6fe9273d4d6532e0ab1c2b796c",
+          "control-server.mjs": "c374010e729de32f7cfb4a12f2195c21b78bd14dfa09de9aa98449ba704b6977",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 8,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "network",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "failed",
+        "execution_seconds": 2.685515900840983,
+        "error": "Command '['/usr/bin/python3.11', '/u/kdhande/causpan/experiments/mcp/score_network.py', '/u/kdhande/causpan/results/mcp/network-v1']' returned non-zero exit status 1."
+      },
+      "causal-report.json": {
+        "valid": true,
+        "errors": [],
+        "requests": 17,
+        "joins": 0,
+        "operations": 13,
+        "operations_started": 13,
+        "operations_cancelled": 0,
+        "inherited_processes": 0,
+        "runtime_spans": 0,
+        "migrating_request_spans": 0,
+        "markers": 1227,
+        "parser": {
+          "lifecycle_lines": 21,
+          "parsed": 4085
+        },
+        "all_event_status": {
+          "unknown": 2572,
+          "background": 170,
+          "bound": 97
+        },
+        "fixture_score": {
+          "events": 13,
+          "background": 13
+        },
+        "fixture_events_per_request": {},
+        "analysis_id": "585f1f5a4bdc44d083116f1870337628",
+        "output_sha256": {
+          "causal-attribution.jsonl": "4676fbe123925c25abe4d4d7b6a2dcffe3762a18fd7fd443eab9a4fe67c05dc1",
+          "provenance.jsonl": "cadb1545b54baa7df309e3f922dd3c7e953f2aab8aa4ca1431580b081312354d"
+        }
+      },
+      "network-score.json": {
+        "valid": false,
+        "counts": {
+          "write_events": 16,
+          "correct": 16,
+          "read_events": 16
+        },
+        "mismatches": [
+          {
+            "source": "strace.3421320:2812",
+            "direction": "read",
+            "expected": [
+              3
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:2817",
+            "direction": "read",
+            "expected": [
+              4
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:2822",
+            "direction": "read",
+            "expected": [
+              5
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:2827",
+            "direction": "read",
+            "expected": [
+              6
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:2832",
+            "direction": "read",
+            "expected": [
+              7
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:2837",
+            "direction": "read",
+            "expected": [
+              8
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:2842",
+            "direction": "read",
+            "expected": [
+              9
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:2847",
+            "direction": "read",
+            "expected": [
+              10
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:3477",
+            "direction": "read",
+            "expected": [
+              11
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:3482",
+            "direction": "read",
+            "expected": [
+              12
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:3487",
+            "direction": "read",
+            "expected": [
+              13
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:3492",
+            "direction": "read",
+            "expected": [
+              14
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:3497",
+            "direction": "read",
+            "expected": [
+              15
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:3502",
+            "direction": "read",
+            "expected": [
+              16
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:3507",
+            "direction": "read",
+            "expected": [
+              17
+            ],
+            "actual": [],
+            "origin": "async_context"
+          },
+          {
+            "source": "strace.3421320:3512",
+            "direction": "read",
+            "expected": [
+              18
+            ],
+            "actual": [],
+            "origin": "async_context"
+          }
+        ],
+        "oracle": "complete synthetic TCP payload tokens; used only for scoring, not inference"
+      }
+    },
+    "network-shared-v1": {
+      "classification": "harness defect: scenario dispatched as file-slot tool and did not drive a TCP exchange",
+      "manifest": {
+        "session_id": "38c4b91cb49d43d58794eb2e6d30fddf",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": true,
+        "code_sha256": {
+          "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+          "attribute.py": "460f6a87b005b3f413067ea0c0e88b6134da245f68ff356ab991e13f7cc246b3",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "proxy.py": "b2eac6e80d54e9b9bf84c8429a0556b78373747f6d462739e9b2a0ca04f08596",
+          "query.py": "1a65ea5e50e3d863c8dcf708fdc3c4e8ce6e891bc58a38e4b004951bbe2579ff",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "99032f00b223ca067c541ea2703e44df4093d6326b88618719baf3e0f799eb76",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "c2e6fc410b98d408df622746320277637718a52de53d4ff76fb6f64b4991e700",
+          "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+          "test_attribute.py": "54f42069e8b8fb6094b6277e56b77adda250d0b96ac9ee9d9d9d207f390fce46",
+          "test_oracles.py": "7a6ba3e7e65384e17bdcf71a519df24b9092fe6fe9273d4d6532e0ab1c2b796c",
+          "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+          "control-server.mjs": "2d688ce05fe52b52b274a44200c1eb529b39db79edf9cd02dfa88aa839bef1cf",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 8,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "network-shared",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "failed",
+        "error": "MCP server closed"
+      }
+    },
+    "network-shared-v2": {
+      "classification": "harness defect: echo server closed shared socket after first framed request",
+      "manifest": {
+        "session_id": "3179c9867be143df962ec87a55849ea3",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": true,
+        "code_sha256": {
+          "analyze.py": "049a9309397e688bdca7542cbc19eb2ab5dff96cbfca78761b31254d2fbab770",
+          "attribute.py": "460f6a87b005b3f413067ea0c0e88b6134da245f68ff356ab991e13f7cc246b3",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+          "proxy.py": "b2eac6e80d54e9b9bf84c8429a0556b78373747f6d462739e9b2a0ca04f08596",
+          "query.py": "1a65ea5e50e3d863c8dcf708fdc3c4e8ce6e891bc58a38e4b004951bbe2579ff",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "fe6b52ebe53be9f4c26ef5bc331749f6b43f4d5bd8fafec58d0ab4cdbb3e5e0a",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "1e66569263bb2f80ab8ec27ab71b2fe2219aa0bb43feb5dcb774625c1173f63e",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "c2e6fc410b98d408df622746320277637718a52de53d4ff76fb6f64b4991e700",
+          "test_analyze.py": "8e4a226fbc7b163f5b667e70cf314191c4cb74ac40c75e8fdb54a0e97cf4c7ab",
+          "test_attribute.py": "54f42069e8b8fb6094b6277e56b77adda250d0b96ac9ee9d9d9d207f390fce46",
+          "test_oracles.py": "7a6ba3e7e65384e17bdcf71a519df24b9092fe6fe9273d4d6532e0ab1c2b796c",
+          "test_query.py": "7425511e87d8598e6e5829b4e1b0f805099d153fdfe5b26ff760bc4f320dc806",
+          "control-server.mjs": "2d688ce05fe52b52b274a44200c1eb529b39db79edf9cd02dfa88aa839bef1cf",
+          "instrument.mjs": "41c99a7675674431135c499ce3a841e52d6b8dd34e1cd726154e52706c5806c5",
+          "native/context.cc": "5ee7818f01f4fa22d3861339198837b0937d690395d2c1a30717b5fa518baf58",
+          "native/build.py": "c8667ffeaa8b1a35ff6a8e5b2c7da7b9215c163920a0b7ccd2ddd43b671e86d8",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 8,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "network-shared",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "failed",
+        "error": "{'result': {'content': [{'type': 'text', 'text': 'write EPIPE'}], 'isError': True}, 'jsonrpc': '2.0', 'id': 5}"
+      }
+    }
+  }
+}

@@ -21,6 +21,7 @@ async def main():
     log = (run / 'protocol.jsonl').open('x', buffering=1)
     err = (run / 'server.stderr').open('w')
     settings = json.loads((run/'run-config.json').read_text()) if (run/'run-config.json').exists() else {}
+    network_fixture=json.loads((run/'network-fixture.json').read_text()) if (run/'network-fixture.json').exists() else {}
     node_args = ['--import', str(HERE/'instrument.mjs')] if settings.get('instrumented') else []
     server = HERE/'control-server.mjs' if settings.get('scenario','read') not in {'read','fileops'} else HERE/'node_modules/@modelcontextprotocol/server-filesystem/dist/index.js'
     server_cmd=['node',*node_args,str(server),str(run/'sandbox')]
@@ -31,7 +32,8 @@ async def main():
         expected=settings.get('tokio_binary_sha256')
         if expected and hashlib.sha256(Path(server_cmd[0]).read_bytes()).hexdigest()!=expected:
             raise RuntimeError('Tokio executable changed after run preparation')
-    cmd=['strace','-ff','-ttt','-T','-yy','-s','4096','-e','trace=%file,%process,%desc,%network',
+    syscall_filter='all' if settings.get('capture')=='strace-all' else '%file,%process,%desc,%network'
+    cmd=['strace','-ff','-ttt','-T','-yy','-s','4096','-e',f'trace={syscall_filter}',
          '-o',str(run/'traces/strace'),*server_cmd]
     if settings.get('seccomp'):cmd.insert(2,'--seccomp-bpf')
     if settings.get('capture')=='off':cmd=server_cmd
@@ -39,7 +41,10 @@ async def main():
     child = await asyncio.create_subprocess_exec(*cmd, stdin=asyncio.subprocess.PIPE,
                                                 stdout=asyncio.subprocess.PIPE, stderr=err, limit=16*1024*1024,
                                                 env={**os.environ,'CAUSPAN_RUN':str(run),'CAUSPAN_INSTRUMENTED':'1' if settings.get('instrumented') else '0',
-                                                     'UV_THREADPOOL_SIZE':str(settings.get('pool_size',4))})
+                                                     'UV_THREADPOOL_SIZE':str(settings.get('pool_size',4)),
+                                                     'CAUSPAN_SCENARIO':settings.get('scenario','read'),
+                                                     'CAUSPAN_NETWORK_PORT':str(network_fixture.get('port','')),
+                                                     'CAUSPAN_INBOUND_PORT':str(network_fixture.get('port',''))})
     loop = asyncio.get_running_loop()
     incoming = asyncio.StreamReader(limit=16*1024*1024)
     await loop.connect_read_pipe(lambda: asyncio.StreamReaderProtocol(incoming), sys.stdin.buffer)

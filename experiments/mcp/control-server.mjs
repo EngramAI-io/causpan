@@ -18,9 +18,80 @@ const stride=128;
 const backgroundSlot=100000;
 let tick=0;
 const server=new McpServer({name:'causpan-control',version:'1.0.0'});
+const sharedMode=process.env.CAUSPAN_SCENARIO==='network-shared';
+const inboundMode=process.env.CAUSPAN_SCENARIO==='network-inbound';
+const inboundSharedMode=process.env.CAUSPAN_SCENARIO==='network-inbound-shared';
+let sharedSocket=null;
+let sharedBuffer='';
+const sharedWaiters=new Map();
+let inboundServer=null;
+const inboundSockets=[];
+const inboundWaiters=[];
+const inboundLiveSockets=new Set();
+let inboundSharedResolve;
+let inboundSharedBuffer='';
+const inboundSharedReady=new Promise(resolve=>{inboundSharedResolve=resolve;});
+const inboundSharedReceived=new Map();
+const inboundSharedWaiters=new Map();
+if(inboundMode||inboundSharedMode){
+  inboundServer=net.createServer(socket=>{
+    inboundLiveSockets.add(socket);
+    socket.once('close',()=>inboundLiveSockets.delete(socket));
+    if(inboundSharedMode){
+      socket.setEncoding('utf8');
+      socket.on('data',chunk=>{
+        inboundSharedBuffer+=chunk;
+        for(;;){
+          const newline=inboundSharedBuffer.indexOf('\n');
+          if(newline<0)break;
+          const message=inboundSharedBuffer.slice(0,newline+1);
+          inboundSharedBuffer=inboundSharedBuffer.slice(newline+1);
+          const match=/^causpan-in:(\d+)\n$/.exec(message);
+          if(!match)continue;
+          const slot=Number(match[1]);
+          const waiter=inboundSharedWaiters.get(slot);
+          if(waiter){inboundSharedWaiters.delete(slot);waiter(message);}
+          else inboundSharedReceived.set(slot,message);
+        }
+      });
+      inboundSharedResolve(socket);
+      return;
+    }
+    const waiter=inboundWaiters.shift();
+    if(waiter)waiter.resolve(socket);else inboundSockets.push(socket);
+  });
+  await new Promise((resolve,reject)=>{
+    inboundServer.once('error',reject);
+    inboundServer.listen(Number(process.env.CAUSPAN_INBOUND_PORT),'127.0.0.1',resolve);
+  });
+}
+if(sharedMode){
+  const port=Number(process.env.CAUSPAN_NETWORK_PORT);
+  sharedSocket=net.createConnection({host:'127.0.0.1',port});
+  await new Promise((resolve,reject)=>{sharedSocket.once('connect',resolve);sharedSocket.once('error',reject);});
+  sharedSocket.setEncoding('utf8');
+  sharedSocket.on('data',chunk=>{
+    sharedBuffer+=chunk;
+    for(;;){
+      const newline=sharedBuffer.indexOf('\n');
+      if(newline<0)break;
+      const message=sharedBuffer.slice(0,newline+1);
+      sharedBuffer=sharedBuffer.slice(newline+1);
+      const match=/causpan-net:(\d+)\n/.exec(message);
+      const waiter=match&&sharedWaiters.get(Number(match[1]));
+      if(waiter){sharedWaiters.delete(Number(match[1]));waiter.resolve(message);}
+    }
+  });
+}
 server.registerTool('tcp_roundtrip',{inputSchema:{slot:z.number().int().min(0).max(99999),port:z.number().int().min(1).max(65535)}},async({slot,port})=>{
   const payload=`causpan-net:${slot}\n`;
-  const received=await new Promise((resolve,reject)=>{
+  let received;
+  if(sharedMode){
+    received=await new Promise((resolve,reject)=>{
+      sharedWaiters.set(slot,{resolve,reject});
+      sharedSocket.write(payload,error=>{if(error){sharedWaiters.delete(slot);reject(error);}});
+    });
+  }else received=await new Promise((resolve,reject)=>{
     const socket=net.createConnection({host:'127.0.0.1',port});
     let bytes='';
     socket.setEncoding('utf8');
@@ -31,6 +102,25 @@ server.registerTool('tcp_roundtrip',{inputSchema:{slot:z.number().int().min(0).m
   });
   if(received!==payload)throw new Error('TCP read-back mismatch');
   return {content:[{type:'text',text:'TCP round trip complete'}]};
+});
+server.registerTool('tcp_accept',{inputSchema:{slot:z.number().int().min(0).max(99999)}},async({slot})=>{
+  if(!inboundMode&&!inboundSharedMode)throw new Error('tcp_accept requires network-inbound scenario');
+  if(inboundSharedMode){
+    const socket=await inboundSharedReady;
+    const payload=inboundSharedReceived.has(slot)?inboundSharedReceived.get(slot):await new Promise(resolve=>inboundSharedWaiters.set(slot,resolve));
+    if(payload!==`causpan-in:${slot}\n`)throw new Error(`inbound payload mismatch for slot ${slot}`);
+    socket.write(`causpan-in:${slot}\n`);
+    return {content:[{type:'text',text:'Accepted shared TCP request complete'}]};
+  }
+  const socket=inboundSockets.shift()??await new Promise((resolve,reject)=>inboundWaiters.push({resolve,reject}));
+  socket.setEncoding('utf8');
+  const payload=await new Promise((resolve,reject)=>{
+    socket.once('error',reject);
+    socket.once('data',chunk=>resolve(chunk));
+  });
+  if(payload!==`causpan-in:${slot}\n`)throw new Error(`inbound payload mismatch for slot ${slot}`);
+  socket.end(`causpan-in:${slot}\n`);
+  return {content:[{type:'text',text:'Accepted TCP request complete'}]};
 });
 const without=fn=>globalThis.causpanContext ? globalThis.causpanContext.withoutRequest(fn) : fn();
 // Intentionally outside any request and on the same file descriptor as request work.
@@ -115,8 +205,14 @@ server.registerTool('barrier',{inputSchema:{}},async()=>{
 });
 process.stdin.on('end',async()=>{
   clearInterval(background);
+  if(inboundServer){
+    inboundServer.close();
+    for(const socket of inboundLiveSockets)socket.destroy();
+    for(const waiter of inboundWaiters)waiter.reject(new Error('MCP transport closed'));
+  }
   await Promise.allSettled([...pending]);
   await backgroundPromise;
   await file.close();
+  if(sharedSocket)sharedSocket.destroy();
 });
 await server.connect(new StdioServerTransport());
