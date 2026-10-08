@@ -25,6 +25,37 @@ def clone_has_flag(args,flag):
     match=re.search(r'\bflags=(0x[0-9a-fA-F]+|[0-9]+)',args)
     return bool(match and int(match[1],0)&CLONE_FLAG_BITS[flag])
 
+def descriptor_rights(name, args, return_value):
+    """Decode observed SCM_RIGHTS numbers without treating payload text as control.
+
+    This records local ancillary observations only. It does not pair sends with
+    receives, identify open file descriptions, or propagate request ownership.
+    """
+    if name not in {'sendmsg', 'recvmsg'}:
+        return None
+    # FD annotations can contain names, and iov payloads can contain arbitrary
+    # control-looking text. Neither is part of the ancillary control structure.
+    structural = re.sub(r'"(?:\\.|[^"\\])*"', '""', args)
+    structural = re.sub(r'\d+<((?:[A-Za-z0-9_-]+|\(null\)):\[.*?\]|[^>]+)>',
+                        lambda m: m[0].split('<', 1)[0], structural)
+    if not re.search(r'\bcmsg_type=SCM_RIGHTS\b', structural):
+        return None
+    controls = re.findall(r'\{cmsg_len=\d+, cmsg_level=SOL_SOCKET, cmsg_type=SCM_RIGHTS, cmsg_data=\[([\d, ]*)\]\}', structural)
+    expected = len(re.findall(r'\bcmsg_type=SCM_RIGHTS\b', structural))
+    fds = []
+    decoded = len(controls) == expected
+    for control in controls:
+        if not re.fullmatch(r'\d+(?:,\s*\d+)*', control.strip()):
+            decoded = False
+            continue
+        fds.extend(int(fd.strip()) for fd in control.split(','))
+    return dict(fds=fds, decoded=decoded,
+                direction='send' if name == 'sendmsg' else 'receive',
+                succeeded=return_value is not None and return_value >= 0,
+                control_truncated=bool(re.search(r'\bMSG_CTRUNC\b', structural)),
+                semantics='local_descriptor_observation_not_transfer_pairing')
+
+
 def parse_traces(directory):
     events, quality = [], Counter()
     for file in sorted(directory.glob('strace.*')):
@@ -64,6 +95,11 @@ def parse_traces(directory):
                 quality['unparsed'] += 1
                 continue
             name, args, ret, tail = m.groups()
+            duration = re.search(r'<(\d+\.\d+)>\s*$', tail)
+            duration_ns = int(Decimal(duration[1])*1_000_000_000) if duration else None
+            # strace -T supplies elapsed syscall time, including blocked time.
+            # An unknown/restarted return does not establish completed effects.
+            completion_ns = ns + duration_ns if duration_ns is not None and ret != '?' else None
             # Only path arguments and FD annotations, never paths embedded in read/write payloads.
             paths = []
             if name in FD_OPS:
@@ -71,7 +107,11 @@ def parse_traces(directory):
                 if fd: paths.append(fd[1])
             elif name in PATH_OPS:
                 paths = re.findall(r'"([^"\\]*)"', args)
-            events.append(dict(timestamp_ns=ns, tid=tid, syscall=name, args=args,
+            result = None if ret=='?' else int(ret,16) if ret.startswith('0x') else int(ret)
+            rights = descriptor_rights(name, args, result)
+            events.append(dict(timestamp_ns=ns, duration_ns=duration_ns, completion_ns=completion_ns,
+                               descriptor_rights=rights,
+                               tid=tid, syscall=name, args=args,
                                return_value=None if ret=='?' else int(ret,16) if ret.startswith('0x') else int(ret),
                                completion='restart' if ret=='?' and 'ERESTART' in tail else 'unknown' if ret=='?' else 'returned',
                                paths=paths, source=f'{file.name}:{line_no}'))

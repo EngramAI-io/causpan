@@ -1,0 +1,72 @@
+{
+  "source_run": "results/mcp/scm-rights-probe",
+  "scope": "standalone kernel descriptor-transfer probe; not an MCP attribution result",
+  "events": [
+    {
+      "timestamp_ns": 1791422590118934000,
+      "tid": 1956045,
+      "syscall": "recvmsg",
+      "args": "4<UNIX:[908981568->908981567]>, {msg_name=0xffffcc2065b8, msg_namelen=110 => 0, msg_iov=[{iov_base=\"descriptor-transfer\", iov_len=128}], msg_iovlen=1, msg_control=[{cmsg_len=20, cmsg_level=SOL_SOCKET, cmsg_type=SCM_RIGHTS, cmsg_data=[3</u/kdhande/causpan/results/mcp/scm-rights-probe/transferred.bin>]}], msg_controllen=24, msg_flags=0}, 0",
+      "return_value": 19,
+      "completion": "returned",
+      "paths": [
+        "UNIX:[908981568->908981567]"
+      ],
+      "source": "strace.1956045:2",
+      "pid": 1956045
+    },
+    {
+      "timestamp_ns": 1791422590120579000,
+      "tid": 1955964,
+      "syscall": "sendmsg",
+      "args": "3<UNIX:[908981567->908981568]>, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base=\"descriptor-transfer\", iov_len=19}], msg_iovlen=1, msg_control=[{cmsg_len=20, cmsg_level=SOL_SOCKET, cmsg_type=SCM_RIGHTS, cmsg_data=[4</u/kdhande/causpan/results/mcp/scm-rights-probe/transferred.bin>]}], msg_controllen=24, msg_flags=0}, 0",
+      "return_value": 19,
+      "completion": "returned",
+      "paths": [
+        "UNIX:[908981567->908981568]"
+      ],
+      "source": "strace.1955964:1004",
+      "pid": 1955964
+    },
+    {
+      "timestamp_ns": 1791422590120927000,
+      "tid": 1956045,
+      "syscall": "pwrite64",
+      "args": "3</u/kdhande/causpan/results/mcp/scm-rights-probe/transferred.bin>, \"received-descriptor\", 19, 256",
+      "return_value": 19,
+      "completion": "returned",
+      "paths": [
+        "/u/kdhande/causpan/results/mcp/scm-rights-probe/transferred.bin"
+      ],
+      "source": "strace.1956045:3",
+      "pid": 1956045
+    },
+    {
+      "timestamp_ns": 1791422590120993000,
+      "tid": 1956045,
+      "syscall": "pread64",
+      "args": "3</u/kdhande/causpan/results/mcp/scm-rights-probe/transferred.bin>, \"received-descriptor\", 19, 256",
+      "return_value": 19,
+      "completion": "returned",
+      "paths": [
+        "/u/kdhande/causpan/results/mcp/scm-rights-probe/transferred.bin"
+      ],
+      "source": "strace.1956045:4",
+      "pid": 1956045
+    }
+  ],
+  "parser_quality": {
+    "lifecycle_lines": 5,
+    "parsed": 1022
+  },
+  "source": "#!/usr/bin/env python3\n\"\"\"Kernel-observed descriptor-transfer fixture; no MCP attribution claim.\"\"\"\nimport array\nimport os\nfrom pathlib import Path\nimport socket\nimport sys\n\n\ndef main():\n    path = Path(sys.argv[1]).resolve()\n    sender, receiver = socket.socketpair(socket.AF_UNIX, socket.SOCK_DGRAM)\n    child = os.fork()\n    if child == 0:\n        sender.close()\n        data, ancillary, flags, address = receiver.recvmsg(128, socket.CMSG_SPACE(array.array('i').itemsize))\n        assert data == b'descriptor-transfer' and not flags & socket.MSG_CTRUNC\n        descriptors = array.array('i')\n        for level, kind, payload in ancillary:\n            if level == socket.SOL_SOCKET and kind == socket.SCM_RIGHTS:\n                descriptors.frombytes(payload)\n        assert len(descriptors) == 1\n        fd = descriptors[0]\n        assert os.pwrite(fd, b'received-descriptor', 256) == 19\n        assert os.pread(fd, 19, 256) == b'received-descriptor'\n        os.close(fd)\n        receiver.close()\n        os._exit(0)\n    receiver.close()\n    # Open AFTER fork: the child cannot have inherited this descriptor.\n    fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_RDWR, 0o600)\n    try:\n        assert sender.sendmsg([b'descriptor-transfer'], [(socket.SOL_SOCKET, socket.SCM_RIGHTS, array.array('i', [fd]))]) == 19\n    finally:\n        os.close(fd)\n        sender.close()\n    _, status = os.waitpid(child, 0)\n    assert os.waitstatus_to_exitcode(status) == 0\n    assert path.read_bytes()[256:275] == b'received-descriptor'\n\n\nif __name__ == '__main__':\n    main()\n",
+  "sha256": {
+    "traces/strace.1955964": "987d51e549130b2a3b662e9077b445a59780b574bc9032772cdeb095b13c0df9",
+    "traces/strace.1956045": "5d668b39d847e21c05b3439fca2363db8cf461a6fa47429855208ee0952978a1"
+  },
+  "gaps": [
+    "SCM_RIGHTS descriptors exist only in raw args, not structured provenance",
+    "recvmsg entry precedes sendmsg entry; entry timestamps cannot order receipt against send",
+    "pathname annotation does not establish open-file-description identity or transfer causality"
+  ]
+}

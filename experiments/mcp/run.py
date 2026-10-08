@@ -74,9 +74,10 @@ async def replay(run, concurrency, shared, scenario="read", batches=4, string_id
 
     def _tool_name_for(scenario):
         if scenario == "spawn": return "spawn_slot"
+        if scenario == "uring": return "uring_slot"
         if scenario == "clone-files": return "clone_files_slot"
         if scenario in {"worker-context","worker-unscoped","worker-failure","worker-crash",
-                        "worker-cancel","worker-spawn","worker-grandchild","worker-socketpair",
+                        "worker-cancel","worker-spawn","worker-grandchild","worker-socketpair","worker-rights",
                         "worker-fatal","worker-relay","worker-relay-fatal","worker-wrong-response"}:
             return "worker_slot"
         if scenario == "cancel": return "cancel_probe"
@@ -90,9 +91,9 @@ async def replay(run, concurrency, shared, scenario="read", batches=4, string_id
             return {"slot": slot, "joined": scenario == "batch-joined", **batch_extra}
         if scenario == "cancel":
             return {"slot": slot, "cancel": bool(i % 2)}
-        if scenario in {"spawn","failure","clone-files","worker-context","worker-unscoped",
+        if scenario in {"spawn","uring","failure","clone-files","worker-context","worker-unscoped",
                         "worker-failure","worker-crash","worker-cancel","worker-spawn",
-                        "worker-grandchild","worker-socketpair","worker-fatal","worker-relay",
+                        "worker-grandchild","worker-socketpair","worker-rights","worker-fatal","worker-relay",
                         "worker-relay-fatal","worker-wrong-response"}:
             return {"slot": slot}
         return {"slot": slot, "rounds": 3, "delay_ms": 2,
@@ -187,7 +188,7 @@ async def replay(run, concurrency, shared, scenario="read", batches=4, string_id
 
 
 
-def validate_agent(run):
+def validate_agent(run, scenario="read"):
     """Require actual successful MCP operations, not just an agent's claim of completion."""
     rows = [json.loads(line) for line in (run/'agent.jsonl').read_text().splitlines()]
     items = [r['item'] for r in rows if r.get('type') == 'item.completed']
@@ -196,6 +197,20 @@ def validate_agent(run):
     calls = [i for i in items if i.get('type') == 'mcp_tool_call']
     if any(i.get('server') != 'causpan_fs' or i.get('status') != 'completed' for i in calls):
         raise RuntimeError('agent used another server or a tool failed')
+    protocol = [json.loads(line) for line in (run/'protocol.jsonl').read_text().splitlines()]
+    if any(r['message'].get('error') or r['message'].get('result', {}).get('isError') for r in protocol if r['direction'] == 'response'):
+        raise RuntimeError('agent protocol contains an error')
+    if scenario == 'worker-relay':
+        actual = [(i.get('tool'), i.get('arguments', {})) for i in calls]
+        expected_slots = [('worker_slot', {'slot': n}) for n in range(4)]
+        if len(actual) != 5 or any(actual.count(call) != 1 for call in expected_slots) or actual[-1] != ('barrier', {}):
+            raise RuntimeError('agent did not complete exactly four unique worker calls followed by barrier')
+        if not any(r.get('type') == 'turn.completed' for r in rows):
+            raise RuntimeError('agent turn did not complete')
+        payload = (run/'sandbox/slots.bin').read_bytes()
+        if any(payload[n*128:n*128+8] != f'worker:{n}'.encode() for n in range(4)):
+            raise RuntimeError('agent worker output mismatch')
+        return
     expected = [('read_text_file', 'call-0-0.txt'), ('read_text_file', 'call-1-0.txt'),
                 ('write_file', 'agent-summary.txt'), ('read_text_file', 'agent-summary.txt')]
     for tool, name in expected:
@@ -218,8 +233,9 @@ def main():
     p.add_argument('--shared', action='store_true')
     p.add_argument('--instrumented', action='store_true')
     p.add_argument('--pool-size', type=int, default=4)
-    p.add_argument('--scenario',choices=['read','fileops','slots','nested','detached','spawn','clone-files','worker-context','worker-unscoped','worker-failure','worker-crash','worker-cancel','worker-spawn','worker-grandchild','worker-socketpair','worker-fatal','worker-relay','worker-relay-fatal','worker-wrong-response','cancel','failure','batch','batch-joined','network','network-shared','network-inbound','network-inbound-shared'],default='read')
+    p.add_argument('--scenario',choices=['read','fileops','uring','slots','nested','detached','spawn','clone-files','worker-context','worker-unscoped','worker-failure','worker-crash','worker-cancel','worker-spawn','worker-grandchild','worker-socketpair','worker-rights','worker-fatal','worker-relay','worker-relay-fatal','worker-wrong-response','cancel','failure','batch','batch-joined','network','network-shared','network-inbound','network-inbound-shared'],default='read')
     p.add_argument('--batches',type=int,default=4)
+    p.add_argument('--disable-io-uring',action='store_true',help='Controlled baseline: inject ENOSYS for io_uring_setup through strace')
     p.add_argument('--seccomp',action='store_true',help='Use strace seccomp filtering to reduce ptrace stops')
     p.add_argument('--string-ids',action='store_true')
     p.add_argument('--spoof-context',action='store_true')
@@ -229,12 +245,15 @@ def main():
     args = p.parse_args()
     if args.concurrency < 1 or args.batches < 1 or not 1 <= args.pool_size <= 128:
         p.error('positive concurrency/batches and pool size 1..128 required')
+    if args.scenario=='uring' and args.disable_io_uring:p.error('uring workload requires working rings')
+    if args.scenario=='uring' and args.concurrency*args.batches>10000:p.error('uring workload supports 10000 slots')
+    if args.disable_io_uring and args.capture=='off':p.error('--disable-io-uring requires strace capture')
     if args.runtime=='tokio' and args.scenario not in {'read','slots','nested','detached','spawn','cancel','failure','batch','batch-joined'}:p.error('Tokio does not yet support this scenario')
-    if args.mode=='agent' and (args.scenario!='read' or args.batches<2):p.error('agent mode requires read scenario and at least two fixture batches')
+    if args.mode=='agent' and (args.scenario not in {'read','worker-relay'} or args.batches<2):p.error('agent mode requires read or worker-relay scenario and at least two fixture batches')
     if args.scenario in {'cancel','failure'} and not args.instrumented:p.error('cancel scenario requires --instrumented')
-    if args.scenario in {'clone-files','worker-context','worker-unscoped','worker-failure','worker-crash','worker-cancel','worker-spawn','worker-grandchild','worker-socketpair','worker-fatal','worker-relay','worker-relay-fatal','worker-wrong-response'} and (args.runtime!='node' or not args.instrumented):p.error('clone-files and worker scenarios require the instrumented Node runtime')
+    if args.scenario in {'uring','clone-files','worker-context','worker-unscoped','worker-failure','worker-crash','worker-cancel','worker-spawn','worker-grandchild','worker-socketpair','worker-rights','worker-fatal','worker-relay','worker-relay-fatal','worker-wrong-response'} and (args.runtime!='node' or not args.instrumented):p.error('clone-files and worker scenarios require the instrumented Node runtime')
     if args.instrumented and args.runtime=='node' and not (HERE/'native/context.node').exists():p.error('build addon first: python3.11 experiments/mcp/native/build.py')
-    for exe in ['strace'] + (['node'] if args.runtime=='node' else ['rustc']) + (['gcc'] if args.scenario=='clone-files' else []) + (['codex'] if args.mode == 'agent' else []):
+    for exe in ['strace'] + (['node'] if args.runtime=='node' else ['rustc']) + (['gcc'] if args.scenario in {'clone-files','uring'} else []) + (['codex'] if args.mode == 'agent' else []):
         if not shutil.which(exe): p.error(f'missing {exe}')
     if args.runtime=='node' and not (HERE / 'node_modules').exists(): p.error('run npm ci --prefix experiments/mcp')
     tokio_binary=(args.tokio_binary or HERE.parent.parent/'target/tokio-provenance/debug/causpan-tokio-server').resolve()
@@ -254,11 +273,12 @@ def main():
     run.mkdir(parents=True, exist_ok=False)
     session_id=uuid.uuid4().hex
     helper_binary=run/'clone_files_probe'
-    (run/'run-config.json').write_text(json.dumps({'session_id':session_id,'runtime':args.runtime,'tokio_binary':str(tokio_binary),'tokio_binary_sha256':tokio_digest,'clone_files_binary':str(helper_binary),'runtime_workers':args.runtime_workers,'instrumented':args.instrumented,'pool_size':args.pool_size,'scenario':args.scenario,'capture':args.capture,'seccomp':args.seccomp}))
+    ring_binary=run/'io_uring_probe'
+    (run/'run-config.json').write_text(json.dumps({'session_id':session_id,'runtime':args.runtime,'tokio_binary':str(tokio_binary),'tokio_binary_sha256':tokio_digest,'clone_files_binary':str(helper_binary),'ring_binary':str(ring_binary),'runtime_workers':args.runtime_workers,'instrumented':args.instrumented,'pool_size':args.pool_size,'scenario':args.scenario,'capture':args.capture,'seccomp':args.seccomp,'disable_io_uring':args.disable_io_uring,'io_uring_control':'strace_inject_enosys' if args.disable_io_uring else None}))
     snapshot=run/'code';snapshot.mkdir()
     if build_provenance is not None:
         (snapshot/'tokio-build.json').write_text(json.dumps(build_provenance,indent=2)+'\n')
-    sources=[*HERE.glob('*.py'),*HERE.glob('*.mjs'),HERE/'clone_files_probe.c',HERE/'native/context.cc',HERE/'native/build.py',HERE/'native/build.json',HERE/'package-lock.json']
+    sources=[*HERE.glob('*.py'),*HERE.glob('*.mjs'),*HERE.glob('*.c'),HERE/'native/context.cc',HERE/'native/build.py',HERE/'native/build.json',HERE/'package-lock.json']
     hashes={}
     for source in sources:
         if source.exists():
@@ -285,8 +305,8 @@ def main():
     (sandbox / 'shared.txt').write_text('shared fixture\n' * 512)
     (sandbox/'link.txt').symlink_to('shared.txt')
     versions = {x:subprocess.check_output([x,'--version'], text=True).splitlines()[0]
-                for x in (['node','strace'] if args.runtime=='node' else ['rustc','strace']) + (['gcc'] if args.scenario=='clone-files' else []) + (['codex'] if args.mode == 'agent' else [])}
-    manifest = dict(session_id=session_id,runtime=args.runtime,runtime_workers=args.runtime_workers,capture=args.capture,seccomp=args.seccomp,code_sha256=hashes,mode=args.mode, concurrency=args.concurrency, shared=args.shared,
+                for x in (['node','strace'] if args.runtime=='node' else ['rustc','strace']) + (['gcc'] if args.scenario in {'clone-files','uring'} else []) + (['codex'] if args.mode == 'agent' else [])}
+    manifest = dict(session_id=session_id,runtime=args.runtime,runtime_workers=args.runtime_workers,capture=args.capture,seccomp=args.seccomp,disable_io_uring=args.disable_io_uring,io_uring_control='strace_inject_enosys' if args.disable_io_uring else None,code_sha256=hashes,mode=args.mode, concurrency=args.concurrency, shared=args.shared,
                     instrumented=args.instrumented,pool_size=args.pool_size,string_ids=args.string_ids,spoof_context=args.spoof_context,scenario=args.scenario,batches=args.batches,
                     model=args.model, platform=platform.platform(), versions=versions,
                     server=json.loads((HERE/'package.json').read_text())['dependencies'] if args.runtime=='node' else {'causpan-tokio-server':subprocess.check_output([str(tokio_binary),'--version'],text=True).strip()},
@@ -297,6 +317,13 @@ def main():
         if args.scenario=='clone-files':
             subprocess.run(['gcc','-Wall','-Wextra','-O2',str(HERE/'clone_files_probe.c'),'-o',str(helper_binary)],check=True)
             manifest['clone_files_probe_sha256']=hashlib.sha256(helper_binary.read_bytes()).hexdigest()
+        if args.scenario=='uring':
+            subprocess.run(['gcc','-Wall','-Wextra','-Werror','-O2',str(HERE/'io_uring_probe.c'),'-o',str(ring_binary)],check=True)
+            digest=hashlib.sha256(ring_binary.read_bytes()).hexdigest()
+            manifest['ring_binary_sha256']=digest
+            settings=json.loads((run/'run-config.json').read_text())
+            settings['ring_binary_sha256']=digest
+            (run/'run-config.json').write_text(json.dumps(settings))
         if args.mode == 'replay':
             asyncio.run(replay(run, args.concurrency, args.shared,args.scenario,args.batches,args.string_ids,args.spoof_context))
         else:
@@ -307,11 +334,15 @@ separate read_text_file tool calls, concurrently if possible:
 {sandbox / 'call-1-0.txt'}
 Then use write_file to create {sandbox / 'agent-summary.txt'} with a short summary.
 Then read agent-summary.txt back with read_text_file. Do not delegate. Stop after verifying.'''
+            if args.scenario == 'worker-relay':
+                prompt = '''This is an MCP persistent-worker attribution experiment. Use ONLY tools from causpan_fs. Discover its tools if deferred. Never use shell, code execution, other servers, or delegation. Call worker_slot exactly once for each slot 0, 1, 2, and 3, concurrently if possible. After all four calls finish, call barrier once with no arguments. Report their results and stop.'''
             (run/'prompt.txt').write_text(prompt)
             config = {'mcp_servers.causpan_fs.command':sys.executable,
                       'mcp_servers.causpan_fs.args':[str(HERE/'proxy.py'),'--run',str(run)],
                       'mcp_servers.causpan_fs.required':True,
                       'mcp_servers.causpan_fs.tools.write_file.approval_mode':'approve',
+                      'mcp_servers.causpan_fs.tools.worker_slot.approval_mode':'approve',
+                      'mcp_servers.causpan_fs.tools.barrier.approval_mode':'approve',
                       'mcp_servers.causpan_fs.startup_timeout_sec':30,
                       'mcp_servers.causpan_fs.tool_timeout_sec':60,
                       'approval_policy':'never'}
@@ -323,15 +354,19 @@ Then read agent-summary.txt back with read_text_file. Do not delegate. Stop afte
             cmd += [prompt]
             with (run/'agent.jsonl').open('w') as out, (run/'agent.stderr').open('w') as err:
                 subprocess.run(cmd, stdin=subprocess.DEVNULL, stdout=out, stderr=err, check=True, timeout=240)
-            validate_agent(run)
+            validate_agent(run, args.scenario)
         manifest['execution_seconds']=time.monotonic()-started
         if args.capture!='off':
             subprocess.run([sys.executable,str(HERE/'analyze.py'),str(run)], check=True)
         if args.instrumented and args.capture!='off':
             subprocess.run([sys.executable,str(HERE/'attribute.py'),str(run)],check=True)
             if args.scenario=='fileops':subprocess.run([sys.executable,str(HERE/'score_fileops.py'),str(run)],check=True)
-            if args.scenario not in {'read','fileops'}:
+            if args.scenario not in {'read','fileops','uring'}:
                 subprocess.run([sys.executable,str(HERE/('score_network.py' if args.scenario in {'network','network-shared','network-inbound','network-inbound-shared'} else 'score_batch.py' if args.scenario in {'batch','batch-joined'} else 'score_control.py')),str(run)],check=True)
+            if args.scenario=='uring':
+                subprocess.run([sys.executable,str(HERE/'score_ring.py'),str(run)],check=True)
+            if args.scenario=='worker-rights':
+                subprocess.run([sys.executable,str(HERE/'score_rights.py'),str(run)],check=True)
         manifest['status'] = 'complete'
     except Exception as e:
         manifest['status'] = 'failed'

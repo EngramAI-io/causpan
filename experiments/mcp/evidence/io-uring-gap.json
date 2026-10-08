@@ -1,0 +1,451 @@
+{
+  "scope": "standalone io_uring observability experiment, not MCP attribution",
+  "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+  "binary_sha256": "5b5f72a7e6e04f6240bbf450f3fde480ca2d6d14d42a84c0d44151b9bfd9511c",
+  "source": "#define _GNU_SOURCE\n/* Minimal direct ring fixture, deliberately independent of liburing. */\n#include <errno.h>\n#include <fcntl.h>\n#include <linux/io_uring.h>\n#include <stdint.h>\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include <sys/mman.h>\n#include <sys/syscall.h>\n#include <unistd.h>\n\nstatic void fail(const char *what) { perror(what); exit(1); }\nstatic unsigned acquire(unsigned *p) { return __atomic_load_n(p, __ATOMIC_ACQUIRE); }\nstatic void release(unsigned *p, unsigned v) { __atomic_store_n(p, v, __ATOMIC_RELEASE); }\nint main(int argc, char **argv) {\n  if (argc != 2) { fprintf(stderr, \"usage: io_uring_probe NEW_FILE\\n\"); return 2; }\n  struct io_uring_params p = {0};\n  int ring = syscall(__NR_io_uring_setup, 8, &p);\n  if (ring < 0) fail(\"io_uring_setup\");\n  size_t sq_size = p.sq_off.array + p.sq_entries * sizeof(unsigned);\n  size_t cq_size = p.cq_off.cqes + p.cq_entries * sizeof(struct io_uring_cqe);\n  int single = (p.features & IORING_FEAT_SINGLE_MMAP) != 0;\n  size_t map_size = single && cq_size > sq_size ? cq_size : sq_size;\n  char *sq = mmap(NULL, map_size, PROT_READ|PROT_WRITE, MAP_SHARED, ring, IORING_OFF_SQ_RING);\n  if (sq == MAP_FAILED) fail(\"mmap sq\");\n  char *cq = single ? sq : mmap(NULL, cq_size, PROT_READ|PROT_WRITE, MAP_SHARED, ring, IORING_OFF_CQ_RING);\n  if (cq == MAP_FAILED) fail(\"mmap cq\");\n  struct io_uring_sqe *sqes = mmap(NULL, p.sq_entries*sizeof(*sqes), PROT_READ|PROT_WRITE, MAP_SHARED, ring, IORING_OFF_SQES);\n  if (sqes == MAP_FAILED) fail(\"mmap sqes\");\n  int fd = open(argv[1], O_CREAT|O_EXCL|O_RDWR, 0600);\n  if (fd < 0) fail(\"open fixture\");\n  unsigned *tail=(unsigned *)(sq+p.sq_off.tail), *mask=(unsigned *)(sq+p.sq_off.ring_mask);\n  unsigned *array=(unsigned *)(sq+p.sq_off.array);\n  unsigned start=acquire(tail);\n  char a[]=\"uring-A\", b[]=\"uring-B\", scratch[8];\n  for (unsigned i=0; i<3; ++i) {\n    unsigned index=(start+i)&*mask;\n    struct io_uring_sqe *entry=&sqes[index];\n    memset(entry,0,sizeof(*entry));\n    entry->opcode=i==2 ? IORING_OP_READ : IORING_OP_WRITE;\n    entry->fd=i==2 ? -1 : fd;\n    entry->addr=(uintptr_t)(i==0 ? a : i==1 ? b : scratch);\n    entry->len=7;\n    entry->off=i*128;\n    entry->user_data=101+i;\n    array[index]=index;\n    printf(\"{\\\"kind\\\":\\\"sqe\\\",\\\"user_data\\\":%llu,\\\"opcode\\\":%u,\\\"fd\\\":%d,\\\"offset\\\":%llu,\\\"length\\\":%u,\\\"flags\\\":%u}\\n\",\n      (unsigned long long)entry->user_data,entry->opcode,entry->fd,(unsigned long long)entry->off,entry->len,entry->flags);\n  }\n  fflush(stdout);\n  release(tail,start+3);\n  int submitted=syscall(__NR_io_uring_enter,ring,3,3,IORING_ENTER_GETEVENTS,NULL,0);\n  if (submitted!=3) { fprintf(stderr,\"submission count: %d errno: %d\\n\",submitted,errno); return 1; }\n  unsigned *cq_head=(unsigned *)(cq+p.cq_off.head), *cq_tail=(unsigned *)(cq+p.cq_off.tail);\n  unsigned cq_mask=*(unsigned *)(cq+p.cq_off.ring_mask), head=acquire(cq_head);\n  struct io_uring_cqe *cqes=(struct io_uring_cqe *)(cq+p.cq_off.cqes);\n  unsigned seen=0;\n  while (head != acquire(cq_tail)) {\n    struct io_uring_cqe entry=cqes[head&cq_mask];\n    printf(\"{\\\"kind\\\":\\\"cqe\\\",\\\"user_data\\\":%llu,\\\"result\\\":%d,\\\"flags\\\":%u}\\n\",\n      (unsigned long long)entry.user_data,entry.res,entry.flags);\n    if (entry.user_data<101 || entry.user_data>103 || (seen&(1u<<(entry.user_data-101)))) return 1;\n    if (entry.res != (entry.user_data==103 ? -EBADF : 7) || entry.flags) return 1;\n    seen |= 1u<<(entry.user_data-101);\n    ++head;\n  }\n  release(cq_head,head);\n  if (seen!=7) { fprintf(stderr,\"incomplete CQ: %u\\n\",seen); return 1; }\n  close(fd);\n  munmap(sqes,p.sq_entries*sizeof(*sqes));\n  if (!single) munmap(cq,cq_size);\n  munmap(sq,map_size);\n  close(ring);\n  return 0;\n}\n",
+  "source_sha256": "8a6bdc17c4ba34290f56751b6a31ed5b87621e7c64614bf31e253e314655d9de",
+  "adapter_sha256": "2f54340cfa8ae1573b02dc5fc0c4438af1e16316d7b57d1ff758c31ad714a4ce",
+  "inspector_sha256": "56d988c93215e2ad92517f52a9848d7694acebc06b260bd2f11b12f4f74d3541",
+  "runs": [
+    {
+      "run": "/u/kdhande/causpan/results/mcp/io-uring-repeats/0",
+      "command": [
+        "strace",
+        "-ff",
+        "-ttt",
+        "-T",
+        "-yy",
+        "-s",
+        "4096",
+        "-e",
+        "trace=all",
+        "-o",
+        "/u/kdhande/causpan/results/mcp/io-uring-repeats/0/traces/strace",
+        "/u/kdhande/causpan/results/mcp/io-uring-observed/probe",
+        "/u/kdhande/causpan/results/mcp/io-uring-repeats/0/effects.bin"
+      ],
+      "report": {
+        "valid": true,
+        "scope": "standalone trusted ring observations, no MCP attribution yet",
+        "parser": {
+          "lifecycle_lines": 2,
+          "parsed": 60
+        },
+        "operations": [
+          {
+            "user_data": 103,
+            "opcode": 22,
+            "fd": -1,
+            "offset": 256,
+            "requested_bytes": 7,
+            "result": -9,
+            "succeeded": false,
+            "evidence": "trusted_runtime_submission_and_completion_observations"
+          },
+          {
+            "user_data": 101,
+            "opcode": 23,
+            "fd": 4,
+            "offset": 0,
+            "requested_bytes": 7,
+            "result": 7,
+            "succeeded": true,
+            "evidence": "trusted_runtime_submission_and_completion_observations"
+          },
+          {
+            "user_data": 102,
+            "opcode": 23,
+            "fd": 4,
+            "offset": 128,
+            "requested_bytes": 7,
+            "result": 7,
+            "succeeded": true,
+            "evidence": "trusted_runtime_submission_and_completion_observations"
+          }
+        ],
+        "ring_syscalls": [
+          {
+            "timestamp_ns": 1791423673224983000,
+            "duration_ns": 53000,
+            "completion_ns": 1791423673225036000,
+            "descriptor_rights": null,
+            "tid": 2450391,
+            "syscall": "io_uring_setup",
+            "args": "8, {flags=0, sq_thread_cpu=0, sq_thread_idle=0, sq_entries=8, cq_entries=16, features=IORING_FEAT_SINGLE_MMAP|IORING_FEAT_NODROP|IORING_FEAT_SUBMIT_STABLE|IORING_FEAT_RW_CUR_POS|IORING_FEAT_CUR_PERSONALITY|IORING_FEAT_FAST_POLL|IORING_FEAT_POLL_32BITS|IORING_FEAT_SQPOLL_NONFIXED|IORING_FEAT_EXT_ARG|IORING_FEAT_NATIVE_WORKERS|IORING_FEAT_RSRC_TAGS|0x3800, sq_off={head=0, tail=4, ring_mask=16, ring_entries=24, flags=36, dropped=32, array=320}, cq_off={head=8, tail=12, ring_mask=20, ring_entries=28, overflow=44, cqes=64, flags=0x28 /* IORING_CQ_??? */}}",
+            "return_value": 3,
+            "completion": "returned",
+            "paths": [],
+            "source": "strace.2450391:46",
+            "pid": 2450391
+          },
+          {
+            "timestamp_ns": 1791423673229623000,
+            "duration_ns": 84000,
+            "completion_ns": 1791423673229707000,
+            "descriptor_rights": null,
+            "tid": 2450391,
+            "syscall": "io_uring_enter",
+            "args": "3<anon_inode:[io_uring]>, 3, 3, IORING_ENTER_GETEVENTS, NULL, 0",
+            "return_value": 3,
+            "completion": "returned",
+            "paths": [],
+            "source": "strace.2450391:55",
+            "pid": 2450391
+          }
+        ],
+        "direct_file_write_syscalls": 0,
+        "independently_verified_file_writes": 2,
+        "traced_runtime_observations_match": true,
+        "completion_order": [
+          103,
+          101,
+          102
+        ],
+        "submission_order": [
+          101,
+          102,
+          103
+        ],
+        "file_sha256": "3bd77c0432eaa83965284c0a0324147f6914f133e098d3c69ad337a6573b4f84",
+        "limitations": [
+          "CQE/SQE contents are trusted runtime observations, not decoded by strace",
+          "one ring, single-shot READ/WRITE, no flags or user_data reuse",
+          "no kernel worker TID or request ownership established"
+        ]
+      },
+      "trace_sha256": {
+        "strace.2450391": "b1e01349a3a34152ec612d2e6ecad29fbbf8225b5459afd6ce51e460998d4755"
+      }
+    },
+    {
+      "run": "/u/kdhande/causpan/results/mcp/io-uring-repeats/1",
+      "command": [
+        "strace",
+        "-ff",
+        "-ttt",
+        "-T",
+        "-yy",
+        "-s",
+        "4096",
+        "-e",
+        "trace=all",
+        "-o",
+        "/u/kdhande/causpan/results/mcp/io-uring-repeats/1/traces/strace",
+        "/u/kdhande/causpan/results/mcp/io-uring-observed/probe",
+        "/u/kdhande/causpan/results/mcp/io-uring-repeats/1/effects.bin"
+      ],
+      "report": {
+        "valid": true,
+        "scope": "standalone trusted ring observations, no MCP attribution yet",
+        "parser": {
+          "lifecycle_lines": 2,
+          "parsed": 60
+        },
+        "operations": [
+          {
+            "user_data": 103,
+            "opcode": 22,
+            "fd": -1,
+            "offset": 256,
+            "requested_bytes": 7,
+            "result": -9,
+            "succeeded": false,
+            "evidence": "trusted_runtime_submission_and_completion_observations"
+          },
+          {
+            "user_data": 101,
+            "opcode": 23,
+            "fd": 4,
+            "offset": 0,
+            "requested_bytes": 7,
+            "result": 7,
+            "succeeded": true,
+            "evidence": "trusted_runtime_submission_and_completion_observations"
+          },
+          {
+            "user_data": 102,
+            "opcode": 23,
+            "fd": 4,
+            "offset": 128,
+            "requested_bytes": 7,
+            "result": 7,
+            "succeeded": true,
+            "evidence": "trusted_runtime_submission_and_completion_observations"
+          }
+        ],
+        "ring_syscalls": [
+          {
+            "timestamp_ns": 1791423673305872000,
+            "duration_ns": 38000,
+            "completion_ns": 1791423673305910000,
+            "descriptor_rights": null,
+            "tid": 2450401,
+            "syscall": "io_uring_setup",
+            "args": "8, {flags=0, sq_thread_cpu=0, sq_thread_idle=0, sq_entries=8, cq_entries=16, features=IORING_FEAT_SINGLE_MMAP|IORING_FEAT_NODROP|IORING_FEAT_SUBMIT_STABLE|IORING_FEAT_RW_CUR_POS|IORING_FEAT_CUR_PERSONALITY|IORING_FEAT_FAST_POLL|IORING_FEAT_POLL_32BITS|IORING_FEAT_SQPOLL_NONFIXED|IORING_FEAT_EXT_ARG|IORING_FEAT_NATIVE_WORKERS|IORING_FEAT_RSRC_TAGS|0x3800, sq_off={head=0, tail=4, ring_mask=16, ring_entries=24, flags=36, dropped=32, array=320}, cq_off={head=8, tail=12, ring_mask=20, ring_entries=28, overflow=44, cqes=64, flags=0x28 /* IORING_CQ_??? */}}",
+            "return_value": 3,
+            "completion": "returned",
+            "paths": [],
+            "source": "strace.2450401:46",
+            "pid": 2450401
+          },
+          {
+            "timestamp_ns": 1791423673308047000,
+            "duration_ns": 72000,
+            "completion_ns": 1791423673308119000,
+            "descriptor_rights": null,
+            "tid": 2450401,
+            "syscall": "io_uring_enter",
+            "args": "3<anon_inode:[io_uring]>, 3, 3, IORING_ENTER_GETEVENTS, NULL, 0",
+            "return_value": 3,
+            "completion": "returned",
+            "paths": [],
+            "source": "strace.2450401:55",
+            "pid": 2450401
+          }
+        ],
+        "direct_file_write_syscalls": 0,
+        "independently_verified_file_writes": 2,
+        "traced_runtime_observations_match": true,
+        "completion_order": [
+          103,
+          101,
+          102
+        ],
+        "submission_order": [
+          101,
+          102,
+          103
+        ],
+        "file_sha256": "3bd77c0432eaa83965284c0a0324147f6914f133e098d3c69ad337a6573b4f84",
+        "limitations": [
+          "CQE/SQE contents are trusted runtime observations, not decoded by strace",
+          "one ring, single-shot READ/WRITE, no flags or user_data reuse",
+          "no kernel worker TID or request ownership established"
+        ]
+      },
+      "trace_sha256": {
+        "strace.2450401": "f5f5d2ad3247bb335ad5b0ec8f8199e12920bc601b61eca6d2f8bc6c950b23f9"
+      }
+    },
+    {
+      "run": "/u/kdhande/causpan/results/mcp/io-uring-repeats/2",
+      "command": [
+        "strace",
+        "-ff",
+        "-ttt",
+        "-T",
+        "-yy",
+        "-s",
+        "4096",
+        "-e",
+        "trace=all",
+        "-o",
+        "/u/kdhande/causpan/results/mcp/io-uring-repeats/2/traces/strace",
+        "/u/kdhande/causpan/results/mcp/io-uring-observed/probe",
+        "/u/kdhande/causpan/results/mcp/io-uring-repeats/2/effects.bin"
+      ],
+      "report": {
+        "valid": true,
+        "scope": "standalone trusted ring observations, no MCP attribution yet",
+        "parser": {
+          "lifecycle_lines": 2,
+          "parsed": 60
+        },
+        "operations": [
+          {
+            "user_data": 103,
+            "opcode": 22,
+            "fd": -1,
+            "offset": 256,
+            "requested_bytes": 7,
+            "result": -9,
+            "succeeded": false,
+            "evidence": "trusted_runtime_submission_and_completion_observations"
+          },
+          {
+            "user_data": 101,
+            "opcode": 23,
+            "fd": 4,
+            "offset": 0,
+            "requested_bytes": 7,
+            "result": 7,
+            "succeeded": true,
+            "evidence": "trusted_runtime_submission_and_completion_observations"
+          },
+          {
+            "user_data": 102,
+            "opcode": 23,
+            "fd": 4,
+            "offset": 128,
+            "requested_bytes": 7,
+            "result": 7,
+            "succeeded": true,
+            "evidence": "trusted_runtime_submission_and_completion_observations"
+          }
+        ],
+        "ring_syscalls": [
+          {
+            "timestamp_ns": 1791423673363832000,
+            "duration_ns": 37000,
+            "completion_ns": 1791423673363869000,
+            "descriptor_rights": null,
+            "tid": 2450413,
+            "syscall": "io_uring_setup",
+            "args": "8, {flags=0, sq_thread_cpu=0, sq_thread_idle=0, sq_entries=8, cq_entries=16, features=IORING_FEAT_SINGLE_MMAP|IORING_FEAT_NODROP|IORING_FEAT_SUBMIT_STABLE|IORING_FEAT_RW_CUR_POS|IORING_FEAT_CUR_PERSONALITY|IORING_FEAT_FAST_POLL|IORING_FEAT_POLL_32BITS|IORING_FEAT_SQPOLL_NONFIXED|IORING_FEAT_EXT_ARG|IORING_FEAT_NATIVE_WORKERS|IORING_FEAT_RSRC_TAGS|0x3800, sq_off={head=0, tail=4, ring_mask=16, ring_entries=24, flags=36, dropped=32, array=320}, cq_off={head=8, tail=12, ring_mask=20, ring_entries=28, overflow=44, cqes=64, flags=0x28 /* IORING_CQ_??? */}}",
+            "return_value": 3,
+            "completion": "returned",
+            "paths": [],
+            "source": "strace.2450413:46",
+            "pid": 2450413
+          },
+          {
+            "timestamp_ns": 1791423673367299000,
+            "duration_ns": 69000,
+            "completion_ns": 1791423673367368000,
+            "descriptor_rights": null,
+            "tid": 2450413,
+            "syscall": "io_uring_enter",
+            "args": "3<anon_inode:[io_uring]>, 3, 3, IORING_ENTER_GETEVENTS, NULL, 0",
+            "return_value": 3,
+            "completion": "returned",
+            "paths": [],
+            "source": "strace.2450413:55",
+            "pid": 2450413
+          }
+        ],
+        "direct_file_write_syscalls": 0,
+        "independently_verified_file_writes": 2,
+        "traced_runtime_observations_match": true,
+        "completion_order": [
+          103,
+          101,
+          102
+        ],
+        "submission_order": [
+          101,
+          102,
+          103
+        ],
+        "file_sha256": "3bd77c0432eaa83965284c0a0324147f6914f133e098d3c69ad337a6573b4f84",
+        "limitations": [
+          "CQE/SQE contents are trusted runtime observations, not decoded by strace",
+          "one ring, single-shot READ/WRITE, no flags or user_data reuse",
+          "no kernel worker TID or request ownership established"
+        ]
+      },
+      "trace_sha256": {
+        "strace.2450413": "456421db41b2dbc868624a7cfab2797608a13a155cbce9f7a4b41f7a8ab2d07c"
+      }
+    },
+    {
+      "run": "/u/kdhande/causpan/results/mcp/io-uring-repeats/3",
+      "command": [
+        "strace",
+        "-ff",
+        "-ttt",
+        "-T",
+        "-yy",
+        "-s",
+        "4096",
+        "-e",
+        "trace=all",
+        "-o",
+        "/u/kdhande/causpan/results/mcp/io-uring-repeats/3/traces/strace",
+        "/u/kdhande/causpan/results/mcp/io-uring-observed/probe",
+        "/u/kdhande/causpan/results/mcp/io-uring-repeats/3/effects.bin"
+      ],
+      "report": {
+        "valid": true,
+        "scope": "standalone trusted ring observations, no MCP attribution yet",
+        "parser": {
+          "lifecycle_lines": 2,
+          "parsed": 60
+        },
+        "operations": [
+          {
+            "user_data": 103,
+            "opcode": 22,
+            "fd": -1,
+            "offset": 256,
+            "requested_bytes": 7,
+            "result": -9,
+            "succeeded": false,
+            "evidence": "trusted_runtime_submission_and_completion_observations"
+          },
+          {
+            "user_data": 101,
+            "opcode": 23,
+            "fd": 4,
+            "offset": 0,
+            "requested_bytes": 7,
+            "result": 7,
+            "succeeded": true,
+            "evidence": "trusted_runtime_submission_and_completion_observations"
+          },
+          {
+            "user_data": 102,
+            "opcode": 23,
+            "fd": 4,
+            "offset": 128,
+            "requested_bytes": 7,
+            "result": 7,
+            "succeeded": true,
+            "evidence": "trusted_runtime_submission_and_completion_observations"
+          }
+        ],
+        "ring_syscalls": [
+          {
+            "timestamp_ns": 1791423673411179000,
+            "duration_ns": 53000,
+            "completion_ns": 1791423673411232000,
+            "descriptor_rights": null,
+            "tid": 2450426,
+            "syscall": "io_uring_setup",
+            "args": "8, {flags=0, sq_thread_cpu=0, sq_thread_idle=0, sq_entries=8, cq_entries=16, features=IORING_FEAT_SINGLE_MMAP|IORING_FEAT_NODROP|IORING_FEAT_SUBMIT_STABLE|IORING_FEAT_RW_CUR_POS|IORING_FEAT_CUR_PERSONALITY|IORING_FEAT_FAST_POLL|IORING_FEAT_POLL_32BITS|IORING_FEAT_SQPOLL_NONFIXED|IORING_FEAT_EXT_ARG|IORING_FEAT_NATIVE_WORKERS|IORING_FEAT_RSRC_TAGS|0x3800, sq_off={head=0, tail=4, ring_mask=16, ring_entries=24, flags=36, dropped=32, array=320}, cq_off={head=8, tail=12, ring_mask=20, ring_entries=28, overflow=44, cqes=64, flags=0x28 /* IORING_CQ_??? */}}",
+            "return_value": 3,
+            "completion": "returned",
+            "paths": [],
+            "source": "strace.2450426:46",
+            "pid": 2450426
+          },
+          {
+            "timestamp_ns": 1791423673413726000,
+            "duration_ns": 69000,
+            "completion_ns": 1791423673413795000,
+            "descriptor_rights": null,
+            "tid": 2450426,
+            "syscall": "io_uring_enter",
+            "args": "3<anon_inode:[io_uring]>, 3, 3, IORING_ENTER_GETEVENTS, NULL, 0",
+            "return_value": 3,
+            "completion": "returned",
+            "paths": [],
+            "source": "strace.2450426:55",
+            "pid": 2450426
+          }
+        ],
+        "direct_file_write_syscalls": 0,
+        "independently_verified_file_writes": 2,
+        "traced_runtime_observations_match": true,
+        "completion_order": [
+          103,
+          101,
+          102
+        ],
+        "submission_order": [
+          101,
+          102,
+          103
+        ],
+        "file_sha256": "3bd77c0432eaa83965284c0a0324147f6914f133e098d3c69ad337a6573b4f84",
+        "limitations": [
+          "CQE/SQE contents are trusted runtime observations, not decoded by strace",
+          "one ring, single-shot READ/WRITE, no flags or user_data reuse",
+          "no kernel worker TID or request ownership established"
+        ]
+      },
+      "trace_sha256": {
+        "strace.2450426": "7e68011395bcf60aa91fa0b7e85a5f6c063467e6e37c9980121e6a596c5ece0e"
+      }
+    }
+  ]
+}

@@ -689,3 +689,224 @@ ambiguous too. A blocked syscall interrupted at shutdown was recorded as one
 contains tool-call details, reports, source manifest, and agent-log hash.
 This validates the current filesystem-agent path; the persistent-worker studies
 remain controlled MCP replay rather than LLM-directed worker experiments.
+
+### Real-agent relay exposed worker initialization and shutdown regressions
+
+The first real LLM-directed relay experiment (`agent-worker-relay`) failed because
+current `persistent_worker.py` did not initialize its file and marker descriptors.
+Inspection also found an undefined slot-width constant inside the separately
+executed child program. Both are repaired. A process-level regression test now
+executes ordinary, child, grandchild, and relay workers and checks payloads and
+balanced IPC markers. All 40 tests pass. Six fresh traced replay cases (ordinary,
+cancel, failure, child, grandchild, relay; concurrency 8, two batches) pass their
+independent oracles.
+
+The second agent run (`agent-worker-relay-fixed`) completed four worker calls and
+the barrier without tool errors, but attribution correctly rejected the entire
+capture: one background libuv operation lacked completion. Its twelve selected
+worker effects are therefore **not a valid attribution result**. The experiment's
+terminal barrier now stops the periodic background producer before draining its
+work; this does not relax incomplete-capture rejection. A further real-agent run
+is being evaluated. Failed-run logs, source snapshots, and replay reports are
+preserved in [regression evidence](../experiments/mcp/evidence/worker-initialization-regression.json).
+
+The drained run (`agent-worker-relay-drained`) passed capture integrity and the
+independent offset oracle: 12/12 request file effects correct, 661/661 background
+effects correctly unassigned, eight completed IPC jobs. Each of the four leaf
+writes has a queryable chain containing exactly one MCP request and two IPC jobs.
+The actual LLM calls did **not** overlap; concurrency evidence remains supplied
+by replay. This advances the persistent-worker path from replay-only to actual
+LLM-directed MCP validation. See [agent relay evidence](../experiments/mcp/evidence/agent-worker-relay.json).
+
+### Terminal-barrier regression matrix
+
+All 28 captures passed across seven worker scenarios, concurrency 1 and 32, two
+repeats, and two batches. Independent oracles confirmed 1,782 request file effects
+and 7,655 background effects; additionally 264 socket-message events passed their
+token oracle. There were 66 queued cancellations and 66 expected failed syscalls.
+Every attribution output hash was revalidated after the matrix completed.
+[Matrix evidence](../experiments/mcp/evidence/worker-terminal-barrier-matrix.json)
+contains individual reports and source manifests. All 41 tests pass, including
+process-level worker execution and agent-validation rejection cases.
+
+### Descriptor transfer baseline: SCM_RIGHTS
+
+A new standalone kernel probe opens a file **after** forking, sends its descriptor
+through an AF_UNIX datagram socket with `SCM_RIGHTS`, and has the receiver write
+and read through its newly received descriptor. Opening after fork rules out
+inherited access to that descriptor. The capture confirms four selected events:
+`sendmsg`, `recvmsg`, `pwrite64`, `pread64`; file content checks pass.
+
+The parser correctly assigns only the socket as the resource accessed by
+send/receive, avoiding a false claim that sending a descriptor writes file data.
+However, the passed descriptor appears only in raw ancillary arguments. There is
+no structured transfer edge or open-file-description identity in current output.
+Also, this blocking `recvmsg` starts before the sender's `sendmsg`; entry timestamp
+ordering is insufficient for transfer pairing. A future implementation needs
+completion-aware lifecycle handling and must avoid identifying a transfer solely
+by pathname or descriptor number. This is a standalone gap demonstration, not a
+new MCP attribution success. [Probe evidence](../experiments/mcp/evidence/scm-rights-probe.json)
+retains selected parsed events, source, parser quality, and raw trace hashes.
+
+The parser now retains `duration_ns` from strace `-T` and `completion_ns` as entry
+wall timestamp plus elapsed duration, at capture precision. Missing durations and
+unknown/restarted returns have no asserted completion time. Existing attribution
+ordering is unchanged: this metadata is groundwork, not a transfer matcher. A
+regression test covers a resumed blocking receive, untimed calls, and restart
+returns; all 42 tests pass. Re-parsing the real probe confirms send entry falls
+inside the receive interval. See [completion evidence](../experiments/mcp/evidence/scm-rights-completion-times.json).
+
+Ancillary decoding now preserves local `SCM_RIGHTS` descriptor numbers, direction,
+syscall success, decode completeness, and control truncation as structured event
+metadata. It strips payload strings and FD annotations before decoding control
+syntax; tests reject control-looking payloads and flag incomplete descriptor
+lists. Failed send attempts are explicitly unsuccessful observations. The real
+probe decodes sender FD 4 and receiver FD 3. No send/receive pairing or request
+ownership is inferred from these numbers. [Decoding evidence](../experiments/mcp/evidence/scm-rights-decoding.json)
+records this incremental result. Timing and ancillary metadata also accompany
+syscall graph nodes. All 44 tests pass.
+
+Fresh replay validation after timing metadata passed 96/96 relay file effects and
+286 background effects. After ancillary metadata was added, a fresh socketpair
+MCP run passed 64 file effects, 64 socket-message effects, and 126 background
+effects. Output hashes were rechecked. [Regression reports](../experiments/mcp/evidence/completion-ancillary-regression.json)
+retain source manifests for both versions. Descriptor-transfer pairing remains
+unimplemented; the next experiment should carry per-job descriptors across the
+persistent-worker boundary, separating explicit request propagation from resource
+transfer provenance.
+
+### MCP jobs carrying SCM_RIGHTS descriptors to persistent workers
+
+`worker-rights` extends the controlled relay: each downstream job travels as a
+Unix datagram with one file descriptor. The receiving persistent process never
+opens `slots.bin`; its worker uses and closes the per-job descriptor. Internal
+job context travels with the dispatch, independently of file offsets. The normal
+attributor does not decode workload JSON payloads for ownership.
+
+The first concurrency-16, two-batch capture passed 96 request file effects and
+243 background effects, with 64 completed IPC jobs. A new independent descriptor
+oracle confirms 32 successful cross-process transfers, 64 receiver file effects
+using the observed received descriptors, and zero receiver opens of the target.
+It checks that effects follow receive completion and that sender attribution
+matches the independently known slot request. Receiver `recvmsg` itself occurs on
+an unscoped dispatcher; this is not claimed to have request ownership.
+
+[Baseline evidence](../experiments/mcp/evidence/worker-rights-baseline.json)
+preserves reports. This establishes request attribution across descriptor
+handoffs using explicit context propagation, **not** general resource-transfer
+provenance. The graph still lacks paired send/receive descriptor-transfer edges.
+The new oracle is integrated into the harness, matrix reports, and query gates;
+negative tests reject missing observations, wrong descriptors/owners, premature
+effects, and independent target opens. All 45 tests pass.
+
+The follow-up descriptor matrix passed all four cases (concurrency 1 and 32,
+two repeats, two batches): 132 transfers and 264 receiver file effects. A further
+concurrency-64 run with string request IDs and spoofed client context passed 128
+transfers, 256 receiver file effects, and all 384 total request file effects;
+the receiver again had zero opens of the target. No capture used client context
+as identity authority. [Matrix evidence](../experiments/mcp/evidence/worker-rights-matrix.json)
+contains individual reports and source manifests; matrix output hashes were
+revalidated.
+
+### Conservative kernel-observed descriptor-transfer provenance
+
+A new matcher pairs descriptor sends/receives on observed AF_UNIX SOCK_DGRAM
+socketpairs using endpoints, ordered complete message sequences, syscall intervals,
+and ancillary descriptor lists. It never reads workload JSON, slots, or payload
+identities. Linux documents Unix datagrams as reliable and ordered, and SCM_RIGHTS
+as transfer of an open-file-description reference: [unix(7)](https://man7.org/linux/man-pages/man7/unix.7.html).
+
+The matcher rejects whole channels when observed message calls overlap, lack
+completion times, have unequal counts/lengths, truncate/peek, reuse endpoint
+identities, or use unsupported reconfiguration/message operations. This is scoped
+to complete observed channels in the traced process tree; it does not establish
+absence of untraced participants or io_uring traffic. Stream ancillary boundaries
+and general descriptor-table/OFD lifetime tracking remain unresolved.
+
+A fresh concurrency-32 capture produced 64 transfer nodes and 192 correct request
+file effects. The independent payload oracle then verified all 64 inferred
+send/receive/descriptor pairs. Receive-event queries expose the sender's request
+ancestry through transfer edges while retaining an empty request assignment for
+the unscoped receiving dispatcher. All 64 queries were checked. Transfer edges
+express resource handoff, not execution ownership or subsequent file dataflow.
+[Evidence](../experiments/mcp/evidence/descriptor-provenance-c32.json) preserves
+reports and query checks. The scorer was strengthened after capture; its current
+hash is recorded separately from the capture snapshot. All 48 tests pass.
+
+The four-case transfer-provenance matrix (concurrency 1 and 32, two repeats,
+two batches) passed all 132 inferred pairs and 264 receiver file effects. Output
+hashes were revalidated. A negative control removed one successful send from the
+parsed events of the 64-transfer capture, leaving raw evidence unchanged. The
+matcher rejected the entire channel, emitted zero pairs, and retained 127
+unpaired ancillary observations. Reports now explicitly list unpaired successful
+observations, including unsupported channel types, so missing coverage is visible.
+[Matrix and negative-control evidence](../experiments/mcp/evidence/descriptor-provenance-matrix.json)
+records reports, mutation, and matcher hash. The unpaired-observation report field
+was added after these captures; the negative-control record identifies that newer
+matcher separately.
+
+### Descriptor observability audit: important scope correction
+
+Adversarial tests exposed two ways the earlier matcher could overlook channel
+activity: a socket in a secondary syscall operand (such as splice's output), and
+a socket annotation containing only the local inode without its peer. Both now
+reject affected channels. Reused endpoint inodes across channel identities,
+ancillary export of channel endpoints, and observed io_uring activity also reject
+pairing. Payload text cannot forge those structural observations. All 53 tests
+pass.
+
+The earlier descriptor captures contain successful `io_uring_setup` and
+`io_uring_enter` calls. Their independently checked pairs remain historical
+experimental results, but they do **not** establish complete channel observability
+under the stricter matcher. Re-evaluation now emits zero transfer pairs for those
+captures. Request attribution of observed effects remains separately evaluated;
+this does not claim visibility into ring submissions.
+
+`UV_USE_IO_URING=0` did not eliminate rings on this host's Node/libuv 1.52.1; the
+failed control `rights-no-uring-c16` is preserved. The current experimental
+`--disable-io-uring` flag instead injects ENOSYS at `io_uring_setup` through strace,
+with the intervention recorded in the manifest and exact trace command. This is
+an intentionally constrained baseline, not support for io_uring attribution.
+A fresh constrained concurrency-16 capture verified all 32 transfer pairs and 96
+request file effects. Its only ring calls were failed setup attempts; no
+successful setup or enter calls were observed. New causal reports explicitly
+count ring setup/enter calls and state that submissions are not decoded.
+[Audit evidence](../experiments/mcp/evidence/descriptor-observation-audit.json)
+retains original reports, ring events, and results under the stricter matcher.
+
+The stricter matcher then passed two fresh constrained cases (concurrency 1 and
+32, two batches): 66 transfer pairs and 132 receiver effects, all independently
+verified. Both reports show zero successful ring setups and zero enter calls;
+output hashes were revalidated. [Constrained matrix evidence](../experiments/mcp/evidence/rights-denied-uring-matrix.json)
+records the injected baseline explicitly. This does not close the io_uring gap.
+
+### io_uring: demonstrated effects absent from the syscall list
+
+`io_uring_probe.c` uses the kernel API directly (no liburing dependency), submits
+two seven-byte writes at offsets 0 and 128, and an invalid-FD read, in one batch.
+The full strace capture shows setup and one `io_uring_enter` returning three;
+it contains **zero direct write/pwrite syscalls to the target file**. Independent
+file-content checks nevertheless confirm both writes. The application reads three
+CQEs: failure `user_data=103, result=-EBADF` arrives before successes 101 and 102,
+although submission order was 101, 102, 103. Four repeat captures reproduced this.
+
+This is a concrete completeness gap, not merely missing request labels: the
+logical kernel I/O operations do not appear as corresponding file-write syscalls
+in this collector. Linux describes the submission/completion queues and warns
+that completion order need not equal submission order: [io_uring(7)](https://man7.org/linux/man-pages/man7/io_uring.7.html).
+
+A small `ring_observations.py` adapter now joins trusted SQE/CQE observations by
+opaque operation ID. It rejects duplicate/missing identities, unsupported opcodes
+or flags, impossible byte counts, and incomplete completions. The prototype
+supports one ring instance, unique IDs for its captured lifetime, and single-shot
+READ/WRITE only. `inspect_ring_probe.py` corroborates the runtime observations
+against their exact traced write bytes, checks the kernel submission count, and
+independently validates final file contents. Failure invalidates its report.
+These are **trusted runtime observations**, not strace decoding of shared ring
+memory. No kernel worker TID or MCP request attribution is claimed yet.
+
+[Repeat evidence](../experiments/mcp/evidence/io-uring-gap.json) includes source,
+binary/adapter/inspector hashes, raw trace hashes, exact commands, reports, and
+out-of-order completion results. All 55 tests pass. The next integration must
+carry MCP identity into each submitted ring operation and retain per-operation
+completion evidence without inventing a corresponding write syscall.

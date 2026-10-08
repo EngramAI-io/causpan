@@ -25,16 +25,24 @@ def evidence_chain(graph,selected,request=None):
                 if edge['type']=='edge' and edge['kind'] in {'joined','ipc_sent','cancelled_before_execution'} and edge['source'] in descendants and edge['target'] not in descendants:
                     descendants.add(edge['target']);changed=True
         wanted.update(descendants)
+    # Include descriptor handoffs caused by selected sends, without treating
+    # the receiving dispatcher as executing under the sender's request.
+    changed=True
+    while changed:
+        changed=False
+        for edge in graph:
+            if edge['type']=='edge' and edge['kind'] in {'ring_submitted','ring_submission_observed','ring_completion_observed','descriptor_sent','descriptor_received'} and edge['source'] in wanted and edge['target'] not in wanted:
+                wanted.add(edge['target']);changed=True
     ancestors=set(wanted)
     changed=True
     while changed:
         changed=False
         for edge in graph:
-            causal=edge['kind'] in {'cancelled_before_execution','ipc_sent','submitted','executed','spawned','joined','created_task','polled','connected','socket_effect','accepted','accepted_connection'}
+            causal=edge['kind'] in {'ring_submitted','ring_submission_observed','ring_completion_observed','descriptor_sent','descriptor_received','cancelled_before_execution','ipc_sent','submitted','executed','spawned','joined','created_task','polled','connected','socket_effect','accepted','accepted_connection'}
             if edge['type']=='edge' and causal and edge['target'] in ancestors and edge['source'] not in ancestors:
                 ancestors.add(edge['source']);changed=True
     evidence=[r for r in graph if (r['type']=='node' and r['id'] in ancestors) or
-              (r['type']=='edge' and r['kind'] in {'cancelled_before_execution','ipc_sent','submitted','executed','spawned','joined','created_task','polled','connected','socket_effect','accepted','accepted_connection'} and r['source'] in ancestors and r['target'] in ancestors)]
+              (r['type']=='edge' and r['kind'] in {'ring_submitted','ring_submission_observed','ring_completion_observed','descriptor_sent','descriptor_received','cancelled_before_execution','ipc_sent','submitted','executed','spawned','joined','created_task','polled','connected','socket_effect','accepted','accepted_connection'} and r['source'] in ancestors and r['target'] in ancestors)]
     return evidence
 
 
@@ -50,7 +58,13 @@ def main():
     manifest=json.loads((run/'manifest.json').read_text())
     if manifest.get('status')!='complete' and not (args.allow_failed_workload and manifest.get('status')=='failed'):
         raise SystemExit('Run did not complete validation; use --allow-failed-workload only for a failed workload with valid attribution')
-    for name in ['control-score.json','batch-score.json','fileops-score.json','network-score.json']:
+    if manifest.get('scenario') == 'worker-rights':
+        for required in ['control-score.json', 'rights-score.json']:
+            if not (run/required).is_file():
+                raise SystemExit('Missing required independent evaluation: '+required)
+    if manifest.get('scenario') == 'uring' and not (run/'ring-score.json').is_file():
+        raise SystemExit('Missing required independent evaluation: ring-score.json')
+    for name in ['ring-score.json','control-score.json','batch-score.json','fileops-score.json','network-score.json','rights-score.json']:
         if (run/name).exists() and not json.loads((run/name).read_text())['valid']:
             raise SystemExit('Independent evaluation failed: '+name)
     report=json.loads((run/'causal-report.json').read_text())

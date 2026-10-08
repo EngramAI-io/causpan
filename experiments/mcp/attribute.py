@@ -531,6 +531,9 @@ class Attributor:
             event_id = 'syscall:' + event['source']
             self.graph.append(dict(type='node', id=event_id, kind='syscall',
                                    timestamp_ns=event['timestamp_ns'],
+                                   duration_ns=event.get('duration_ns'),
+                                   completion_ns=event.get('completion_ns'),
+                                   descriptor_rights=event.get('descriptor_rights'),
                                    pid=pid, tid=tid, syscall=event['syscall'],
                                    paths=event['paths'], return_value=event['return_value']))
             if request and event_id not in self.executed_syscalls:
@@ -691,6 +694,19 @@ class Attributor:
             if row.get('connection_id'):
                 row['connection_id'] = self.session_id + ':' + row['connection_id']
 
+        from descriptor_transfers import pair_transfers, transfer_graph
+        transfers = pair_transfers(self.tagged)
+        self.graph.extend(transfer_graph(transfers, self.tagged,
+            {r['id'] for r in self.graph if r['type'] == 'node'}))
+
+        from ring_helper import helper_graph
+        ring_operations = 0
+        try:
+            ring_graph, ring_operations = helper_graph(self.run, self.tagged) if (self.run/'run-config.json').exists() else ([], 0)
+            self.graph.extend(ring_graph)
+        except (ValueError, KeyError, OSError, TypeError) as error:
+            self.errors.append('ring helper evidence invalid: '+str(error))
+
         self._validate_invariants()
 
         # Evaluation sidecar — consulted only after inference, never changes assignments.
@@ -714,6 +730,16 @@ class Attributor:
             valid=not self.errors,
             errors=self.errors,
             attribution_model='causal-context-v2',
+            attributed_ring_operations=ring_operations,
+            capture_scope='observed_syscalls_and_trusted_runtime_markers',
+            io_uring_observation=dict(
+                setup_attempts=sum(e['syscall']=='io_uring_setup' for e in self.events),
+                successful_setups=sum(e['syscall']=='io_uring_setup' and e['return_value'] is not None and e['return_value']>=0 for e in self.events),
+                enter_calls=sum(e['syscall']=='io_uring_enter' for e in self.events),
+                submissions_decoded=False),
+            descriptor_transfers=len(transfers['pairs']),
+            descriptor_transfer_rejections=transfers['rejected_channels'],
+            unpaired_descriptor_observations=transfers['unpaired_observations'],
             requests=len(self.roots),
             joins=len(self.mapping) - len(self.roots),
             operations=len(self.operations),

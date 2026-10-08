@@ -167,6 +167,19 @@ server.registerTool('spawn_slot',{inputSchema:{slot:z.number().int().min(0).max(
   });
   return {content:[{type:'text',text:`spawned slot ${slot}`} ]};
 });
+server.registerTool('uring_slot',{inputSchema:{slot:z.number().int().min(0).max(9999)}},async({slot})=>{
+  const helper=process.env.CAUSPAN_RING_BIN;
+  if(!helper)throw new Error('ring probe binary was not configured');
+  const output=await new Promise((resolve,reject)=>{
+    const child=spawn(helper,[`${root}/slots.bin`,String(slot)],{stdio:['ignore','pipe','pipe']});
+    let stdout='',stderr='';
+    child.stdout.setEncoding('utf8').on('data',chunk=>stdout+=chunk);
+    child.stderr.setEncoding('utf8').on('data',chunk=>stderr+=chunk);
+    child.on('error',reject);
+    child.on('close',code=>code===0?resolve(stdout.trim()):reject(new Error(`ring helper exit ${code}: ${stderr.trim()}`)));
+  });
+  return {content:[{type:'text',text:output}]};
+});
 server.registerTool('clone_files_slot',{inputSchema:{slot:z.number().int().min(0).max(99999)}},async({slot})=>{
   const helper=process.env.CAUSPAN_CLONE_FILES_BIN;
   if(!helper)throw new Error('CLONE_FILES probe binary was not configured');
@@ -187,7 +200,7 @@ const workerWaiters=new Map();
 const workerDispatcher=randomUUID();
 let nextWorkerJob=1n;
 let workerMarkerFd=null;
-if(['worker-context','worker-unscoped','worker-failure','worker-crash','worker-cancel','worker-spawn','worker-grandchild','worker-socketpair','worker-fatal','worker-relay','worker-relay-fatal','worker-wrong-response'].includes(process.env.CAUSPAN_SCENARIO)){
+if(['worker-context','worker-unscoped','worker-failure','worker-crash','worker-cancel','worker-spawn','worker-grandchild','worker-socketpair','worker-rights','worker-fatal','worker-relay','worker-relay-fatal','worker-wrong-response'].includes(process.env.CAUSPAN_SCENARIO)){
   workerMarkerFd=fsSync.openSync(`${process.env.CAUSPAN_RUN}/native-events.jsonl`,'a');
   persistentWorker=spawn('python3.11',[new URL('./persistent_worker.py',import.meta.url).pathname,`${root}/slots.bin`],{stdio:['pipe','pipe','inherit']});
   let buffer='';
@@ -261,6 +274,8 @@ server.registerTool('cancel_probe',{inputSchema:{slot:z.number().int().min(0).ma
   return {content:[{type:'text',text:JSON.stringify(result)}],structuredContent:result};
 });
 server.registerTool('barrier',{inputSchema:{}},async()=>{
+  // Terminal experiment barrier: stop producing work before draining it.
+  clearInterval(background);
   await Promise.allSettled([...pending]);
   await backgroundPromise;
   if(errors.length)throw new Error(errors.join('; '));

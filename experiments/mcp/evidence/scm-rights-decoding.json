@@ -1,0 +1,57 @@
+{
+  "source_run": "results/mcp/scm-rights-probe",
+  "parser_sha256": "850df40aa16e9c9f6a2756c7df4d892ff2ec8c18d04a20ec1844541386aef701",
+  "local_descriptor_observations": [
+    {
+      "timestamp_ns": 1791422590118934000,
+      "duration_ns": 1763000,
+      "completion_ns": 1791422590120697000,
+      "descriptor_rights": {
+        "fds": [
+          3
+        ],
+        "decoded": true,
+        "direction": "receive",
+        "succeeded": true,
+        "control_truncated": false,
+        "semantics": "local_descriptor_observation_not_transfer_pairing"
+      },
+      "tid": 1956045,
+      "syscall": "recvmsg",
+      "args": "4<UNIX:[908981568->908981567]>, {msg_name=0xffffcc2065b8, msg_namelen=110 => 0, msg_iov=[{iov_base=\"descriptor-transfer\", iov_len=128}], msg_iovlen=1, msg_control=[{cmsg_len=20, cmsg_level=SOL_SOCKET, cmsg_type=SCM_RIGHTS, cmsg_data=[3</u/kdhande/causpan/results/mcp/scm-rights-probe/transferred.bin>]}], msg_controllen=24, msg_flags=0}, 0",
+      "return_value": 19,
+      "completion": "returned",
+      "paths": [
+        "UNIX:[908981568->908981567]"
+      ],
+      "source": "strace.1956045:2",
+      "pid": 1956045
+    },
+    {
+      "timestamp_ns": 1791422590120579000,
+      "duration_ns": 21000,
+      "completion_ns": 1791422590120600000,
+      "descriptor_rights": {
+        "fds": [
+          4
+        ],
+        "decoded": true,
+        "direction": "send",
+        "succeeded": true,
+        "control_truncated": false,
+        "semantics": "local_descriptor_observation_not_transfer_pairing"
+      },
+      "tid": 1955964,
+      "syscall": "sendmsg",
+      "args": "3<UNIX:[908981567->908981568]>, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base=\"descriptor-transfer\", iov_len=19}], msg_iovlen=1, msg_control=[{cmsg_len=20, cmsg_level=SOL_SOCKET, cmsg_type=SCM_RIGHTS, cmsg_data=[4</u/kdhande/causpan/results/mcp/scm-rights-probe/transferred.bin>]}], msg_controllen=24, msg_flags=0}, 0",
+      "return_value": 19,
+      "completion": "returned",
+      "paths": [
+        "UNIX:[908981567->908981568]"
+      ],
+      "source": "strace.1955964:1004",
+      "pid": 1955964
+    }
+  ],
+  "transfer_pairing_implemented": false
+}

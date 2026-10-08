@@ -44,7 +44,7 @@ def score(run):
     responses={r['message'].get('id'):r['message'].get('result',{}) for r in map(json.loads,(run/'protocol.jsonl').read_text().splitlines()) if r['direction']=='response'}
     for call in slots.values():
         wanted=1 if call['tool'] in {'spawn_slot','cancel_probe','fail_probe'} else 2 if call['tool'] in {'clone_files_slot','worker_slot'} else 2*call['arguments'].get('rounds',3)
-        if call['tool']=='worker_slot' and scenario=='worker-relay':wanted=3
+        if call['tool']=='worker_slot' and scenario in {'worker-relay','worker-rights'}:wanted=3
         if call['tool']=='worker_slot' and scenario=='worker-failure':
             expected_failure=bool(call['arguments']['slot']%2)
             if bool(responses[call['id']].get('structuredContent',{}).get('expected_failure'))!=expected_failure:

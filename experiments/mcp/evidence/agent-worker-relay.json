@@ -1,0 +1,481 @@
+{
+  "source_run": "results/mcp/agent-worker-relay-drained",
+  "overlapping_worker_calls": false,
+  "calls": [
+    {
+      "id": 2,
+      "start_ns": 1791422407098951734,
+      "end_ns": 1791422407212710644,
+      "tool": "worker_slot",
+      "arguments": {
+        "slot": 0
+      },
+      "error": false
+    },
+    {
+      "id": 3,
+      "start_ns": 1791422407214499067,
+      "end_ns": 1791422407329962435,
+      "tool": "worker_slot",
+      "arguments": {
+        "slot": 1
+      },
+      "error": false
+    },
+    {
+      "id": 4,
+      "start_ns": 1791422407331005538,
+      "end_ns": 1791422407447297744,
+      "tool": "worker_slot",
+      "arguments": {
+        "slot": 3
+      },
+      "error": false
+    },
+    {
+      "id": 5,
+      "start_ns": 1791422407448273650,
+      "end_ns": 1791422407577223312,
+      "tool": "worker_slot",
+      "arguments": {
+        "slot": 2
+      },
+      "error": false
+    },
+    {
+      "id": 6,
+      "start_ns": 1791422407578918811,
+      "end_ns": 1791422407667571152,
+      "tool": "barrier",
+      "arguments": {},
+      "error": false
+    }
+  ],
+  "write_chain_checks": [
+    {
+      "event": "strace.1831049:4",
+      "node_counts": {
+        "mcp_request": 1,
+        "ipc_job": 2
+      },
+      "chain": [
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:request:1",
+          "kind": "mcp_request",
+          "context": 1,
+          "rpc_id": 2,
+          "method": "tools/call",
+          "tool": "worker_slot",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:ipc:28e11eb5-942f-42fd-9185-8e8336a206ea/1",
+          "kind": "ipc_job",
+          "request_context": 1,
+          "sender_pid": 1823292,
+          "sender_tid": 1823292,
+          "send_evidence": "strace.1823292:8382",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "edge",
+          "source": "e6cab607141941f68f5edb2c31e209e8:request:1",
+          "target": "e6cab607141941f68f5edb2c31e209e8:ipc:28e11eb5-942f-42fd-9185-8e8336a206ea/1",
+          "kind": "ipc_sent",
+          "evidence": "strace.1823292:8382",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:ipc:2317f45d-00b6-4e5d-9755-8b6f34ed7949/1",
+          "kind": "ipc_job",
+          "request_context": 1,
+          "sender_pid": 1823984,
+          "sender_tid": 1831016,
+          "send_evidence": "strace.1831016:4",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "edge",
+          "source": "e6cab607141941f68f5edb2c31e209e8:ipc:28e11eb5-942f-42fd-9185-8e8336a206ea/1",
+          "target": "e6cab607141941f68f5edb2c31e209e8:ipc:2317f45d-00b6-4e5d-9755-8b6f34ed7949/1",
+          "kind": "ipc_sent",
+          "evidence": "strace.1831016:4",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:syscall:strace.1831049:4",
+          "kind": "syscall",
+          "timestamp_ns": 1791422407165617000,
+          "pid": 1824710,
+          "tid": 1831049,
+          "syscall": "pwrite64",
+          "paths": [
+            "/u/kdhande/causpan/results/mcp/agent-worker-relay-drained/sandbox/slots.bin"
+          ],
+          "return_value": 8,
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "edge",
+          "source": "e6cab607141941f68f5edb2c31e209e8:ipc:2317f45d-00b6-4e5d-9755-8b6f34ed7949/1",
+          "target": "e6cab607141941f68f5edb2c31e209e8:syscall:strace.1831049:4",
+          "kind": "executed",
+          "evidence": "strace.1831049:3",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        }
+      ]
+    },
+    {
+      "event": "strace.1831049:10",
+      "node_counts": {
+        "mcp_request": 1,
+        "ipc_job": 2
+      },
+      "chain": [
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:request:2",
+          "kind": "mcp_request",
+          "context": 2,
+          "rpc_id": 3,
+          "method": "tools/call",
+          "tool": "worker_slot",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:ipc:28e11eb5-942f-42fd-9185-8e8336a206ea/2",
+          "kind": "ipc_job",
+          "request_context": 2,
+          "sender_pid": 1823292,
+          "sender_tid": 1823292,
+          "send_evidence": "strace.1823292:8489",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "edge",
+          "source": "e6cab607141941f68f5edb2c31e209e8:request:2",
+          "target": "e6cab607141941f68f5edb2c31e209e8:ipc:28e11eb5-942f-42fd-9185-8e8336a206ea/2",
+          "kind": "ipc_sent",
+          "evidence": "strace.1823292:8489",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:ipc:2317f45d-00b6-4e5d-9755-8b6f34ed7949/2",
+          "kind": "ipc_job",
+          "request_context": 2,
+          "sender_pid": 1823984,
+          "sender_tid": 1831016,
+          "send_evidence": "strace.1831016:11",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "edge",
+          "source": "e6cab607141941f68f5edb2c31e209e8:ipc:28e11eb5-942f-42fd-9185-8e8336a206ea/2",
+          "target": "e6cab607141941f68f5edb2c31e209e8:ipc:2317f45d-00b6-4e5d-9755-8b6f34ed7949/2",
+          "kind": "ipc_sent",
+          "evidence": "strace.1831016:11",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:syscall:strace.1831049:10",
+          "kind": "syscall",
+          "timestamp_ns": 1791422407286043000,
+          "pid": 1824710,
+          "tid": 1831049,
+          "syscall": "pwrite64",
+          "paths": [
+            "/u/kdhande/causpan/results/mcp/agent-worker-relay-drained/sandbox/slots.bin"
+          ],
+          "return_value": 8,
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "edge",
+          "source": "e6cab607141941f68f5edb2c31e209e8:ipc:2317f45d-00b6-4e5d-9755-8b6f34ed7949/2",
+          "target": "e6cab607141941f68f5edb2c31e209e8:syscall:strace.1831049:10",
+          "kind": "executed",
+          "evidence": "strace.1831049:9",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        }
+      ]
+    },
+    {
+      "event": "strace.1831049:16",
+      "node_counts": {
+        "mcp_request": 1,
+        "ipc_job": 2
+      },
+      "chain": [
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:request:3",
+          "kind": "mcp_request",
+          "context": 3,
+          "rpc_id": 4,
+          "method": "tools/call",
+          "tool": "worker_slot",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:ipc:28e11eb5-942f-42fd-9185-8e8336a206ea/3",
+          "kind": "ipc_job",
+          "request_context": 3,
+          "sender_pid": 1823292,
+          "sender_tid": 1823292,
+          "send_evidence": "strace.1823292:8581",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "edge",
+          "source": "e6cab607141941f68f5edb2c31e209e8:request:3",
+          "target": "e6cab607141941f68f5edb2c31e209e8:ipc:28e11eb5-942f-42fd-9185-8e8336a206ea/3",
+          "kind": "ipc_sent",
+          "evidence": "strace.1823292:8581",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:ipc:2317f45d-00b6-4e5d-9755-8b6f34ed7949/3",
+          "kind": "ipc_job",
+          "request_context": 3,
+          "sender_pid": 1823984,
+          "sender_tid": 1831016,
+          "send_evidence": "strace.1831016:18",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "edge",
+          "source": "e6cab607141941f68f5edb2c31e209e8:ipc:28e11eb5-942f-42fd-9185-8e8336a206ea/3",
+          "target": "e6cab607141941f68f5edb2c31e209e8:ipc:2317f45d-00b6-4e5d-9755-8b6f34ed7949/3",
+          "kind": "ipc_sent",
+          "evidence": "strace.1831016:18",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:syscall:strace.1831049:16",
+          "kind": "syscall",
+          "timestamp_ns": 1791422407403666000,
+          "pid": 1824710,
+          "tid": 1831049,
+          "syscall": "pwrite64",
+          "paths": [
+            "/u/kdhande/causpan/results/mcp/agent-worker-relay-drained/sandbox/slots.bin"
+          ],
+          "return_value": 8,
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "edge",
+          "source": "e6cab607141941f68f5edb2c31e209e8:ipc:2317f45d-00b6-4e5d-9755-8b6f34ed7949/3",
+          "target": "e6cab607141941f68f5edb2c31e209e8:syscall:strace.1831049:16",
+          "kind": "executed",
+          "evidence": "strace.1831049:15",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        }
+      ]
+    },
+    {
+      "event": "strace.1831049:22",
+      "node_counts": {
+        "mcp_request": 1,
+        "ipc_job": 2
+      },
+      "chain": [
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:request:4",
+          "kind": "mcp_request",
+          "context": 4,
+          "rpc_id": 5,
+          "method": "tools/call",
+          "tool": "worker_slot",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:ipc:28e11eb5-942f-42fd-9185-8e8336a206ea/4",
+          "kind": "ipc_job",
+          "request_context": 4,
+          "sender_pid": 1823292,
+          "sender_tid": 1823292,
+          "send_evidence": "strace.1823292:8678",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "edge",
+          "source": "e6cab607141941f68f5edb2c31e209e8:request:4",
+          "target": "e6cab607141941f68f5edb2c31e209e8:ipc:28e11eb5-942f-42fd-9185-8e8336a206ea/4",
+          "kind": "ipc_sent",
+          "evidence": "strace.1823292:8678",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:ipc:2317f45d-00b6-4e5d-9755-8b6f34ed7949/4",
+          "kind": "ipc_job",
+          "request_context": 4,
+          "sender_pid": 1823984,
+          "sender_tid": 1831016,
+          "send_evidence": "strace.1831016:25",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "edge",
+          "source": "e6cab607141941f68f5edb2c31e209e8:ipc:28e11eb5-942f-42fd-9185-8e8336a206ea/4",
+          "target": "e6cab607141941f68f5edb2c31e209e8:ipc:2317f45d-00b6-4e5d-9755-8b6f34ed7949/4",
+          "kind": "ipc_sent",
+          "evidence": "strace.1831016:25",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "node",
+          "id": "e6cab607141941f68f5edb2c31e209e8:syscall:strace.1831049:22",
+          "kind": "syscall",
+          "timestamp_ns": 1791422407524689000,
+          "pid": 1824710,
+          "tid": 1831049,
+          "syscall": "pwrite64",
+          "paths": [
+            "/u/kdhande/causpan/results/mcp/agent-worker-relay-drained/sandbox/slots.bin"
+          ],
+          "return_value": 8,
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        },
+        {
+          "type": "edge",
+          "source": "e6cab607141941f68f5edb2c31e209e8:ipc:2317f45d-00b6-4e5d-9755-8b6f34ed7949/4",
+          "target": "e6cab607141941f68f5edb2c31e209e8:syscall:strace.1831049:22",
+          "kind": "executed",
+          "evidence": "strace.1831049:21",
+          "session_id": "e6cab607141941f68f5edb2c31e209e8"
+        }
+      ]
+    }
+  ],
+  "reports": {
+    "manifest.json": {
+      "session_id": "e6cab607141941f68f5edb2c31e209e8",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "capture": "strace",
+      "seccomp": false,
+      "code_sha256": {
+        "analyze.py": "7f4e4102ee69e10e0ffc1d50160629314f3dd125b18641850b89546425072a8b",
+        "attribute.py": "f976d116b7d215b248c91351418e2120a26701a0a5370051e76a5403b22528fa",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "matrix.py": "6b43d9d1fbae336bf187ea49872190fc15e43aeb709d8e44cbd75af18979f368",
+        "persistent_worker.py": "881a898bde8bffcecf792f95fc6d94c62868af7a6256cf47b02bf2b18e0270bf",
+        "proxy.py": "8685fb1d0118e8a3e48eb45b50d3c0f1c5b6386348ec40879027230a52dd9dfe",
+        "query.py": "06863a5f783dd9307094419762e18f3faaf373e7acafcccc17da9010385d6022",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "96bdb9034476d5d7afeadfdab389829a8cf0e37308bfcd36a65a947c5bd0ae49",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "9dd45571b6f1b1ca94770c680d4c3c5a0ae8957b546ed470a6ce1cb3ee9d22f8",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "test_analyze.py": "7875e0675c318eb773de3d0f1747fc978a115eb183b196bcdb128f57fbe4d754",
+        "test_attribute.py": "07c3c14c2ba9625043c3a8427b2bd54465de9668f0045a890b3021a6e5595c76",
+        "test_ipc.py": "2a062df384acf3d70e57523030af49b971f364f103ae46ea8495081f55ea3c14",
+        "test_marker.py": "daae97ec03f6dc83b3384028a20ab9ee741d332cc5989b499f63a3705003149a",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "911c6bf41b9caeba4c752fb4ee019aeb90bc2ecf87c93bf1796b092f424e91a3",
+        "test_worker_process.py": "dd3da19a5bd85245c44a187f829c13953b925190fbc866808dc0e4c53cfde0de",
+        "control-server.mjs": "0dccce0f1e253e5fb477dbbe9b57f5547fc49188493ab77595d08f8756eb08ca",
+        "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+        "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+        "native/context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a",
+        "native/build.py": "881db69efeb0883f6621d033385942008d5ec35dd8de82e7f9911680a865f1e1",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      },
+      "mode": "agent",
+      "concurrency": 4,
+      "shared": false,
+      "instrumented": true,
+      "pool_size": 4,
+      "string_ids": false,
+      "spoof_context": false,
+      "scenario": "worker-relay",
+      "batches": 2,
+      "model": null,
+      "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+      "versions": {
+        "node": "v24.20.0",
+        "strace": "strace -- version 5.14",
+        "codex": "codex-cli 0.161.0"
+      },
+      "server": {
+        "@modelcontextprotocol/server-filesystem": "2026.8.31"
+      },
+      "status": "complete",
+      "execution_seconds": 14.316214601043612
+    },
+    "causal-report.json": {
+      "valid": true,
+      "errors": [],
+      "attribution_model": "causal-context-v2",
+      "requests": 5,
+      "joins": 0,
+      "operations": 662,
+      "operations_started": 662,
+      "operations_cancelled": 0,
+      "ipc_jobs": 8,
+      "ipc_cancelled": 0,
+      "inherited_processes": 2,
+      "runtime_spans": 0,
+      "retroactive_socket_reads": 0,
+      "migrating_request_spans": 0,
+      "markers": 4890,
+      "parser": {
+        "lifecycle_lines": 21,
+        "unfinished": 2,
+        "terminal_interrupted": 2,
+        "parsed": 14919
+      },
+      "all_event_status": {
+        "unknown": 2491,
+        "no_request_context": 7503,
+        "bound": 25
+      },
+      "fixture_score": {
+        "events": 676,
+        "no_request_context": 664,
+        "bound": 12
+      },
+      "fixture_events_per_request": {
+        "2": 3,
+        "3": 3,
+        "4": 3,
+        "5": 3
+      },
+      "analysis_id": "725badc5206b43b4b914948ee04a9c5a",
+      "output_sha256": {
+        "causal-attribution.jsonl": "a155f84841201ca85a2202e554c7a0a59b9ea2ebcdbc1048a80e6a4cab556b5a",
+        "provenance.jsonl": "1bc65972e5e86ee9c0e923148bd0e46dcb62c416f926dffef0b774b999d31034"
+      }
+    },
+    "control-score.json": {
+      "valid": true,
+      "counts": {
+        "background": 661,
+        "correct": 673,
+        "request_events": 12,
+        "after_response": 0
+      },
+      "mismatches": [],
+      "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; socketpair scenario also uses complete message tokens; neither is used during inference"
+    }
+  },
+  "agent_log_sha256": "b14f0cf527ccb03614a2f55cd8abb627789dd104f1ad98cdfe22ae3f66f82ccb"
+}

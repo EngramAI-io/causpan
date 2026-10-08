@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Trusted IPC context adapter; offsets are workload data, never context identity."""
+import array
 import concurrent.futures
 import json
 import errno
@@ -16,6 +17,12 @@ SLOT_BYTE_WIDTH = 128      # Bytes per slot; matches the 128-byte record layout 
 BACKGROUND_SLOT_INDEX = 100000  # Dedicated background-write slot past the normal slot range.
 EXIT_CRASH = 23            # Deliberate bypass of finally; leaves IPC bracket open.
 EXIT_FATAL = 24            # Fatal task failure exit code; bypasses normal cleanup.
+rights_mode = os.environ['CAUSPAN_SCENARIO'] == 'worker-rights'
+rights_leaf = rights_mode and bool(os.environ.get('CAUSPAN_WORKER_LEAF'))
+fd = None if rights_leaf else os.open(sys.argv[1], os.O_RDWR)
+rights_socket = socket.socket(fileno=int(os.environ['CAUSPAN_RIGHTS_FD'])) if rights_leaf else None
+markers = os.open(Path(os.environ['CAUSPAN_RUN']) / 'native-events.jsonl',
+                  os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
 cancel_mode = os.environ['CAUSPAN_SCENARIO'] == 'worker-cancel'
 failure_mode = os.environ['CAUSPAN_SCENARIO'] == 'worker-failure'
 propagate = os.environ['CAUSPAN_SCENARIO'] != 'worker-unscoped'
@@ -34,7 +41,7 @@ def mark(context, kind='JS_CONTEXT', job=None):
 
 
 # A second persistent process is launched at startup, before request execution.
-relay = os.environ['CAUSPAN_SCENARIO'] in {'worker-relay','worker-relay-fatal'} and not os.environ.get('CAUSPAN_WORKER_LEAF')
+relay = os.environ['CAUSPAN_SCENARIO'] in {'worker-relay','worker-relay-fatal','worker-rights'} and not os.environ.get('CAUSPAN_WORKER_LEAF')
 relay_child = None
 relay_lock = threading.Lock()
 relay_waiters = {}
@@ -65,9 +72,17 @@ def read_relay_responses():
 
 
 if relay:
+    passed = ()
+    child_env = {**os.environ,'CAUSPAN_WORKER_LEAF':'1'}
+    if rights_mode:
+        rights_socket, child_socket = socket.socketpair(socket.AF_UNIX, socket.SOCK_DGRAM)
+        passed = (child_socket.fileno(),)
+        child_env['CAUSPAN_RIGHTS_FD'] = str(child_socket.fileno())
     relay_child = subprocess.Popen([sys.executable,__file__,sys.argv[1]],
         stdin=subprocess.PIPE,stdout=subprocess.PIPE,text=True,bufsize=1,
-        env={**os.environ,'CAUSPAN_WORKER_LEAF':'1'})
+        env=child_env, pass_fds=passed)
+    if rights_mode:
+        child_socket.close()
     relay_reader = threading.Thread(target=read_relay_responses)
     relay_reader.start()
 
@@ -82,8 +97,13 @@ def delegate(context, slot):
         job = f'{relay_namespace}/{relay_sequence}'
         relay_waiters[job] = future
         mark(context, 'IPC_SEND', job)
-        relay_child.stdin.write(json.dumps(dict(context=str(context),slot=slot,job=job))+'\n')
-        relay_child.stdin.flush()
+        payload = json.dumps(dict(context=str(context),slot=slot,job=job)).encode()
+        if rights_mode:
+            if rights_socket.sendmsg([payload], [(socket.SOL_SOCKET, socket.SCM_RIGHTS, array.array('i', [fd]))]) != len(payload):
+                raise RuntimeError('short descriptor job dispatch')
+        else:
+            relay_child.stdin.write(payload.decode()+'\n')
+            relay_child.stdin.flush()
     response = future.result(timeout=30)
     if response['slot']!=slot:
         raise RuntimeError('downstream response slot mismatch')
@@ -93,6 +113,7 @@ def delegate(context, slot):
 def execute(message):
     context = int(message['context']) if propagate else 0
     slot = message['slot']
+    job_fd = message.get('received_fd', fd)
     if propagate:
         mark(context, 'IPC_ENTER', message['job'])
     else:
@@ -108,11 +129,11 @@ def execute(message):
             finally:
                 left.close();right.close()
         time.sleep(0.002 * (slot % 5))
-        target = readonly if failure_mode and slot % 2 else fd
+        target = readonly if failure_mode and slot % 2 else job_fd
         if relay:
             delegate(context,slot)
         elif os.environ['CAUSPAN_SCENARIO'] in {'worker-spawn','worker-grandchild'}:
-            program='import os,sys; f=os.open(sys.argv[1],os.O_RDWR); p=("worker:"+sys.argv[2]).encode(); assert os.pwrite(f,p,int(sys.argv[2])*SLOT_BYTE_WIDTH)==len(p); os.close(f)'
+            program=f'import os,sys; SLOT_BYTE_WIDTH={SLOT_BYTE_WIDTH}; f=os.open(sys.argv[1],os.O_RDWR); p=("worker:"+sys.argv[2]).encode(); assert os.pwrite(f,p,int(sys.argv[2])*SLOT_BYTE_WIDTH)==len(p); os.close(f)'
             command=[sys.executable,'-c',program,sys.argv[1],str(slot)]
             if os.environ['CAUSPAN_SCENARIO']=='worker-grandchild':
                 command=[sys.executable,'-c','import subprocess,sys; subprocess.run(sys.argv[1:],check=True)',*command]
@@ -122,7 +143,7 @@ def execute(message):
         if os.environ['CAUSPAN_SCENARIO']=='worker-crash':
             os._exit(EXIT_CRASH)  # Deliberately bypass finally and leave the IPC bracket open.
         time.sleep(0.003)
-        if os.pread(fd, len(payload), slot * SLOT_BYTE_WIDTH) != payload:
+        if os.pread(job_fd, len(payload), slot * SLOT_BYTE_WIDTH) != payload:
             raise RuntimeError('worker payload mismatch')
         response = dict(slot=slot)
     except Exception as error:
@@ -131,6 +152,8 @@ def execute(message):
         else:
             response = dict(slot=slot, error=str(error))
     finally:
+        if rights_leaf:
+            os.close(job_fd)
         if os.environ['CAUSPAN_SCENARIO']=='worker-fatal' or (os.environ['CAUSPAN_SCENARIO']=='worker-relay-fatal' and os.environ.get('CAUSPAN_WORKER_LEAF')):
             raise RuntimeError('injected failure during job cleanup')
         if propagate:
@@ -160,10 +183,38 @@ def check_task_failure(future):
             os._exit(EXIT_FATAL)
 
 
+def messages():
+    if not rights_leaf:
+        for line in sys.stdin:
+            yield json.loads(line)
+        return
+    while True:
+        payload, ancillary, flags, _ = rights_socket.recvmsg(4096, socket.CMSG_SPACE(4))
+        descriptors = array.array('i')
+        for level, kind, data in ancillary:
+            if level == socket.SOL_SOCKET and kind == socket.SCM_RIGHTS:
+                descriptors.frombytes(data)
+        try:
+            message = json.loads(payload)
+            if flags & (socket.MSG_CTRUNC | socket.MSG_TRUNC):
+                raise RuntimeError('truncated descriptor job')
+            if message.get('stop'):
+                if descriptors:
+                    raise RuntimeError('stop message carried descriptors')
+                return
+            if len(descriptors) != 1:
+                raise RuntimeError('job requires exactly one descriptor')
+            message['received_fd'] = descriptors[0]
+        except BaseException:
+            for received in descriptors:
+                os.close(received)
+            raise
+        yield message
+
+
 with concurrent.futures.ThreadPoolExecutor(max_workers=1 if cancel_mode else 4) as pool:
     futures = []
-    for line in sys.stdin:
-        message = json.loads(line)
+    for message in messages():
         if cancel_mode:
             # A gated predecessor guarantees the new job is queued while cancel()
             # runs. This tests pre-execution cancellation, not a timing race.
@@ -187,12 +238,17 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=1 if cancel_mode else 4) 
         if not future.cancelled():
             future.result()
 if relay_child is not None:
+    if rights_mode:
+        rights_socket.send(b'{"stop":true}')
     relay_child.stdin.close()
     relay_reader.join(timeout=5)
     if relay_child.wait(timeout=5)!=0:
         raise RuntimeError('downstream worker failed during shutdown')
 os.close(markers)
-os.close(fd)
+if fd is not None:
+    os.close(fd)
+if rights_socket is not None:
+    rights_socket.close()
 
 if readonly is not None:
     os.close(readonly)

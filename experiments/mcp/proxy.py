@@ -35,14 +35,18 @@ async def main():
     syscall_filter='all' if settings.get('capture')=='strace-all' else '%file,%process,%desc,%network'
     cmd=['strace','-ff','-ttt','-T','-yy','-s','4096','-e',f'trace={syscall_filter}',
          '-o',str(run/'traces/strace'),*server_cmd]
+    if settings.get('io_uring_control')=='strace_inject_enosys':
+        cmd[1:1]=['-e','inject=io_uring_setup:error=ENOSYS']
     if settings.get('seccomp'):cmd.insert(2,'--seccomp-bpf')
     if settings.get('capture')=='off':cmd=server_cmd
     (run / 'trace-command.json').write_text(json.dumps(cmd, indent=2))
     child = await asyncio.create_subprocess_exec(*cmd, stdin=asyncio.subprocess.PIPE,
                                                 stdout=asyncio.subprocess.PIPE, stderr=err, limit=16*1024*1024,
                                                 env={**os.environ,'CAUSPAN_RUN':str(run),'CAUSPAN_INSTRUMENTED':'1' if settings.get('instrumented') else '0',
+                                                     **({'UV_USE_IO_URING':'0'} if settings.get('disable_io_uring') else {}),
                                                      'UV_THREADPOOL_SIZE':str(settings.get('pool_size',4)),
                                                      'CAUSPAN_SCENARIO':settings.get('scenario','read'),
+                                                     'CAUSPAN_RING_BIN':settings.get('ring_binary',''),
                                                      'CAUSPAN_CLONE_FILES_BIN':settings.get('clone_files_binary',''),
                                                      'CAUSPAN_NETWORK_PORT':str(network_fixture.get('port','')),
                                                      'CAUSPAN_INBOUND_PORT':str(network_fixture.get('port',''))})

@@ -1,0 +1,472 @@
+{
+  "root": "results/mcp/rights-denied-uring-matrix",
+  "aggregate_counts": {
+    "transfers": 66,
+    "receiver_file_effects": 132,
+    "verified_provenance_pairs": 66
+  },
+  "runs": [
+    {
+      "name": "worker-rights-c1-p4-s0-r0-i1",
+      "scenario": "worker-rights",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "concurrency": 1,
+      "pool_size": 4,
+      "shared": false,
+      "repeat": 0,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 4.282801547786221,
+      "report": {
+        "tool_calls": 3,
+        "incomplete_calls": 0,
+        "tool_errors": 0,
+        "server_pid": 2359195,
+        "parser": {
+          "lifecycle_lines": 33,
+          "parsed": 8767
+        },
+        "sandbox_events": 208,
+        "sandbox_tids": [
+          2359448,
+          2359450,
+          2359452,
+          2359456,
+          2359467,
+          2359861,
+          2360546
+        ],
+        "sandbox_syscalls": {
+          "openat": 2,
+          "pwrite64": 198,
+          "pread64": 4,
+          "close": 4
+        },
+        "oracle_labelled": 0,
+        "baselines": {
+          "pid": {
+            "events": 208,
+            "ambiguous": 198,
+            "unattributed": 10
+          },
+          "request_window": {
+            "events": 208,
+            "unattributed": 14,
+            "singleton": 194
+          }
+        },
+        "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+      },
+      "causal-report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "capture_scope": "observed_syscalls_and_trusted_runtime_markers",
+        "io_uring_observation": {
+          "setup_attempts": 3,
+          "successful_setups": 0,
+          "enter_calls": 0,
+          "submissions_decoded": false
+        },
+        "descriptor_transfers": 2,
+        "descriptor_transfer_rejections": [],
+        "unpaired_descriptor_observations": [],
+        "requests": 3,
+        "joins": 0,
+        "operations": 198,
+        "operations_started": 198,
+        "operations_cancelled": 0,
+        "ipc_jobs": 4,
+        "ipc_cancelled": 0,
+        "inherited_processes": 2,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 1538,
+        "parser": {
+          "lifecycle_lines": 33,
+          "parsed": 8767
+        },
+        "all_event_status": {
+          "unknown": 2565,
+          "no_request_context": 4638,
+          "bound": 16
+        },
+        "fixture_score": {
+          "events": 208,
+          "no_request_context": 200,
+          "bound": 8
+        },
+        "fixture_events_per_request": {
+          "3": 4,
+          "4": 4
+        },
+        "analysis_id": "6e3aee8dc9e04210847f3c5166ae18b4",
+        "output_sha256": {
+          "causal-attribution.jsonl": "c562b8f727b9c76443ae28d649a969008afaa5a2db23640edb46d870849fc1f1",
+          "provenance.jsonl": "932df69b021588e5f2241e037061cd79e738014189828ef25a3436734d604937"
+        }
+      },
+      "control-score": {
+        "valid": true,
+        "counts": {
+          "background": 196,
+          "correct": 202,
+          "request_events": 6,
+          "after_response": 0
+        },
+        "mismatches": [],
+        "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; socketpair scenario also uses complete message tokens; neither is used during inference"
+      },
+      "rights-score": {
+        "valid": true,
+        "counts": {
+          "transfers": 2,
+          "receiver_file_effects": 4,
+          "verified_provenance_pairs": 2
+        },
+        "receiver_pids": [
+          2359831
+        ],
+        "receiver_target_opens": 0,
+        "mismatches": [],
+        "oracle": "controlled JSON payload slots and matching received FD numbers; used only for scoring",
+        "transfer_provenance_pairing_evaluated": true
+      },
+      "manifest": {
+        "session_id": "b7314e89308841b08bad7f2f68c08554",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": false,
+        "disable_io_uring": true,
+        "io_uring_control": "strace_inject_enosys",
+        "code_sha256": {
+          "analyze.py": "850df40aa16e9c9f6a2756c7df4d892ff2ec8c18d04a20ec1844541386aef701",
+          "attribute.py": "a4ef1b27371d94cbafffb738cbb5a889b71b17224fdf5d7d1e9abed8064e512d",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "descriptor_transfers.py": "08e008311f2f2afd1bb6946245e255f1d0902186b9b96aec4182f5fb46058ef2",
+          "matrix.py": "0b5cb9ad8084ef5478cf1061ebc98e0ed9a4495ab3300df98b2074fb60f44b78",
+          "persistent_worker.py": "22993649ff444e91d0f61dfc51ca013af5b43b49a15bc6494a0e8af6e7bdc3d1",
+          "proxy.py": "ae992bd46296f36cb9ce184208a8afdd1cdc95f5602b6954b4121886ac2b80b0",
+          "query.py": "ab10f3565f773226a3ca73642086b9e8d3f7dbdcfefa7badc87d0c4d6e54e9b3",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "89360483293bf4cb17d88459e96585e23154c25843051be751d261ddef572cee",
+          "scm_rights_probe.py": "7a2ec0087150c7f925497a027a5beacd2a3c8654ffbe04a227a9c1485aa98071",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "f03fc7e078b50c0773d0923bbbbe01e5e7dd746576dc1389a0206ee13515ab34",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "score_rights.py": "4117c1f214ce7e1b20ec609a618f2de267b5dc56eec97344e15b12c28ad1ca74",
+          "test_agent_validation.py": "fbd2153655ad92a3f6b85a877f32d166ece4c04f8af4e559a5489873d33b1fa9",
+          "test_analyze.py": "f4b912b95cfffb4ab0c8d62478061de3daec7cc85f9cf75edc8f0bb02d6c9c05",
+          "test_attribute.py": "07c3c14c2ba9625043c3a8427b2bd54465de9668f0045a890b3021a6e5595c76",
+          "test_descriptor_transfers.py": "df5ac36153651b1cc4d84bb13d2e9d436ae5b00720504c84685113cd7d0339b5",
+          "test_ipc.py": "2a062df384acf3d70e57523030af49b971f364f103ae46ea8495081f55ea3c14",
+          "test_marker.py": "daae97ec03f6dc83b3384028a20ab9ee741d332cc5989b499f63a3705003149a",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "911c6bf41b9caeba4c752fb4ee019aeb90bc2ecf87c93bf1796b092f424e91a3",
+          "test_rights_oracle.py": "d21b791a9c1cca42a0dc9621f2f7a0d93ce2bb0be5bb073ae1960a345de9aa92",
+          "test_worker_process.py": "cecc09229e2efe81d1637b6a7098bc9ed9bb8d4eb914adaeb3b781976923f059",
+          "control-server.mjs": "8bac411af0e4b5d0c6be6e2766ee7811e797c2d72bf47fae8ab9a8625df15749",
+          "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "native/context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a",
+          "native/build.py": "881db69efeb0883f6621d033385942008d5ec35dd8de82e7f9911680a865f1e1",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 1,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "worker-rights",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "complete",
+        "execution_seconds": 3.3269615380559117
+      }
+    },
+    {
+      "name": "worker-rights-c32-p4-s0-r0-i1",
+      "scenario": "worker-rights",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "concurrency": 32,
+      "pool_size": 4,
+      "shared": false,
+      "repeat": 0,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 8.992756590014324,
+      "report": {
+        "tool_calls": 65,
+        "incomplete_calls": 0,
+        "tool_errors": 0,
+        "server_pid": 2359269,
+        "parser": {
+          "lifecycle_lines": 45,
+          "parsed": 12791
+        },
+        "sandbox_events": 457,
+        "sandbox_tids": [
+          2359445,
+          2359446,
+          2359447,
+          2359451,
+          2359465,
+          2359977,
+          2359978,
+          2359982,
+          2360007,
+          2360660,
+          2360665,
+          2360685,
+          2360764
+        ],
+        "sandbox_syscalls": {
+          "openat": 2,
+          "pwrite64": 261,
+          "pread64": 128,
+          "close": 66
+        },
+        "oracle_labelled": 0,
+        "baselines": {
+          "pid": {
+            "events": 457,
+            "ambiguous": 199,
+            "unattributed": 258
+          },
+          "request_window": {
+            "events": 457,
+            "unattributed": 262,
+            "ambiguous": 172,
+            "singleton": 23
+          }
+        },
+        "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+      },
+      "causal-report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "capture_scope": "observed_syscalls_and_trusted_runtime_markers",
+        "io_uring_observation": {
+          "setup_attempts": 3,
+          "successful_setups": 0,
+          "enter_calls": 0,
+          "submissions_decoded": false
+        },
+        "descriptor_transfers": 64,
+        "descriptor_transfer_rejections": [],
+        "unpaired_descriptor_observations": [],
+        "requests": 65,
+        "joins": 0,
+        "operations": 199,
+        "operations_started": 199,
+        "operations_cancelled": 0,
+        "ipc_jobs": 128,
+        "ipc_cancelled": 0,
+        "inherited_processes": 2,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 4769,
+        "parser": {
+          "lifecycle_lines": 45,
+          "parsed": 12791
+        },
+        "all_event_status": {
+          "unknown": 2566,
+          "no_request_context": 4935,
+          "bound": 449
+        },
+        "fixture_score": {
+          "events": 457,
+          "no_request_context": 201,
+          "bound": 256
+        },
+        "fixture_events_per_request": {
+          "3": 4,
+          "4": 4,
+          "5": 4,
+          "6": 4,
+          "7": 4,
+          "8": 4,
+          "9": 4,
+          "10": 4,
+          "11": 4,
+          "12": 4,
+          "13": 4,
+          "14": 4,
+          "15": 4,
+          "16": 4,
+          "17": 4,
+          "18": 4,
+          "19": 4,
+          "20": 4,
+          "21": 4,
+          "23": 4,
+          "22": 4,
+          "24": 4,
+          "25": 4,
+          "26": 4,
+          "27": 4,
+          "28": 4,
+          "29": 4,
+          "30": 4,
+          "31": 4,
+          "32": 4,
+          "33": 4,
+          "34": 4,
+          "35": 4,
+          "38": 4,
+          "37": 4,
+          "36": 4,
+          "39": 4,
+          "40": 4,
+          "41": 4,
+          "42": 4,
+          "43": 4,
+          "44": 4,
+          "45": 4,
+          "46": 4,
+          "48": 4,
+          "47": 4,
+          "49": 4,
+          "50": 4,
+          "52": 4,
+          "51": 4,
+          "54": 4,
+          "53": 4,
+          "55": 4,
+          "56": 4,
+          "57": 4,
+          "58": 4,
+          "59": 4,
+          "60": 4,
+          "61": 4,
+          "62": 4,
+          "63": 4,
+          "64": 4,
+          "65": 4,
+          "66": 4
+        },
+        "analysis_id": "c974c8b49d99419babb7a14558fb4568",
+        "output_sha256": {
+          "causal-attribution.jsonl": "11ef599d3086d3a9b31581efcb6d96b94a1f012c28f5ea781a0b6681d04de7cd",
+          "provenance.jsonl": "560926762519e042ad692e1f3c9489a2f4b68debdf5b2202ee27fec3c03e434f"
+        }
+      },
+      "control-score": {
+        "valid": true,
+        "counts": {
+          "background": 197,
+          "correct": 389,
+          "request_events": 192,
+          "after_response": 0
+        },
+        "mismatches": [],
+        "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; socketpair scenario also uses complete message tokens; neither is used during inference"
+      },
+      "rights-score": {
+        "valid": true,
+        "counts": {
+          "transfers": 64,
+          "receiver_file_effects": 128,
+          "verified_provenance_pairs": 64
+        },
+        "receiver_pids": [
+          2359949
+        ],
+        "receiver_target_opens": 0,
+        "mismatches": [],
+        "oracle": "controlled JSON payload slots and matching received FD numbers; used only for scoring",
+        "transfer_provenance_pairing_evaluated": true
+      },
+      "manifest": {
+        "session_id": "2607282bc10e41888d32d7ad86d86e34",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": false,
+        "disable_io_uring": true,
+        "io_uring_control": "strace_inject_enosys",
+        "code_sha256": {
+          "analyze.py": "850df40aa16e9c9f6a2756c7df4d892ff2ec8c18d04a20ec1844541386aef701",
+          "attribute.py": "a4ef1b27371d94cbafffb738cbb5a889b71b17224fdf5d7d1e9abed8064e512d",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "descriptor_transfers.py": "08e008311f2f2afd1bb6946245e255f1d0902186b9b96aec4182f5fb46058ef2",
+          "matrix.py": "0b5cb9ad8084ef5478cf1061ebc98e0ed9a4495ab3300df98b2074fb60f44b78",
+          "persistent_worker.py": "22993649ff444e91d0f61dfc51ca013af5b43b49a15bc6494a0e8af6e7bdc3d1",
+          "proxy.py": "ae992bd46296f36cb9ce184208a8afdd1cdc95f5602b6954b4121886ac2b80b0",
+          "query.py": "ab10f3565f773226a3ca73642086b9e8d3f7dbdcfefa7badc87d0c4d6e54e9b3",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "run.py": "89360483293bf4cb17d88459e96585e23154c25843051be751d261ddef572cee",
+          "scm_rights_probe.py": "7a2ec0087150c7f925497a027a5beacd2a3c8654ffbe04a227a9c1485aa98071",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "f03fc7e078b50c0773d0923bbbbe01e5e7dd746576dc1389a0206ee13515ab34",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "score_rights.py": "4117c1f214ce7e1b20ec609a618f2de267b5dc56eec97344e15b12c28ad1ca74",
+          "test_agent_validation.py": "fbd2153655ad92a3f6b85a877f32d166ece4c04f8af4e559a5489873d33b1fa9",
+          "test_analyze.py": "f4b912b95cfffb4ab0c8d62478061de3daec7cc85f9cf75edc8f0bb02d6c9c05",
+          "test_attribute.py": "07c3c14c2ba9625043c3a8427b2bd54465de9668f0045a890b3021a6e5595c76",
+          "test_descriptor_transfers.py": "df5ac36153651b1cc4d84bb13d2e9d436ae5b00720504c84685113cd7d0339b5",
+          "test_ipc.py": "2a062df384acf3d70e57523030af49b971f364f103ae46ea8495081f55ea3c14",
+          "test_marker.py": "daae97ec03f6dc83b3384028a20ab9ee741d332cc5989b499f63a3705003149a",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "911c6bf41b9caeba4c752fb4ee019aeb90bc2ecf87c93bf1796b092f424e91a3",
+          "test_rights_oracle.py": "d21b791a9c1cca42a0dc9621f2f7a0d93ce2bb0be5bb073ae1960a345de9aa92",
+          "test_worker_process.py": "cecc09229e2efe81d1637b6a7098bc9ed9bb8d4eb914adaeb3b781976923f059",
+          "control-server.mjs": "8bac411af0e4b5d0c6be6e2766ee7811e797c2d72bf47fae8ab9a8625df15749",
+          "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "native/context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a",
+          "native/build.py": "881db69efeb0883f6621d033385942008d5ec35dd8de82e7f9911680a865f1e1",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 32,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "worker-rights",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "complete",
+        "execution_seconds": 7.58020636998117
+      }
+    }
+  ],
+  "output_hashes_revalidated": true
+}

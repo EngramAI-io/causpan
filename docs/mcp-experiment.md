@@ -109,3 +109,59 @@ Further work must cover multiplexed network protocols, long-lived child servers,
 No CamFlow, SPADE, Tetragon, Tracee, Audit, or OpenTelemetry deployment was benchmarked here. The experiment establishes failures of the tested metadata baselines; it does not establish that every configuration of those systems fails. [CamFlow](https://camflow.org/) captures whole-system provenance and supports application integration; [OpenTelemetry context propagation](https://opentelemetry.io/docs/concepts/context-propagation/) preserves execution context across instrumented boundaries. The research question is the additional binding from logical request context to individual kernel effects under shared execution, which must be tested rather than inferred from product categories.
 
 Implementation references: [official filesystem server](https://raw.githubusercontent.com/modelcontextprotocol/servers/main/src/filesystem/README.md), [Codex noninteractive mode](https://learn.chatgpt.com/docs/non-interactive-mode), [Codex MCP configuration](https://learn.chatgpt.com/docs/extend/mcp?surface=cli), and [per-tool approval settings](https://learn.chatgpt.com/docs/config-file/config-reference).
+
+### LLM-directed persistent-worker relay
+
+Run the actual agent against the instrumented controlled MCP server:
+
+```sh
+python3.11 experiments/mcp/run.py --mode agent --scenario worker-relay --instrumented --batches 2 --concurrency 4
+```
+
+This agent task requests four distinct `worker_slot` calls and one final `barrier`.
+The server dispatches through two persistent Python processes; the independent
+oracle checks the resulting file offsets. Agent validation checks successful MCP
+protocol responses, exact call membership, final barrier, completed turn, and
+actual payloads. The harness authorizes those fixture tools in its local agent
+configuration. `--concurrency` does not force LLM parallelism; inspect measured
+call intervals before claiming concurrency.
+
+The controlled server's `barrier` is terminal for the experiment background
+producer: it stops the periodic timer and drains queued background work. It is
+not a reusable pause/resume operation. Capture integrity still rejects missing
+native completions, even when all requested tool calls succeeded.
+
+For per-job Unix descriptor transfer between persistent workers:
+
+```sh
+python3.11 experiments/mcp/run.py --scenario worker-rights --instrumented --disable-io-uring --concurrency 32 --batches 2
+```
+
+`rights-score.json` independently checks descriptor delivery and receiver effects,
+in addition to the normal file-offset oracle. Queries require both reports for
+this scenario. The attributor also emits descriptor-transfer edges for fully observed serialized
+Unix datagram channels. The independent oracle verifies these pairs using workload
+payloads that inference never consumes. Rejected channels are reported without
+guessed edges; this remains narrower than general descriptor/OFD lifetime tracking.
+
+For descriptor-pair completeness controls, `--disable-io-uring` deliberately
+injects ENOSYS for `io_uring_setup` using strace. The intervention is recorded as
+`io_uring_control: strace_inject_enosys`; it requires capture. An environment-only
+control failed to eliminate rings on the current libuv build. Without this
+intervention, observed ring activity causes the descriptor matcher to abstain,
+and the rights oracle reports missing pairs. This is an explicit coverage gap,
+not an assertion that the default runtime has no ring-based effects.
+
+### Standalone io_uring observability probe
+
+```sh
+mkdir -p results/mcp/my-ring-probe/traces
+gcc -Wall -Wextra -Werror -O2 experiments/mcp/io_uring_probe.c -o results/mcp/my-ring-probe/probe
+strace -ff -ttt -T -yy -s 4096 -e trace=all -o results/mcp/my-ring-probe/traces/strace results/mcp/my-ring-probe/probe results/mcp/my-ring-probe/effects.bin > results/mcp/my-ring-probe/ring-observations.jsonl
+python3.11 experiments/mcp/inspect_ring_probe.py results/mcp/my-ring-probe
+```
+
+Use a fresh output directory/file. This submits real ring operations; do not use
+the no-ring injection control. The report distinguishes syscall observations from
+trusted application SQE/CQE observations and independent file-content checks.
+It is a standalone gap experiment, not yet an MCP ring attribution adapter.

@@ -26,6 +26,7 @@ def main():
     p.add_argument('--jobs',type=int,default=2)
     p.add_argument('--scenarios',default='read')
     p.add_argument('--batches',type=int,default=4)
+    p.add_argument('--disable-io-uring',action='store_true')
     p.add_argument('--seccomp',action='store_true')
     p.add_argument('--baseline',action='store_true',help='also run without instrumentation')
     args=p.parse_args()
@@ -43,6 +44,7 @@ def main():
         cmd=[sys.executable,str(HERE/'run.py'),'--concurrency',str(concurrency),'--pool-size',str(pool),
              '--runtime',args.runtime,'--runtime-workers',str(args.runtime_workers),'--output',str(path),'--scenario',scenario,'--batches',str(args.batches)]
         if args.seccomp:cmd.append('--seccomp')
+        if args.disable_io_uring:cmd.append('--disable-io-uring')
         if shared:cmd.append('--shared')
         if instrumented:cmd.append('--instrumented')
         if args.tokio_binary:cmd.extend(['--tokio-binary',str(args.tokio_binary.resolve())])
@@ -69,7 +71,7 @@ def main():
                 manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
         row=dict(name=name,scenario=scenario,runtime=args.runtime,runtime_workers=args.runtime_workers,concurrency=concurrency,pool_size=pool,shared=shared,repeat=repeat,
                  instrumented=instrumented,returncode=124 if timed_out else result.returncode,timed_out=timed_out,elapsed_seconds=time.monotonic()-start)
-        for file in ['report','causal-report','control-score','batch-score','fileops-score','network-score','manifest']:
+        for file in ['report','causal-report','control-score','batch-score','fileops-score','network-score','rights-score','ring-score','manifest']:
             if (path/(file+'.json')).exists():row[file]=json.loads((path/(file+'.json')).read_text())
         return row
     rows=[]

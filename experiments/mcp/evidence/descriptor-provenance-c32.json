@@ -1,0 +1,650 @@
+{
+  "source_run": "results/mcp/worker-rights-provenance-c32",
+  "reports": {
+    "manifest.json": {
+      "session_id": "65fbc2fa45ed4ad9b89f91bfa87fa05c",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "capture": "strace",
+      "seccomp": false,
+      "code_sha256": {
+        "analyze.py": "850df40aa16e9c9f6a2756c7df4d892ff2ec8c18d04a20ec1844541386aef701",
+        "attribute.py": "1be117427fc208c7bdb58eea440f5bf24c1aea9bbd395af458e14bb4ee96f235",
+        "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+        "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+        "descriptor_transfers.py": "2707a657edf7721c23ec76c8c02caca6194b6b1e33b0a82bd677dc3c77c93ca0",
+        "matrix.py": "2248fd02f16800906abf5519d63cc71a9df5e934b5f633cc559d768ddd7b2497",
+        "persistent_worker.py": "22993649ff444e91d0f61dfc51ca013af5b43b49a15bc6494a0e8af6e7bdc3d1",
+        "proxy.py": "8685fb1d0118e8a3e48eb45b50d3c0f1c5b6386348ec40879027230a52dd9dfe",
+        "query.py": "ab10f3565f773226a3ca73642086b9e8d3f7dbdcfefa7badc87d0c4d6e54e9b3",
+        "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+        "run.py": "9b83047fbf78ade3772cbd3cb4e8630e24f5840da152d5b58c2ff94a7527938c",
+        "scm_rights_probe.py": "7a2ec0087150c7f925497a027a5beacd2a3c8654ffbe04a227a9c1485aa98071",
+        "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+        "score_control.py": "f03fc7e078b50c0773d0923bbbbe01e5e7dd746576dc1389a0206ee13515ab34",
+        "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+        "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+        "score_rights.py": "c9568134c4e965c4e1e26c6682287a79d8b6207fd6683bc6e6031b3837ad06fb",
+        "test_agent_validation.py": "fbd2153655ad92a3f6b85a877f32d166ece4c04f8af4e559a5489873d33b1fa9",
+        "test_analyze.py": "f4b912b95cfffb4ab0c8d62478061de3daec7cc85f9cf75edc8f0bb02d6c9c05",
+        "test_attribute.py": "07c3c14c2ba9625043c3a8427b2bd54465de9668f0045a890b3021a6e5595c76",
+        "test_descriptor_transfers.py": "6764c456737c53a689ed5d6b69eaa71731e66373988c81402041348ad4e23b5d",
+        "test_ipc.py": "2a062df384acf3d70e57523030af49b971f364f103ae46ea8495081f55ea3c14",
+        "test_marker.py": "daae97ec03f6dc83b3384028a20ab9ee741d332cc5989b499f63a3705003149a",
+        "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+        "test_query.py": "911c6bf41b9caeba4c752fb4ee019aeb90bc2ecf87c93bf1796b092f424e91a3",
+        "test_rights_oracle.py": "b90bbc3edf98ba2a029738711b6fcde6bf877d1266a7f2af50f8fc5b0576525b",
+        "test_worker_process.py": "cecc09229e2efe81d1637b6a7098bc9ed9bb8d4eb914adaeb3b781976923f059",
+        "control-server.mjs": "8bac411af0e4b5d0c6be6e2766ee7811e797c2d72bf47fae8ab9a8625df15749",
+        "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+        "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+        "native/context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a",
+        "native/build.py": "881db69efeb0883f6621d033385942008d5ec35dd8de82e7f9911680a865f1e1",
+        "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+        "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+      },
+      "mode": "replay",
+      "concurrency": 32,
+      "shared": false,
+      "instrumented": true,
+      "pool_size": 4,
+      "string_ids": false,
+      "spoof_context": false,
+      "scenario": "worker-rights",
+      "batches": 2,
+      "model": null,
+      "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+      "versions": {
+        "node": "v24.20.0",
+        "strace": "strace -- version 5.14"
+      },
+      "server": {
+        "@modelcontextprotocol/server-filesystem": "2026.8.31"
+      },
+      "status": "complete",
+      "execution_seconds": 6.783403089037165
+    },
+    "causal-report.json": {
+      "valid": true,
+      "errors": [],
+      "attribution_model": "causal-context-v2",
+      "descriptor_transfers": 64,
+      "descriptor_transfer_rejections": [],
+      "requests": 65,
+      "joins": 0,
+      "operations": 152,
+      "operations_started": 152,
+      "operations_cancelled": 0,
+      "ipc_jobs": 128,
+      "ipc_cancelled": 0,
+      "inherited_processes": 2,
+      "runtime_spans": 0,
+      "retroactive_socket_reads": 0,
+      "migrating_request_spans": 0,
+      "markers": 4440,
+      "parser": {
+        "lifecycle_lines": 45,
+        "parsed": 12241
+      },
+      "all_event_status": {
+        "unknown": 2568,
+        "no_request_context": 4712,
+        "bound": 449
+      },
+      "fixture_score": {
+        "events": 410,
+        "no_request_context": 154,
+        "bound": 256
+      },
+      "fixture_events_per_request": {
+        "3": 4,
+        "4": 4,
+        "5": 4,
+        "6": 4,
+        "7": 4,
+        "8": 4,
+        "9": 4,
+        "10": 4,
+        "11": 4,
+        "12": 4,
+        "13": 4,
+        "14": 4,
+        "15": 4,
+        "16": 4,
+        "17": 4,
+        "18": 4,
+        "19": 4,
+        "20": 4,
+        "21": 4,
+        "22": 4,
+        "23": 4,
+        "24": 4,
+        "25": 4,
+        "26": 4,
+        "27": 4,
+        "28": 4,
+        "29": 4,
+        "30": 4,
+        "31": 4,
+        "32": 4,
+        "33": 4,
+        "34": 4,
+        "35": 4,
+        "38": 4,
+        "37": 4,
+        "36": 4,
+        "39": 4,
+        "40": 4,
+        "41": 4,
+        "42": 4,
+        "43": 4,
+        "44": 4,
+        "45": 4,
+        "46": 4,
+        "48": 4,
+        "47": 4,
+        "49": 4,
+        "50": 4,
+        "51": 4,
+        "52": 4,
+        "53": 4,
+        "54": 4,
+        "55": 4,
+        "56": 4,
+        "57": 4,
+        "58": 4,
+        "59": 4,
+        "60": 4,
+        "61": 4,
+        "62": 4,
+        "63": 4,
+        "64": 4,
+        "65": 4,
+        "66": 4
+      },
+      "analysis_id": "fc7da1a235d449ca965ef3de3b0835b8",
+      "output_sha256": {
+        "causal-attribution.jsonl": "ad82f3f9ba3c931d81a56c18ba9076347e03cd89fbba0b24a2ea785d6f296b85",
+        "provenance.jsonl": "dea3adda5d98259e0d17330689e350dcb0fc42a718bd36bac03f0ff3df584a60"
+      }
+    },
+    "control-score.json": {
+      "valid": true,
+      "counts": {
+        "background": 150,
+        "correct": 342,
+        "request_events": 192,
+        "after_response": 0
+      },
+      "mismatches": [],
+      "oracle": "pread64/pwrite64 byte offsets on one shared path and descriptor; socketpair scenario also uses complete message tokens; neither is used during inference"
+    },
+    "rights-score.json": {
+      "valid": true,
+      "counts": {
+        "transfers": 64,
+        "receiver_file_effects": 128,
+        "verified_provenance_pairs": 64
+      },
+      "receiver_pids": [
+        2255366
+      ],
+      "receiver_target_opens": 0,
+      "mismatches": [],
+      "oracle": "controlled JSON payload slots and matching received FD numbers; used only for scoring",
+      "transfer_provenance_pairing_evaluated": true
+    }
+  },
+  "receive_query_checks": [
+    {
+      "receive": "strace.2255366:1665",
+      "sender_requests": [
+        3
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1668",
+      "sender_requests": [
+        4
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1671",
+      "sender_requests": [
+        5
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1674",
+      "sender_requests": [
+        6
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1677",
+      "sender_requests": [
+        7
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1678",
+      "sender_requests": [
+        8
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1679",
+      "sender_requests": [
+        9
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1680",
+      "sender_requests": [
+        10
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1681",
+      "sender_requests": [
+        11
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1682",
+      "sender_requests": [
+        12
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1683",
+      "sender_requests": [
+        13
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1684",
+      "sender_requests": [
+        14
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1685",
+      "sender_requests": [
+        15
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1686",
+      "sender_requests": [
+        16
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1687",
+      "sender_requests": [
+        17
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1688",
+      "sender_requests": [
+        18
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1689",
+      "sender_requests": [
+        19
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1690",
+      "sender_requests": [
+        20
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1691",
+      "sender_requests": [
+        21
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1692",
+      "sender_requests": [
+        22
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1693",
+      "sender_requests": [
+        23
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1694",
+      "sender_requests": [
+        24
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1695",
+      "sender_requests": [
+        25
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1696",
+      "sender_requests": [
+        26
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1697",
+      "sender_requests": [
+        27
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1698",
+      "sender_requests": [
+        28
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1699",
+      "sender_requests": [
+        29
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1700",
+      "sender_requests": [
+        30
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1701",
+      "sender_requests": [
+        31
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1702",
+      "sender_requests": [
+        32
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1703",
+      "sender_requests": [
+        33
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1704",
+      "sender_requests": [
+        34
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1705",
+      "sender_requests": [
+        35
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1706",
+      "sender_requests": [
+        38
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1707",
+      "sender_requests": [
+        37
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1708",
+      "sender_requests": [
+        36
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1709",
+      "sender_requests": [
+        39
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1710",
+      "sender_requests": [
+        40
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1711",
+      "sender_requests": [
+        41
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1712",
+      "sender_requests": [
+        42
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1713",
+      "sender_requests": [
+        43
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1714",
+      "sender_requests": [
+        44
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1715",
+      "sender_requests": [
+        45
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1716",
+      "sender_requests": [
+        46
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1717",
+      "sender_requests": [
+        47
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1718",
+      "sender_requests": [
+        48
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1719",
+      "sender_requests": [
+        49
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1720",
+      "sender_requests": [
+        50
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1721",
+      "sender_requests": [
+        51
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1722",
+      "sender_requests": [
+        52
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1723",
+      "sender_requests": [
+        53
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1724",
+      "sender_requests": [
+        54
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1725",
+      "sender_requests": [
+        55
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1726",
+      "sender_requests": [
+        56
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1727",
+      "sender_requests": [
+        57
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1728",
+      "sender_requests": [
+        58
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1729",
+      "sender_requests": [
+        59
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1730",
+      "sender_requests": [
+        60
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1731",
+      "sender_requests": [
+        61
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1732",
+      "sender_requests": [
+        62
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1733",
+      "sender_requests": [
+        63
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1734",
+      "sender_requests": [
+        64
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1735",
+      "sender_requests": [
+        65
+      ],
+      "receive_request_ids": []
+    },
+    {
+      "receive": "strace.2255366:1736",
+      "sender_requests": [
+        66
+      ],
+      "receive_request_ids": []
+    }
+  ],
+  "postcapture_scorer_sha256": "4117c1f214ce7e1b20ec609a618f2de267b5dc56eec97344e15b12c28ad1ca74"
+}

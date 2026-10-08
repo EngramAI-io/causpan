@@ -1,0 +1,67 @@
+{
+  "source_run": "results/mcp/scm-rights-probe",
+  "parser_sha256": "5bae80d3a8cb8b8b3202e840df1b79414b612c9f0583b279cc84d36667b06110",
+  "events": [
+    {
+      "timestamp_ns": 1791422590118934000,
+      "duration_ns": 1763000,
+      "completion_ns": 1791422590120697000,
+      "tid": 1956045,
+      "syscall": "recvmsg",
+      "args": "4<UNIX:[908981568->908981567]>, {msg_name=0xffffcc2065b8, msg_namelen=110 => 0, msg_iov=[{iov_base=\"descriptor-transfer\", iov_len=128}], msg_iovlen=1, msg_control=[{cmsg_len=20, cmsg_level=SOL_SOCKET, cmsg_type=SCM_RIGHTS, cmsg_data=[3</u/kdhande/causpan/results/mcp/scm-rights-probe/transferred.bin>]}], msg_controllen=24, msg_flags=0}, 0",
+      "return_value": 19,
+      "completion": "returned",
+      "paths": [
+        "UNIX:[908981568->908981567]"
+      ],
+      "source": "strace.1956045:2",
+      "pid": 1956045
+    },
+    {
+      "timestamp_ns": 1791422590120579000,
+      "duration_ns": 21000,
+      "completion_ns": 1791422590120600000,
+      "tid": 1955964,
+      "syscall": "sendmsg",
+      "args": "3<UNIX:[908981567->908981568]>, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base=\"descriptor-transfer\", iov_len=19}], msg_iovlen=1, msg_control=[{cmsg_len=20, cmsg_level=SOL_SOCKET, cmsg_type=SCM_RIGHTS, cmsg_data=[4</u/kdhande/causpan/results/mcp/scm-rights-probe/transferred.bin>]}], msg_controllen=24, msg_flags=0}, 0",
+      "return_value": 19,
+      "completion": "returned",
+      "paths": [
+        "UNIX:[908981567->908981568]"
+      ],
+      "source": "strace.1955964:1004",
+      "pid": 1955964
+    },
+    {
+      "timestamp_ns": 1791422590120927000,
+      "duration_ns": 20000,
+      "completion_ns": 1791422590120947000,
+      "tid": 1956045,
+      "syscall": "pwrite64",
+      "args": "3</u/kdhande/causpan/results/mcp/scm-rights-probe/transferred.bin>, \"received-descriptor\", 19, 256",
+      "return_value": 19,
+      "completion": "returned",
+      "paths": [
+        "/u/kdhande/causpan/results/mcp/scm-rights-probe/transferred.bin"
+      ],
+      "source": "strace.1956045:3",
+      "pid": 1956045
+    },
+    {
+      "timestamp_ns": 1791422590120993000,
+      "duration_ns": 18000,
+      "completion_ns": 1791422590121011000,
+      "tid": 1956045,
+      "syscall": "pread64",
+      "args": "3</u/kdhande/causpan/results/mcp/scm-rights-probe/transferred.bin>, \"received-descriptor\", 19, 256",
+      "return_value": 19,
+      "completion": "returned",
+      "paths": [
+        "/u/kdhande/causpan/results/mcp/scm-rights-probe/transferred.bin"
+      ],
+      "source": "strace.1956045:4",
+      "pid": 1956045
+    }
+  ],
+  "semantics": "completion_ns is entry wall timestamp plus strace -T duration at capture precision; no total ordering of overlapping operations is inferred"
+}

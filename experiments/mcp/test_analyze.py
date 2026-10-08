@@ -108,3 +108,50 @@ class OracleTests(unittest.TestCase):
             self.assertEqual(s['candidates']['request_window'],[1,2])
 
 if __name__ == '__main__': unittest.main()
+
+class CompletionTimeTests(unittest.TestCase):
+    def test_blocked_receive_completion_follows_send_despite_entry_order(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root/'strace.10').write_text(
+                '1.000000 recvmsg(4<UNIX:[2->1]>,  <unfinished ...>\n'
+                '1.003000 <... recvmsg resumed>{msg_flags=0}, 0) = 1 <0.003000>\n'
+                '1.004000 read(4<UNIX:[2->1]>, "x", 1) = 1\n'
+                '1.005000 read(4<UNIX:[2->1]>, 0xffff, 1) = ? ERESTARTSYS <0.000100>\n')
+            (root/'strace.11').write_text(
+                '1.002000 sendmsg(3<UNIX:[1->2]>, {msg_flags=0}, 0) = 1 <0.000100>\n')
+            events, _ = parse_traces(root)
+            receive, send, untimed, interrupted = events
+            self.assertLess(receive['timestamp_ns'], send['timestamp_ns'])
+            self.assertEqual(receive['duration_ns'], 3000000)
+            self.assertGreater(receive['completion_ns'], send['completion_ns'])
+            self.assertIsNone(untimed['duration_ns'])
+            self.assertIsNone(untimed['completion_ns'])
+            self.assertEqual(interrupted['duration_ns'], 100000)
+            self.assertIsNone(interrupted['completion_ns'])
+
+class DescriptorRightsTests(unittest.TestCase):
+    def test_ancillary_descriptors_are_observations_not_file_data_access(self):
+        from analyze import descriptor_rights
+        args = '3<UNIX:[1->2]>, {msg_iov=[{iov_base="payload", iov_len=7}], msg_control=[{cmsg_len=24, cmsg_level=SOL_SOCKET, cmsg_type=SCM_RIGHTS, cmsg_data=[4</tmp/a>, 5</tmp/b>]}], msg_flags=0}, 0'
+        rights = descriptor_rights('sendmsg', args, 7)
+        self.assertEqual(rights['fds'], [4, 5])
+        self.assertTrue(rights['decoded'])
+        self.assertTrue(rights['succeeded'])
+        self.assertFalse(rights['control_truncated'])
+        self.assertEqual(rights['direction'], 'send')
+        failed = descriptor_rights('sendmsg', args, -1)
+        self.assertFalse(failed['succeeded'])
+        truncated = descriptor_rights('recvmsg', args.replace('msg_flags=0', 'msg_flags=MSG_CTRUNC'), 7)
+        self.assertTrue(truncated['control_truncated'])
+        self.assertEqual(truncated['direction'], 'receive')
+        malformed = descriptor_rights('recvmsg', args.replace('4</tmp/a>, 5</tmp/b>', '4</tmp/a>, ...'), 7)
+        self.assertFalse(malformed['decoded'])
+        self.assertEqual(malformed['fds'], [])
+
+    def test_payload_cannot_forge_ancillary_control(self):
+        from analyze import descriptor_rights
+        payload = '{cmsg_len=20, cmsg_level=SOL_SOCKET, cmsg_type=SCM_RIGHTS, cmsg_data=[99]}'
+        args = '3<UNIX:[1->2]>, {msg_iov=[{iov_base=' + json.dumps(payload) + ', iov_len=100}], msg_control=[], msg_flags=0}, 0'
+        self.assertIsNone(descriptor_rights('recvmsg', args, 100))
+        self.assertIsNone(descriptor_rights('read', payload, 100))
