@@ -1,0 +1,47 @@
+{
+  "run": "results/mcp/native-ring-mcp-snapshotted",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 4,
+    "mcp_replay": true,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "606a1e90889ac5c0f0791626b3f66aed7d0bbc140c3eb20fdd149bf4b88dbc36",
+      "mcp-network.mjs": "4c8c357865a94ada70e9a8d78ea6d79a4c1a8313a8b9e815ed3ac09b6bab8725",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "6e6d08b8dda3204887b70185fbc5d2d5ff2b578e75f93b2148c54d31fa9e3fc8",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 20,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "cb6d460d4c351a67413b90d786ea72277dd186233655ec0800b0c85416f35691",
+    "socket_links": 17,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "8e0e979f13b340dfc6b962ea0f4740296f6ea78e5e767ce58ba578b5d6794fd7",
+    "batches": 14,
+    "operations": 23,
+    "report_sha256": "d1acf189dc130a9c57386814b8a24a4d245dba8e8064e2e66c958db16655082e"
+  },
+  "response_contexts": [
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "artifact_sha256": {
+    "request-map.jsonl": "df9a7c91688fd61076f0654c02dc4d9ba0c91dee2374d7704543510cefb68662",
+    "native-events.jsonl": "cdbac21a49a5ef5cf625e091d26fce5e85720f0ac65b475ff4544a0de77f81e5",
+    "mcp-responses.json": "62bbaca812db0a363af9678da56ace02ed8f7d96183d49361ae9ae67e51dae55",
+    "debugger.log": "fa512b23fff1e13c18ba9eaf5216fc3d21cea4b4673dcf958ad33a575239c1f4"
+  },
+  "limitations": [
+    "deterministic in-memory MCP replay, not an LLM workload",
+    "request markers not yet joined to native ring timeline",
+    "instrumentation and SDK loaded from workspace; instrumentation sources and addon snapshotted"
+  ]
+}

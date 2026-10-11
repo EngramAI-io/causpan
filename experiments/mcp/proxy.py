@@ -46,6 +46,8 @@ async def main():
                                                      **({'UV_USE_IO_URING':'0'} if settings.get('disable_io_uring') else {}),
                                                      'UV_THREADPOOL_SIZE':str(settings.get('pool_size',4)),
                                                      'CAUSPAN_SCENARIO':settings.get('scenario','read'),
+                                                     'CAUSPAN_RING_BATCH':str(settings.get('ring_batch_width',1)),
+                                                     'CAUSPAN_RING_IDLE_MS':str(settings.get('ring_idle_ms',0)),
                                                      'CAUSPAN_RING_BIN':settings.get('ring_binary',''),
                                                      'CAUSPAN_CLONE_FILES_BIN':settings.get('clone_files_binary',''),
                                                      'CAUSPAN_NETWORK_PORT':str(network_fixture.get('port','')),

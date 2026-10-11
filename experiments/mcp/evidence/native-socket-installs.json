@@ -1,0 +1,142 @@
+{
+  "installs": [
+    {
+      "fd": 21,
+      "syscall": 198,
+      "entry_argument": 2,
+      "entry_line": 121,
+      "return_line": 122,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 22,
+      "syscall": 198,
+      "entry_argument": 2,
+      "entry_line": 123,
+      "return_line": 124,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 23,
+      "syscall": 242,
+      "entry_argument": 21,
+      "entry_line": 152,
+      "return_line": 153,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 24,
+      "syscall": 198,
+      "entry_argument": 2,
+      "entry_line": 183,
+      "return_line": 184,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 22,
+      "syscall": 242,
+      "entry_argument": 21,
+      "entry_line": 199,
+      "return_line": 200,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 23,
+      "syscall": 198,
+      "entry_argument": 2,
+      "entry_line": 232,
+      "return_line": 233,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 24,
+      "syscall": 242,
+      "entry_argument": 21,
+      "entry_line": 248,
+      "return_line": 249,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 22,
+      "syscall": 198,
+      "entry_argument": 2,
+      "entry_line": 281,
+      "return_line": 282,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 23,
+      "syscall": 242,
+      "entry_argument": 21,
+      "entry_line": 297,
+      "return_line": 298,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 24,
+      "syscall": 198,
+      "entry_argument": 2,
+      "entry_line": 330,
+      "return_line": 331,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 22,
+      "syscall": 242,
+      "entry_argument": 21,
+      "entry_line": 346,
+      "return_line": 347,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 23,
+      "syscall": 198,
+      "entry_argument": 2,
+      "entry_line": 379,
+      "return_line": 380,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 24,
+      "syscall": 242,
+      "entry_argument": 21,
+      "entry_line": 395,
+      "return_line": 396,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 22,
+      "syscall": 198,
+      "entry_argument": 2,
+      "entry_line": 428,
+      "return_line": 429,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 23,
+      "syscall": 242,
+      "entry_argument": 21,
+      "entry_line": 444,
+      "return_line": 445,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 24,
+      "syscall": 198,
+      "entry_argument": 2,
+      "entry_line": 477,
+      "return_line": 478,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 22,
+      "syscall": 242,
+      "entry_argument": 21,
+      "entry_line": 493,
+      "return_line": 494,
+      "debugger_thread": 1
+    }
+  ],
+  "log_sha256": "ff4874ebbad3a7373d24010c4ed0afbf11efdaaccea6c503109949c5502cda58",
+  "scope": "Successful socket/accept4 returns in controlled native debugger capture; other descriptor installations are not captured."
+}

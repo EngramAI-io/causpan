@@ -1,0 +1,44 @@
+{
+  "observations": [
+    {
+      "fd": 11,
+      "requested_submissions": 2,
+      "minimum_completions": 2,
+      "flags": 1,
+      "sq_head": 0,
+      "sq_tail": 2,
+      "sq_mask": 255,
+      "pending": 2
+    },
+    {
+      "fd": 16,
+      "requested_submissions": 2,
+      "minimum_completions": 2,
+      "flags": 1,
+      "sq_head": 0,
+      "sq_tail": 2,
+      "sq_mask": 255,
+      "pending": 2
+    },
+    {
+      "fd": 4,
+      "requested_submissions": 2,
+      "minimum_completions": 2,
+      "flags": 1,
+      "sq_head": 0,
+      "sq_tail": 2,
+      "sq_mask": 255,
+      "pending": 2
+    }
+  ],
+  "normal_exit": true,
+  "limitations": [
+    "SQ array indirection not yet captured",
+    "No CQE observations or MCP ownership",
+    "Inferior memory copy perturbs execution"
+  ],
+  "sha256": {
+    "results/mcp/node-ring-pending/debugger.log": "427986a2ed4dc84b0db2dc576bddeed6613e2b6f596a15517e7a9541a5d887f6",
+    "experiments/mcp/node-ring-debug/pending.gdb": "9a416d8b2cfd2d8d5ef186ac0bdb15d406f48654cc282c7f9da9c9bf7da822c4"
+  }
+}

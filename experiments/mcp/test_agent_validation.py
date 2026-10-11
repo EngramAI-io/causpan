@@ -31,3 +31,25 @@ class AgentValidationTests(unittest.TestCase):
             (root/'sandbox/slots.bin').write_bytes(bytes(512))
             with self.assertRaisesRegex(RuntimeError, 'output mismatch'):
                 validate_agent(root, 'worker-relay')
+
+    def test_shared_ring_agent_requires_ring_contents_and_unique_calls(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);(root/'sandbox').mkdir()
+            payload=bytearray(2048)
+            for n in range(4):
+                payload[n*512:n*512+7]=b'uring-A'
+                payload[n*512+128:n*512+135]=b'uring-B'
+            (root/'sandbox/slots.bin').write_bytes(payload)
+            calls=[dict(type='item.completed',item=dict(type='mcp_tool_call',server='causpan_fs',
+                   status='completed',tool='worker_slot',arguments={'slot':n})) for n in range(4)]
+            calls += [dict(type='item.completed',item=dict(type='mcp_tool_call',server='causpan_fs',
+                       status='completed',tool='barrier',arguments={})),dict(type='turn.completed')]
+            (root/'protocol.jsonl').write_text('')
+            def write(rows):
+                (root/'agent.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in rows))
+            write(calls);validate_agent(root,'uring-shared')
+            write([calls[0],calls[0],*calls[2:]])
+            with self.assertRaises(RuntimeError):validate_agent(root,'uring-shared')
+            write(calls);payload[0]=0;(root/'sandbox/slots.bin').write_bytes(payload)
+            with self.assertRaisesRegex(RuntimeError,'ring output mismatch'):
+                validate_agent(root,'uring-shared')

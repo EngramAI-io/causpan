@@ -1,0 +1,1280 @@
+{
+  "run": "results/mcp/native-ring-watcher-dequeue",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 16,
+    "mcp_replay": true,
+    "concurrency": 8,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "499624c5fe8054088e597217685f2a1f4e9060fe5d2be07a90d10cb7172634f8",
+      "mcp-network.mjs": "1e933db7501410805ec66eb7ecb2c648b8cb13316e0b0a53d1e2e860ceeeddbd",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "2c5e379fe2593e805bbdd3943d2f77a4eee04d3ae2dc3d8bced29f525e6d002b",
+      "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+      "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+      "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 68,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "4e9a3b432d90d7e5f7c932af37b0b4b15a37a732f882bc00cf843ff5d48d62fd",
+    "socket_links": 65,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "e833741a74b27260ea80b69d1326ebe9a5eba45f8a33a14422c96850bcb869af",
+    "resource_score_sha256": "81537965e5c45406103a54189ad698d9a9f5fcf14978fccbbfcbb442c57ce627",
+    "resource_context_sha256": "3f5876b40210e8e1ce4baff846b5523516c616eec90246b515c00edd9960398a",
+    "batches": 22,
+    "operations": 71,
+    "report_sha256": "3318e3255ec2c2fa43331c97a13bb9470bb022c7e8b54c462c23bff62bd653cc"
+  },
+  "queue": {
+    "matches": [
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109077304,
+          "fd": 23,
+          "pevents": 1,
+          "events": 0,
+          "line": 697,
+          "tid": 496397,
+          "context": null
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109077304,
+          "fd": 23,
+          "pevents": 1,
+          "events": 0,
+          "line": 899,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109855656,
+          "fd": 24,
+          "pevents": 4,
+          "events": 0,
+          "line": 816,
+          "tid": 496397,
+          "context": 1
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109855656,
+          "fd": 24,
+          "pevents": 4,
+          "events": 0,
+          "line": 903,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109856088,
+          "fd": 25,
+          "pevents": 4,
+          "events": 0,
+          "line": 826,
+          "tid": 496397,
+          "context": 2
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109856088,
+          "fd": 25,
+          "pevents": 4,
+          "events": 0,
+          "line": 907,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109856664,
+          "fd": 26,
+          "pevents": 4,
+          "events": 0,
+          "line": 836,
+          "tid": 496397,
+          "context": 3
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109856664,
+          "fd": 26,
+          "pevents": 4,
+          "events": 0,
+          "line": 911,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109857096,
+          "fd": 27,
+          "pevents": 4,
+          "events": 0,
+          "line": 846,
+          "tid": 496397,
+          "context": 4
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109857096,
+          "fd": 27,
+          "pevents": 4,
+          "events": 0,
+          "line": 915,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109857528,
+          "fd": 28,
+          "pevents": 4,
+          "events": 0,
+          "line": 856,
+          "tid": 496397,
+          "context": 5
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109857528,
+          "fd": 28,
+          "pevents": 4,
+          "events": 0,
+          "line": 919,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109857960,
+          "fd": 29,
+          "pevents": 4,
+          "events": 0,
+          "line": 866,
+          "tid": 496397,
+          "context": 6
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109857960,
+          "fd": 29,
+          "pevents": 4,
+          "events": 0,
+          "line": 923,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109858392,
+          "fd": 30,
+          "pevents": 4,
+          "events": 0,
+          "line": 876,
+          "tid": 496397,
+          "context": 7
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109858392,
+          "fd": 30,
+          "pevents": 4,
+          "events": 0,
+          "line": 927,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109858824,
+          "fd": 31,
+          "pevents": 4,
+          "events": 0,
+          "line": 886,
+          "tid": 496397,
+          "context": 8
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109858824,
+          "fd": 31,
+          "pevents": 4,
+          "events": 0,
+          "line": 931,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109867752,
+          "fd": 32,
+          "pevents": 1,
+          "events": 0,
+          "line": 1001,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109867752,
+          "fd": 32,
+          "pevents": 1,
+          "events": 0,
+          "line": 1035,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109855656,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 1004,
+          "tid": 496397,
+          "context": 1
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109855656,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 1039,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109856088,
+          "fd": 25,
+          "pevents": 1,
+          "events": 0,
+          "line": 1008,
+          "tid": 496397,
+          "context": 2
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109856088,
+          "fd": 25,
+          "pevents": 1,
+          "events": 0,
+          "line": 1043,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109856664,
+          "fd": 26,
+          "pevents": 1,
+          "events": 0,
+          "line": 1012,
+          "tid": 496397,
+          "context": 3
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109856664,
+          "fd": 26,
+          "pevents": 1,
+          "events": 0,
+          "line": 1047,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109857096,
+          "fd": 27,
+          "pevents": 1,
+          "events": 0,
+          "line": 1016,
+          "tid": 496397,
+          "context": 4
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109857096,
+          "fd": 27,
+          "pevents": 1,
+          "events": 0,
+          "line": 1051,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109857528,
+          "fd": 28,
+          "pevents": 1,
+          "events": 0,
+          "line": 1020,
+          "tid": 496397,
+          "context": 5
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109857528,
+          "fd": 28,
+          "pevents": 1,
+          "events": 0,
+          "line": 1055,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109857960,
+          "fd": 29,
+          "pevents": 1,
+          "events": 0,
+          "line": 1024,
+          "tid": 496397,
+          "context": 6
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109857960,
+          "fd": 29,
+          "pevents": 1,
+          "events": 0,
+          "line": 1059,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109858392,
+          "fd": 30,
+          "pevents": 1,
+          "events": 0,
+          "line": 1028,
+          "tid": 496397,
+          "context": 7
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109858392,
+          "fd": 30,
+          "pevents": 1,
+          "events": 0,
+          "line": 1063,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109858824,
+          "fd": 31,
+          "pevents": 1,
+          "events": 0,
+          "line": 1032,
+          "tid": 496397,
+          "context": 8
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109858824,
+          "fd": 31,
+          "pevents": 1,
+          "events": 0,
+          "line": 1067,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109868328,
+          "fd": 33,
+          "pevents": 1,
+          "events": 0,
+          "line": 1190,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109868328,
+          "fd": 33,
+          "pevents": 1,
+          "events": 0,
+          "line": 1196,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109868760,
+          "fd": 34,
+          "pevents": 1,
+          "events": 0,
+          "line": 1216,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109868760,
+          "fd": 34,
+          "pevents": 1,
+          "events": 0,
+          "line": 1270,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109855656,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 1290,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109855656,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 1346,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109867752,
+          "fd": 25,
+          "pevents": 1,
+          "events": 0,
+          "line": 1366,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109867752,
+          "fd": 25,
+          "pevents": 1,
+          "events": 0,
+          "line": 1422,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109868328,
+          "fd": 26,
+          "pevents": 1,
+          "events": 0,
+          "line": 1442,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109868328,
+          "fd": 26,
+          "pevents": 1,
+          "events": 0,
+          "line": 1498,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109868760,
+          "fd": 27,
+          "pevents": 1,
+          "events": 0,
+          "line": 1518,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109868760,
+          "fd": 27,
+          "pevents": 1,
+          "events": 0,
+          "line": 1574,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109855656,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 1594,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109855656,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 1650,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109858392,
+          "fd": 25,
+          "pevents": 4,
+          "events": 0,
+          "line": 1875,
+          "tid": 496397,
+          "context": 9
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109858392,
+          "fd": 25,
+          "pevents": 4,
+          "events": 0,
+          "line": 1962,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109867752,
+          "fd": 26,
+          "pevents": 4,
+          "events": 0,
+          "line": 1885,
+          "tid": 496397,
+          "context": 10
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109867752,
+          "fd": 26,
+          "pevents": 4,
+          "events": 0,
+          "line": 1966,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109857960,
+          "fd": 28,
+          "pevents": 4,
+          "events": 0,
+          "line": 1895,
+          "tid": 496397,
+          "context": 11
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109857960,
+          "fd": 28,
+          "pevents": 4,
+          "events": 0,
+          "line": 1970,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109857528,
+          "fd": 29,
+          "pevents": 4,
+          "events": 0,
+          "line": 1905,
+          "tid": 496397,
+          "context": 12
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109857528,
+          "fd": 29,
+          "pevents": 4,
+          "events": 0,
+          "line": 1974,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109857096,
+          "fd": 30,
+          "pevents": 4,
+          "events": 0,
+          "line": 1915,
+          "tid": 496397,
+          "context": 13
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109857096,
+          "fd": 30,
+          "pevents": 4,
+          "events": 0,
+          "line": 1978,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109856664,
+          "fd": 32,
+          "pevents": 4,
+          "events": 0,
+          "line": 1925,
+          "tid": 496397,
+          "context": 14
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109856664,
+          "fd": 32,
+          "pevents": 4,
+          "events": 0,
+          "line": 1982,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109856088,
+          "fd": 33,
+          "pevents": 4,
+          "events": 0,
+          "line": 1935,
+          "tid": 496397,
+          "context": 15
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109856088,
+          "fd": 33,
+          "pevents": 4,
+          "events": 0,
+          "line": 1986,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109788952,
+          "fd": 34,
+          "pevents": 4,
+          "events": 0,
+          "line": 1945,
+          "tid": 496397,
+          "context": 16
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109788952,
+          "fd": 34,
+          "pevents": 4,
+          "events": 0,
+          "line": 1990,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109868760,
+          "fd": 27,
+          "pevents": 1,
+          "events": 0,
+          "line": 2045,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109868760,
+          "fd": 27,
+          "pevents": 1,
+          "events": 0,
+          "line": 2081,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109858392,
+          "fd": 25,
+          "pevents": 1,
+          "events": 0,
+          "line": 2050,
+          "tid": 496397,
+          "context": 9
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109858392,
+          "fd": 25,
+          "pevents": 1,
+          "events": 0,
+          "line": 2085,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109867752,
+          "fd": 26,
+          "pevents": 1,
+          "events": 0,
+          "line": 2054,
+          "tid": 496397,
+          "context": 10
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109867752,
+          "fd": 26,
+          "pevents": 1,
+          "events": 0,
+          "line": 2089,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109857960,
+          "fd": 28,
+          "pevents": 1,
+          "events": 0,
+          "line": 2058,
+          "tid": 496397,
+          "context": 11
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109857960,
+          "fd": 28,
+          "pevents": 1,
+          "events": 0,
+          "line": 2093,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109857528,
+          "fd": 29,
+          "pevents": 1,
+          "events": 0,
+          "line": 2062,
+          "tid": 496397,
+          "context": 12
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109857528,
+          "fd": 29,
+          "pevents": 1,
+          "events": 0,
+          "line": 2097,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109857096,
+          "fd": 30,
+          "pevents": 1,
+          "events": 0,
+          "line": 2066,
+          "tid": 496397,
+          "context": 13
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109857096,
+          "fd": 30,
+          "pevents": 1,
+          "events": 0,
+          "line": 2101,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109856664,
+          "fd": 32,
+          "pevents": 1,
+          "events": 0,
+          "line": 2070,
+          "tid": 496397,
+          "context": 14
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109856664,
+          "fd": 32,
+          "pevents": 1,
+          "events": 0,
+          "line": 2105,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109856088,
+          "fd": 33,
+          "pevents": 1,
+          "events": 0,
+          "line": 2074,
+          "tid": 496397,
+          "context": 15
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109856088,
+          "fd": 33,
+          "pevents": 1,
+          "events": 0,
+          "line": 2109,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109788952,
+          "fd": 34,
+          "pevents": 1,
+          "events": 0,
+          "line": 2078,
+          "tid": 496397,
+          "context": 16
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109788952,
+          "fd": 34,
+          "pevents": 1,
+          "events": 0,
+          "line": 2113,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109855656,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 2236,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109855656,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 2242,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109858824,
+          "fd": 31,
+          "pevents": 1,
+          "events": 0,
+          "line": 2262,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109858824,
+          "fd": 31,
+          "pevents": 1,
+          "events": 0,
+          "line": 2316,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109858392,
+          "fd": 25,
+          "pevents": 1,
+          "events": 0,
+          "line": 2336,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109858392,
+          "fd": 25,
+          "pevents": 1,
+          "events": 0,
+          "line": 2392,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109868760,
+          "fd": 26,
+          "pevents": 1,
+          "events": 0,
+          "line": 2412,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109868760,
+          "fd": 26,
+          "pevents": 1,
+          "events": 0,
+          "line": 2468,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109855656,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 2488,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109855656,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 2544,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109858824,
+          "fd": 27,
+          "pevents": 1,
+          "events": 0,
+          "line": 2564,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109858824,
+          "fd": 27,
+          "pevents": 1,
+          "events": 0,
+          "line": 2620,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109858392,
+          "fd": 25,
+          "pevents": 1,
+          "events": 0,
+          "line": 2640,
+          "tid": 496397,
+          "context": 0
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109858392,
+          "fd": 25,
+          "pevents": 1,
+          "events": 0,
+          "line": 2696,
+          "tid": 496397,
+          "context": 0
+        },
+        "masks_unchanged": true
+      }
+    ],
+    "unmatched": [
+      {
+        "reason": "no_observed_insertion",
+        "event": {
+          "loop": 108098912,
+          "watcher": 108099480,
+          "fd": 12,
+          "pevents": 1,
+          "events": 0,
+          "line": 90,
+          "tid": 496419,
+          "context": null
+        }
+      },
+      {
+        "reason": "no_observed_insertion",
+        "event": {
+          "loop": 108098912,
+          "watcher": 108099376,
+          "fd": 14,
+          "pevents": 1,
+          "events": 0,
+          "line": 95,
+          "tid": 496419,
+          "context": null
+        }
+      },
+      {
+        "reason": "no_observed_insertion",
+        "event": {
+          "loop": 107089216,
+          "watcher": 107089784,
+          "fd": 17,
+          "pevents": 1,
+          "events": 0,
+          "line": 891,
+          "tid": 496397,
+          "context": 0
+        }
+      },
+      {
+        "reason": "no_observed_insertion",
+        "event": {
+          "loop": 107089216,
+          "watcher": 107089680,
+          "fd": 19,
+          "pevents": 1,
+          "events": 0,
+          "line": 895,
+          "tid": 496397,
+          "context": 0
+        }
+      },
+      {
+        "reason": "no_observed_insertion",
+        "event": {
+          "loop": 108096016,
+          "watcher": 108096584,
+          "fd": 7,
+          "pevents": 1,
+          "events": 0,
+          "line": 2843,
+          "tid": 496397,
+          "context": 0
+        }
+      },
+      {
+        "reason": "no_observed_insertion",
+        "event": {
+          "loop": 108096016,
+          "watcher": 108096480,
+          "fd": 9,
+          "pevents": 1,
+          "events": 0,
+          "line": 2847,
+          "tid": 496397,
+          "context": 0
+        }
+      }
+    ],
+    "insertion_context_counts": {
+      "None": 1,
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "0": 16,
+      "9": 2,
+      "10": 2,
+      "11": 2,
+      "12": 2,
+      "13": 2,
+      "14": 2,
+      "15": 2,
+      "16": 2
+    },
+    "removal_context_counts": {
+      "0": 49
+    },
+    "artifact_sha256": {
+      "debugger.log": "16f0da536d68d00a85e1b6bc77d4fd385061c8c6fae18142691cc4ae0b147838",
+      "native-events.jsonl": "c81dabe24a1e26dc82e6241006a7af02940ca6420af3fdebe7a1e83b6095c352",
+      "request-map.jsonl": "8aaf5285857838ebc0fb5b34d269593c6e2d888324beb19503c32789899dc1b6"
+    },
+    "limitations": [
+      "only observed start insertion and poll removal sites",
+      "stop/close lifecycle and intermediate coalescing not captured",
+      "matching pointer and FD is scoped queue evidence, not general lifetime proof or SQE ownership"
+    ]
+  }
+}

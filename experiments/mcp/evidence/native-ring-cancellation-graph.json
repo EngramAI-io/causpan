@@ -1,0 +1,86 @@
+{
+  "run": "results/mcp/native-ring-cancellation-graph",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 8,
+    "mcp_replay": true,
+    "shared_watcher": true,
+    "concurrency": 8,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "bc7becc4ecc68d2a3c68f697a1e801b38e67c05d212f5125c41c62fe2f1d05ca",
+      "mcp-network.mjs": "213b5d9f1a8d2d55693019cc22e60a21115e6335af764b8414458b4bbe583c56",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "7d1796c7b7c64f38492f54c6bab722acb425ce9f4987c5d705ea35ae724fb8d2",
+      "native_graph.py": "485234e54459a57a19f08084f3861cbdfdb50ed2c7a9b63145fe937e58a84b28",
+      "native_preparation.py": "1cb101289c67802f0397a75c5d7d8754c9d7e8c14ba45dde596b9f2baba6410d",
+      "native_watcher_queue.py": "1721e7a0a2a8b0b5a3a70f362064920bdcdd409d31cf766d9da2bf0b85499a5b",
+      "native_watcher_operations.py": "720188f48d38d6d2343e32f23d6658b93a4a661af3897a0f4704be2e1d8206a5",
+      "native_retry_ancestry.py": "59e8b370c6a814489e3cce353b3ed5c9ac4d9542ee0855fbb9b4cafd62d73e82",
+      "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+      "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+      "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 9,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "c95d3b6c21e139de1caccc009394b4cf9f8b81e246f3a0b604017c6e205bf98b",
+    "socket_links": 6,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "f151cae1978a5d285a95f70024f781c0c54578f08011fb5c8bf14493e6689e0a",
+    "native_graph_sha256": "26c5df1ec71866351ca62dcdbf6ff92f6035c4f619a1f51eaba13e3c6e8c505d",
+    "resource_score_sha256": "4b5033b54638630d0bd1c340b0f1932e68b9863a17886e40105ff595224ab5c0",
+    "resource_context_sha256": "22f341116ba1864d8358af2e9da597045cf604a862a4917b49db78a36d57f7d2",
+    "batches": 6,
+    "operations": 12,
+    "report_sha256": "d615fae6577e5f817efe6b0b3599faa1ef12b68b561dc8f2a4c1aa5a42673014"
+  },
+  "queries": [
+    {
+      "rpc_id": 1,
+      "ring_operations": 0,
+      "canceled_episodes": 2
+    },
+    {
+      "rpc_id": 2,
+      "ring_operations": 0,
+      "canceled_episodes": 2
+    },
+    {
+      "rpc_id": 3,
+      "ring_operations": 0,
+      "canceled_episodes": 2
+    },
+    {
+      "rpc_id": 4,
+      "ring_operations": 0,
+      "canceled_episodes": 2
+    },
+    {
+      "rpc_id": 5,
+      "ring_operations": 0,
+      "canceled_episodes": 2
+    },
+    {
+      "rpc_id": 6,
+      "ring_operations": 0,
+      "canceled_episodes": 2
+    },
+    {
+      "rpc_id": 7,
+      "ring_operations": 0,
+      "canceled_episodes": 2
+    },
+    {
+      "rpc_id": 8,
+      "ring_operations": 2,
+      "canceled_episodes": 1
+    }
+  ],
+  "marker_mutation_rejected": true
+}

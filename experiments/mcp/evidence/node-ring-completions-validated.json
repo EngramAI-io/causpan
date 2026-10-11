@@ -1,0 +1,55 @@
+{
+  "valid": true,
+  "operations": [
+    {
+      "user_data": 51539607553,
+      "opcode": 29,
+      "fd": 10,
+      "result": 0,
+      "flags": 0,
+      "ring_fd": 11
+    },
+    {
+      "user_data": 60129542149,
+      "opcode": 29,
+      "fd": 10,
+      "result": 0,
+      "flags": 0,
+      "ring_fd": 11
+    },
+    {
+      "user_data": 73014444033,
+      "opcode": 29,
+      "fd": 15,
+      "result": 0,
+      "flags": 0,
+      "ring_fd": 16
+    },
+    {
+      "user_data": 81604378629,
+      "opcode": 29,
+      "fd": 15,
+      "result": 0,
+      "flags": 0,
+      "ring_fd": 16
+    },
+    {
+      "user_data": 30064771073,
+      "opcode": 29,
+      "fd": 3,
+      "result": 0,
+      "flags": 0,
+      "ring_fd": 4
+    },
+    {
+      "user_data": 38654705669,
+      "opcode": 29,
+      "fd": 3,
+      "result": 0,
+      "flags": 0,
+      "ring_fd": 4
+    }
+  ],
+  "log_sha256": "e3f40f5a28d75665e52e3843e42deb9fa14b7052fc64294d8d31f4be903ba1e8",
+  "scope": "Controlled first-batch SQ/CQ identity validation; setup metadata validation is separate; no MCP ownership inferred."
+}

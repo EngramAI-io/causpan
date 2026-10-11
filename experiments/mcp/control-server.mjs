@@ -170,8 +170,11 @@ server.registerTool('spawn_slot',{inputSchema:{slot:z.number().int().min(0).max(
 server.registerTool('uring_slot',{inputSchema:{slot:z.number().int().min(0).max(9999)}},async({slot})=>{
   const helper=process.env.CAUSPAN_RING_BIN;
   if(!helper)throw new Error('ring probe binary was not configured');
+  const snapshot=process.env.CAUSPAN_SCENARIO==='uring-memory' ? await fs.mkdtemp(`${process.env.CAUSPAN_RUN}/ring-memory-`) : null;
   const output=await new Promise((resolve,reject)=>{
-    const child=spawn(helper,[`${root}/slots.bin`,String(slot)],{stdio:['ignore','pipe','pipe']});
+    const args=[`${root}/slots.bin`,String(slot)];
+    if(process.env.CAUSPAN_SCENARIO==='uring-reuse')args.push(`${root}/replacement.bin`);
+    const child=spawn(helper,args,{stdio:['ignore','pipe','pipe'],env:{...process.env,...(snapshot?{CAUSPAN_RING_INHERITED_COLLECTOR:snapshot}:{})}});
     let stdout='',stderr='';
     child.stdout.setEncoding('utf8').on('data',chunk=>stdout+=chunk);
     child.stderr.setEncoding('utf8').on('data',chunk=>stderr+=chunk);
@@ -200,9 +203,11 @@ const workerWaiters=new Map();
 const workerDispatcher=randomUUID();
 let nextWorkerJob=1n;
 let workerMarkerFd=null;
-if(['worker-context','worker-unscoped','worker-failure','worker-crash','worker-cancel','worker-spawn','worker-grandchild','worker-socketpair','worker-rights','worker-fatal','worker-relay','worker-relay-fatal','worker-wrong-response'].includes(process.env.CAUSPAN_SCENARIO)){
+if(['uring-shared','worker-context','worker-unscoped','worker-failure','worker-crash','worker-cancel','worker-spawn','worker-grandchild','worker-socketpair','worker-rights','worker-fatal','worker-relay','worker-relay-fatal','worker-wrong-response'].includes(process.env.CAUSPAN_SCENARIO)){
   workerMarkerFd=fsSync.openSync(`${process.env.CAUSPAN_RUN}/native-events.jsonl`,'a');
-  persistentWorker=spawn('python3.11',[new URL('./persistent_worker.py',import.meta.url).pathname,`${root}/slots.bin`],{stdio:['pipe','pipe','inherit']});
+  persistentWorker=process.env.CAUSPAN_SCENARIO==='uring-shared'
+    ? spawn(process.env.CAUSPAN_RING_BIN,[`${root}/slots.bin`,`${process.env.CAUSPAN_RUN}/native-events.jsonl`,`${process.env.CAUSPAN_RUN}/ring-observations.jsonl`,process.env.CAUSPAN_RING_BATCH,process.env.CAUSPAN_RING_IDLE_MS],{stdio:['pipe','pipe','inherit']})
+    : spawn('python3.11',[new URL('./persistent_worker.py',import.meta.url).pathname,`${root}/slots.bin`],{stdio:['pipe','pipe','inherit']});
   let buffer='';
   const fail=error=>{workerFailure=error;for(const waiter of workerWaiters.values())waiter.reject(error);workerWaiters.clear();};
   persistentWorker.on('error',fail);
@@ -234,7 +239,9 @@ server.registerTool('worker_slot',{inputSchema:{slot:z.number().int().min(0).max
     const marker=JSON.stringify({csp:1,kind:'IPC_SEND',request:Number(context),operation:0,pointer:0,tid:process.pid,status:0,job})+'\n';
     const propagate=process.env.CAUSPAN_SCENARIO!=='worker-unscoped';
     if(propagate)fsSync.writeSync(workerMarkerFd,marker);
-    persistentWorker.stdin.write(JSON.stringify(propagate?{slot,context,job}:{slot,job})+'\n');
+    persistentWorker.stdin.write(process.env.CAUSPAN_SCENARIO==='uring-shared'
+      ? `${context} ${job} ${slot}\n`
+      : JSON.stringify(propagate?{slot,context,job}:{slot,job})+'\n');
   });
   if(Boolean(response.expected_failure)!==(process.env.CAUSPAN_SCENARIO==='worker-failure'&&slot%2===1))throw new Error('unexpected worker failure status');
   return {content:[{type:'text',text:JSON.stringify(response)}],structuredContent:response};

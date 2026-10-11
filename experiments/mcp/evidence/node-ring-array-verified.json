@@ -1,0 +1,41 @@
+{
+  "valid": true,
+  "setups": [
+    {
+      "fd": 4,
+      "entries": 256,
+      "cq_entries": 512,
+      "flags": 0,
+      "sq_array_offset": 8256
+    },
+    {
+      "fd": 11,
+      "entries": 256,
+      "cq_entries": 512,
+      "flags": 0,
+      "sq_array_offset": 8256
+    },
+    {
+      "fd": 16,
+      "entries": 256,
+      "cq_entries": 512,
+      "flags": 0,
+      "sq_array_offset": 8256
+    }
+  ],
+  "pending_queue": {
+    "head": 0,
+    "tail": 2,
+    "mask": 255,
+    "array": [
+      0,
+      1
+    ],
+    "observed_batches": 3
+  },
+  "scope": "Six copied SQE slots now have verified pending queue membership in this controlled run; CQEs and request attribution remain unobserved.",
+  "sha256": {
+    "results/mcp/node-ring-syscall-setup/array-verified.log": "f1ae62ad5494b4c1605f9536e950079e611ca3adc3a791dcc3f1ea9cd64c89fb",
+    "experiments/mcp/node-ring-debug/array.gdb": "67fc0725b65c9e8d78ffeb04fa03ff3168175a6a6393a3cc1ad3dfa72f13a37b"
+  }
+}

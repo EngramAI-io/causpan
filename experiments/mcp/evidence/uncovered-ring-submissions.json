@@ -1,0 +1,81 @@
+{
+  "setup_attempts": 7,
+  "successful_setups": 7,
+  "enter_calls": 12,
+  "submissions_decoded": false,
+  "submissions_decoded_meaning": "generic kernel submission decoding is unavailable",
+  "attributed_operations_by_evidence": {
+    "parent_snapshot_of_inherited_shared_ring": 12
+  },
+  "enters_with_attributed_operations": 4,
+  "enters_without_attributed_operations": 8,
+  "uncovered_enters": [
+    {
+      "source": "strace.3681578:8",
+      "pid": 3681564,
+      "tid": 3681578,
+      "requested_submissions": 2,
+      "minimum_completions": 2,
+      "accepted_submissions": 2
+    },
+    {
+      "source": "strace.3681564:2530",
+      "pid": 3681564,
+      "tid": 3681564,
+      "requested_submissions": 2,
+      "minimum_completions": 2,
+      "accepted_submissions": 2
+    },
+    {
+      "source": "strace.3681564:2541",
+      "pid": 3681564,
+      "tid": 3681564,
+      "requested_submissions": 1,
+      "minimum_completions": 1,
+      "accepted_submissions": 1
+    },
+    {
+      "source": "strace.3681564:2641",
+      "pid": 3681564,
+      "tid": 3681564,
+      "requested_submissions": 4,
+      "minimum_completions": 4,
+      "accepted_submissions": 4
+    },
+    {
+      "source": "strace.3681564:2787",
+      "pid": 3681564,
+      "tid": 3681564,
+      "requested_submissions": 2,
+      "minimum_completions": 2,
+      "accepted_submissions": 2
+    },
+    {
+      "source": "strace.3681564:2938",
+      "pid": 3681564,
+      "tid": 3681564,
+      "requested_submissions": 2,
+      "minimum_completions": 2,
+      "accepted_submissions": 2
+    },
+    {
+      "source": "strace.3681564:2970",
+      "pid": 3681564,
+      "tid": 3681564,
+      "requested_submissions": 2,
+      "minimum_completions": 2,
+      "accepted_submissions": 2
+    },
+    {
+      "source": "strace.3681564:3265",
+      "pid": 3681564,
+      "tid": 3681564,
+      "requested_submissions": 2,
+      "minimum_completions": 2,
+      "accepted_submissions": 2
+    }
+  ],
+  "observed_uncovered_accepted_submissions": 17,
+  "completeness": "Accepted submissions are syscall return counts, not decoded operations or completions; SQPOLL and other unobserved activity prevent a universal denominator.",
+  "reporter_sha256": "5327791b967e24b61397607a3c65d4c6c0895811c57993c5ad1411115776e3ee"
+}

@@ -1,0 +1,42 @@
+{
+  "valid": false,
+  "stage": "external_memory_access",
+  "observations": [
+    {
+      "mapping": "sq",
+      "address": 281473190854656,
+      "proc_mem_errno": 5,
+      "process_vm_readv_bytes": -1,
+      "process_vm_readv_errno": 14
+    },
+    {
+      "mapping": "cq",
+      "address": 281473190854656,
+      "proc_mem_errno": 5,
+      "process_vm_readv_bytes": -1,
+      "process_vm_readv_errno": 14
+    },
+    {
+      "mapping": "sqes",
+      "address": 281473188954112,
+      "proc_mem_errno": 5,
+      "process_vm_readv_bytes": -1,
+      "process_vm_readv_errno": 14
+    },
+    {
+      "mapping": "ordinary_text",
+      "address": 4194304,
+      "proc_mem_bytes": 16,
+      "process_vm_readv_bytes": 16,
+      "process_vm_readv_errno": 0
+    }
+  ],
+  "limitation": "No SQE/CQE decoding established; cooperative mapping addresses alone do not enable external reads on this host.",
+  "sha256": {
+    "experiments/mcp/ring_memory_access.py": "5d8ed544a8df78c1c5123707e42ecff5a4b247630129aefdcb8a3a522e3201b1",
+    "experiments/mcp/ring_memory_probe.py": "3289b72df6a4b550bb1c0e1c0e34e6c5aa8e92fe18c7f64b97bc1526598ab0a3",
+    "experiments/mcp/io_uring_probe.c": "f2a186e04fbe8fca36f435618296322c9b14def80c22068c85a671fef4ba54e0",
+    "results/mcp/ring-memory-probe/helper": "e14a3de3e8113494feef81aa8bd77dd15515654bc120fcb2c56e35ebb37a5d42",
+    "results/mcp/ring-memory-probe/maps.txt": "d2da5147de82418240e017632db9050fa256070d7340eb8804ef2033f0a894c4"
+  }
+}

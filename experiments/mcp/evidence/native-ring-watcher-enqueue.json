@@ -1,0 +1,558 @@
+{
+  "run": "results/mcp/native-ring-watcher-enqueue",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 16,
+    "mcp_replay": true,
+    "concurrency": 8,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "d92c12f6f7f532a0eb04095e6ac22e60b06555f4d253cea77c04509a8a56046f",
+      "mcp-network.mjs": "1e933db7501410805ec66eb7ecb2c648b8cb13316e0b0a53d1e2e860ceeeddbd",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "2c5e379fe2593e805bbdd3943d2f77a4eee04d3ae2dc3d8bced29f525e6d002b",
+      "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+      "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+      "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 68,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "fa9c9f537e63cef4ce462866ada69fdfca40e4ace72ecb65b866affe4c7ce67f",
+    "socket_links": 65,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "68047855a5166016d9a0b194c2f230caeccd0c4dbf6c01c6de0a174b374d3f21",
+    "resource_score_sha256": "20eb8062cd2aae5b7b8444ffdeb75cb4103221ad07ce8b45fabcad6afeda35b0",
+    "resource_context_sha256": "e4f53c1a7ed786294df4791b58fb6137750654b9a313cbd13bce33829c931900",
+    "batches": 22,
+    "operations": 71,
+    "report_sha256": "0952bb9000f5aa0fc3871fd684886ca5ea4d2db9b1715c1b79a05270c1e3ccc9"
+  },
+  "marker_validation": {
+    "debugger.log": "3deb384fa65fbcc51975ae974789c55d8a5e9d28f531f6cdde863355b29c715b",
+    "native-events.jsonl": "525931a8dfb28d71e6d54bd3dc8fb190f08dfafb3522ff1655219924f093cdca",
+    "request-map.jsonl": "8aaf5285857838ebc0fb5b34d269593c6e2d888324beb19503c32789899dc1b6"
+  },
+  "enqueue_context_counts": {
+    "None": 1,
+    "1": 2,
+    "2": 2,
+    "3": 2,
+    "4": 2,
+    "5": 2,
+    "6": 2,
+    "7": 2,
+    "8": 2,
+    "0": 16,
+    "9": 2,
+    "10": 2,
+    "11": 2,
+    "12": 2,
+    "13": 2,
+    "14": 2,
+    "15": 2,
+    "16": 2
+  },
+  "enqueue_events": [
+    {
+      "line": 692,
+      "tid": 485501,
+      "context": null,
+      "loop": 107089216,
+      "watcher": 109163512,
+      "fd": 23,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 811,
+      "tid": 485501,
+      "context": 1,
+      "loop": 107089216,
+      "watcher": 109811704,
+      "fd": 24,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 821,
+      "tid": 485501,
+      "context": 2,
+      "loop": 107089216,
+      "watcher": 109812968,
+      "fd": 25,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 831,
+      "tid": 485501,
+      "context": 3,
+      "loop": 107089216,
+      "watcher": 109813544,
+      "fd": 26,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 841,
+      "tid": 485501,
+      "context": 4,
+      "loop": 107089216,
+      "watcher": 109813976,
+      "fd": 27,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 851,
+      "tid": 485501,
+      "context": 5,
+      "loop": 107089216,
+      "watcher": 109348376,
+      "fd": 28,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 861,
+      "tid": 485501,
+      "context": 6,
+      "loop": 107089216,
+      "watcher": 109792024,
+      "fd": 29,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 871,
+      "tid": 485501,
+      "context": 7,
+      "loop": 107089216,
+      "watcher": 109792456,
+      "fd": 30,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 881,
+      "tid": 485501,
+      "context": 8,
+      "loop": 107089216,
+      "watcher": 109792888,
+      "fd": 31,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 974,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109795144,
+      "fd": 32,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 977,
+      "tid": 485501,
+      "context": 1,
+      "loop": 107089216,
+      "watcher": 109811704,
+      "fd": 24,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 981,
+      "tid": 485501,
+      "context": 2,
+      "loop": 107089216,
+      "watcher": 109812968,
+      "fd": 25,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 985,
+      "tid": 485501,
+      "context": 3,
+      "loop": 107089216,
+      "watcher": 109813544,
+      "fd": 26,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 989,
+      "tid": 485501,
+      "context": 4,
+      "loop": 107089216,
+      "watcher": 109813976,
+      "fd": 27,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 993,
+      "tid": 485501,
+      "context": 5,
+      "loop": 107089216,
+      "watcher": 109348376,
+      "fd": 28,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 997,
+      "tid": 485501,
+      "context": 6,
+      "loop": 107089216,
+      "watcher": 109792024,
+      "fd": 29,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1001,
+      "tid": 485501,
+      "context": 7,
+      "loop": 107089216,
+      "watcher": 109792456,
+      "fd": 30,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1005,
+      "tid": 485501,
+      "context": 8,
+      "loop": 107089216,
+      "watcher": 109792888,
+      "fd": 31,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1145,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109795576,
+      "fd": 33,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1169,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109796008,
+      "fd": 34,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1241,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109811704,
+      "fd": 24,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1315,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109795144,
+      "fd": 25,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1389,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109795576,
+      "fd": 26,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1463,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109796008,
+      "fd": 27,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1537,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109811704,
+      "fd": 24,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1816,
+      "tid": 485501,
+      "context": 9,
+      "loop": 107089216,
+      "watcher": 109792456,
+      "fd": 25,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 1826,
+      "tid": 485501,
+      "context": 10,
+      "loop": 107089216,
+      "watcher": 109795144,
+      "fd": 26,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 1836,
+      "tid": 485501,
+      "context": 11,
+      "loop": 107089216,
+      "watcher": 109792024,
+      "fd": 28,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 1846,
+      "tid": 485501,
+      "context": 12,
+      "loop": 107089216,
+      "watcher": 109348376,
+      "fd": 29,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 1856,
+      "tid": 485501,
+      "context": 13,
+      "loop": 107089216,
+      "watcher": 109813976,
+      "fd": 30,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 1866,
+      "tid": 485501,
+      "context": 14,
+      "loop": 107089216,
+      "watcher": 109813544,
+      "fd": 32,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 1876,
+      "tid": 485501,
+      "context": 15,
+      "loop": 107089216,
+      "watcher": 109812968,
+      "fd": 33,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 1886,
+      "tid": 485501,
+      "context": 16,
+      "loop": 107089216,
+      "watcher": 109348808,
+      "fd": 34,
+      "pevents": 4,
+      "events": 0
+    },
+    {
+      "line": 1970,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109796008,
+      "fd": 27,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1975,
+      "tid": 485501,
+      "context": 9,
+      "loop": 107089216,
+      "watcher": 109792456,
+      "fd": 25,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1979,
+      "tid": 485501,
+      "context": 10,
+      "loop": 107089216,
+      "watcher": 109795144,
+      "fd": 26,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1983,
+      "tid": 485501,
+      "context": 11,
+      "loop": 107089216,
+      "watcher": 109792024,
+      "fd": 28,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1987,
+      "tid": 485501,
+      "context": 12,
+      "loop": 107089216,
+      "watcher": 109348376,
+      "fd": 29,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1991,
+      "tid": 485501,
+      "context": 13,
+      "loop": 107089216,
+      "watcher": 109813976,
+      "fd": 30,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1995,
+      "tid": 485501,
+      "context": 14,
+      "loop": 107089216,
+      "watcher": 109813544,
+      "fd": 32,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 1999,
+      "tid": 485501,
+      "context": 15,
+      "loop": 107089216,
+      "watcher": 109812968,
+      "fd": 33,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 2003,
+      "tid": 485501,
+      "context": 16,
+      "loop": 107089216,
+      "watcher": 109348808,
+      "fd": 34,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 2143,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109811704,
+      "fd": 24,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 2167,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109792888,
+      "fd": 31,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 2239,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109792456,
+      "fd": 25,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 2313,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109796008,
+      "fd": 26,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 2387,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109811704,
+      "fd": 24,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 2461,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109792888,
+      "fd": 27,
+      "pevents": 1,
+      "events": 0
+    },
+    {
+      "line": 2535,
+      "tid": 485501,
+      "context": 0,
+      "loop": 107089216,
+      "watcher": 109792456,
+      "fd": 25,
+      "pevents": 1,
+      "events": 0
+    }
+  ],
+  "limitations": [
+    "only uv__io_start insertion site observed",
+    "no watcher-to-SQE causal join yet",
+    "uv__io_stop and queue coalescing not covered"
+  ]
+}

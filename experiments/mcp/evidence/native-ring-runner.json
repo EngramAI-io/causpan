@@ -1,0 +1,524 @@
+{
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 8,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "78abed339b751e9653f3e9c40616547ba0d7368d6629f76358a5d445d9809330",
+      "network.cjs": "60658c519f8c8e5967e7c7eef39e4733ab9fcb50d8ddaa4c5179b77dddda5efd",
+      "inspect_native_windows.py": "9c345f041f26e156909d0c08a57a8d482154cd368a587456a0b773e8eddf0e6b",
+      "run_native_ring_debug.py": "ecc395e7f20d6a811dce3ba7bc666502c9c109a88822b239494c2c0e6b30ad8b"
+    },
+    "batches": 26,
+    "operations": 39,
+    "report_sha256": "2dabdacb4309f1bdca0b756824a9c24a11017d2072c58356a783f6cc80572df5"
+  },
+  "report": {
+    "valid": true,
+    "batches": [
+      {
+        "ring_fd": 11,
+        "sq_head": 0,
+        "sq_tail": 2,
+        "operations": [
+          {
+            "index": 0,
+            "opcode": 29,
+            "fd": 10,
+            "user_data": 51539607553,
+            "result": 0,
+            "flags": 0
+          },
+          {
+            "index": 1,
+            "opcode": 29,
+            "fd": 10,
+            "user_data": 60129542149,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 0,
+        "sq_tail": 4,
+        "operations": [
+          {
+            "index": 0,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 73014444033,
+            "result": 0,
+            "flags": 0
+          },
+          {
+            "index": 1,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 81604378629,
+            "result": 0,
+            "flags": 0
+          },
+          {
+            "index": 2,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 90194313225,
+            "result": 0,
+            "flags": 0
+          },
+          {
+            "index": 3,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 94489280525,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 4,
+        "sq_tail": 6,
+        "operations": [
+          {
+            "index": 4,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 98784247825,
+            "result": 0,
+            "flags": 0
+          },
+          {
+            "index": 5,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 94489280533,
+            "result": -17,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 6,
+        "sq_tail": 7,
+        "operations": [
+          {
+            "index": 6,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 94489280539,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 7,
+        "sq_tail": 8,
+        "operations": [
+          {
+            "index": 7,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 103079215133,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 8,
+        "sq_tail": 10,
+        "operations": [
+          {
+            "index": 8,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 94489280545,
+            "result": 0,
+            "flags": 0
+          },
+          {
+            "index": 9,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 103079215141,
+            "result": -17,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 10,
+        "sq_tail": 11,
+        "operations": [
+          {
+            "index": 10,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 103079215147,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 11,
+        "sq_tail": 12,
+        "operations": [
+          {
+            "index": 11,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 98784247853,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 12,
+        "sq_tail": 14,
+        "operations": [
+          {
+            "index": 12,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 103079215153,
+            "result": 0,
+            "flags": 0
+          },
+          {
+            "index": 13,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 98784247861,
+            "result": -17,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 14,
+        "sq_tail": 15,
+        "operations": [
+          {
+            "index": 14,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 98784247867,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 15,
+        "sq_tail": 16,
+        "operations": [
+          {
+            "index": 15,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 94489280573,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 16,
+        "sq_tail": 18,
+        "operations": [
+          {
+            "index": 16,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 98784247873,
+            "result": 0,
+            "flags": 0
+          },
+          {
+            "index": 17,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 94489280581,
+            "result": -17,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 18,
+        "sq_tail": 19,
+        "operations": [
+          {
+            "index": 18,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 94489280587,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 19,
+        "sq_tail": 20,
+        "operations": [
+          {
+            "index": 19,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 103079215181,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 20,
+        "sq_tail": 22,
+        "operations": [
+          {
+            "index": 20,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 94489280593,
+            "result": 0,
+            "flags": 0
+          },
+          {
+            "index": 21,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 103079215189,
+            "result": -17,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 22,
+        "sq_tail": 23,
+        "operations": [
+          {
+            "index": 22,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 103079215195,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 23,
+        "sq_tail": 24,
+        "operations": [
+          {
+            "index": 23,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 98784247901,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 24,
+        "sq_tail": 26,
+        "operations": [
+          {
+            "index": 24,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 103079215201,
+            "result": 0,
+            "flags": 0
+          },
+          {
+            "index": 25,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 98784247909,
+            "result": -17,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 26,
+        "sq_tail": 27,
+        "operations": [
+          {
+            "index": 26,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 98784247915,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 27,
+        "sq_tail": 28,
+        "operations": [
+          {
+            "index": 27,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 94489280621,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 28,
+        "sq_tail": 30,
+        "operations": [
+          {
+            "index": 28,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 98784247921,
+            "result": 0,
+            "flags": 0
+          },
+          {
+            "index": 29,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 94489280629,
+            "result": -17,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 30,
+        "sq_tail": 31,
+        "operations": [
+          {
+            "index": 30,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 94489280635,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 31,
+        "sq_tail": 32,
+        "operations": [
+          {
+            "index": 31,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 103079215229,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 32,
+        "sq_tail": 34,
+        "operations": [
+          {
+            "index": 32,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 94489280641,
+            "result": 0,
+            "flags": 0
+          },
+          {
+            "index": 33,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 103079215237,
+            "result": -17,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 16,
+        "sq_head": 34,
+        "sq_tail": 35,
+        "operations": [
+          {
+            "index": 34,
+            "opcode": 29,
+            "fd": 15,
+            "user_data": 103079215243,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      },
+      {
+        "ring_fd": 4,
+        "sq_head": 0,
+        "sq_tail": 2,
+        "operations": [
+          {
+            "index": 0,
+            "opcode": 29,
+            "fd": 3,
+            "user_data": 30064771073,
+            "result": 0,
+            "flags": 0
+          },
+          {
+            "index": 1,
+            "opcode": 29,
+            "fd": 3,
+            "user_data": 38654705669,
+            "result": 0,
+            "flags": 0
+          }
+        ]
+      }
+    ],
+    "operations": 39,
+    "log_sha256": "3bb40462d6bf86f7e3b0bae70933033b5e2d6cd86d67a89c5081f868adf5786d",
+    "limitations": [
+      "binary-specific cooperative debugger probe",
+      "fixed layout offset not verified by this inspector",
+      "serialized batches only",
+      "no request ownership or kernel worker identity"
+    ]
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "normal_exit": true,
+  "enters": [
+    [
+      11,
+      2,
+      2,
+      1
+    ],
+    [
+      16,
+      4,
+      4,
+      1
+    ],
+    [
+      16,
+      2,
+      2,
+      1
+    ],
+    [
+      16,
+      1,
+      1,
+      1
+    ],
+    [
+      16,
+      1,
+      1,
+      1
+    ],
+    [
+      16,
+      2,
+      2,
+      1
+    ],
+    [
+      16,
+      1,
+      1,
+      1
+    ],
+    [
+      16,
+      1,
+      1,
+      1
+    ],
+    [
+      16,
+      2,
+      2,
+      1
+    ],
+    [
+      16,
+      1,
+      1,
+      1
+    ],
+    [
+      16,
+      1,
+      1,
+      1
+    ],
+    [
+      16,
+      2,
+      2,
+      1
+    ],
+    [
+      16,
+      1,
+      1,
+      1
+    ],
+    [
+      4,
+      2,
+      2,
+      1
+    ]
+  ],
+  "requested_submissions": 23,
+  "bounded_validator_rejection": "unsupported enter shape",
+  "limitation": "Fixed-slot byte dumps are stale or incomplete outside first two-entry batch; no completion join coverage claimed.",
+  "sha256": {
+    "results/mcp/node-ring-network/log": "2e0a055902984f1400167d60711be0cff0329531663e78ee2cd0899c78aa8ad3",
+    "experiments/mcp/node-ring-debug/network.cjs": "8e0eb3ea529090b81ce40db8cc86a2d5b7158499dd0e09b44f72919fd9e9848e"
+  }
+}

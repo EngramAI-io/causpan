@@ -1,0 +1,193 @@
+{
+  "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+  "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+  "versions": {
+    "node": "24.20.0",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.8",
+    "brotli": "1.2.0",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.3",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.7",
+    "simdjson": "4.6.6",
+    "simdutf": "6.4.0",
+    "sqlite": "3.53.4",
+    "tz": "2026c",
+    "undici": "7.29.0",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.53",
+    "zlib": "1.3.2.1-motley-42c2f19",
+    "zstd": "1.5.7"
+  },
+  "symbols": [
+    {
+      "name": "uv__iou_submit",
+      "address": 25975920,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__iou_init",
+      "address": 25977168,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__io_uring_setup",
+      "address": 25978896,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__io_uring_enter",
+      "address": 25978928,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__io_uring_register",
+      "address": 25978992,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__iou_fs_close",
+      "address": 25980096,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__iou_fs_ftruncate",
+      "address": 25980544,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__iou_fs_fsync_or_fdatasync",
+      "address": 25981024,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__iou_fs_link",
+      "address": 25981552,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__iou_fs_mkdir",
+      "address": 25982036,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__iou_fs_open",
+      "address": 25982516,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__iou_fs_rename",
+      "address": 25983040,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__iou_fs_symlink",
+      "address": 25983556,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__iou_fs_unlink",
+      "address": 25984036,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__iou_fs_read_or_write",
+      "address": 25984544,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__iou_fs_statx",
+      "address": 25985088,
+      "symbol_type": "t"
+    },
+    {
+      "name": "uv__io_poll",
+      "address": 25985856,
+      "symbol_type": "t"
+    }
+  ],
+  "disassembly": [
+    {
+      "file": "uv__iou_submit.asm",
+      "sha256": "84b16b65ae37b3040fc521e4890667d02a154bc81e64d0843b755c2b013b71e4"
+    },
+    {
+      "file": "uv__iou_init.asm",
+      "sha256": "3bde5c1cd96b0ea26b4d153f5c5cfb24dc214daeadd93f292206184e00ebe4d7"
+    },
+    {
+      "file": "uv__io_uring_setup.asm",
+      "sha256": "fe0444744b0a3b141c2ab760cadf6d7bdc42f35cdf74c0d0c73cc35c7395e0d4"
+    },
+    {
+      "file": "uv__io_uring_enter.asm",
+      "sha256": "591dcecaa365c6e06686eccb9e789ded1a447994975ec98f32d56c63145cbe90"
+    },
+    {
+      "file": "uv__io_uring_register.asm",
+      "sha256": "5486635129c593b44122155a6dc934cdea44b0ec3d359a639e6104c9377d3df7"
+    },
+    {
+      "file": "uv__iou_fs_close.asm",
+      "sha256": "352f2d9a05c70cb4416aec0884ce864dafc1c51fc9790d8f59240ae88b6172b0"
+    },
+    {
+      "file": "uv__iou_fs_ftruncate.asm",
+      "sha256": "e91b854998be8193a0ff02880513b59bc4f1a333ba441686d29e5db7ec5e4811"
+    },
+    {
+      "file": "uv__iou_fs_fsync_or_fdatasync.asm",
+      "sha256": "ad6a5a1af2d5d22343d52496ef5f9253cdc56cce65d4c3adfe6f61dc0cd2bd25"
+    },
+    {
+      "file": "uv__iou_fs_link.asm",
+      "sha256": "378cbf3f92b2c64564050c98795356b207741e2b8d4d98aa41137d4ea26f8308"
+    },
+    {
+      "file": "uv__iou_fs_mkdir.asm",
+      "sha256": "28113d216eebb84a3146669fd15c8fd24855c10116b6f177e68ac2e909b0eef7"
+    },
+    {
+      "file": "uv__iou_fs_open.asm",
+      "sha256": "71c0f91c51daa02a5f341609f9c32de4750f63cdba49eb00c8d77bd541702f1e"
+    },
+    {
+      "file": "uv__iou_fs_rename.asm",
+      "sha256": "00aeb7ba2b1f2fa11f21d60b9ab52b92154dfe68fcce6b2586220f78f50d0f4f"
+    },
+    {
+      "file": "uv__iou_fs_symlink.asm",
+      "sha256": "dc5abce7077661018eed4fe871763c73fc832741eb3a1dcecd398ff09d13b8a7"
+    },
+    {
+      "file": "uv__iou_fs_unlink.asm",
+      "sha256": "4a8bd11dfa7b745d8c983d413a043c559a4c20f74198864ccbddfaaaed5c7225"
+    },
+    {
+      "file": "uv__iou_fs_read_or_write.asm",
+      "sha256": "57f89bdf697e03ec3aed6255ddef35ec60ca83ee4e0a48aace9e23b1048c6db2"
+    },
+    {
+      "file": "uv__iou_fs_statx.asm",
+      "sha256": "5f7db58effbd3118f203963cdc6439d1f268373e5deb9731b47ad9a9ea6c762c"
+    },
+    {
+      "file": "uv__io_poll.asm",
+      "sha256": "d13f454ef49aa99ba93a549f44a4dcbd6b83d606c15b9c3dddb87704dc387173"
+    }
+  ],
+  "scope": "Static inventory only; symbol presence does not establish execution, request ownership, ABI stability, or safe hook placement."
+}

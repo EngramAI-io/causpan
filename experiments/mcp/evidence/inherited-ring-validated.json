@@ -1,0 +1,54 @@
+{
+  "valid": true,
+  "operations": [
+    {
+      "user_data": 103,
+      "opcode": 22,
+      "fd": -1,
+      "offset": 256,
+      "requested_bytes": 7,
+      "result": -9,
+      "succeeded": false,
+      "evidence": "parent_snapshot_of_inherited_shared_ring"
+    },
+    {
+      "user_data": 101,
+      "opcode": 23,
+      "fd": 4,
+      "offset": 0,
+      "requested_bytes": 7,
+      "result": 7,
+      "succeeded": true,
+      "evidence": "parent_snapshot_of_inherited_shared_ring"
+    },
+    {
+      "user_data": 102,
+      "opcode": 23,
+      "fd": 4,
+      "offset": 128,
+      "requested_bytes": 7,
+      "result": 7,
+      "succeeded": true,
+      "evidence": "parent_snapshot_of_inherited_shared_ring"
+    }
+  ],
+  "limitations": [
+    "collector creates ring before fork",
+    "cooperative worker stops",
+    "helper provides layout metadata",
+    "no MCP ownership or kernel worker identity",
+    "not a collector for arbitrary preexisting rings"
+  ],
+  "sha256": {
+    "io_uring_probe.c": "a6f53f6c6482973c2ba174e88ee57e4628310ea9e573b74a59bf0755ff7a3b48",
+    "inherited_ring_probe.py": "28bd4c79c6e25ce33711ded548e8f883424c386d71c7f11dd0b3da2df94fc9f8",
+    "ring_memory_probe.py": "2db797ed5fbfc7b2eb334e7477db6b14eeecacc2fb12806e252e61002c5e9983",
+    "helper": "6c4adf6fb0c7db7d980199c43a412b96b6a042d652d0e5eafffbacb7cefc0850",
+    "sq.bin": "de91acd7945e5bfe696d5910e6ea6efa186607a091320da63f6cf749b6f3bf96",
+    "sqes.bin": "2248fa10553594cba1cad22ef35f5dcda051bad309a0382c5fa7d7814e5ef7a8",
+    "cq.bin": "20a87f966f752f0c719abbcd8245e71ad37f17b97e7ea8db15437a359ca2415b",
+    "metadata.jsonl": "8801b318f08d99c8088728376a19b52b786a721041e8087e1d47a78676a28c97",
+    "stdout.jsonl": "6dc0b971d859503241a479f42a30ad72fde2a7db6879fc933c24af5659efdc72",
+    "fixture.bin": "3bd77c0432eaa83965284c0a0324147f6914f133e098d3c69ad337a6573b4f84"
+  }
+}

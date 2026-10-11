@@ -1,0 +1,254 @@
+{
+  "runs": [
+    {
+      "run": "results/mcp/native-ring-partial-stop",
+      "manifest": {
+        "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+        "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+        "connections": 8,
+        "mcp_replay": true,
+        "shared_watcher": true,
+        "concurrency": 8,
+        "status": "complete",
+        "source_sha256": {
+          "windows.gdb": "f86201b3c4261e05bce0a6e00b57796c3998c8acc35498d65e4a2d500aeb1f22",
+          "mcp-network.mjs": "213b5d9f1a8d2d55693019cc22e60a21115e6335af764b8414458b4bbe583c56",
+          "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+          "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+          "run_native_ring_debug.py": "7d1796c7b7c64f38492f54c6bab722acb425ce9f4987c5d705ea35ae724fb8d2",
+          "native_graph.py": "485234e54459a57a19f08084f3861cbdfdb50ed2c7a9b63145fe937e58a84b28",
+          "native_preparation.py": "1cb101289c67802f0397a75c5d7d8754c9d7e8c14ba45dde596b9f2baba6410d",
+          "native_watcher_queue.py": "1721e7a0a2a8b0b5a3a70f362064920bdcdd409d31cf766d9da2bf0b85499a5b",
+          "native_watcher_operations.py": "720188f48d38d6d2343e32f23d6658b93a4a661af3897a0f4704be2e1d8206a5",
+          "native_retry_ancestry.py": "59e8b370c6a814489e3cce353b3ed5c9ac4d9542ee0855fbb9b4cafd62d73e82",
+          "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+          "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+          "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+          "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+          "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+          "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+        },
+        "resource_links": 9,
+        "unresolved_resource_targets": 3,
+        "resource_lifetimes_sha256": "42bdeced7c2f1a81ee2f2432f4fde3385c41ffab111ad4a4fcc17fa8fa5637d9",
+        "socket_links": 6,
+        "unresolved_socket_targets": 6,
+        "socket_lifetimes_sha256": "209dc225b3f2e618afdbd51fdeb27f097b1a9ad5099fcede5ff7387fb03d24e0",
+        "native_graph_sha256": "1beb4146a132a8b2756a5bf504e933af7d979f4f826517c1c4680258202d07fc",
+        "resource_score_sha256": "4b5033b54638630d0bd1c340b0f1932e68b9863a17886e40105ff595224ab5c0",
+        "resource_context_sha256": "7ff7195a18c216f6197e50226a1b45d29ecbf4429674a3907afb2a292d014028",
+        "batches": 6,
+        "operations": 12,
+        "report_sha256": "4f8778f1f9948a83dcb1059718d79f8c6ddac048d59bb13f59952eb35cae4e41"
+      },
+      "matches": 5,
+      "canceled": 8,
+      "unmatched": [
+        {
+          "reason": "no_observed_insertion",
+          "event": {
+            "loop": 108098912,
+            "watcher": 108099480,
+            "fd": 12,
+            "pevents": 1,
+            "events": 0,
+            "line": 96,
+            "tid": 3348545,
+            "context": null
+          }
+        },
+        {
+          "reason": "no_observed_insertion",
+          "event": {
+            "loop": 108098912,
+            "watcher": 108099376,
+            "fd": 14,
+            "pevents": 1,
+            "events": 0,
+            "line": 103,
+            "tid": 3348545,
+            "context": null
+          }
+        },
+        {
+          "reason": "no_observed_insertion",
+          "event": {
+            "loop": 107089216,
+            "watcher": 107089784,
+            "fd": 17,
+            "pevents": 1,
+            "events": 0,
+            "line": 719,
+            "tid": 3348529,
+            "context": null
+          }
+        },
+        {
+          "reason": "no_observed_insertion",
+          "event": {
+            "loop": 107089216,
+            "watcher": 107089680,
+            "fd": 19,
+            "pevents": 1,
+            "events": 0,
+            "line": 725,
+            "tid": 3348529,
+            "context": null
+          }
+        },
+        {
+          "reason": "no_observed_insertion",
+          "event": {
+            "loop": 108096016,
+            "watcher": 108096584,
+            "fd": 7,
+            "pevents": 1,
+            "events": 0,
+            "line": 1296,
+            "tid": 3348529,
+            "context": 0
+          }
+        },
+        {
+          "reason": "no_observed_insertion",
+          "event": {
+            "loop": 108096016,
+            "watcher": 108096480,
+            "fd": 9,
+            "pevents": 1,
+            "events": 0,
+            "line": 1302,
+            "tid": 3348529,
+            "context": 0
+          }
+        }
+      ]
+    },
+    {
+      "run": "results/mcp/native-ring-partial-stop-regression",
+      "manifest": {
+        "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+        "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+        "connections": 16,
+        "mcp_replay": true,
+        "shared_watcher": false,
+        "concurrency": 8,
+        "status": "complete",
+        "source_sha256": {
+          "windows.gdb": "f86201b3c4261e05bce0a6e00b57796c3998c8acc35498d65e4a2d500aeb1f22",
+          "mcp-network.mjs": "213b5d9f1a8d2d55693019cc22e60a21115e6335af764b8414458b4bbe583c56",
+          "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+          "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+          "run_native_ring_debug.py": "7d1796c7b7c64f38492f54c6bab722acb425ce9f4987c5d705ea35ae724fb8d2",
+          "native_graph.py": "485234e54459a57a19f08084f3861cbdfdb50ed2c7a9b63145fe937e58a84b28",
+          "native_preparation.py": "1cb101289c67802f0397a75c5d7d8754c9d7e8c14ba45dde596b9f2baba6410d",
+          "native_watcher_queue.py": "1721e7a0a2a8b0b5a3a70f362064920bdcdd409d31cf766d9da2bf0b85499a5b",
+          "native_watcher_operations.py": "720188f48d38d6d2343e32f23d6658b93a4a661af3897a0f4704be2e1d8206a5",
+          "native_retry_ancestry.py": "59e8b370c6a814489e3cce353b3ed5c9ac4d9542ee0855fbb9b4cafd62d73e82",
+          "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+          "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+          "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+          "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+          "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+          "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+        },
+        "resource_links": 68,
+        "unresolved_resource_targets": 3,
+        "resource_lifetimes_sha256": "986e60627bf11f81569a7b802529d40f20b8f0547954cabf8b7a436b2c5da555",
+        "socket_links": 65,
+        "unresolved_socket_targets": 6,
+        "socket_lifetimes_sha256": "2c3f130de97a00ecbadb421a3de4f7715a22f0c091b3edd411e5748bde2a9fce",
+        "native_graph_sha256": "d29ccc3debb522fbe4479d139d7ff1dc5c82a912ef40073009e9e827071e115d",
+        "resource_score_sha256": "fbcf9ec975feea2f2c8d7377acc69576af5df75103a1c9bb55a1643c1fe58431",
+        "resource_context_sha256": "61639db7889bf1f437910fec8777b66f03814febd90bbb565871239232d8a076",
+        "batches": 22,
+        "operations": 71,
+        "report_sha256": "29eef70551f420cf70773a882dfe320e95023a180078c51bf7c5da52039fd38c"
+      },
+      "matches": 49,
+      "canceled": 0,
+      "unmatched": [
+        {
+          "reason": "no_observed_insertion",
+          "event": {
+            "loop": 108098944,
+            "watcher": 108099512,
+            "fd": 12,
+            "pevents": 1,
+            "events": 0,
+            "line": 96,
+            "tid": 3352615,
+            "context": null
+          }
+        },
+        {
+          "reason": "no_observed_insertion",
+          "event": {
+            "loop": 108098944,
+            "watcher": 108099408,
+            "fd": 14,
+            "pevents": 1,
+            "events": 0,
+            "line": 103,
+            "tid": 3352615,
+            "context": null
+          }
+        },
+        {
+          "reason": "no_observed_insertion",
+          "event": {
+            "loop": 107089216,
+            "watcher": 107089784,
+            "fd": 17,
+            "pevents": 1,
+            "events": 0,
+            "line": 923,
+            "tid": 3352598,
+            "context": 0
+          }
+        },
+        {
+          "reason": "no_observed_insertion",
+          "event": {
+            "loop": 107089216,
+            "watcher": 107089680,
+            "fd": 19,
+            "pevents": 1,
+            "events": 0,
+            "line": 929,
+            "tid": 3352598,
+            "context": 0
+          }
+        },
+        {
+          "reason": "no_observed_insertion",
+          "event": {
+            "loop": 108096048,
+            "watcher": 108096616,
+            "fd": 7,
+            "pevents": 1,
+            "events": 0,
+            "line": 3283,
+            "tid": 3352598,
+            "context": 0
+          }
+        },
+        {
+          "reason": "no_observed_insertion",
+          "event": {
+            "loop": 108096048,
+            "watcher": 108096512,
+            "fd": 9,
+            "pevents": 1,
+            "events": 0,
+            "line": 3289,
+            "tid": 3352598,
+            "context": 0
+          }
+        }
+      ]
+    }
+  ]
+}

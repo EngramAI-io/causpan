@@ -1,0 +1,609 @@
+{
+  "description": "Submission-time resource resolution regression matrix; output hashes revalidated. Controlled trusted-runtime ring observations, not generic kernel ring decoding.",
+  "cases": [
+    {
+      "name": "uring-shared-c4-p4-s0-r0-i1",
+      "scenario": "uring-shared",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "concurrency": 4,
+      "pool_size": 4,
+      "shared": false,
+      "repeat": 0,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.870151556096971,
+      "report": {
+        "tool_calls": 9,
+        "incomplete_calls": 0,
+        "tool_errors": 0,
+        "server_pid": 1443769,
+        "parser": {
+          "lifecycle_lines": 24,
+          "parsed": 3414
+        },
+        "sandbox_events": 18,
+        "sandbox_tids": [
+          1443936,
+          1443937,
+          1443939,
+          1443943,
+          1443949
+        ],
+        "sandbox_syscalls": {
+          "openat": 2,
+          "pwrite64": 14,
+          "close": 2
+        },
+        "oracle_labelled": 0,
+        "baselines": {
+          "pid": {
+            "events": 18,
+            "ambiguous": 16,
+            "unattributed": 2
+          },
+          "request_window": {
+            "events": 18,
+            "unattributed": 6,
+            "ambiguous": 9,
+            "singleton": 3
+          }
+        },
+        "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+      },
+      "causal-report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "attributed_ring_operations": 24,
+        "capture_scope": "observed_syscalls_and_trusted_runtime_markers",
+        "io_uring_observation": {
+          "setup_attempts": 4,
+          "successful_setups": 4,
+          "enter_calls": 6,
+          "submissions_decoded": false
+        },
+        "descriptor_transfers": 0,
+        "descriptor_transfer_rejections": [],
+        "unpaired_descriptor_observations": [],
+        "requests": 9,
+        "joins": 0,
+        "operations": 16,
+        "operations_started": 16,
+        "operations_cancelled": 0,
+        "ipc_jobs": 8,
+        "ipc_cancelled": 0,
+        "inherited_processes": 1,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 536,
+        "parser": {
+          "lifecycle_lines": 24,
+          "parsed": 3414
+        },
+        "all_event_status": {
+          "unknown": 2571,
+          "no_request_context": 252,
+          "bound": 41
+        },
+        "fixture_score": {
+          "events": 18,
+          "no_request_context": 18
+        },
+        "fixture_events_per_request": {},
+        "analysis_id": "92c14c5451eb4de2b1e2d8de28c575d5",
+        "output_sha256": {
+          "causal-attribution.jsonl": "987ec57943dbb5efd047298f52abcb382c5da5c291ca9c82c877dc9f2a00d7c3",
+          "provenance.jsonl": "065c401ff482fb4b1f94d854b00745a11e0876774e3f6b444d4a34cbc0dcda54"
+        }
+      },
+      "ring-score": {
+        "valid": true,
+        "tool_calls": 8,
+        "ring_operations": 24,
+        "successful_writes": 16,
+        "expected_failed_reads": 8,
+        "mismatches": [],
+        "oracle": "fixture byte offsets and final contents, not used in inference"
+      },
+      "manifest": {
+        "session_id": "0d8b2f860844403b9f1641a6164b8a89",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": false,
+        "disable_io_uring": false,
+        "io_uring_control": null,
+        "code_sha256": {
+          "analyze.py": "850df40aa16e9c9f6a2756c7df4d892ff2ec8c18d04a20ec1844541386aef701",
+          "attribute.py": "6d14a7cb71ac9a80d9f95438b87377603c1642d51d0fc77949ed78fa0f637898",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "descriptor_transfers.py": "08e008311f2f2afd1bb6946245e255f1d0902186b9b96aec4182f5fb46058ef2",
+          "inspect_ring_probe.py": "56d988c93215e2ad92517f52a9848d7694acebc06b260bd2f11b12f4f74d3541",
+          "matrix.py": "359792113efaf9436dcab710b8c216ec879d278211e7c85a5035f4f70c1888f4",
+          "persistent_worker.py": "22993649ff444e91d0f61dfc51ca013af5b43b49a15bc6494a0e8af6e7bdc3d1",
+          "proxy.py": "3496cbb272a626f4d02d74798b023727acbdc09820ffaf764e6f05572f09d725",
+          "query.py": "29bdba67aacbc8d37a52866968808281da9b25aa874e5ef62fe04c170c4c9adf",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "ring_baselines.py": "c10abd16238745b2ae4a760579e901a4fd8e0254eb29d716235e951be361550c",
+          "ring_helper.py": "44024816340d38fd3333f718c77bebb3e66222c345bbd96bb76730fc568f87da",
+          "ring_observations.py": "da4c9c616c8007141240333f6c66278aa69da63432bfc26184a920074b6b7104",
+          "run.py": "582d8efd8c428b242b9a2040327c53b7f6c8eeeab0fc3cec05a37e5947be72e0",
+          "scm_rights_probe.py": "7a2ec0087150c7f925497a027a5beacd2a3c8654ffbe04a227a9c1485aa98071",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "f03fc7e078b50c0773d0923bbbbe01e5e7dd746576dc1389a0206ee13515ab34",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "score_rights.py": "4117c1f214ce7e1b20ec609a618f2de267b5dc56eec97344e15b12c28ad1ca74",
+          "score_ring.py": "ca96edbb42fbca23d0a3286ee13b59ed02542bc304ee42adf0afda9d6bc15fd1",
+          "shared_ring_adapter.py": "8cfe6a706d71b150d08b832be82e72b05c907587f7866321b63c13f986482e92",
+          "test_agent_validation.py": "fbd2153655ad92a3f6b85a877f32d166ece4c04f8af4e559a5489873d33b1fa9",
+          "test_analyze.py": "f4b912b95cfffb4ab0c8d62478061de3daec7cc85f9cf75edc8f0bb02d6c9c05",
+          "test_attribute.py": "07c3c14c2ba9625043c3a8427b2bd54465de9668f0045a890b3021a6e5595c76",
+          "test_descriptor_transfers.py": "df5ac36153651b1cc4d84bb13d2e9d436ae5b00720504c84685113cd7d0339b5",
+          "test_ipc.py": "2a062df384acf3d70e57523030af49b971f364f103ae46ea8495081f55ea3c14",
+          "test_marker.py": "daae97ec03f6dc83b3384028a20ab9ee741d332cc5989b499f63a3705003149a",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "68f12b01ae48e7bad40c921008854baa9130cd7dee1a853843438d5c2ce82d29",
+          "test_rights_oracle.py": "d21b791a9c1cca42a0dc9621f2f7a0d93ce2bb0be5bb073ae1960a345de9aa92",
+          "test_ring_baselines.py": "6261032e9fb64963b478d6693075b284eef5f24a3517107313a90afdc20d63a1",
+          "test_ring_helper.py": "24d629f453e292f7e783eeb14010d176406740714c4bab703c0673314a513ec5",
+          "test_ring_observations.py": "987e13e4e99ed5a4fdc88839d6f8e3dcd52237e9481f2c3197c28a0f5b7d9e2b",
+          "test_shared_ring_adapter.py": "71e9d9524d8e4ff139824e445c7e01f3432b53b74d57b96e1b18a8b8badeca9a",
+          "test_worker_process.py": "cecc09229e2efe81d1637b6a7098bc9ed9bb8d4eb914adaeb3b781976923f059",
+          "control-server.mjs": "05f25cba498c3666aeb418ecac9ea10694bb561166ea1d047d5c23a2aaa4a7ee",
+          "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "io_uring_probe.c": "64683c0f6a2de020d828b2e496fc86f6b2f8636d3959c05db8966976485a2f57",
+          "shared_ring.c": "92fc17a9a777cad1e3db72160ec92cb859c7e521069dcf1619a53eaa7cabd52c",
+          "native/context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a",
+          "native/build.py": "881db69efeb0883f6621d033385942008d5ec35dd8de82e7f9911680a865f1e1",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 4,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "uring-shared",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14",
+          "gcc": "gcc (SUSE Linux) 14.2.0"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "complete",
+        "ring_binary_sha256": "e4c010d1143e068fd777372e7bdc4c06fbb48c853620730651277c90f2c21ba2",
+        "execution_seconds": 1.253714598948136
+      }
+    },
+    {
+      "name": "uring-c4-p4-s0-r0-i1",
+      "scenario": "uring",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "concurrency": 4,
+      "pool_size": 4,
+      "shared": false,
+      "repeat": 0,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 2.3195675041060895,
+      "report": {
+        "tool_calls": 9,
+        "incomplete_calls": 0,
+        "tool_errors": 0,
+        "server_pid": 1443752,
+        "parser": {
+          "lifecycle_lines": 45,
+          "parsed": 4265
+        },
+        "sandbox_events": 28,
+        "sandbox_tids": [
+          1443938,
+          1443940,
+          1443944,
+          1443945,
+          1443974,
+          1443976,
+          1443981,
+          1443983,
+          1444111,
+          1444117,
+          1444122,
+          1444128
+        ],
+        "sandbox_syscalls": {
+          "openat": 9,
+          "pwrite64": 10,
+          "close": 9
+        },
+        "oracle_labelled": 0,
+        "baselines": {
+          "pid": {
+            "events": 28,
+            "ambiguous": 12,
+            "unattributed": 16
+          },
+          "request_window": {
+            "events": 28,
+            "unattributed": 19,
+            "ambiguous": 6,
+            "singleton": 3
+          }
+        },
+        "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+      },
+      "causal-report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "attributed_ring_operations": 24,
+        "capture_scope": "observed_syscalls_and_trusted_runtime_markers",
+        "io_uring_observation": {
+          "setup_attempts": 11,
+          "successful_setups": 11,
+          "enter_calls": 18,
+          "submissions_decoded": false
+        },
+        "descriptor_transfers": 0,
+        "descriptor_transfer_rejections": [],
+        "unpaired_descriptor_observations": [],
+        "requests": 9,
+        "joins": 0,
+        "operations": 12,
+        "operations_started": 12,
+        "operations_cancelled": 0,
+        "ipc_jobs": 0,
+        "ipc_cancelled": 0,
+        "inherited_processes": 8,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 852,
+        "parser": {
+          "lifecycle_lines": 45,
+          "parsed": 4265
+        },
+        "all_event_status": {
+          "unknown": 2572,
+          "no_request_context": 149,
+          "bound": 681
+        },
+        "fixture_score": {
+          "events": 28,
+          "no_request_context": 12,
+          "bound": 16
+        },
+        "fixture_events_per_request": {
+          "3": 2,
+          "4": 2,
+          "5": 2,
+          "6": 2,
+          "7": 2,
+          "8": 2,
+          "9": 2,
+          "10": 2
+        },
+        "analysis_id": "8e11a85978a04a93a882e9ffdc83535c",
+        "output_sha256": {
+          "causal-attribution.jsonl": "108262366994b1a361d8eff6503fef20361ac5e1bcba4c2fe90fb8acd72515e0",
+          "provenance.jsonl": "81a1494dc100996648337645ffa7174e0ddabd8651f54585ad9a31cec1d6e752"
+        }
+      },
+      "ring-score": {
+        "valid": true,
+        "tool_calls": 8,
+        "ring_operations": 24,
+        "successful_writes": 16,
+        "expected_failed_reads": 8,
+        "mismatches": [],
+        "oracle": "fixture byte offsets and final contents, not used in inference"
+      },
+      "manifest": {
+        "session_id": "6f243f4ed01140a28beb8e3b3ebfb302",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": false,
+        "disable_io_uring": false,
+        "io_uring_control": null,
+        "code_sha256": {
+          "analyze.py": "850df40aa16e9c9f6a2756c7df4d892ff2ec8c18d04a20ec1844541386aef701",
+          "attribute.py": "6d14a7cb71ac9a80d9f95438b87377603c1642d51d0fc77949ed78fa0f637898",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "descriptor_transfers.py": "08e008311f2f2afd1bb6946245e255f1d0902186b9b96aec4182f5fb46058ef2",
+          "inspect_ring_probe.py": "56d988c93215e2ad92517f52a9848d7694acebc06b260bd2f11b12f4f74d3541",
+          "matrix.py": "359792113efaf9436dcab710b8c216ec879d278211e7c85a5035f4f70c1888f4",
+          "persistent_worker.py": "22993649ff444e91d0f61dfc51ca013af5b43b49a15bc6494a0e8af6e7bdc3d1",
+          "proxy.py": "3496cbb272a626f4d02d74798b023727acbdc09820ffaf764e6f05572f09d725",
+          "query.py": "29bdba67aacbc8d37a52866968808281da9b25aa874e5ef62fe04c170c4c9adf",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "ring_baselines.py": "c10abd16238745b2ae4a760579e901a4fd8e0254eb29d716235e951be361550c",
+          "ring_helper.py": "44024816340d38fd3333f718c77bebb3e66222c345bbd96bb76730fc568f87da",
+          "ring_observations.py": "da4c9c616c8007141240333f6c66278aa69da63432bfc26184a920074b6b7104",
+          "run.py": "582d8efd8c428b242b9a2040327c53b7f6c8eeeab0fc3cec05a37e5947be72e0",
+          "scm_rights_probe.py": "7a2ec0087150c7f925497a027a5beacd2a3c8654ffbe04a227a9c1485aa98071",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "f03fc7e078b50c0773d0923bbbbe01e5e7dd746576dc1389a0206ee13515ab34",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "score_rights.py": "4117c1f214ce7e1b20ec609a618f2de267b5dc56eec97344e15b12c28ad1ca74",
+          "score_ring.py": "ca96edbb42fbca23d0a3286ee13b59ed02542bc304ee42adf0afda9d6bc15fd1",
+          "shared_ring_adapter.py": "8cfe6a706d71b150d08b832be82e72b05c907587f7866321b63c13f986482e92",
+          "test_agent_validation.py": "fbd2153655ad92a3f6b85a877f32d166ece4c04f8af4e559a5489873d33b1fa9",
+          "test_analyze.py": "f4b912b95cfffb4ab0c8d62478061de3daec7cc85f9cf75edc8f0bb02d6c9c05",
+          "test_attribute.py": "07c3c14c2ba9625043c3a8427b2bd54465de9668f0045a890b3021a6e5595c76",
+          "test_descriptor_transfers.py": "df5ac36153651b1cc4d84bb13d2e9d436ae5b00720504c84685113cd7d0339b5",
+          "test_ipc.py": "2a062df384acf3d70e57523030af49b971f364f103ae46ea8495081f55ea3c14",
+          "test_marker.py": "daae97ec03f6dc83b3384028a20ab9ee741d332cc5989b499f63a3705003149a",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "68f12b01ae48e7bad40c921008854baa9130cd7dee1a853843438d5c2ce82d29",
+          "test_rights_oracle.py": "d21b791a9c1cca42a0dc9621f2f7a0d93ce2bb0be5bb073ae1960a345de9aa92",
+          "test_ring_baselines.py": "6261032e9fb64963b478d6693075b284eef5f24a3517107313a90afdc20d63a1",
+          "test_ring_helper.py": "24d629f453e292f7e783eeb14010d176406740714c4bab703c0673314a513ec5",
+          "test_ring_observations.py": "987e13e4e99ed5a4fdc88839d6f8e3dcd52237e9481f2c3197c28a0f5b7d9e2b",
+          "test_shared_ring_adapter.py": "71e9d9524d8e4ff139824e445c7e01f3432b53b74d57b96e1b18a8b8badeca9a",
+          "test_worker_process.py": "cecc09229e2efe81d1637b6a7098bc9ed9bb8d4eb914adaeb3b781976923f059",
+          "control-server.mjs": "05f25cba498c3666aeb418ecac9ea10694bb561166ea1d047d5c23a2aaa4a7ee",
+          "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "io_uring_probe.c": "64683c0f6a2de020d828b2e496fc86f6b2f8636d3959c05db8966976485a2f57",
+          "shared_ring.c": "92fc17a9a777cad1e3db72160ec92cb859c7e521069dcf1619a53eaa7cabd52c",
+          "native/context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a",
+          "native/build.py": "881db69efeb0883f6621d033385942008d5ec35dd8de82e7f9911680a865f1e1",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 4,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "uring",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14",
+          "gcc": "gcc (SUSE Linux) 14.2.0"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "complete",
+        "ring_binary_sha256": "d37bf8db9bfb5bbb1a5144ba8c19c1cb93b4f7c801f027826894628410d2301b",
+        "execution_seconds": 1.6661713600624353
+      }
+    },
+    {
+      "name": "uring-reuse-c4-p4-s0-r0-i1",
+      "scenario": "uring-reuse",
+      "runtime": "node",
+      "runtime_workers": 2,
+      "concurrency": 4,
+      "pool_size": 4,
+      "shared": false,
+      "repeat": 0,
+      "instrumented": true,
+      "returncode": 0,
+      "timed_out": false,
+      "elapsed_seconds": 2.1684498658869416,
+      "report": {
+        "tool_calls": 9,
+        "incomplete_calls": 0,
+        "tool_errors": 0,
+        "server_pid": 1444327,
+        "parser": {
+          "lifecycle_lines": 45,
+          "parsed": 4270
+        },
+        "sandbox_events": 43,
+        "sandbox_tids": [
+          1444453,
+          1444454,
+          1444455,
+          1444456,
+          1444483,
+          1444486,
+          1444492,
+          1444501,
+          1444628,
+          1444635,
+          1444643,
+          1444651
+        ],
+        "sandbox_syscalls": {
+          "openat": 17,
+          "pwrite64": 9,
+          "close": 17
+        },
+        "oracle_labelled": 0,
+        "baselines": {
+          "pid": {
+            "events": 43,
+            "ambiguous": 11,
+            "unattributed": 32
+          },
+          "request_window": {
+            "events": 43,
+            "unattributed": 34,
+            "ambiguous": 6,
+            "singleton": 3
+          }
+        },
+        "tid_baseline": "Not scored: stdio request boundaries do not expose server execution TID."
+      },
+      "causal-report": {
+        "valid": true,
+        "errors": [],
+        "attribution_model": "causal-context-v2",
+        "attributed_ring_operations": 24,
+        "capture_scope": "observed_syscalls_and_trusted_runtime_markers",
+        "io_uring_observation": {
+          "setup_attempts": 11,
+          "successful_setups": 11,
+          "enter_calls": 18,
+          "submissions_decoded": false
+        },
+        "descriptor_transfers": 0,
+        "descriptor_transfer_rejections": [],
+        "unpaired_descriptor_observations": [],
+        "requests": 9,
+        "joins": 0,
+        "operations": 11,
+        "operations_started": 11,
+        "operations_cancelled": 0,
+        "ipc_jobs": 0,
+        "ipc_cancelled": 0,
+        "inherited_processes": 8,
+        "runtime_spans": 0,
+        "retroactive_socket_reads": 0,
+        "migrating_request_spans": 0,
+        "markers": 845,
+        "parser": {
+          "lifecycle_lines": 45,
+          "parsed": 4270
+        },
+        "all_event_status": {
+          "unknown": 2570,
+          "no_request_context": 150,
+          "bound": 694
+        },
+        "fixture_score": {
+          "events": 43,
+          "no_request_context": 11,
+          "bound": 32
+        },
+        "fixture_events_per_request": {
+          "3": 4,
+          "4": 4,
+          "5": 4,
+          "6": 4,
+          "7": 4,
+          "8": 4,
+          "9": 4,
+          "10": 4
+        },
+        "analysis_id": "8fa06ffae04447ce8864351666ebcddc",
+        "output_sha256": {
+          "causal-attribution.jsonl": "0838e362175e7642440f67bf4bf8b7bd2c50ccba14fc02d94c92a8bdc3bca1d1",
+          "provenance.jsonl": "00827fc0b7f30e277697b187b6ee469b29634cc8cce8535946b156bcbedead5e"
+        }
+      },
+      "ring-score": {
+        "valid": true,
+        "tool_calls": 8,
+        "ring_operations": 24,
+        "successful_writes": 16,
+        "expected_failed_reads": 8,
+        "mismatches": [],
+        "oracle": "fixture byte offsets and final contents, not used in inference"
+      },
+      "manifest": {
+        "session_id": "84c9ce51ffd14ec583b32cd0338b6cb0",
+        "runtime": "node",
+        "runtime_workers": 2,
+        "capture": "strace",
+        "seccomp": false,
+        "disable_io_uring": false,
+        "io_uring_control": null,
+        "code_sha256": {
+          "analyze.py": "850df40aa16e9c9f6a2756c7df4d892ff2ec8c18d04a20ec1844541386aef701",
+          "attribute.py": "6d14a7cb71ac9a80d9f95438b87377603c1642d51d0fc77949ed78fa0f637898",
+          "benchmark.py": "0e905a92b53fdac822b747329bdfaaf1fd827420e8d05c515496de5bbca144a2",
+          "build_tokio.py": "12397b114fa574e7a8d234a2764420a1905dc0fca9db8512fe94de473b8d1783",
+          "descriptor_transfers.py": "08e008311f2f2afd1bb6946245e255f1d0902186b9b96aec4182f5fb46058ef2",
+          "inspect_ring_probe.py": "56d988c93215e2ad92517f52a9848d7694acebc06b260bd2f11b12f4f74d3541",
+          "matrix.py": "359792113efaf9436dcab710b8c216ec879d278211e7c85a5035f4f70c1888f4",
+          "persistent_worker.py": "22993649ff444e91d0f61dfc51ca013af5b43b49a15bc6494a0e8af6e7bdc3d1",
+          "proxy.py": "3496cbb272a626f4d02d74798b023727acbdc09820ffaf764e6f05572f09d725",
+          "query.py": "29bdba67aacbc8d37a52866968808281da9b25aa874e5ef62fe04c170c4c9adf",
+          "render.py": "07740050a485603aae8fac7718a078fc276ebc8772cba41da6e591f2d8fec6b5",
+          "ring_baselines.py": "c10abd16238745b2ae4a760579e901a4fd8e0254eb29d716235e951be361550c",
+          "ring_helper.py": "44024816340d38fd3333f718c77bebb3e66222c345bbd96bb76730fc568f87da",
+          "ring_observations.py": "da4c9c616c8007141240333f6c66278aa69da63432bfc26184a920074b6b7104",
+          "run.py": "582d8efd8c428b242b9a2040327c53b7f6c8eeeab0fc3cec05a37e5947be72e0",
+          "scm_rights_probe.py": "7a2ec0087150c7f925497a027a5beacd2a3c8654ffbe04a227a9c1485aa98071",
+          "score_batch.py": "7086fc129cf82fed9d96dcacd2aa412e6109fb9bb0addde2d83d8be669f28c63",
+          "score_control.py": "f03fc7e078b50c0773d0923bbbbe01e5e7dd746576dc1389a0206ee13515ab34",
+          "score_fileops.py": "1c490935c5e4f8e82d9548a7d211e750dbfa391b8c15fec3c0f36adc8214dfe5",
+          "score_network.py": "b9a75300fa0291f0131afd395ec4061713b4829761ddb13db05de8d7195859a9",
+          "score_rights.py": "4117c1f214ce7e1b20ec609a618f2de267b5dc56eec97344e15b12c28ad1ca74",
+          "score_ring.py": "ca96edbb42fbca23d0a3286ee13b59ed02542bc304ee42adf0afda9d6bc15fd1",
+          "shared_ring_adapter.py": "8cfe6a706d71b150d08b832be82e72b05c907587f7866321b63c13f986482e92",
+          "test_agent_validation.py": "fbd2153655ad92a3f6b85a877f32d166ece4c04f8af4e559a5489873d33b1fa9",
+          "test_analyze.py": "f4b912b95cfffb4ab0c8d62478061de3daec7cc85f9cf75edc8f0bb02d6c9c05",
+          "test_attribute.py": "07c3c14c2ba9625043c3a8427b2bd54465de9668f0045a890b3021a6e5595c76",
+          "test_descriptor_transfers.py": "df5ac36153651b1cc4d84bb13d2e9d436ae5b00720504c84685113cd7d0339b5",
+          "test_ipc.py": "2a062df384acf3d70e57523030af49b971f364f103ae46ea8495081f55ea3c14",
+          "test_marker.py": "daae97ec03f6dc83b3384028a20ab9ee741d332cc5989b499f63a3705003149a",
+          "test_oracles.py": "e1e3eb219aed8352d057215d90ad17cd9fb696aa6adbef250c714ec348d6592e",
+          "test_query.py": "68f12b01ae48e7bad40c921008854baa9130cd7dee1a853843438d5c2ce82d29",
+          "test_rights_oracle.py": "d21b791a9c1cca42a0dc9621f2f7a0d93ce2bb0be5bb073ae1960a345de9aa92",
+          "test_ring_baselines.py": "6261032e9fb64963b478d6693075b284eef5f24a3517107313a90afdc20d63a1",
+          "test_ring_helper.py": "24d629f453e292f7e783eeb14010d176406740714c4bab703c0673314a513ec5",
+          "test_ring_observations.py": "987e13e4e99ed5a4fdc88839d6f8e3dcd52237e9481f2c3197c28a0f5b7d9e2b",
+          "test_shared_ring_adapter.py": "71e9d9524d8e4ff139824e445c7e01f3432b53b74d57b96e1b18a8b8badeca9a",
+          "test_worker_process.py": "cecc09229e2efe81d1637b6a7098bc9ed9bb8d4eb914adaeb3b781976923f059",
+          "control-server.mjs": "05f25cba498c3666aeb418ecac9ea10694bb561166ea1d047d5c23a2aaa4a7ee",
+          "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+          "clone_files_probe.c": "ad9402216ece94c8cb6270d688a6cbc71c946c053f0a425a749d602aa5288b73",
+          "io_uring_probe.c": "64683c0f6a2de020d828b2e496fc86f6b2f8636d3959c05db8966976485a2f57",
+          "shared_ring.c": "92fc17a9a777cad1e3db72160ec92cb859c7e521069dcf1619a53eaa7cabd52c",
+          "native/context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a",
+          "native/build.py": "881db69efeb0883f6621d033385942008d5ec35dd8de82e7f9911680a865f1e1",
+          "native/build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+          "package-lock.json": "4daa9275099e31bfe2eb0fcdd10f53ceb937760ede23426d54be5b27fdaa74c4",
+          "native/context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2"
+        },
+        "mode": "replay",
+        "concurrency": 4,
+        "shared": false,
+        "instrumented": true,
+        "pool_size": 4,
+        "string_ids": false,
+        "spoof_context": false,
+        "scenario": "uring-reuse",
+        "batches": 2,
+        "model": null,
+        "platform": "Linux-6.4.0-150600.23.53-64kb-aarch64-with-glibc2.38",
+        "versions": {
+          "node": "v24.20.0",
+          "strace": "strace -- version 5.14",
+          "gcc": "gcc (SUSE Linux) 14.2.0"
+        },
+        "server": {
+          "@modelcontextprotocol/server-filesystem": "2026.8.31"
+        },
+        "status": "complete",
+        "ring_binary_sha256": "d37bf8db9bfb5bbb1a5144ba8c19c1cb93b4f7c801f027826894628410d2301b",
+        "execution_seconds": 1.5334638950880617
+      }
+    }
+  ],
+  "totals": {
+    "tool_calls": 24,
+    "ring_operations": 72,
+    "successful_writes": 48,
+    "expected_failed_reads": 24
+  }
+}

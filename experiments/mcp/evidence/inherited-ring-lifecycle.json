@@ -1,0 +1,72 @@
+{
+  "valid": true,
+  "operations": [
+    {
+      "user_data": 103,
+      "opcode": 22,
+      "fd": -1,
+      "offset": 256,
+      "requested_bytes": 7,
+      "result": -9,
+      "succeeded": false,
+      "evidence": "parent_snapshot_of_inherited_shared_ring"
+    },
+    {
+      "user_data": 101,
+      "opcode": 23,
+      "fd": 4,
+      "offset": 0,
+      "requested_bytes": 7,
+      "result": 7,
+      "succeeded": true,
+      "evidence": "parent_snapshot_of_inherited_shared_ring"
+    },
+    {
+      "user_data": 102,
+      "opcode": 23,
+      "fd": 4,
+      "offset": 128,
+      "requested_bytes": 7,
+      "result": 7,
+      "succeeded": true,
+      "evidence": "parent_snapshot_of_inherited_shared_ring"
+    }
+  ],
+  "lifecycle": {
+    "collector_pid": 2943841,
+    "submitter_pid": 2943842,
+    "setup": "strace.2943841:46",
+    "fork": "strace.2943841:49",
+    "enter": "strace.2943842:16",
+    "snapshots": {
+      "sq.bin": "strace.2943841:53",
+      "sqes.bin": "strace.2943841:56",
+      "cq.bin": "strace.2943841:63"
+    },
+    "parser": {
+      "lifecycle_lines": 15,
+      "parsed": 84
+    }
+  },
+  "limitations": [
+    "collector creates ring before fork",
+    "cooperative worker stops",
+    "helper provides layout metadata",
+    "no MCP ownership or kernel worker identity",
+    "not a collector for arbitrary preexisting rings"
+  ],
+  "sha256": {
+    "io_uring_probe.c": "a6f53f6c6482973c2ba174e88ee57e4628310ea9e573b74a59bf0755ff7a3b48",
+    "inherited_ring_probe.py": "d56523615ad964fc8a7d8fc4971487543cf486e8e9eb5a5933fa98b8afef0873",
+    "ring_memory_probe.py": "2db797ed5fbfc7b2eb334e7477db6b14eeecacc2fb12806e252e61002c5e9983",
+    "helper": "6c4adf6fb0c7db7d980199c43a412b96b6a042d652d0e5eafffbacb7cefc0850",
+    "strace.2943841": "90058ba81d3f76fc0bf915f07476e1586560b3fecc28475880dd582c172f4008",
+    "strace.2943842": "bed910e0cc45767ba1c53091a47f0813cfffed02e76697009ef062ca720cb25e",
+    "sq.bin": "de91acd7945e5bfe696d5910e6ea6efa186607a091320da63f6cf749b6f3bf96",
+    "sqes.bin": "d03a8a4c6afa832803c802a96d6da823ae90d3de7da2f1e5f041085108d093c4",
+    "cq.bin": "20a87f966f752f0c719abbcd8245e71ad37f17b97e7ea8db15437a359ca2415b",
+    "metadata.jsonl": "68f122b55c2acce51f86d7103a08e679ba83071c10d323bd2e4a8fe1ed43445b",
+    "stdout.jsonl": "6dc0b971d859503241a479f42a30ad72fde2a7db6879fc933c24af5659efdc72",
+    "fixture.bin": "3bd77c0432eaa83965284c0a0324147f6914f133e098d3c69ad337a6573b4f84"
+  }
+}

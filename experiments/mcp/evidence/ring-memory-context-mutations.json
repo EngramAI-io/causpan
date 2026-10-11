@@ -1,0 +1,14 @@
+[
+  {
+    "mutation": "setup_context",
+    "rejection": "collector lifecycle request context disagrees with worker"
+  },
+  {
+    "mutation": "snapshot_context",
+    "rejection": "snapshot request context mismatch"
+  },
+  {
+    "mutation": "snapshot_timing",
+    "rejection": "snapshot timing missing"
+  }
+]

@@ -1,0 +1,433 @@
+{
+  "run": "results/mcp/native-ring-mcp-oracle",
+  "score": {
+    "requests": 16,
+    "covered_requests": 16,
+    "checked_links": 48,
+    "mismatches": 0,
+    "checks": [
+      {
+        "line": 875,
+        "rpc_id": 1,
+        "token": "replay-0",
+        "expected_fd": 24,
+        "observed_fd": 24,
+        "correct": true
+      },
+      {
+        "line": 878,
+        "rpc_id": 2,
+        "token": "replay-1",
+        "expected_fd": 25,
+        "observed_fd": 25,
+        "correct": true
+      },
+      {
+        "line": 881,
+        "rpc_id": 3,
+        "token": "replay-2",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "line": 884,
+        "rpc_id": 4,
+        "token": "replay-3",
+        "expected_fd": 27,
+        "observed_fd": 27,
+        "correct": true
+      },
+      {
+        "line": 887,
+        "rpc_id": 5,
+        "token": "replay-4",
+        "expected_fd": 28,
+        "observed_fd": 28,
+        "correct": true
+      },
+      {
+        "line": 890,
+        "rpc_id": 6,
+        "token": "replay-5",
+        "expected_fd": 29,
+        "observed_fd": 29,
+        "correct": true
+      },
+      {
+        "line": 893,
+        "rpc_id": 7,
+        "token": "replay-6",
+        "expected_fd": 30,
+        "observed_fd": 30,
+        "correct": true
+      },
+      {
+        "line": 896,
+        "rpc_id": 8,
+        "token": "replay-7",
+        "expected_fd": 31,
+        "observed_fd": 31,
+        "correct": true
+      },
+      {
+        "line": 951,
+        "rpc_id": 1,
+        "token": "replay-0",
+        "expected_fd": 24,
+        "observed_fd": 24,
+        "correct": true
+      },
+      {
+        "line": 954,
+        "rpc_id": 2,
+        "token": "replay-1",
+        "expected_fd": 25,
+        "observed_fd": 25,
+        "correct": true
+      },
+      {
+        "line": 957,
+        "rpc_id": 3,
+        "token": "replay-2",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "line": 960,
+        "rpc_id": 4,
+        "token": "replay-3",
+        "expected_fd": 27,
+        "observed_fd": 27,
+        "correct": true
+      },
+      {
+        "line": 963,
+        "rpc_id": 5,
+        "token": "replay-4",
+        "expected_fd": 28,
+        "observed_fd": 28,
+        "correct": true
+      },
+      {
+        "line": 966,
+        "rpc_id": 6,
+        "token": "replay-5",
+        "expected_fd": 29,
+        "observed_fd": 29,
+        "correct": true
+      },
+      {
+        "line": 969,
+        "rpc_id": 7,
+        "token": "replay-6",
+        "expected_fd": 30,
+        "observed_fd": 30,
+        "correct": true
+      },
+      {
+        "line": 972,
+        "rpc_id": 8,
+        "token": "replay-7",
+        "expected_fd": 31,
+        "observed_fd": 31,
+        "correct": true
+      },
+      {
+        "line": 1000,
+        "rpc_id": 1,
+        "token": "replay-0",
+        "expected_fd": 24,
+        "observed_fd": 24,
+        "correct": true
+      },
+      {
+        "line": 1003,
+        "rpc_id": 2,
+        "token": "replay-1",
+        "expected_fd": 25,
+        "observed_fd": 25,
+        "correct": true
+      },
+      {
+        "line": 1006,
+        "rpc_id": 3,
+        "token": "replay-2",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "line": 1009,
+        "rpc_id": 4,
+        "token": "replay-3",
+        "expected_fd": 27,
+        "observed_fd": 27,
+        "correct": true
+      },
+      {
+        "line": 1012,
+        "rpc_id": 5,
+        "token": "replay-4",
+        "expected_fd": 28,
+        "observed_fd": 28,
+        "correct": true
+      },
+      {
+        "line": 1015,
+        "rpc_id": 6,
+        "token": "replay-5",
+        "expected_fd": 29,
+        "observed_fd": 29,
+        "correct": true
+      },
+      {
+        "line": 1018,
+        "rpc_id": 7,
+        "token": "replay-6",
+        "expected_fd": 30,
+        "observed_fd": 30,
+        "correct": true
+      },
+      {
+        "line": 1021,
+        "rpc_id": 8,
+        "token": "replay-7",
+        "expected_fd": 31,
+        "observed_fd": 31,
+        "correct": true
+      },
+      {
+        "line": 1765,
+        "rpc_id": 9,
+        "token": "replay-8",
+        "expected_fd": 25,
+        "observed_fd": 25,
+        "correct": true
+      },
+      {
+        "line": 1768,
+        "rpc_id": 10,
+        "token": "replay-9",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "line": 1771,
+        "rpc_id": 11,
+        "token": "replay-10",
+        "expected_fd": 28,
+        "observed_fd": 28,
+        "correct": true
+      },
+      {
+        "line": 1774,
+        "rpc_id": 12,
+        "token": "replay-11",
+        "expected_fd": 29,
+        "observed_fd": 29,
+        "correct": true
+      },
+      {
+        "line": 1777,
+        "rpc_id": 13,
+        "token": "replay-12",
+        "expected_fd": 30,
+        "observed_fd": 30,
+        "correct": true
+      },
+      {
+        "line": 1780,
+        "rpc_id": 14,
+        "token": "replay-13",
+        "expected_fd": 32,
+        "observed_fd": 32,
+        "correct": true
+      },
+      {
+        "line": 1783,
+        "rpc_id": 15,
+        "token": "replay-14",
+        "expected_fd": 33,
+        "observed_fd": 33,
+        "correct": true
+      },
+      {
+        "line": 1786,
+        "rpc_id": 16,
+        "token": "replay-15",
+        "expected_fd": 34,
+        "observed_fd": 34,
+        "correct": true
+      },
+      {
+        "line": 1837,
+        "rpc_id": 9,
+        "token": "replay-8",
+        "expected_fd": 25,
+        "observed_fd": 25,
+        "correct": true
+      },
+      {
+        "line": 1840,
+        "rpc_id": 10,
+        "token": "replay-9",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "line": 1843,
+        "rpc_id": 11,
+        "token": "replay-10",
+        "expected_fd": 28,
+        "observed_fd": 28,
+        "correct": true
+      },
+      {
+        "line": 1846,
+        "rpc_id": 12,
+        "token": "replay-11",
+        "expected_fd": 29,
+        "observed_fd": 29,
+        "correct": true
+      },
+      {
+        "line": 1849,
+        "rpc_id": 13,
+        "token": "replay-12",
+        "expected_fd": 30,
+        "observed_fd": 30,
+        "correct": true
+      },
+      {
+        "line": 1852,
+        "rpc_id": 14,
+        "token": "replay-13",
+        "expected_fd": 32,
+        "observed_fd": 32,
+        "correct": true
+      },
+      {
+        "line": 1855,
+        "rpc_id": 15,
+        "token": "replay-14",
+        "expected_fd": 33,
+        "observed_fd": 33,
+        "correct": true
+      },
+      {
+        "line": 1858,
+        "rpc_id": 16,
+        "token": "replay-15",
+        "expected_fd": 34,
+        "observed_fd": 34,
+        "correct": true
+      },
+      {
+        "line": 1886,
+        "rpc_id": 9,
+        "token": "replay-8",
+        "expected_fd": 25,
+        "observed_fd": 25,
+        "correct": true
+      },
+      {
+        "line": 1889,
+        "rpc_id": 10,
+        "token": "replay-9",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "line": 1892,
+        "rpc_id": 11,
+        "token": "replay-10",
+        "expected_fd": 28,
+        "observed_fd": 28,
+        "correct": true
+      },
+      {
+        "line": 1895,
+        "rpc_id": 12,
+        "token": "replay-11",
+        "expected_fd": 29,
+        "observed_fd": 29,
+        "correct": true
+      },
+      {
+        "line": 1898,
+        "rpc_id": 13,
+        "token": "replay-12",
+        "expected_fd": 30,
+        "observed_fd": 30,
+        "correct": true
+      },
+      {
+        "line": 1901,
+        "rpc_id": 14,
+        "token": "replay-13",
+        "expected_fd": 32,
+        "observed_fd": 32,
+        "correct": true
+      },
+      {
+        "line": 1904,
+        "rpc_id": 15,
+        "token": "replay-14",
+        "expected_fd": 33,
+        "observed_fd": 33,
+        "correct": true
+      },
+      {
+        "line": 1907,
+        "rpc_id": 16,
+        "token": "replay-15",
+        "expected_fd": 34,
+        "observed_fd": 34,
+        "correct": true
+      }
+    ],
+    "oracle_sha256": "238901765998f9971c2bef40bcb5f84fcbaa14988236055a2387d7d2481ac0d7",
+    "limitations": [
+      "validates claimed client-socket creation ancestry only, not all kernel effects",
+      "numeric FD oracle cannot distinguish same-number incarnations within one request",
+      "workload records Node private socket handle FD at connect; not a production identity source"
+    ]
+  },
+  "swapped_socket_oracle_mismatches": 6,
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 16,
+    "mcp_replay": true,
+    "concurrency": 8,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "c6fa8a52a12e9a19455e6a87ab66449b73c25439929f9d6eb91c8454bff120a0",
+      "mcp-network.mjs": "1e933db7501410805ec66eb7ecb2c648b8cb13316e0b0a53d1e2e860ceeeddbd",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "fba9563fd84d3a7cfb8ab6cadad24d752fc60e54e97ffce66c8b662e81a4c165",
+      "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+      "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 68,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "6b824f032e9f48236c942bfc9c3a8e10edbb7d706c708570dad5ba94ddbfbfa6",
+    "socket_links": 65,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "e32d55fec11f2792a407b805da862a10ac8bc03ed87e602ecac5c61c262f505c",
+    "resource_context_sha256": "90283c0ce56ffedc819ac166d971b8931010cbaaa873be3b0e02adcdf821adba",
+    "batches": 22,
+    "operations": 71,
+    "report_sha256": "4a532423b42872aa02070ece015b803c6cf64731455daa49e12dc1e21fa11b3d"
+  }
+}

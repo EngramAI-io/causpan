@@ -1,0 +1,588 @@
+{
+  "valid": true,
+  "operations": 39,
+  "references": [
+    {
+      "target_fd": 12,
+      "close_epoch": 0,
+      "control": 1,
+      "line": 73,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 14,
+      "close_epoch": 0,
+      "control": 1,
+      "line": 76,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 17,
+      "close_epoch": 0,
+      "control": 1,
+      "line": 125,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 19,
+      "close_epoch": 0,
+      "control": 1,
+      "line": 128,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 21,
+      "close_epoch": 0,
+      "control": 1,
+      "line": 131,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 22,
+      "close_epoch": 0,
+      "control": 1,
+      "line": 134,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 23,
+      "close_epoch": 0,
+      "control": 1,
+      "line": 152,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 22,
+      "close_epoch": 0,
+      "control": 1,
+      "line": 155,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 22,
+      "close_epoch": 0,
+      "control": 3,
+      "line": 169,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 24,
+      "close_epoch": 0,
+      "control": 1,
+      "line": 183,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 22,
+      "close_epoch": 1,
+      "control": 1,
+      "line": 197,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 24,
+      "close_epoch": 0,
+      "control": 1,
+      "line": 200,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 24,
+      "close_epoch": 0,
+      "control": 3,
+      "line": 214,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 23,
+      "close_epoch": 1,
+      "control": 1,
+      "line": 228,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 24,
+      "close_epoch": 1,
+      "control": 1,
+      "line": 242,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 23,
+      "close_epoch": 1,
+      "control": 1,
+      "line": 245,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 23,
+      "close_epoch": 1,
+      "control": 3,
+      "line": 259,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 22,
+      "close_epoch": 2,
+      "control": 1,
+      "line": 273,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 23,
+      "close_epoch": 2,
+      "control": 1,
+      "line": 287,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 22,
+      "close_epoch": 2,
+      "control": 1,
+      "line": 290,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 22,
+      "close_epoch": 2,
+      "control": 3,
+      "line": 304,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 24,
+      "close_epoch": 2,
+      "control": 1,
+      "line": 318,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 22,
+      "close_epoch": 3,
+      "control": 1,
+      "line": 332,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 24,
+      "close_epoch": 2,
+      "control": 1,
+      "line": 335,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 24,
+      "close_epoch": 2,
+      "control": 3,
+      "line": 349,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 23,
+      "close_epoch": 3,
+      "control": 1,
+      "line": 363,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 24,
+      "close_epoch": 3,
+      "control": 1,
+      "line": 377,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 23,
+      "close_epoch": 3,
+      "control": 1,
+      "line": 380,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 23,
+      "close_epoch": 3,
+      "control": 3,
+      "line": 394,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 22,
+      "close_epoch": 4,
+      "control": 1,
+      "line": 408,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 23,
+      "close_epoch": 4,
+      "control": 1,
+      "line": 422,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 22,
+      "close_epoch": 4,
+      "control": 1,
+      "line": 425,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 22,
+      "close_epoch": 4,
+      "control": 3,
+      "line": 439,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 24,
+      "close_epoch": 4,
+      "control": 1,
+      "line": 453,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 22,
+      "close_epoch": 5,
+      "control": 1,
+      "line": 467,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 24,
+      "close_epoch": 4,
+      "control": 1,
+      "line": 470,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 24,
+      "close_epoch": 4,
+      "control": 3,
+      "line": 484,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 7,
+      "close_epoch": 0,
+      "control": 1,
+      "line": 519,
+      "unresolved_close": false
+    },
+    {
+      "target_fd": 9,
+      "close_epoch": 0,
+      "control": 1,
+      "line": 522,
+      "unresolved_close": false
+    }
+  ],
+  "closes": [
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 5,
+      "return_line": 6
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 7,
+      "return_line": 8
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 9,
+      "return_line": 10
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 11,
+      "return_line": 12
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 13,
+      "return_line": 14
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 15,
+      "return_line": 16
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 17,
+      "return_line": 18
+    },
+    {
+      "fd": 4,
+      "result": 0,
+      "entry_line": 21,
+      "return_line": 22
+    },
+    {
+      "fd": 4,
+      "result": 0,
+      "entry_line": 23,
+      "return_line": 24
+    },
+    {
+      "fd": 4,
+      "result": 0,
+      "entry_line": 25,
+      "return_line": 26
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 27,
+      "return_line": 28
+    },
+    {
+      "fd": 20,
+      "result": 0,
+      "entry_line": 107,
+      "return_line": 108
+    },
+    {
+      "fd": 20,
+      "result": 0,
+      "entry_line": 109,
+      "return_line": 110
+    },
+    {
+      "fd": 20,
+      "result": 0,
+      "entry_line": 111,
+      "return_line": 112
+    },
+    {
+      "fd": 20,
+      "result": 0,
+      "entry_line": 114,
+      "return_line": 115
+    },
+    {
+      "fd": 20,
+      "result": 0,
+      "entry_line": 116,
+      "return_line": 117
+    },
+    {
+      "fd": 20,
+      "result": 0,
+      "entry_line": 118,
+      "return_line": 119
+    },
+    {
+      "fd": 22,
+      "result": 0,
+      "entry_line": 176,
+      "return_line": 177
+    },
+    {
+      "fd": 23,
+      "result": 0,
+      "entry_line": 190,
+      "return_line": 191
+    },
+    {
+      "fd": 24,
+      "result": 0,
+      "entry_line": 221,
+      "return_line": 222
+    },
+    {
+      "fd": 22,
+      "result": 0,
+      "entry_line": 235,
+      "return_line": 236
+    },
+    {
+      "fd": 23,
+      "result": 0,
+      "entry_line": 266,
+      "return_line": 267
+    },
+    {
+      "fd": 24,
+      "result": 0,
+      "entry_line": 280,
+      "return_line": 281
+    },
+    {
+      "fd": 22,
+      "result": 0,
+      "entry_line": 311,
+      "return_line": 312
+    },
+    {
+      "fd": 23,
+      "result": 0,
+      "entry_line": 325,
+      "return_line": 326
+    },
+    {
+      "fd": 24,
+      "result": 0,
+      "entry_line": 356,
+      "return_line": 357
+    },
+    {
+      "fd": 22,
+      "result": 0,
+      "entry_line": 370,
+      "return_line": 371
+    },
+    {
+      "fd": 23,
+      "result": 0,
+      "entry_line": 401,
+      "return_line": 402
+    },
+    {
+      "fd": 24,
+      "result": 0,
+      "entry_line": 415,
+      "return_line": 416
+    },
+    {
+      "fd": 22,
+      "result": 0,
+      "entry_line": 446,
+      "return_line": 447
+    },
+    {
+      "fd": 23,
+      "result": 0,
+      "entry_line": 460,
+      "return_line": 461
+    },
+    {
+      "fd": 21,
+      "result": 0,
+      "entry_line": 491,
+      "return_line": 492
+    },
+    {
+      "fd": 24,
+      "result": 0,
+      "entry_line": 493,
+      "return_line": 494
+    },
+    {
+      "fd": 22,
+      "result": 0,
+      "entry_line": 495,
+      "return_line": 496
+    },
+    {
+      "fd": 12,
+      "result": 0,
+      "entry_line": 501,
+      "return_line": 503
+    },
+    {
+      "fd": 13,
+      "result": 0,
+      "entry_line": 504,
+      "return_line": 505
+    },
+    {
+      "fd": 11,
+      "result": 0,
+      "entry_line": 506,
+      "return_line": 507
+    },
+    {
+      "fd": 14,
+      "result": 0,
+      "entry_line": 508,
+      "return_line": 509
+    },
+    {
+      "fd": 10,
+      "result": 0,
+      "entry_line": 510,
+      "return_line": 511
+    },
+    {
+      "fd": 7,
+      "result": 0,
+      "entry_line": 531,
+      "return_line": 532
+    },
+    {
+      "fd": 8,
+      "result": 0,
+      "entry_line": 533,
+      "return_line": 534
+    },
+    {
+      "fd": 4,
+      "result": 0,
+      "entry_line": 535,
+      "return_line": 536
+    },
+    {
+      "fd": 9,
+      "result": 0,
+      "entry_line": 537,
+      "return_line": 538
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 539,
+      "return_line": 540
+    },
+    {
+      "fd": 5,
+      "result": 0,
+      "entry_line": 541,
+      "return_line": 542
+    },
+    {
+      "fd": 6,
+      "result": 0,
+      "entry_line": 543,
+      "return_line": 544
+    }
+  ],
+  "targets_crossing_successful_closes": {
+    "22": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "23": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "24": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "log_sha256": "63574f95adbf9de87e9c9208803bba561374c5ade88dfd42551f5ff4ac5b8986",
+  "limitations": [
+    "single process shared descriptor table assumed",
+    "epochs count observed successful closes only",
+    "creation, dup, transfer, close_range and failed-close effects untracked",
+    "epochs are not stable resource identities or request owners"
+  ]
+}

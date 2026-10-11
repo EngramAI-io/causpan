@@ -1,0 +1,369 @@
+{
+  "installations": [
+    {
+      "id": "socket-install:122",
+      "fd": 21,
+      "syscall": 198,
+      "entry_line": 121,
+      "return_line": 122
+    },
+    {
+      "id": "socket-install:124",
+      "fd": 22,
+      "syscall": 198,
+      "entry_line": 123,
+      "return_line": 124
+    },
+    {
+      "id": "socket-install:153",
+      "fd": 23,
+      "syscall": 242,
+      "entry_line": 152,
+      "return_line": 153
+    },
+    {
+      "id": "socket-install:184",
+      "fd": 24,
+      "syscall": 198,
+      "entry_line": 183,
+      "return_line": 184
+    },
+    {
+      "id": "socket-install:200",
+      "fd": 22,
+      "syscall": 242,
+      "entry_line": 199,
+      "return_line": 200
+    },
+    {
+      "id": "socket-install:233",
+      "fd": 23,
+      "syscall": 198,
+      "entry_line": 232,
+      "return_line": 233
+    },
+    {
+      "id": "socket-install:249",
+      "fd": 24,
+      "syscall": 242,
+      "entry_line": 248,
+      "return_line": 249
+    },
+    {
+      "id": "socket-install:282",
+      "fd": 22,
+      "syscall": 198,
+      "entry_line": 281,
+      "return_line": 282
+    },
+    {
+      "id": "socket-install:298",
+      "fd": 23,
+      "syscall": 242,
+      "entry_line": 297,
+      "return_line": 298
+    },
+    {
+      "id": "socket-install:331",
+      "fd": 24,
+      "syscall": 198,
+      "entry_line": 330,
+      "return_line": 331
+    },
+    {
+      "id": "socket-install:347",
+      "fd": 22,
+      "syscall": 242,
+      "entry_line": 346,
+      "return_line": 347
+    },
+    {
+      "id": "socket-install:380",
+      "fd": 23,
+      "syscall": 198,
+      "entry_line": 379,
+      "return_line": 380
+    },
+    {
+      "id": "socket-install:396",
+      "fd": 24,
+      "syscall": 242,
+      "entry_line": 395,
+      "return_line": 396
+    },
+    {
+      "id": "socket-install:429",
+      "fd": 22,
+      "syscall": 198,
+      "entry_line": 428,
+      "return_line": 429
+    },
+    {
+      "id": "socket-install:445",
+      "fd": 23,
+      "syscall": 242,
+      "entry_line": 444,
+      "return_line": 445
+    },
+    {
+      "id": "socket-install:478",
+      "fd": 24,
+      "syscall": 198,
+      "entry_line": 477,
+      "return_line": 478
+    },
+    {
+      "id": "socket-install:494",
+      "fd": 22,
+      "syscall": 242,
+      "entry_line": 493,
+      "return_line": 494
+    }
+  ],
+  "references": [
+    {
+      "line": 74,
+      "target_fd": 12,
+      "installation": null,
+      "status": "unresolved"
+    },
+    {
+      "line": 78,
+      "target_fd": 14,
+      "installation": null,
+      "status": "unresolved"
+    },
+    {
+      "line": 130,
+      "target_fd": 17,
+      "installation": null,
+      "status": "unresolved"
+    },
+    {
+      "line": 133,
+      "target_fd": 19,
+      "installation": null,
+      "status": "unresolved"
+    },
+    {
+      "line": 136,
+      "target_fd": 21,
+      "installation": "socket-install:122",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 139,
+      "target_fd": 22,
+      "installation": "socket-install:124",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 159,
+      "target_fd": 23,
+      "installation": "socket-install:153",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 162,
+      "target_fd": 22,
+      "installation": "socket-install:124",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 176,
+      "target_fd": 22,
+      "installation": "socket-install:124",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 192,
+      "target_fd": 24,
+      "installation": "socket-install:184",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 208,
+      "target_fd": 22,
+      "installation": "socket-install:200",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 211,
+      "target_fd": 24,
+      "installation": "socket-install:184",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 225,
+      "target_fd": 24,
+      "installation": "socket-install:184",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 241,
+      "target_fd": 23,
+      "installation": "socket-install:233",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 257,
+      "target_fd": 24,
+      "installation": "socket-install:249",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 260,
+      "target_fd": 23,
+      "installation": "socket-install:233",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 274,
+      "target_fd": 23,
+      "installation": "socket-install:233",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 290,
+      "target_fd": 22,
+      "installation": "socket-install:282",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 306,
+      "target_fd": 23,
+      "installation": "socket-install:298",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 309,
+      "target_fd": 22,
+      "installation": "socket-install:282",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 323,
+      "target_fd": 22,
+      "installation": "socket-install:282",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 339,
+      "target_fd": 24,
+      "installation": "socket-install:331",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 355,
+      "target_fd": 22,
+      "installation": "socket-install:347",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 358,
+      "target_fd": 24,
+      "installation": "socket-install:331",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 372,
+      "target_fd": 24,
+      "installation": "socket-install:331",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 388,
+      "target_fd": 23,
+      "installation": "socket-install:380",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 404,
+      "target_fd": 24,
+      "installation": "socket-install:396",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 407,
+      "target_fd": 23,
+      "installation": "socket-install:380",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 421,
+      "target_fd": 23,
+      "installation": "socket-install:380",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 437,
+      "target_fd": 22,
+      "installation": "socket-install:429",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 453,
+      "target_fd": 23,
+      "installation": "socket-install:445",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 456,
+      "target_fd": 22,
+      "installation": "socket-install:429",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 470,
+      "target_fd": 22,
+      "installation": "socket-install:429",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 486,
+      "target_fd": 24,
+      "installation": "socket-install:478",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 502,
+      "target_fd": 22,
+      "installation": "socket-install:494",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 505,
+      "target_fd": 24,
+      "installation": "socket-install:478",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 519,
+      "target_fd": 24,
+      "installation": "socket-install:478",
+      "status": "observed_socket_installation"
+    },
+    {
+      "line": 554,
+      "target_fd": 7,
+      "installation": null,
+      "status": "unresolved"
+    },
+    {
+      "line": 557,
+      "target_fd": 9,
+      "installation": null,
+      "status": "unresolved"
+    }
+  ],
+  "linked": 33,
+  "unresolved": 6,
+  "log_sha256": "ff4874ebbad3a7373d24010c4ed0afbf11efdaaccea6c503109949c5502cda58",
+  "scope": "Observed socket/accept4 installations within the controlled single-process workload",
+  "limitations": [
+    "uncaptured replacement mechanisms can invalidate links",
+    "shared descriptor table assumed",
+    "not general OFD identity",
+    "no request ownership inferred"
+  ]
+}

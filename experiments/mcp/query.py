@@ -13,8 +13,21 @@ def select_row(row, request=None, event=None, fixture_root=None):
     return True
 
 
-def evidence_chain(graph,selected,request=None):
+def validate_snapshot_files(run,graph):
+    for node in graph:
+        if node['type']!='node' or node['kind']!='ring_snapshot':continue
+        path=Path(node['path'])
+        if path.parent.parent!=run or not path.parent.name.startswith('ring-memory-'):
+            raise ValueError('snapshot path outside capture')
+        if path.is_symlink() or path.parent.is_symlink():raise ValueError('snapshot symlink unsupported')
+        try:digest=hashlib.sha256(path.read_bytes()).hexdigest()
+        except OSError as error:raise ValueError('snapshot unavailable: '+str(path)) from error
+        if digest!=node['sha256']:raise ValueError('snapshot integrity mismatch: '+str(path))
+
+
+def evidence_chain(graph,selected,request=None,operations=None):
     wanted={r['id'] for r in graph if r['type']=='node' and r['kind']=='syscall' and any(r['id'].endswith('syscall:'+e['source']) for e in selected)}
+    wanted.update(r['id'] for r in (operations or []))
     # Request queries retain handoff outcomes even when no syscall was executed.
     if request is not None:
         descendants={r['id'] for r in graph if r['type']=='node' and r['kind']=='mcp_request' and r.get('rpc_id')==request}
@@ -38,11 +51,11 @@ def evidence_chain(graph,selected,request=None):
     while changed:
         changed=False
         for edge in graph:
-            causal=edge['kind'] in {'ring_submitted','ring_submission_observed','ring_completion_observed','descriptor_sent','descriptor_received','cancelled_before_execution','ipc_sent','submitted','executed','spawned','joined','created_task','polled','connected','socket_effect','accepted','accepted_connection'}
+            causal=edge['kind'] in {'ring_memory_observed','ring_snapshot_written','ring_resource_observed','ring_submitted','ring_submission_observed','ring_completion_observed','descriptor_sent','descriptor_received','cancelled_before_execution','ipc_sent','submitted','executed','spawned','joined','created_task','polled','connected','socket_effect','accepted','accepted_connection'}
             if edge['type']=='edge' and causal and edge['target'] in ancestors and edge['source'] not in ancestors:
                 ancestors.add(edge['source']);changed=True
     evidence=[r for r in graph if (r['type']=='node' and r['id'] in ancestors) or
-              (r['type']=='edge' and r['kind'] in {'ring_submitted','ring_submission_observed','ring_completion_observed','descriptor_sent','descriptor_received','cancelled_before_execution','ipc_sent','submitted','executed','spawned','joined','created_task','polled','connected','socket_effect','accepted','accepted_connection'} and r['source'] in ancestors and r['target'] in ancestors)]
+              (r['type']=='edge' and r['kind'] in {'ring_memory_observed','ring_snapshot_written','ring_resource_observed','ring_submitted','ring_submission_observed','ring_completion_observed','descriptor_sent','descriptor_received','cancelled_before_execution','ipc_sent','submitted','executed','spawned','joined','created_task','polled','connected','socket_effect','accepted','accepted_connection'} and r['source'] in ancestors and r['target'] in ancestors)]
     return evidence
 
 
@@ -51,6 +64,7 @@ def main():
     p.add_argument('run',type=Path)
     group=p.add_mutually_exclusive_group(required=True)
     group.add_argument('--request',help='JSON request ID: 3 or a quoted JSON string')
+    group.add_argument('--operation',help='Full ring_operation node ID from provenance output')
     group.add_argument('--event',help='Raw trace source, e.g. strace.123:42')
     p.add_argument('--fixture-only',action='store_true')
     p.add_argument('--allow-failed-workload',action='store_true',help='Inspect a failed workload only when attribution integrity remains valid; failed independent evaluations are still rejected')
@@ -62,7 +76,7 @@ def main():
         for required in ['control-score.json', 'rights-score.json']:
             if not (run/required).is_file():
                 raise SystemExit('Missing required independent evaluation: '+required)
-    if manifest.get('scenario') == 'uring' and not (run/'ring-score.json').is_file():
+    if manifest.get('scenario') in {'uring','uring-memory','uring-reuse','uring-shared'} and not (run/'ring-score.json').is_file():
         raise SystemExit('Missing required independent evaluation: ring-score.json')
     for name in ['ring-score.json','control-score.json','batch-score.json','fileops-score.json','network-score.json','rights-score.json']:
         if (run/name).exists() and not json.loads((run/name).read_text())['valid']:
@@ -76,11 +90,25 @@ def main():
     request=json.loads(args.request) if args.request is not None else None
     selected=[]
     for row in map(json.loads,(run/'causal-attribution.jsonl').read_text().splitlines()):
-        if select_row(row,request=request,event=args.event,fixture_root=run/'sandbox' if args.fixture_only else None):selected.append(row)
+        if args.operation is None and select_row(row,request=request,event=args.event,fixture_root=run/'sandbox' if args.fixture_only else None):selected.append(row)
     graph=list(map(json.loads,(run/'provenance.jsonl').read_text().splitlines()))
-    evidence=evidence_chain(graph,selected,request=request)
+    try:validate_snapshot_files(run,graph)
+    except ValueError as error:raise SystemExit(str(error)) from error
+    operations=[]; omitted=0
+    for node in graph:
+        if node['type']!='node' or node['kind']!='ring_operation':continue
+        if args.operation is not None and node['id']!=args.operation:continue
+        if request is not None and request not in node.get('request_ids',[]):continue
+        if args.event is not None and args.event not in [node.get('syscall_evidence'),node.get('submit_evidence'),node.get('completion_evidence')]:continue
+        if args.fixture_only and not any(path.startswith(str(run/'sandbox')+'/') for path in node.get('paths',[])):
+            omitted+=1;continue
+        operations.append(node)
+    if args.operation is not None and not operations and not omitted:
+        raise SystemExit('Unknown ring operation ID')
+    evidence=evidence_chain(graph,selected,request=request,operations=operations)
     if json.loads((run/'causal-report.json').read_text())!=report:raise SystemExit('Analysis changed while reading; retry after it completes')
     print(json.dumps({'workload_status':manifest['status'],'workload_error':manifest.get('error'),
-                      'attribution_valid':True,'events':selected,'provenance':evidence},indent=2))
+                      'attribution_valid':True,'events':selected,'ring_operations':operations,
+                      'ring_operations_omitted_by_fixture_filter':omitted,'provenance':evidence},indent=2))
 
 if __name__=='__main__':main()

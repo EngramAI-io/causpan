@@ -1,0 +1,200 @@
+{
+  "run": "results/mcp/native-ring-submission-graph",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 16,
+    "mcp_replay": true,
+    "shared_watcher": false,
+    "concurrency": 8,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "f86201b3c4261e05bce0a6e00b57796c3998c8acc35498d65e4a2d500aeb1f22",
+      "mcp-network.mjs": "213b5d9f1a8d2d55693019cc22e60a21115e6335af764b8414458b4bbe583c56",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "7d1796c7b7c64f38492f54c6bab722acb425ce9f4987c5d705ea35ae724fb8d2",
+      "native_graph.py": "2f2cdca7c4a4a5969ebeb83209cf98a7dd0882b04719f3e8e7dd839f0e87bb75",
+      "native_preparation.py": "1cb101289c67802f0397a75c5d7d8754c9d7e8c14ba45dde596b9f2baba6410d",
+      "native_watcher_queue.py": "1721e7a0a2a8b0b5a3a70f362064920bdcdd409d31cf766d9da2bf0b85499a5b",
+      "native_watcher_operations.py": "720188f48d38d6d2343e32f23d6658b93a4a661af3897a0f4704be2e1d8206a5",
+      "native_retry_ancestry.py": "59e8b370c6a814489e3cce353b3ed5c9ac4d9542ee0855fbb9b4cafd62d73e82",
+      "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+      "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+      "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 68,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "118edb520e804a971d430508735fb85d545c4efb97fde00b82719c1a2a95223b",
+    "socket_links": 65,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "615096e5e7650186e0b3bcc62af3689bf9e7908498640182f88049e66bb09892",
+    "native_graph_sha256": "507cd4d7d261716b4debd3d95ee05c60beaed42a39fee224838e06ec19cfc98b",
+    "resource_score_sha256": "1ad8eda065a32f55bbaf501855af94f547d21f9df766439f568b810023d414a7",
+    "resource_context_sha256": "ffb38d982cf8e163d3205f0066479791a7ddfdc704006e115b5430998739d226",
+    "batches": 22,
+    "operations": 71,
+    "report_sha256": "3d54b1c8dfac7a42a6dd4de6acd949bf0b8942e5b501120d7521c26b86ff5d59"
+  },
+  "queries": [
+    {
+      "rpc_id": 1,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:986",
+        "enter:1176",
+        "enter:1276"
+      ]
+    },
+    {
+      "rpc_id": 2,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:986",
+        "enter:1176",
+        "enter:1276"
+      ]
+    },
+    {
+      "rpc_id": 3,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:986",
+        "enter:1176",
+        "enter:1276"
+      ]
+    },
+    {
+      "rpc_id": 4,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:986",
+        "enter:1176",
+        "enter:1276"
+      ]
+    },
+    {
+      "rpc_id": 5,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:986",
+        "enter:1176",
+        "enter:1276"
+      ]
+    },
+    {
+      "rpc_id": 6,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:986",
+        "enter:1176",
+        "enter:1276"
+      ]
+    },
+    {
+      "rpc_id": 7,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:986",
+        "enter:1176",
+        "enter:1276"
+      ]
+    },
+    {
+      "rpc_id": 8,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:986",
+        "enter:1176",
+        "enter:1276"
+      ]
+    },
+    {
+      "rpc_id": 9,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:2251",
+        "enter:2430",
+        "enter:2530"
+      ]
+    },
+    {
+      "rpc_id": 10,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:2251",
+        "enter:2430",
+        "enter:2530"
+      ]
+    },
+    {
+      "rpc_id": 11,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:2251",
+        "enter:2430",
+        "enter:2530"
+      ]
+    },
+    {
+      "rpc_id": 12,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:2251",
+        "enter:2430",
+        "enter:2530"
+      ]
+    },
+    {
+      "rpc_id": 13,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:2251",
+        "enter:2430",
+        "enter:2530"
+      ]
+    },
+    {
+      "rpc_id": 14,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:2251",
+        "enter:2430",
+        "enter:2530"
+      ]
+    },
+    {
+      "rpc_id": 15,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:2251",
+        "enter:2430",
+        "enter:2530"
+      ]
+    },
+    {
+      "rpc_id": 16,
+      "ring_operations": 3,
+      "submission_nodes": [
+        "enter:2251",
+        "enter:2430",
+        "enter:2530"
+      ]
+    }
+  ],
+  "maximum_requests_reaching_same_submission": 8,
+  "nodes_by_kind": {
+    "request": 16,
+    "io_uring_enter": 22,
+    "ring_operation": 71,
+    "syscall_return": 22,
+    "completion": 71,
+    "preparation": 71,
+    "watcher_insertion": 49,
+    "watcher_removal": 49
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "run": "results/mcp/native-ring-mcp-oracle-stress",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 160,
+    "mcp_replay": true,
+    "concurrency": 16,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "c6fa8a52a12e9a19455e6a87ab66449b73c25439929f9d6eb91c8454bff120a0",
+      "mcp-network.mjs": "1e933db7501410805ec66eb7ecb2c648b8cb13316e0b0a53d1e2e860ceeeddbd",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "2c5e379fe2593e805bbdd3943d2f77a4eee04d3ae2dc3d8bced29f525e6d002b",
+      "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+      "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+      "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 644,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "e54bc141055865eed5f305ac641611b18a86099e75043c30fe8fd4cbec6beb44",
+    "socket_links": 641,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "b3c6bf40a1f610428fc5f109ee76e0f6154c20993b47a66826811d6f22ff73c2",
+    "resource_score_sha256": "ed773783b9b86f038de6b368248e34410fb05d442c6427dab15d20aac3349f0d",
+    "resource_context_sha256": "6bbf0a9aaf90e74afc1756866b8cb76f5886e538c7b133075830bc33b0127b84",
+    "batches": 182,
+    "operations": 647,
+    "report_sha256": "66653a07510f2ba5aaf97edfb8f313e8a6e980b9b08676cbfb848183aedeb198"
+  },
+  "score_summary": {
+    "requests": 160,
+    "covered_requests": 160,
+    "checked_links": 480,
+    "mismatches": 0,
+    "oracle_sha256": "1ce86f979f0eaf59670a50133c352077aa66ce70f593bbb31ad948aa9a9ef19d",
+    "limitations": [
+      "validates claimed client-socket creation ancestry only, not all kernel effects",
+      "numeric FD oracle cannot distinguish same-number incarnations within one request",
+      "workload records Node private socket handle FD at connect; not a production identity source"
+    ]
+  },
+  "overlap": {
+    "count": 160,
+    "concurrency": 16,
+    "maxActive": 16
+  },
+  "maximum_ring_tails": {
+    "11": 2,
+    "16": 643,
+    "4": 2
+  },
+  "repeated_descriptor_installation_counts": {
+    "24": 45,
+    "25": 45,
+    "26": 40,
+    "27": 40,
+    "28": 10,
+    "29": 10,
+    "30": 10,
+    "31": 10,
+    "32": 10,
+    "33": 10,
+    "34": 10,
+    "35": 10,
+    "36": 10,
+    "37": 10,
+    "38": 10,
+    "39": 10,
+    "40": 10,
+    "41": 10,
+    "42": 10
+  },
+  "tests": "83 tests passed under Python 3.11"
+}

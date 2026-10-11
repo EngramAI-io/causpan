@@ -1,0 +1,328 @@
+{
+  "closes": [
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 4,
+      "return_line": 5,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 6,
+      "return_line": 7,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 8,
+      "return_line": 9,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 10,
+      "return_line": 11,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 12,
+      "return_line": 13,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 14,
+      "return_line": 15,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 16,
+      "return_line": 17,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 4,
+      "result": 0,
+      "entry_line": 20,
+      "return_line": 21,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 4,
+      "result": 0,
+      "entry_line": 22,
+      "return_line": 23,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 4,
+      "result": 0,
+      "entry_line": 24,
+      "return_line": 25,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 26,
+      "return_line": 27,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 20,
+      "result": 0,
+      "entry_line": 106,
+      "return_line": 107,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 20,
+      "result": 0,
+      "entry_line": 108,
+      "return_line": 109,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 20,
+      "result": 0,
+      "entry_line": 110,
+      "return_line": 111,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 20,
+      "result": 0,
+      "entry_line": 113,
+      "return_line": 114,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 20,
+      "result": 0,
+      "entry_line": 115,
+      "return_line": 116,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 20,
+      "result": 0,
+      "entry_line": 117,
+      "return_line": 118,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 22,
+      "result": 0,
+      "entry_line": 175,
+      "return_line": 176,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 23,
+      "result": 0,
+      "entry_line": 189,
+      "return_line": 190,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 24,
+      "result": 0,
+      "entry_line": 220,
+      "return_line": 221,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 22,
+      "result": 0,
+      "entry_line": 234,
+      "return_line": 235,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 23,
+      "result": 0,
+      "entry_line": 265,
+      "return_line": 266,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 24,
+      "result": 0,
+      "entry_line": 279,
+      "return_line": 280,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 22,
+      "result": 0,
+      "entry_line": 310,
+      "return_line": 311,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 23,
+      "result": 0,
+      "entry_line": 324,
+      "return_line": 325,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 24,
+      "result": 0,
+      "entry_line": 355,
+      "return_line": 356,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 22,
+      "result": 0,
+      "entry_line": 369,
+      "return_line": 370,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 23,
+      "result": 0,
+      "entry_line": 400,
+      "return_line": 401,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 24,
+      "result": 0,
+      "entry_line": 414,
+      "return_line": 415,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 22,
+      "result": 0,
+      "entry_line": 445,
+      "return_line": 446,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 23,
+      "result": 0,
+      "entry_line": 459,
+      "return_line": 460,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 21,
+      "result": 0,
+      "entry_line": 490,
+      "return_line": 491,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 24,
+      "result": 0,
+      "entry_line": 492,
+      "return_line": 493,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 22,
+      "result": 0,
+      "entry_line": 494,
+      "return_line": 495,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 12,
+      "result": 0,
+      "entry_line": 500,
+      "return_line": 502,
+      "debugger_thread": 2
+    },
+    {
+      "fd": 13,
+      "result": 0,
+      "entry_line": 503,
+      "return_line": 504,
+      "debugger_thread": 2
+    },
+    {
+      "fd": 11,
+      "result": 0,
+      "entry_line": 505,
+      "return_line": 506,
+      "debugger_thread": 2
+    },
+    {
+      "fd": 14,
+      "result": 0,
+      "entry_line": 507,
+      "return_line": 508,
+      "debugger_thread": 2
+    },
+    {
+      "fd": 10,
+      "result": 0,
+      "entry_line": 509,
+      "return_line": 510,
+      "debugger_thread": 2
+    },
+    {
+      "fd": 7,
+      "result": 0,
+      "entry_line": 530,
+      "return_line": 531,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 8,
+      "result": 0,
+      "entry_line": 532,
+      "return_line": 533,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 4,
+      "result": 0,
+      "entry_line": 534,
+      "return_line": 535,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 9,
+      "result": 0,
+      "entry_line": 536,
+      "return_line": 537,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 3,
+      "result": 0,
+      "entry_line": 538,
+      "return_line": 539,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 5,
+      "result": 0,
+      "entry_line": 540,
+      "return_line": 541,
+      "debugger_thread": 1
+    },
+    {
+      "fd": 6,
+      "result": 0,
+      "entry_line": 542,
+      "return_line": 543,
+      "debugger_thread": 1
+    }
+  ],
+  "successful_closes": 46,
+  "scope": "Paired close syscall catchpoints in one debugger capture; descriptor creation and reuse attribution not yet joined."
+}

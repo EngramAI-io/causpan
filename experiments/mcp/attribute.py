@@ -702,8 +702,13 @@ class Attributor:
         from ring_helper import helper_graph
         ring_operations = 0
         try:
-            ring_graph, ring_operations = helper_graph(self.run, self.tagged) if (self.run/'run-config.json').exists() else ([], 0)
+            ring_graph, ring_operations = helper_graph(self.run, self.tagged, {r['id'] for r in self.graph if r['type']=='node'}) if (self.run/'run-config.json').exists() else ([], 0)
             self.graph.extend(ring_graph)
+            if (self.run/'run-config.json').exists():
+                from shared_ring_adapter import shared_graph
+                shared, shared_count = shared_graph(self.run, self.tagged, {r['id'] for r in self.graph if r['type']=='node'})
+                self.graph.extend(shared)
+                ring_operations += shared_count
         except (ValueError, KeyError, OSError, TypeError) as error:
             self.errors.append('ring helper evidence invalid: '+str(error))
 
@@ -726,17 +731,14 @@ class Attributor:
         if score['oracle_wrong']:
             self.errors.append(f'{score["oracle_wrong"]} independent path-oracle disagreements')
 
+        from ring_coverage import ring_coverage
         report = dict(
             valid=not self.errors,
             errors=self.errors,
             attribution_model='causal-context-v2',
             attributed_ring_operations=ring_operations,
             capture_scope='observed_syscalls_and_trusted_runtime_markers',
-            io_uring_observation=dict(
-                setup_attempts=sum(e['syscall']=='io_uring_setup' for e in self.events),
-                successful_setups=sum(e['syscall']=='io_uring_setup' and e['return_value'] is not None and e['return_value']>=0 for e in self.events),
-                enter_calls=sum(e['syscall']=='io_uring_enter' for e in self.events),
-                submissions_decoded=False),
+            io_uring_observation=ring_coverage(self.events,self.graph),
             descriptor_transfers=len(transfers['pairs']),
             descriptor_transfer_rejections=transfers['rejected_channels'],
             unpaired_descriptor_observations=transfers['unpaired_observations'],

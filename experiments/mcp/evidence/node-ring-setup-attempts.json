@@ -1,0 +1,10 @@
+{
+  "valid_layout_capture": false,
+  "reason": "entry params uninitialized; standalone return breakpoints had zero hits",
+  "sha256": {
+    "results/mcp/node-ring-setup/log": "37fe120f4f5f41b404b0bd97bc21273e7014df885a36baf6d7ae02c9f5adb845",
+    "results/mcp/node-ring-setup/returned.log": "f764dd6ffb156a9167283ed18588450277bcd4e1df65f2f758aa8dc686c61472",
+    "results/mcp/node-ring-setup/syscall-return.log": "e85b031758f19dc840482f229554a53bd6e3056a1de6f3ff6fa5ed7b46225e90",
+    "experiments/mcp/node-ring-debug/setup.gdb": "047f9837646fea3818a462b3f0e7fbfed1a739fb7bc944109a9d5fa8d2f4f12c"
+  }
+}

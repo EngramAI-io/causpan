@@ -1,0 +1,7 @@
+{
+  "valid": true,
+  "modified_snapshot_rejected": true,
+  "error": "snapshot integrity mismatch: /u/kdhande/causpan/results/mcp/mcp-ring-memory-context/ring-memory-1gpXyO/sq.bin",
+  "restored_query_passed": true,
+  "query_sha256": "98b2069be3a467a1cbe5e6a2d246a2267a6092bf63d952a711267dfc513c5b22"
+}

@@ -1,0 +1,460 @@
+{
+  "run": "results/mcp/native-ring-scored-graph",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 16,
+    "mcp_replay": true,
+    "shared_watcher": false,
+    "concurrency": 8,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "f86201b3c4261e05bce0a6e00b57796c3998c8acc35498d65e4a2d500aeb1f22",
+      "mcp-network.mjs": "213b5d9f1a8d2d55693019cc22e60a21115e6335af764b8414458b4bbe583c56",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "f2302348afa2dcbef6db5ad520a9ee05feab412861930b187cad47d8fb59c056",
+      "score_native_graph.py": "9f07488d384ef6fdf26e0b101fb70cb9fc814cb9fca6aebb9a9404f322340303",
+      "native_graph.py": "2f2cdca7c4a4a5969ebeb83209cf98a7dd0882b04719f3e8e7dd839f0e87bb75",
+      "native_preparation.py": "1cb101289c67802f0397a75c5d7d8754c9d7e8c14ba45dde596b9f2baba6410d",
+      "native_watcher_queue.py": "1721e7a0a2a8b0b5a3a70f362064920bdcdd409d31cf766d9da2bf0b85499a5b",
+      "native_watcher_operations.py": "720188f48d38d6d2343e32f23d6658b93a4a661af3897a0f4704be2e1d8206a5",
+      "native_retry_ancestry.py": "59e8b370c6a814489e3cce353b3ed5c9ac4d9542ee0855fbb9b4cafd62d73e82",
+      "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+      "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+      "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 68,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "91d1949c5ec2f17724a655eaaa7a53e785bfbe774e3b0989aae8574cd1a2f52c",
+    "socket_links": 65,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "1a127de9381502cc5656c2ffd421ab4c312f7cf56eb0cffd64f7595b8d66e83a",
+    "native_graph_sha256": "319a623dac559b802e49eece14107cb00758611d7e2ec9646e3921ec738f8884",
+    "graph_score_sha256": "c9a777b26dcdcdab709c7db8c146e9ed29394fe89f22e0c1d16cfa2255c5cb65",
+    "resource_score_sha256": "fbcf9ec975feea2f2c8d7377acc69576af5df75103a1c9bb55a1643c1fe58431",
+    "resource_context_sha256": "81975c4775e2b87d823eb7476a60bec6ecae70a0f4fa630c075c03e4c609b163",
+    "batches": 22,
+    "operations": 71,
+    "report_sha256": "4e3a8e526ef09a3ddda2cd45b3aa0eb631063212ba128a16f3097469cda9762d"
+  },
+  "score": {
+    "checks": [
+      {
+        "rpc_id": 1,
+        "operation": "sqe:1186",
+        "expected_fd": 24,
+        "observed_fd": 24,
+        "correct": true
+      },
+      {
+        "rpc_id": 1,
+        "operation": "sqe:1002",
+        "expected_fd": 24,
+        "observed_fd": 24,
+        "correct": true
+      },
+      {
+        "rpc_id": 1,
+        "operation": "sqe:1283",
+        "expected_fd": 24,
+        "observed_fd": 24,
+        "correct": true
+      },
+      {
+        "rpc_id": 2,
+        "operation": "sqe:1286",
+        "expected_fd": 25,
+        "observed_fd": 25,
+        "correct": true
+      },
+      {
+        "rpc_id": 2,
+        "operation": "sqe:1189",
+        "expected_fd": 25,
+        "observed_fd": 25,
+        "correct": true
+      },
+      {
+        "rpc_id": 2,
+        "operation": "sqe:1005",
+        "expected_fd": 25,
+        "observed_fd": 25,
+        "correct": true
+      },
+      {
+        "rpc_id": 3,
+        "operation": "sqe:1008",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "rpc_id": 3,
+        "operation": "sqe:1192",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "rpc_id": 3,
+        "operation": "sqe:1289",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "rpc_id": 4,
+        "operation": "sqe:1292",
+        "expected_fd": 27,
+        "observed_fd": 27,
+        "correct": true
+      },
+      {
+        "rpc_id": 4,
+        "operation": "sqe:1195",
+        "expected_fd": 27,
+        "observed_fd": 27,
+        "correct": true
+      },
+      {
+        "rpc_id": 4,
+        "operation": "sqe:1011",
+        "expected_fd": 27,
+        "observed_fd": 27,
+        "correct": true
+      },
+      {
+        "rpc_id": 5,
+        "operation": "sqe:1014",
+        "expected_fd": 28,
+        "observed_fd": 28,
+        "correct": true
+      },
+      {
+        "rpc_id": 5,
+        "operation": "sqe:1198",
+        "expected_fd": 28,
+        "observed_fd": 28,
+        "correct": true
+      },
+      {
+        "rpc_id": 5,
+        "operation": "sqe:1295",
+        "expected_fd": 28,
+        "observed_fd": 28,
+        "correct": true
+      },
+      {
+        "rpc_id": 6,
+        "operation": "sqe:1201",
+        "expected_fd": 29,
+        "observed_fd": 29,
+        "correct": true
+      },
+      {
+        "rpc_id": 6,
+        "operation": "sqe:1298",
+        "expected_fd": 29,
+        "observed_fd": 29,
+        "correct": true
+      },
+      {
+        "rpc_id": 6,
+        "operation": "sqe:1017",
+        "expected_fd": 29,
+        "observed_fd": 29,
+        "correct": true
+      },
+      {
+        "rpc_id": 7,
+        "operation": "sqe:1020",
+        "expected_fd": 30,
+        "observed_fd": 30,
+        "correct": true
+      },
+      {
+        "rpc_id": 7,
+        "operation": "sqe:1204",
+        "expected_fd": 30,
+        "observed_fd": 30,
+        "correct": true
+      },
+      {
+        "rpc_id": 7,
+        "operation": "sqe:1301",
+        "expected_fd": 30,
+        "observed_fd": 30,
+        "correct": true
+      },
+      {
+        "rpc_id": 8,
+        "operation": "sqe:1207",
+        "expected_fd": 31,
+        "observed_fd": 31,
+        "correct": true
+      },
+      {
+        "rpc_id": 8,
+        "operation": "sqe:1304",
+        "expected_fd": 31,
+        "observed_fd": 31,
+        "correct": true
+      },
+      {
+        "rpc_id": 8,
+        "operation": "sqe:1023",
+        "expected_fd": 31,
+        "observed_fd": 31,
+        "correct": true
+      },
+      {
+        "rpc_id": 9,
+        "operation": "sqe:2258",
+        "expected_fd": 25,
+        "observed_fd": 25,
+        "correct": true
+      },
+      {
+        "rpc_id": 9,
+        "operation": "sqe:2537",
+        "expected_fd": 25,
+        "observed_fd": 25,
+        "correct": true
+      },
+      {
+        "rpc_id": 9,
+        "operation": "sqe:2440",
+        "expected_fd": 25,
+        "observed_fd": 25,
+        "correct": true
+      },
+      {
+        "rpc_id": 10,
+        "operation": "sqe:2261",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "rpc_id": 10,
+        "operation": "sqe:2443",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "rpc_id": 10,
+        "operation": "sqe:2540",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "rpc_id": 11,
+        "operation": "sqe:2264",
+        "expected_fd": 28,
+        "observed_fd": 28,
+        "correct": true
+      },
+      {
+        "rpc_id": 11,
+        "operation": "sqe:2446",
+        "expected_fd": 28,
+        "observed_fd": 28,
+        "correct": true
+      },
+      {
+        "rpc_id": 11,
+        "operation": "sqe:2543",
+        "expected_fd": 28,
+        "observed_fd": 28,
+        "correct": true
+      },
+      {
+        "rpc_id": 12,
+        "operation": "sqe:2546",
+        "expected_fd": 29,
+        "observed_fd": 29,
+        "correct": true
+      },
+      {
+        "rpc_id": 12,
+        "operation": "sqe:2267",
+        "expected_fd": 29,
+        "observed_fd": 29,
+        "correct": true
+      },
+      {
+        "rpc_id": 12,
+        "operation": "sqe:2449",
+        "expected_fd": 29,
+        "observed_fd": 29,
+        "correct": true
+      },
+      {
+        "rpc_id": 13,
+        "operation": "sqe:2270",
+        "expected_fd": 30,
+        "observed_fd": 30,
+        "correct": true
+      },
+      {
+        "rpc_id": 13,
+        "operation": "sqe:2549",
+        "expected_fd": 30,
+        "observed_fd": 30,
+        "correct": true
+      },
+      {
+        "rpc_id": 13,
+        "operation": "sqe:2452",
+        "expected_fd": 30,
+        "observed_fd": 30,
+        "correct": true
+      },
+      {
+        "rpc_id": 14,
+        "operation": "sqe:2455",
+        "expected_fd": 32,
+        "observed_fd": 32,
+        "correct": true
+      },
+      {
+        "rpc_id": 14,
+        "operation": "sqe:2552",
+        "expected_fd": 32,
+        "observed_fd": 32,
+        "correct": true
+      },
+      {
+        "rpc_id": 14,
+        "operation": "sqe:2273",
+        "expected_fd": 32,
+        "observed_fd": 32,
+        "correct": true
+      },
+      {
+        "rpc_id": 15,
+        "operation": "sqe:2458",
+        "expected_fd": 33,
+        "observed_fd": 33,
+        "correct": true
+      },
+      {
+        "rpc_id": 15,
+        "operation": "sqe:2555",
+        "expected_fd": 33,
+        "observed_fd": 33,
+        "correct": true
+      },
+      {
+        "rpc_id": 15,
+        "operation": "sqe:2276",
+        "expected_fd": 33,
+        "observed_fd": 33,
+        "correct": true
+      },
+      {
+        "rpc_id": 16,
+        "operation": "sqe:2461",
+        "expected_fd": 34,
+        "observed_fd": 34,
+        "correct": true
+      },
+      {
+        "rpc_id": 16,
+        "operation": "sqe:2558",
+        "expected_fd": 34,
+        "observed_fd": 34,
+        "correct": true
+      },
+      {
+        "rpc_id": 16,
+        "operation": "sqe:2279",
+        "expected_fd": 34,
+        "observed_fd": 34,
+        "correct": true
+      }
+    ],
+    "requests": [
+      {
+        "rpc_id": 1,
+        "operations": 3
+      },
+      {
+        "rpc_id": 2,
+        "operations": 3
+      },
+      {
+        "rpc_id": 3,
+        "operations": 3
+      },
+      {
+        "rpc_id": 4,
+        "operations": 3
+      },
+      {
+        "rpc_id": 5,
+        "operations": 3
+      },
+      {
+        "rpc_id": 6,
+        "operations": 3
+      },
+      {
+        "rpc_id": 7,
+        "operations": 3
+      },
+      {
+        "rpc_id": 8,
+        "operations": 3
+      },
+      {
+        "rpc_id": 9,
+        "operations": 3
+      },
+      {
+        "rpc_id": 10,
+        "operations": 3
+      },
+      {
+        "rpc_id": 11,
+        "operations": 3
+      },
+      {
+        "rpc_id": 12,
+        "operations": 3
+      },
+      {
+        "rpc_id": 13,
+        "operations": 3
+      },
+      {
+        "rpc_id": 14,
+        "operations": 3
+      },
+      {
+        "rpc_id": 15,
+        "operations": 3
+      },
+      {
+        "rpc_id": 16,
+        "operations": 3
+      }
+    ],
+    "checked_links": 48,
+    "mismatches": 0,
+    "covered_requests": 16,
+    "limitations": [
+      "socket target matching validates ancestry consistency, not exclusive causality",
+      "shared socket tokens cannot distinguish requests with identical target descriptors",
+      "zero reachable operations does not prove absence of effects"
+    ]
+  },
+  "swapped_parent_mismatches": 6
+}

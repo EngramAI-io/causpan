@@ -1,0 +1,195 @@
+{
+  "run": "results/mcp/native-ring-stdio-arguments",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 4,
+    "mcp_replay": true,
+    "mcp_stdio": true,
+    "shared_watcher": false,
+    "concurrency": 2,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "f86201b3c4261e05bce0a6e00b57796c3998c8acc35498d65e4a2d500aeb1f22",
+      "mcp-network.mjs": "4c40ea5dd583c0c30118269cd4c77861fe5e6cec4d0b3b8a0c1222e36243aa6a",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "8bb110fc759661c50997c12dc1683e81a8941c0a38192f02a5b6d9cde91dd555",
+      "native_stdio_replay.py": "3dfd3a048d4ab2fdb063e3f9c0722abf6a3b6a4a3151a5706e72b7fc19c7e2c6",
+      "score_native_graph.py": "83a628ec66232fca884bdd8089f5c8fcee7864c90a8c426375f8522b620f14dc",
+      "native_graph.py": "2f2cdca7c4a4a5969ebeb83209cf98a7dd0882b04719f3e8e7dd839f0e87bb75",
+      "native_preparation.py": "1cb101289c67802f0397a75c5d7d8754c9d7e8c14ba45dde596b9f2baba6410d",
+      "native_watcher_queue.py": "1721e7a0a2a8b0b5a3a70f362064920bdcdd409d31cf766d9da2bf0b85499a5b",
+      "native_watcher_operations.py": "720188f48d38d6d2343e32f23d6658b93a4a661af3897a0f4704be2e1d8206a5",
+      "native_retry_ancestry.py": "59e8b370c6a814489e3cce353b3ed5c9ac4d9542ee0855fbb9b4cafd62d73e82",
+      "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+      "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+      "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 20,
+    "unresolved_resource_targets": 4,
+    "resource_lifetimes_sha256": "0188a2a75d802d0a1907d251be0b87bd8fa1761a4aeba069f860c569fb14ff1a",
+    "socket_links": 17,
+    "unresolved_socket_targets": 7,
+    "socket_lifetimes_sha256": "0d8b14b0ce42bf52a80263de85837a83d3f493d4106b9808154a716fd9bb12ba",
+    "native_graph_sha256": "2b8ff09d28b5fd25df3b4657bd8535379f71698e2e4f39714c2681975170fc33",
+    "graph_score_sha256": "4e98da7fb29e69eaf833ea0e9348895849fc68d476b62e0d075e9af5fb21de06",
+    "resource_score_sha256": "a480b26e3bd4f5688149f21742977aae3cfac0295061f7a624a3aa51321689f4",
+    "resource_context_sha256": "7a2ef1c3a3bc2fa43bd20bbf24bd3906592e92f2c3f8f7f2204193f39c6de6ec",
+    "batches": 11,
+    "operations": 24,
+    "report_sha256": "727c378dd79e78d5d1e48acd3741d0518fd47ce4212063ef060dc339ca670d66"
+  },
+  "graph_score": {
+    "checks": [
+      {
+        "rpc_id": 1,
+        "operation": "sqe:840",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "rpc_id": 1,
+        "operation": "sqe:935",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "rpc_id": 1,
+        "operation": "sqe:904",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "rpc_id": 2,
+        "operation": "sqe:843",
+        "expected_fd": 27,
+        "observed_fd": 27,
+        "correct": true
+      },
+      {
+        "rpc_id": 2,
+        "operation": "sqe:907",
+        "expected_fd": 27,
+        "observed_fd": 27,
+        "correct": true
+      },
+      {
+        "rpc_id": 2,
+        "operation": "sqe:938",
+        "expected_fd": 27,
+        "observed_fd": 27,
+        "correct": true
+      },
+      {
+        "rpc_id": 3,
+        "operation": "sqe:1164",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "rpc_id": 3,
+        "operation": "sqe:1259",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "rpc_id": 3,
+        "operation": "sqe:1228",
+        "expected_fd": 26,
+        "observed_fd": 26,
+        "correct": true
+      },
+      {
+        "rpc_id": 4,
+        "operation": "sqe:1262",
+        "expected_fd": 27,
+        "observed_fd": 27,
+        "correct": true
+      },
+      {
+        "rpc_id": 4,
+        "operation": "sqe:1167",
+        "expected_fd": 27,
+        "observed_fd": 27,
+        "correct": true
+      },
+      {
+        "rpc_id": 4,
+        "operation": "sqe:1231",
+        "expected_fd": 27,
+        "observed_fd": 27,
+        "correct": true
+      }
+    ],
+    "requests": [
+      {
+        "rpc_id": 1,
+        "operations": 3
+      },
+      {
+        "rpc_id": 2,
+        "operations": 3
+      },
+      {
+        "rpc_id": 3,
+        "operations": 3
+      },
+      {
+        "rpc_id": 4,
+        "operations": 3
+      }
+    ],
+    "checked_links": 12,
+    "mismatches": 0,
+    "covered_requests": 4,
+    "limitations": [
+      "socket target matching validates ancestry consistency, not exclusive causality",
+      "shared socket tokens cannot distinguish requests with identical target descriptors",
+      "zero reachable operations does not prove absence of effects"
+    ],
+    "oracle_sha256": "fb52d996d0186182a115148a9b59e798cf92b6819c7160a4494b884f86ae3d2c"
+  },
+  "protocol_sha256": "4de1ce57e82edc605ce49f3a060d63314fda85b062268dc76fc9dd89b3646f95",
+  "failed_attempt": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 4,
+    "mcp_replay": true,
+    "mcp_stdio": true,
+    "shared_watcher": false,
+    "concurrency": 2,
+    "status": "failed",
+    "source_sha256": {
+      "windows.gdb": "f86201b3c4261e05bce0a6e00b57796c3998c8acc35498d65e4a2d500aeb1f22",
+      "mcp-network.mjs": "4c40ea5dd583c0c30118269cd4c77861fe5e6cec4d0b3b8a0c1222e36243aa6a",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "8bb110fc759661c50997c12dc1683e81a8941c0a38192f02a5b6d9cde91dd555",
+      "native_stdio_replay.py": "1271932be61369a7c03723fef3f21dafe02dac681ec03e2fb5c5e1916b83ddaa",
+      "score_native_graph.py": "83a628ec66232fca884bdd8089f5c8fcee7864c90a8c426375f8522b620f14dc",
+      "native_graph.py": "2f2cdca7c4a4a5969ebeb83209cf98a7dd0882b04719f3e8e7dd839f0e87bb75",
+      "native_preparation.py": "1cb101289c67802f0397a75c5d7d8754c9d7e8c14ba45dde596b9f2baba6410d",
+      "native_watcher_queue.py": "1721e7a0a2a8b0b5a3a70f362064920bdcdd409d31cf766d9da2bf0b85499a5b",
+      "native_watcher_operations.py": "720188f48d38d6d2343e32f23d6658b93a4a661af3897a0f4704be2e1d8206a5",
+      "native_retry_ancestry.py": "59e8b370c6a814489e3cce353b3ed5c9ac4d9542ee0855fbb9b4cafd62d73e82",
+      "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+      "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+      "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "error": "RuntimeError('MCP stdio closed before response')"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "observations": [
+    {
+      "descriptor": "ordinary",
+      "received": 1,
+      "payload": "R",
+      "flags": 0,
+      "stderr": "{\"sq\":281473386348544,\"cq\":281473386348544,\"sqes\":281473384448000,\"sq_size\":352,\"cq_size\":320,\"sq_entries\":8,\"cq_entries\":16,\"sq_head\":0,\"sq_tail\":4,\"sq_mask\":16,\"sq_array\":320,\"cq_head\":8,\"cq_tail\":12,\"cq_mask\":20,\"cqes\":64}\n"
+    },
+    {
+      "descriptor": "ring",
+      "error": "helper did not reach snapshot stop: 256",
+      "stderr": "export ring descriptor: Invalid argument\n"
+    }
+  ],
+  "conclusion": "Ordinary file transfer succeeds; ring descriptor transfer fails with EINVAL on this host. No external ring snapshot established.",
+  "sha256": {
+    "experiments/mcp/io_uring_probe.c": "22b339581696e7b986c6bfb220b21b3ae8d5db028cfbfbc23116511594e6da7f",
+    "results/mcp/ring-export-controls/helper": "4c277f77464a1d7e80271e30619cbe9f92ecaf42673f07cd9935477834809dc7"
+  }
+}

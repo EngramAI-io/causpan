@@ -1,0 +1,475 @@
+{
+  "run": "results/mcp/native-ring-shared-watcher-connected",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 8,
+    "mcp_replay": true,
+    "shared_watcher": true,
+    "concurrency": 8,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "bdf585f2764e996b9c9404f5e5600ad404474a8f69333bd1c3a2d78a9110cc82",
+      "mcp-network.mjs": "213b5d9f1a8d2d55693019cc22e60a21115e6335af764b8414458b4bbe583c56",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "7d1796c7b7c64f38492f54c6bab722acb425ce9f4987c5d705ea35ae724fb8d2",
+      "native_graph.py": "c202c0bd0a790d2c9beb9297f0d28bda58d6d6b0d608c14d75002622e8d6d110",
+      "native_preparation.py": "1cb101289c67802f0397a75c5d7d8754c9d7e8c14ba45dde596b9f2baba6410d",
+      "native_watcher_queue.py": "7a746f9695c309574bf8c839a99e89aabe7c371b2da71544e5a7a895bf0100ca",
+      "native_watcher_operations.py": "720188f48d38d6d2343e32f23d6658b93a4a661af3897a0f4704be2e1d8206a5",
+      "native_retry_ancestry.py": "59e8b370c6a814489e3cce353b3ed5c9ac4d9542ee0855fbb9b4cafd62d73e82",
+      "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+      "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+      "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 9,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "2d7c58b1dca7e15198955266dc491ccf1f90ce0440a9508ff5d098e678ad6756",
+    "socket_links": 6,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "3d6fd1fcc64ae1b197ce1eefe832cdfb9ccfe09e912bf8924838ba92073be982",
+    "native_graph_sha256": "daf566b0846a28d83feb393c52cf5e4f4e799faf67f1901a6d31b09f9009f0d3",
+    "resource_score_sha256": "4b5033b54638630d0bd1c340b0f1932e68b9863a17886e40105ff595224ab5c0",
+    "resource_context_sha256": "3d20fff072ec654d28beb2474ae49db85014d456e2f4ce920702f912dfb69357",
+    "batches": 6,
+    "operations": 12,
+    "report_sha256": "2b002f32bca341375e93ea10e8f12b28c1d9c4ed78967aea11088262e72e5aad"
+  },
+  "overlap": {
+    "count": 8,
+    "concurrency": 8,
+    "maxActive": 8
+  },
+  "queue": {
+    "matches": [
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 108584872,
+          "fd": 23,
+          "pevents": 1,
+          "events": 0,
+          "line": 709,
+          "tid": 3280672,
+          "context": null
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 108584872,
+          "fd": 23,
+          "pevents": 1,
+          "events": 0,
+          "line": 731,
+          "tid": 3280672,
+          "context": null
+        },
+        "observed_updates": [],
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109948648,
+          "fd": 24,
+          "pevents": 4,
+          "events": 0,
+          "line": 717,
+          "tid": 3280672,
+          "context": null
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109948648,
+          "fd": 24,
+          "pevents": 4,
+          "events": 0,
+          "line": 737,
+          "tid": 3280672,
+          "context": null
+        },
+        "observed_updates": [],
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 110351608,
+          "fd": 25,
+          "pevents": 1,
+          "events": 0,
+          "line": 778,
+          "tid": 3280672,
+          "context": null
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 110351608,
+          "fd": 25,
+          "pevents": 1,
+          "events": 0,
+          "line": 928,
+          "tid": 3280672,
+          "context": 0
+        },
+        "observed_updates": [],
+        "masks_unchanged": true
+      },
+      {
+        "insertion": {
+          "loop": 107089216,
+          "watcher": 109948648,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 925,
+          "tid": 3280672,
+          "context": 8
+        },
+        "removal": {
+          "loop": 107089216,
+          "watcher": 109948648,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 934,
+          "tid": 3280672,
+          "context": 0
+        },
+        "observed_updates": [],
+        "masks_unchanged": true
+      }
+    ],
+    "unmatched": [
+      {
+        "reason": "no_observed_insertion",
+        "event": {
+          "loop": 108098944,
+          "watcher": 108099512,
+          "fd": 12,
+          "pevents": 1,
+          "events": 0,
+          "line": 94,
+          "tid": 3280678,
+          "context": null
+        }
+      },
+      {
+        "reason": "no_observed_insertion",
+        "event": {
+          "loop": 108098944,
+          "watcher": 108099408,
+          "fd": 14,
+          "pevents": 1,
+          "events": 0,
+          "line": 101,
+          "tid": 3280678,
+          "context": null
+        }
+      },
+      {
+        "reason": "no_observed_insertion",
+        "event": {
+          "loop": 107089216,
+          "watcher": 107089784,
+          "fd": 17,
+          "pevents": 1,
+          "events": 0,
+          "line": 719,
+          "tid": 3280672,
+          "context": null
+        }
+      },
+      {
+        "reason": "no_observed_insertion",
+        "event": {
+          "loop": 107089216,
+          "watcher": 107089680,
+          "fd": 19,
+          "pevents": 1,
+          "events": 0,
+          "line": 725,
+          "tid": 3280672,
+          "context": null
+        }
+      },
+      {
+        "reason": "replacement_without_observed_removal",
+        "event": {
+          "loop": 107089216,
+          "watcher": 109948648,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 782,
+          "tid": 3280672,
+          "context": null
+        }
+      },
+      {
+        "reason": "replacement_without_observed_removal",
+        "event": {
+          "loop": 107089216,
+          "watcher": 109948648,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 883,
+          "tid": 3280672,
+          "context": 1
+        }
+      },
+      {
+        "reason": "replacement_without_observed_removal",
+        "event": {
+          "loop": 107089216,
+          "watcher": 109948648,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 889,
+          "tid": 3280672,
+          "context": 2
+        }
+      },
+      {
+        "reason": "replacement_without_observed_removal",
+        "event": {
+          "loop": 107089216,
+          "watcher": 109948648,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 895,
+          "tid": 3280672,
+          "context": 3
+        }
+      },
+      {
+        "reason": "replacement_without_observed_removal",
+        "event": {
+          "loop": 107089216,
+          "watcher": 109948648,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 901,
+          "tid": 3280672,
+          "context": 4
+        }
+      },
+      {
+        "reason": "replacement_without_observed_removal",
+        "event": {
+          "loop": 107089216,
+          "watcher": 109948648,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 907,
+          "tid": 3280672,
+          "context": 5
+        }
+      },
+      {
+        "reason": "replacement_without_observed_removal",
+        "event": {
+          "loop": 107089216,
+          "watcher": 109948648,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 913,
+          "tid": 3280672,
+          "context": 6
+        }
+      },
+      {
+        "reason": "replacement_without_observed_removal",
+        "event": {
+          "loop": 107089216,
+          "watcher": 109948648,
+          "fd": 24,
+          "pevents": 1,
+          "events": 0,
+          "line": 919,
+          "tid": 3280672,
+          "context": 7
+        }
+      },
+      {
+        "reason": "no_observed_insertion",
+        "event": {
+          "loop": 107089216,
+          "watcher": 110351608,
+          "fd": 25,
+          "pevents": 1,
+          "events": 1,
+          "line": 981,
+          "tid": 3280672,
+          "context": 0
+        }
+      },
+      {
+        "reason": "no_observed_insertion",
+        "event": {
+          "loop": 108096048,
+          "watcher": 108096616,
+          "fd": 7,
+          "pevents": 1,
+          "events": 0,
+          "line": 1268,
+          "tid": 3280672,
+          "context": 0
+        }
+      },
+      {
+        "reason": "no_observed_insertion",
+        "event": {
+          "loop": 108096048,
+          "watcher": 108096512,
+          "fd": 9,
+          "pevents": 1,
+          "events": 0,
+          "line": 1274,
+          "tid": 3280672,
+          "context": 0
+        }
+      }
+    ],
+    "updates_outside_observed_episode": [
+      {
+        "loop": 107089216,
+        "watcher": 108584872,
+        "fd": 23,
+        "pevents": 1,
+        "events": 0,
+        "line": 707,
+        "tid": 3280672,
+        "context": null
+      },
+      {
+        "loop": 107089216,
+        "watcher": 109948648,
+        "fd": 24,
+        "pevents": 4,
+        "events": 0,
+        "line": 715,
+        "tid": 3280672,
+        "context": null
+      },
+      {
+        "loop": 107089216,
+        "watcher": 108584872,
+        "fd": 23,
+        "pevents": 1,
+        "events": 1,
+        "line": 774,
+        "tid": 3280672,
+        "context": null
+      },
+      {
+        "loop": 107089216,
+        "watcher": 110351608,
+        "fd": 25,
+        "pevents": 1,
+        "events": 0,
+        "line": 776,
+        "tid": 3280672,
+        "context": null
+      },
+      {
+        "loop": 107089216,
+        "watcher": 109948648,
+        "fd": 24,
+        "pevents": 1,
+        "events": 0,
+        "line": 780,
+        "tid": 3280672,
+        "context": null
+      }
+    ],
+    "insertion_context_counts": {
+      "None": 3,
+      "8": 1
+    },
+    "removal_context_counts": {
+      "None": 2,
+      "0": 2
+    },
+    "artifact_sha256": {
+      "debugger.log": "0733f08e5416082e1977a873f3823c705b27ce2142b35fe72da59c715dc50e8c",
+      "native-events.jsonl": "6c5f8cd5c9e1cb3bd7cec6f96b306e7f18e185456da2dd5ee500ea1016886397",
+      "request-map.jsonl": "ba7a9a6f4cd31adff90234328ab620f918bf6525578a2230af61204f33b1f5d8"
+    },
+    "limitations": [
+      "only observed start insertion and poll removal sites",
+      "stop/close lifecycle and intermediate coalescing not captured",
+      "matching pointer and FD is scoped queue evidence, not general lifetime proof or SQE ownership"
+    ]
+  },
+  "failed_attempts": [
+    {
+      "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+      "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+      "connections": 8,
+      "mcp_replay": true,
+      "shared_watcher": true,
+      "concurrency": 8,
+      "status": "failed",
+      "source_sha256": {
+        "windows.gdb": "bdf585f2764e996b9c9404f5e5600ad404474a8f69333bd1c3a2d78a9110cc82",
+        "mcp-network.mjs": "05b9e645e24f00677b20abecb090d88ea8c2d94ecb2c3d665450cafe2a54ac6c",
+        "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+        "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+        "run_native_ring_debug.py": "7d1796c7b7c64f38492f54c6bab722acb425ce9f4987c5d705ea35ae724fb8d2",
+        "native_graph.py": "c202c0bd0a790d2c9beb9297f0d28bda58d6d6b0d608c14d75002622e8d6d110",
+        "native_preparation.py": "1cb101289c67802f0397a75c5d7d8754c9d7e8c14ba45dde596b9f2baba6410d",
+        "native_watcher_queue.py": "7a746f9695c309574bf8c839a99e89aabe7c371b2da71544e5a7a895bf0100ca",
+        "native_watcher_operations.py": "720188f48d38d6d2343e32f23d6658b93a4a661af3897a0f4704be2e1d8206a5",
+        "native_retry_ancestry.py": "59e8b370c6a814489e3cce353b3ed5c9ac4d9542ee0855fbb9b4cafd62d73e82",
+        "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+        "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+        "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+        "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+        "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+        "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+      },
+      "error": "ValueError('incomplete debugger run',)"
+    },
+    {
+      "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+      "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+      "connections": 8,
+      "mcp_replay": true,
+      "shared_watcher": true,
+      "concurrency": 8,
+      "status": "failed",
+      "source_sha256": {
+        "windows.gdb": "bdf585f2764e996b9c9404f5e5600ad404474a8f69333bd1c3a2d78a9110cc82",
+        "mcp-network.mjs": "f4da58c0bfa727f45904221ab10d9f4cea01ac179b5116d385413fb360f0238a",
+        "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+        "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+        "run_native_ring_debug.py": "7d1796c7b7c64f38492f54c6bab722acb425ce9f4987c5d705ea35ae724fb8d2",
+        "native_graph.py": "c202c0bd0a790d2c9beb9297f0d28bda58d6d6b0d608c14d75002622e8d6d110",
+        "native_preparation.py": "1cb101289c67802f0397a75c5d7d8754c9d7e8c14ba45dde596b9f2baba6410d",
+        "native_watcher_queue.py": "7a746f9695c309574bf8c839a99e89aabe7c371b2da71544e5a7a895bf0100ca",
+        "native_watcher_operations.py": "720188f48d38d6d2343e32f23d6658b93a4a661af3897a0f4704be2e1d8206a5",
+        "native_retry_ancestry.py": "59e8b370c6a814489e3cce353b3ed5c9ac4d9542ee0855fbb9b4cafd62d73e82",
+        "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+        "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+        "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+        "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+        "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+        "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+        "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+      },
+      "error": "ValueError('incomplete debugger run')"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "run": "results/mcp/native-ring-retry-source",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 16,
+    "mcp_replay": true,
+    "concurrency": 8,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "834e05b2a1a66330fe2941395aba4dd8654c52f0e82d6b26da478aa2718f4f25",
+      "mcp-network.mjs": "1e933db7501410805ec66eb7ecb2c648b8cb13316e0b0a53d1e2e860ceeeddbd",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "2c5e379fe2593e805bbdd3943d2f77a4eee04d3ae2dc3d8bced29f525e6d002b",
+      "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+      "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+      "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 68,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "4bdf828a1734a4ccfc5aa7a19f5455d35749b9466634d3737e4da6e2afb07d64",
+    "socket_links": 65,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "da792cbaad9dfea8563fba2429a5a8c690ded8f018da4d9dac1cd43ee5d9dd21",
+    "resource_score_sha256": "40c4f5b2408274551208126ec38bc8aaed73e9b2edef4c208eb7115d259c05e6",
+    "resource_context_sha256": "c2dfb7e08438be7ea6ca9da0d4008aca6533213f07581175c5826bb71df7fad5",
+    "batches": 22,
+    "operations": 71,
+    "report_sha256": "5b661ee0c5c1a95f4a7a81047507c4e9fabbc2da5ccafcaa1f7850b6ed156e7f"
+  },
+  "retry_ancestry": {
+    "retries": [
+      {
+        "source_sqe_line": 1127,
+        "retry_call_line": 1174,
+        "retry_sqe_line": 1224,
+        "target_fd": 24,
+        "enqueue_context": 1
+      },
+      {
+        "source_sqe_line": 1130,
+        "retry_call_line": 1180,
+        "retry_sqe_line": 1227,
+        "target_fd": 25,
+        "enqueue_context": 2
+      },
+      {
+        "source_sqe_line": 1133,
+        "retry_call_line": 1186,
+        "retry_sqe_line": 1230,
+        "target_fd": 26,
+        "enqueue_context": 3
+      },
+      {
+        "source_sqe_line": 1136,
+        "retry_call_line": 1192,
+        "retry_sqe_line": 1233,
+        "target_fd": 27,
+        "enqueue_context": 4
+      },
+      {
+        "source_sqe_line": 1139,
+        "retry_call_line": 1198,
+        "retry_sqe_line": 1236,
+        "target_fd": 28,
+        "enqueue_context": 5
+      },
+      {
+        "source_sqe_line": 1142,
+        "retry_call_line": 1204,
+        "retry_sqe_line": 1239,
+        "target_fd": 29,
+        "enqueue_context": 6
+      },
+      {
+        "source_sqe_line": 1145,
+        "retry_call_line": 1210,
+        "retry_sqe_line": 1242,
+        "target_fd": 30,
+        "enqueue_context": 7
+      },
+      {
+        "source_sqe_line": 1148,
+        "retry_call_line": 1216,
+        "retry_sqe_line": 1245,
+        "target_fd": 31,
+        "enqueue_context": 8
+      },
+      {
+        "source_sqe_line": 2253,
+        "retry_call_line": 2300,
+        "retry_sqe_line": 2350,
+        "target_fd": 25,
+        "enqueue_context": 9
+      },
+      {
+        "source_sqe_line": 2256,
+        "retry_call_line": 2306,
+        "retry_sqe_line": 2353,
+        "target_fd": 26,
+        "enqueue_context": 10
+      },
+      {
+        "source_sqe_line": 2259,
+        "retry_call_line": 2312,
+        "retry_sqe_line": 2356,
+        "target_fd": 28,
+        "enqueue_context": 11
+      },
+      {
+        "source_sqe_line": 2262,
+        "retry_call_line": 2318,
+        "retry_sqe_line": 2359,
+        "target_fd": 29,
+        "enqueue_context": 12
+      },
+      {
+        "source_sqe_line": 2265,
+        "retry_call_line": 2324,
+        "retry_sqe_line": 2362,
+        "target_fd": 30,
+        "enqueue_context": 13
+      },
+      {
+        "source_sqe_line": 2268,
+        "retry_call_line": 2330,
+        "retry_sqe_line": 2365,
+        "target_fd": 32,
+        "enqueue_context": 14
+      },
+      {
+        "source_sqe_line": 2271,
+        "retry_call_line": 2336,
+        "retry_sqe_line": 2368,
+        "target_fd": 33,
+        "enqueue_context": 15
+      },
+      {
+        "source_sqe_line": 2274,
+        "retry_call_line": 2342,
+        "retry_sqe_line": 2371,
+        "target_fd": 34,
+        "enqueue_context": 16
+      }
+    ],
+    "artifact_sha256": {
+      "debugger.log": "19b6bc24e9b2adff8e230b6df9ba379d1ee60c1b03660c18ef5abf9d5a193269",
+      "native-events.jsonl": "85345189a6ac051865c48e723fa365f0ab369a36369b0a82e20c867f4c682aa8",
+      "request-map.jsonl": "8aaf5285857838ebc0fb5b34d269593c6e2d888324beb19503c32789899dc1b6"
+    },
+    "limitations": [
+      "only pinned ADD/EEXIST-to-MOD retry path",
+      "inherits queue insertion ancestry, not exclusive ownership",
+      "other nonzero completions do not acquire retry edges"
+    ]
+  },
+  "oracle_checked_retries": 16,
+  "oracle_mismatches": 0
+}

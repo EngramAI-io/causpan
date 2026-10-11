@@ -1,0 +1,115 @@
+{
+  "run": "results/mcp/native-ring-shared-action-oracle",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 8,
+    "mcp_replay": true,
+    "shared_watcher": true,
+    "concurrency": 8,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "f86201b3c4261e05bce0a6e00b57796c3998c8acc35498d65e4a2d500aeb1f22",
+      "mcp-network.mjs": "711c9846c6ae08d8c55e2124e81c83ab583a9d1a33144066e512f6628e87cc27",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "f2302348afa2dcbef6db5ad520a9ee05feab412861930b187cad47d8fb59c056",
+      "score_native_graph.py": "d03d8fdbc2ac6f1ecd62d605516ab0ff0a372f4ea496233f6615cc65fe4b41b9",
+      "native_graph.py": "2f2cdca7c4a4a5969ebeb83209cf98a7dd0882b04719f3e8e7dd839f0e87bb75",
+      "native_preparation.py": "1cb101289c67802f0397a75c5d7d8754c9d7e8c14ba45dde596b9f2baba6410d",
+      "native_watcher_queue.py": "1721e7a0a2a8b0b5a3a70f362064920bdcdd409d31cf766d9da2bf0b85499a5b",
+      "native_watcher_operations.py": "720188f48d38d6d2343e32f23d6658b93a4a661af3897a0f4704be2e1d8206a5",
+      "native_retry_ancestry.py": "59e8b370c6a814489e3cce353b3ed5c9ac4d9542ee0855fbb9b4cafd62d73e82",
+      "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+      "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+      "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 9,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "31c9b9e67cc8d0cd751f9dda0bd6fecb19c5d242b4c8ad582dd2433281422cf4",
+    "socket_links": 6,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "6e3e11bc759fbd9a753f606a6d7a31e323481e67acadbabc737280962b42f4b0",
+    "native_graph_sha256": "802ce06fa8c145e2a19d13e3346d966a0f2f196a9afbe0440fd5438ea35ae3bb",
+    "graph_score_sha256": "038c3b752019bb544b277c32e35a902dbb04b5075342198081e1ca61bc0031fa",
+    "resource_score_sha256": "4b5033b54638630d0bd1c340b0f1932e68b9863a17886e40105ff595224ab5c0",
+    "resource_context_sha256": "c24d2198e74d55f5055c0aee189bcdc88b2425a2824740b72fcaf725cf128726",
+    "batches": 6,
+    "operations": 12,
+    "report_sha256": "1e23b0c53b77451ada64da5127db7b0afc728b0025f5bf66f7e1913a71a94298"
+  },
+  "graph_score": {
+    "checks": [
+      {
+        "rpc_id": 8,
+        "operation": "sqe:989",
+        "expected_fd": 24,
+        "observed_fd": 24,
+        "correct": true
+      },
+      {
+        "rpc_id": 8,
+        "operation": "sqe:969",
+        "expected_fd": 24,
+        "observed_fd": 24,
+        "correct": true
+      }
+    ],
+    "requests": [
+      {
+        "rpc_id": 1,
+        "operations": 0
+      },
+      {
+        "rpc_id": 2,
+        "operations": 0
+      },
+      {
+        "rpc_id": 3,
+        "operations": 0
+      },
+      {
+        "rpc_id": 4,
+        "operations": 0
+      },
+      {
+        "rpc_id": 5,
+        "operations": 0
+      },
+      {
+        "rpc_id": 6,
+        "operations": 0
+      },
+      {
+        "rpc_id": 7,
+        "operations": 0
+      },
+      {
+        "rpc_id": 8,
+        "operations": 2
+      }
+    ],
+    "checked_links": 2,
+    "mismatches": 0,
+    "covered_requests": 1,
+    "limitations": [
+      "socket target matching validates ancestry consistency, not exclusive causality",
+      "shared socket tokens cannot distinguish requests with identical target descriptors",
+      "zero reachable operations does not prove absence of effects"
+    ],
+    "shared_sequence": {
+      "expected_surviving_request": 8,
+      "mismatches": 0,
+      "failed_checks": [],
+      "scope": "single controlled synchronous stop/start batch; checks queue survival, not all request effects"
+    },
+    "action_oracle_sha256": "3fc741cbc36217715b7d3c6dc3a5099310d41fb74d587bcab908f6e908e6129b",
+    "oracle_sha256": "ab1bfb7459afa3914a4db2908f90a99691739c8a7bb5876a581981025441e5f2"
+  },
+  "swapped_shared_parent_fd_mismatches": 0,
+  "swapped_shared_parent_sequence_mismatches": 2
+}

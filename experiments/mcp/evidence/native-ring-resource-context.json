@@ -1,0 +1,384 @@
+{
+  "run": "results/mcp/native-ring-resource-context",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 4,
+    "mcp_replay": true,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "c6fa8a52a12e9a19455e6a87ab66449b73c25439929f9d6eb91c8454bff120a0",
+      "mcp-network.mjs": "4c8c357865a94ada70e9a8d78ea6d79a4c1a8313a8b9e815ed3ac09b6bab8725",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "6e6d08b8dda3204887b70185fbc5d2d5ff2b578e75f93b2148c54d31fa9e3fc8",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 20,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "1adba18b5cbbc00df295c5ec0c2cd5483798f45a2a00b0215ad467b28d56b551",
+    "socket_links": 17,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "b150767176538edf587d4ae419791ca1840f6a9c030636f3ff054e4e6b90353b",
+    "batches": 14,
+    "operations": 23,
+    "report_sha256": "07cbeec6d87dcceca704c2f87f42438d2f3ee12f9a091b06ed50978b484e3f2b"
+  },
+  "report": {
+    "installations": [
+      {
+        "id": "epoll-install:35",
+        "kind": "epoll",
+        "fd": 3,
+        "syscall": 20,
+        "entry_line": 33,
+        "return_line": 35,
+        "creation_context": null
+      },
+      {
+        "id": "eventfd-install:57",
+        "kind": "eventfd",
+        "fd": 9,
+        "syscall": 19,
+        "entry_line": 55,
+        "return_line": 57,
+        "creation_context": null
+      },
+      {
+        "id": "epoll-install:63",
+        "kind": "epoll",
+        "fd": 10,
+        "syscall": 20,
+        "entry_line": 61,
+        "return_line": 63,
+        "creation_context": null
+      },
+      {
+        "id": "eventfd-install:85",
+        "kind": "eventfd",
+        "fd": 14,
+        "syscall": 19,
+        "entry_line": 83,
+        "return_line": 85,
+        "creation_context": null
+      },
+      {
+        "id": "epoll-install:111",
+        "kind": "epoll",
+        "fd": 15,
+        "syscall": 20,
+        "entry_line": 109,
+        "return_line": 111,
+        "creation_context": null
+      },
+      {
+        "id": "eventfd-install:133",
+        "kind": "eventfd",
+        "fd": 19,
+        "syscall": 19,
+        "entry_line": 131,
+        "return_line": 133,
+        "creation_context": null
+      },
+      {
+        "id": "socket-install:686",
+        "kind": "socket",
+        "fd": 23,
+        "syscall": 198,
+        "entry_line": 684,
+        "return_line": 686,
+        "creation_context": null
+      },
+      {
+        "id": "socket-install:705",
+        "kind": "socket",
+        "fd": 24,
+        "syscall": 198,
+        "entry_line": 703,
+        "return_line": 705,
+        "creation_context": 1
+      },
+      {
+        "id": "socket-install:739",
+        "kind": "socket",
+        "fd": 25,
+        "syscall": 242,
+        "entry_line": 737,
+        "return_line": 739,
+        "creation_context": 0
+      },
+      {
+        "id": "socket-install:831",
+        "kind": "socket",
+        "fd": 26,
+        "syscall": 198,
+        "entry_line": 829,
+        "return_line": 831,
+        "creation_context": 2
+      },
+      {
+        "id": "socket-install:862",
+        "kind": "socket",
+        "fd": 24,
+        "syscall": 242,
+        "entry_line": 860,
+        "return_line": 862,
+        "creation_context": 0
+      },
+      {
+        "id": "socket-install:954",
+        "kind": "socket",
+        "fd": 25,
+        "syscall": 198,
+        "entry_line": 952,
+        "return_line": 954,
+        "creation_context": 3
+      },
+      {
+        "id": "socket-install:985",
+        "kind": "socket",
+        "fd": 24,
+        "syscall": 242,
+        "entry_line": 983,
+        "return_line": 985,
+        "creation_context": 0
+      },
+      {
+        "id": "socket-install:1077",
+        "kind": "socket",
+        "fd": 26,
+        "syscall": 198,
+        "entry_line": 1075,
+        "return_line": 1077,
+        "creation_context": 4
+      },
+      {
+        "id": "socket-install:1108",
+        "kind": "socket",
+        "fd": 24,
+        "syscall": 242,
+        "entry_line": 1106,
+        "return_line": 1108,
+        "creation_context": 0
+      }
+    ],
+    "references": [
+      {
+        "line": 91,
+        "target_fd": 12,
+        "installation": null,
+        "status": "unresolved",
+        "resource_creation_context": null,
+        "resource_creation_rpc_id": null
+      },
+      {
+        "line": 94,
+        "target_fd": 14,
+        "installation": "eventfd-install:85",
+        "status": "observed_eventfd_installation",
+        "resource_creation_context": null,
+        "resource_creation_rpc_id": null
+      },
+      {
+        "line": 714,
+        "target_fd": 17,
+        "installation": null,
+        "status": "unresolved",
+        "resource_creation_context": null,
+        "resource_creation_rpc_id": null
+      },
+      {
+        "line": 717,
+        "target_fd": 19,
+        "installation": "eventfd-install:133",
+        "status": "observed_eventfd_installation",
+        "resource_creation_context": null,
+        "resource_creation_rpc_id": null
+      },
+      {
+        "line": 720,
+        "target_fd": 23,
+        "installation": "socket-install:686",
+        "status": "observed_socket_installation",
+        "resource_creation_context": null,
+        "resource_creation_rpc_id": null
+      },
+      {
+        "line": 723,
+        "target_fd": 24,
+        "installation": "socket-install:705",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 1,
+        "resource_creation_rpc_id": 1
+      },
+      {
+        "line": 747,
+        "target_fd": 25,
+        "installation": "socket-install:739",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 0,
+        "resource_creation_rpc_id": null
+      },
+      {
+        "line": 750,
+        "target_fd": 24,
+        "installation": "socket-install:705",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 1,
+        "resource_creation_rpc_id": 1
+      },
+      {
+        "line": 764,
+        "target_fd": 24,
+        "installation": "socket-install:705",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 1,
+        "resource_creation_rpc_id": 1
+      },
+      {
+        "line": 850,
+        "target_fd": 26,
+        "installation": "socket-install:831",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 2,
+        "resource_creation_rpc_id": 2
+      },
+      {
+        "line": 870,
+        "target_fd": 24,
+        "installation": "socket-install:862",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 0,
+        "resource_creation_rpc_id": null
+      },
+      {
+        "line": 873,
+        "target_fd": 26,
+        "installation": "socket-install:831",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 2,
+        "resource_creation_rpc_id": 2
+      },
+      {
+        "line": 887,
+        "target_fd": 26,
+        "installation": "socket-install:831",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 2,
+        "resource_creation_rpc_id": 2
+      },
+      {
+        "line": 973,
+        "target_fd": 25,
+        "installation": "socket-install:954",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 3,
+        "resource_creation_rpc_id": 3
+      },
+      {
+        "line": 993,
+        "target_fd": 24,
+        "installation": "socket-install:985",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 0,
+        "resource_creation_rpc_id": null
+      },
+      {
+        "line": 996,
+        "target_fd": 25,
+        "installation": "socket-install:954",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 3,
+        "resource_creation_rpc_id": 3
+      },
+      {
+        "line": 1010,
+        "target_fd": 25,
+        "installation": "socket-install:954",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 3,
+        "resource_creation_rpc_id": 3
+      },
+      {
+        "line": 1096,
+        "target_fd": 26,
+        "installation": "socket-install:1077",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 4,
+        "resource_creation_rpc_id": 4
+      },
+      {
+        "line": 1116,
+        "target_fd": 24,
+        "installation": "socket-install:1108",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 0,
+        "resource_creation_rpc_id": null
+      },
+      {
+        "line": 1119,
+        "target_fd": 26,
+        "installation": "socket-install:1077",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 4,
+        "resource_creation_rpc_id": 4
+      },
+      {
+        "line": 1133,
+        "target_fd": 26,
+        "installation": "socket-install:1077",
+        "status": "observed_socket_installation",
+        "resource_creation_context": 4,
+        "resource_creation_rpc_id": 4
+      },
+      {
+        "line": 1220,
+        "target_fd": 7,
+        "installation": null,
+        "status": "unresolved",
+        "resource_creation_context": null,
+        "resource_creation_rpc_id": null
+      },
+      {
+        "line": 1223,
+        "target_fd": 9,
+        "installation": "eventfd-install:57",
+        "status": "observed_eventfd_installation",
+        "resource_creation_context": null,
+        "resource_creation_rpc_id": null
+      }
+    ],
+    "resource_context_counts": {
+      "None": 7,
+      "1": 3,
+      "0": 4,
+      "2": 3,
+      "3": 3,
+      "4": 3
+    },
+    "artifact_sha256": {
+      "debugger.log": "16d7b4d1afbc4a61705816a7d55db690ef5c04b0cf4f7db441c2fa248694a793",
+      "native-events.jsonl": "d3366cfbe221e169082b42c1bab95458ced5ea9fbbe246088fa1d22e9c282bf4",
+      "request-map.jsonl": "df9a7c91688fd61076f0654c02dc4d9ba0c91dee2374d7704543510cefb68662"
+    },
+    "submission_context_counts": {
+      "None": 1,
+      "0": 13
+    },
+    "limitations": [
+      "marker producers and controlled workload trusted; marker FD authority not independently validated",
+      "submission execution context is not per-SQE causal ownership",
+      "null context means no context marker observed for thread; zero means explicit unowned context",
+      "resource creator is not necessarily operation owner",
+      "descriptor replacement outside observed creation/close syscalls remains unsupported",
+      "shared resources may serve several requests; this report preserves creation ancestry only"
+    ]
+  },
+  "analysis_source_sha256": {
+    "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+    "native_resource_context.py": "23c8912c675620ef2bb74d436c2425cb8b77bfe56b253e3fcf25ea6aaf1fe962"
+  }
+}

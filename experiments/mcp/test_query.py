@@ -74,3 +74,40 @@ class QueryTests(unittest.TestCase):
 
 
 if __name__=='__main__':unittest.main()
+
+class RingQueryTests(unittest.TestCase):
+    def test_fixture_filter_and_operation_lookup_keep_ring_nodes_separate(self):
+        with tempfile.TemporaryDirectory() as directory:
+            run=Path(directory)
+            (run/'manifest.json').write_text(json.dumps({'status':'complete'}))
+            graph=[dict(type='node',id='op:write',kind='ring_operation',request_ids=[7],paths=[str(run/'sandbox/file')]),
+                   dict(type='node',id='op:failed',kind='ring_operation',request_ids=[7],paths=[]),
+                   dict(type='node',id='op:other',kind='ring_operation',request_ids=[8],paths=[str(run/'sandbox/file')])]
+            (run/'causal-attribution.jsonl').write_text('')
+            (run/'provenance.jsonl').write_text(''.join(json.dumps(r)+'\n' for r in graph))
+            hashes={name:hashlib.sha256((run/name).read_bytes()).hexdigest() for name in ['causal-attribution.jsonl','provenance.jsonl']}
+            (run/'causal-report.json').write_text(json.dumps({'valid':True,'output_sha256':hashes}))
+            command=[sys.executable,str(Path(__file__).with_name('query.py')),str(run)]
+            result=subprocess.run(command+['--request','7','--fixture-only'],capture_output=True,text=True,check=True)
+            output=json.loads(result.stdout)
+            self.assertEqual(output['events'],[])
+            self.assertEqual([r['id'] for r in output['ring_operations']],['op:write'])
+            self.assertEqual(output['ring_operations_omitted_by_fixture_filter'],1)
+            result=subprocess.run(command+['--operation','op:failed'],capture_output=True,text=True,check=True)
+            self.assertEqual([r['id'] for r in json.loads(result.stdout)['ring_operations']],['op:failed'])
+            self.assertNotEqual(subprocess.run(command+['--operation','missing'],capture_output=True).returncode,0)
+
+class SnapshotIntegrityTests(unittest.TestCase):
+    def test_changed_missing_and_symlinked_snapshot_rejected(self):
+        from query import validate_snapshot_files
+        with tempfile.TemporaryDirectory() as directory:
+            run=Path(directory);folder=run/'ring-memory-test';folder.mkdir()
+            path=folder/'sq.bin';path.write_bytes(b'evidence')
+            graph=[dict(type='node',kind='ring_snapshot',path=str(path),sha256=hashlib.sha256(b'evidence').hexdigest())]
+            validate_snapshot_files(run,graph)
+            path.write_bytes(b'changed')
+            with self.assertRaisesRegex(ValueError,'integrity mismatch'):validate_snapshot_files(run,graph)
+            path.unlink()
+            with self.assertRaisesRegex(ValueError,'unavailable'):validate_snapshot_files(run,graph)
+            target=folder/'target';target.write_bytes(b'evidence');path.symlink_to(target)
+            with self.assertRaisesRegex(ValueError,'symlink'):validate_snapshot_files(run,graph)

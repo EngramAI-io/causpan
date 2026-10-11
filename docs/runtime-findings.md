@@ -1,7 +1,9 @@
 # Runtime attribution: experimental results
 
 The prototype now connects MCP request identities to captured Linux syscalls through
-runtime execution context. It has been exercised with a real Codex agent and the
+runtime execution context. It has been exercised with a real Codex agent
+(`codex-cli 0.160.1`, model `gpt-6-astra`, reasoning effort `low`,
+configured in `~/.codex/config.toml`) and the
 official filesystem MCP server, and with controlled Node and Rust/Tokio MCP servers.
 This is an executable research mechanism, not a complete security provenance system.
 
@@ -910,3 +912,1112 @@ binary/adapter/inspector hashes, raw trace hashes, exact commands, reports, and
 out-of-order completion results. All 55 tests pass. The next integration must
 carry MCP identity into each submitted ring operation and retain per-operation
 completion evidence without inventing a corresponding write syscall.
+
+### MCP request identity linked to individual ring operations
+
+The controlled `uring_slot` MCP tool now starts one hashed C helper per request.
+Each helper creates one ring and submits two writes plus an intentionally invalid
+read to the shared `slots.bin`, at independently assigned fixture offsets. The
+existing runtime/process bridge supplies request identity; the ring adapter does
+not inspect tool arguments or derive ownership from file offsets.
+
+The adapter corroborates helper observations against complete traced stdout
+writes, validates submission/completion identity and timing around `io_uring_enter`,
+checks the kernel submission count, and requires consistent inherited request
+context. Provenance uses separate `ring_operation` nodes with submission and
+completion evidence edges. It does not fabricate corresponding write syscalls.
+`kernel_worker_tid` remains unknown. The helper build hash is checked against the
+run configuration; missing, malformed, or inconsistent evidence invalidates capture.
+
+A concurrency-8 two-batch run attributed 48 operations to 16 MCP calls: 32 writes
+and 16 expected failed reads. Each of the 16 request queries exposed exactly its
+three ring operations and one request ancestor. [Initial evidence](../experiments/mcp/evidence/mcp-ring-c8.json)
+contains reports and query checks. The independent oracle checks operation offsets,
+owners, completion results, and file contents after inference.
+
+The four-case replay matrix (concurrency 1 and 16, two repeats, two batches) passed
+204 operations across 68 calls: 136 writes and 68 expected failed reads. A further
+concurrency-32 run with string request IDs and spoofed client context passed all
+192 operations across 64 calls. [Matrix evidence](../experiments/mcp/evidence/mcp-ring-matrix.json)
+preserves reports and source manifests; output hashes were revalidated.
+All 56 tests pass, including malformed helper evidence and context/timing failures.
+
+This remains a trusted one-request/one-helper/one-ring adapter. It does not yet
+support requests sharing one ring, reused user_data, multishot requests, SQPOLL,
+registered resources, or decoding the unrelated Node/libuv ring traffic. The
+kernel-side completeness gap remains visible rather than being declared solved.
+
+### Actual LLM agent invokes the ring workload
+
+The actual Codex LLM agent completed four `uring_slot` calls and a final barrier,
+using MCP without shell operations. The run passed capture validation and the
+independent oracle: 12 attributed ring operations, eight successful writes, and
+four expected invalid-FD reads. Each request query exposes exactly its three ring
+operations. The tool calls did not overlap; replay supplies concurrency coverage.
+[Agent evidence](../experiments/mcp/evidence/agent-ring.json) retains call intervals,
+query checks, transcript hash, reports, and source manifest. This confirms the
+real-agent path for the scoped helper adapter; it does not extend its runtime or
+kernel observability guarantees.
+
+### Multiple MCP requests share one persistent io_uring
+
+`uring-shared` starts a C worker before any request and keeps one ring open across
+batches. The server sends internal IPC job identities and contexts separately
+from workload slots. Under each verified IPC preparation context, the worker
+records three SQEs; it then leaves that context. One context-free
+`io_uring_enter` submits the entire batch. CQEs are recorded by the unscoped
+completion dispatcher and joined by operation identity, not completion order.
+IPC brackets describe the preparation task, not the lifetime of the async I/O.
+
+The first concurrency-8 run passed 48 operations across 16 requests. Each of its
+two batch syscalls submitted 24 operations belonging to eight requests, while the
+syscall itself retained no single execution owner. Every request query exposed
+only its own three operations and its own request ancestor, despite sharing the
+batch syscall. [Initial shared-ring evidence](../experiments/mcp/evidence/shared-ring-c8.json)
+contains these checks and reports.
+
+The adapter verifies a single observed worker/ring, build identity, exact sidecar
+bytes against traced writes, unique per-SQE IPC ownership, per-batch kernel
+submission counts, SQE/CQE timing, and absence of context leakage on batch enter
+and completion dispatch. It still trusts the cooperating runtime's SQE/CQE
+observations; no kernel worker identity is claimed. Queue IDs are unique for the
+captured ring lifetime. Fixed batch width is an experimental coordination rule;
+partial batches at EOF fail, and arbitrary arrivals, cancellation, SQPOLL,
+registered resources, multishot operations, and unrelated runtime rings remain
+outside this adapter. All 57 tests pass, including malformed shared-ring evidence.
+
+The six-case shared-ring matrix (concurrency 1, 16, 64; two repeats; three batches)
+passed 1,458 operations across 486 requests: 972 writes and 486 expected failed
+reads. A separate concurrency-32, three-batch run with string request IDs and
+spoofed client context passed all 288 operations. [Matrix evidence](../experiments/mcp/evidence/shared-ring-matrix.json)
+contains reports and manifests; matrix output hashes were revalidated.
+
+A maximum-width run (128 requests per batch, four batches) passed 1,536 operations
+across 512 requests. Captured setup parameters show 512 SQ entries and 1,024 CQ
+entries, so both queues wrapped during the run. All 1,536 operation IDs were
+unique. Each of the four batch syscalls submitted 384 operations owned by 128
+requests, without gaining a single execution owner. All 1,024 writes and 512
+expected failed reads passed the independent oracle. [Wraparound evidence](../experiments/mcp/evidence/shared-ring-wraparound.json)
+records queue sizes, batch checks, reports, and source manifest.
+
+### Shared-ring batch-boundary audit and conditional baselines
+
+The adapter now requires each batch's SQE preparation to follow observed ring
+setup and the preceding batch's completed CQE observations. Missing CQE timing
+or overlapping preparation is rejected. A fresh concurrency-16, three-batch run
+passed all 144 operations after this tightening. Negative tests cover inter-batch
+overlap and untimed completion observations; all 58 tests pass.
+
+`ring_baselines.py` measures ownership **given the already enumerated ring
+operations and their associated enter syscall**. It does not pretend a syscall-
+only collector discovers those operations. For the fresh 48-request run, the
+worker-lifetime PID candidate set contains 48 requests for every operation;
+request-window correlation narrows that to 16. Both cover the correct owner but
+leave all 144 operations ambiguous, with respectively 6,768 and 2,160 extra
+candidate edges. The context adapter assigns all 144 correctly under its trust
+assumptions. A sequential three-request control yields nine exact request-window
+assignments, demonstrating when that weaker baseline is sufficient.
+[Baseline evidence](../experiments/mcp/evidence/shared-ring-baselines.json) preserves
+both reports, manifests, and the baseline scorer hash. These are internal
+conditional baselines, not measured results for CamFlow or other external systems.
+
+### Ring resource observations and first-class operation queries
+
+The query audit found that `--fixture-only` could hide shared-ring effects:
+context-bearing SQE/CQE witness writes target a sidecar outside the fixture,
+while the actual writes have no corresponding file-write syscalls. Ring nodes
+now carry a conservative pathname projection from a preceding observed absolute
+open in the scoped single-threaded helper. Descriptor close/replacement or
+unsupported installation loses the projection; invalid descriptors remain
+explicitly unresolvable. This is an observed opening pathname, **not** inode/OFD
+identity, rename tracking, or a file-content dependency claim.
+
+`ring_resource_observed` edges retain the source open syscall. Request queries
+select ring operations separately from syscall events, including when filtering
+by fixture path. `--operation FULL_NODE_ID` inspects a ring operation directly;
+unknown IDs fail. Results expose a separate `ring_operations` array and a count
+of operations omitted by the fixture filter, rather than silently losing them.
+The failed invalid-FD reads have no fixture path and remain accessible directly.
+
+Two fresh cases (per-request helper and persistent shared ring, concurrency 4,
+two batches each) passed 48 total ring operations. All 16 request fixture queries
+returned exactly two writes, explicitly omitted one invalid-FD read, and retained
+the corresponding open evidence. Direct failed-operation queries also passed.
+[Query evidence](../experiments/mcp/evidence/ring-resource-queries.json) contains
+reports, checks, and query hash; output hashes were revalidated. All 60 tests
+pass, including descriptor replacement/reuse and CLI operation selection.
+
+### Descriptor reuse between ring preparation and submission
+
+The new `uring-reuse` scenario prepares SQEs using the descriptor for `slots.bin`,
+then closes it and opens `replacement.bin` on the same descriptor before submitting.
+In the concurrency-8, two-batch capture, all 32 writes affected the replacement
+file; resolving resources when preparing the SQE would have retained the wrong
+opening pathname. The adapters now resolve ordinary descriptors at the observed
+submission boundary. All 48 operations retained the correct request owners,
+including 16 expected invalid-descriptor read failures.
+[Reuse evidence](../experiments/mcp/evidence/ring-fd-reuse.json) preserves the
+per-operation preparation-versus-submission comparison.
+
+Both ring adapters also require a full submission and a full waiting GETEVENTS
+enter; partial submissions, partial waits, and unsupported enter flags fail
+closed. This boundary is justified only for the controlled single-threaded
+helpers, without SQPOLL, fixed-file registration, or concurrent descriptor-table
+mutation. It is not a general kernel file-reference acquisition observation.
+
+A fresh three-scenario regression matrix (per-request, shared, and descriptor
+reuse; concurrency 4, two batches) passed all 72 operations across 24 requests:
+48 successful writes and 24 expected failed reads. Output hashes were revalidated
+before preserving [matrix evidence](../experiments/mcp/evidence/ring-submission-resource-matrix.json).
+All 62 unit tests passed, including descriptor reuse and rejected partial enters.
+
+The follow-up resource audit also found that a descriptor-mutating syscall with
+an unavailable return value could leave an earlier open projection intact.
+Unknown results now invalidate that projection instead of being treated like
+failed calls. Regression cases cover `dup2`, `close_range`, `recvmsg`, and `openat`;
+all 63 tests pass. This is a conservative evidence-loss rule, not a claim that
+those syscalls succeeded.
+
+### Explicit enforcement of the ring helper execution contract
+
+The adapter audit found that rejecting unsupported enter flags did not also
+verify setup flags. Both adapters now require explicitly observed zero setup
+flags and reject successful or unresolved process creation and ring registration
+inside the helper. This prevents accepting an observed SQPOLL or expanded
+process/registration scope under assumptions made for a single-threaded ordinary
+ring. Failed calls do not imply a scope change. These checks strengthen the
+trusted-helper contract; they do not establish immunity to hidden activity or
+replace kernel memory observation.
+
+A fresh concurrency-8, two-batch matrix across per-request, shared, and reuse
+scenarios passed 144 operations from 48 requests: 96 successful writes and 48
+expected failures. [Evidence](../experiments/mcp/evidence/ring-scope-validation.json)
+preserves reports and source identities, with output hashes revalidated. All 64
+unit tests pass, including top-level setup-flag parsing and unknown-result scope
+changes.
+
+### Sparse arrivals in the shared-ring worker
+
+`--ring-idle-ms N` enables partial batch flushing after N milliseconds without
+another ready job. Zero retains the fixed-batch control. The worker disables
+stdio read-ahead so polling sees the next complete dispatcher line; this is a
+trusted newline-delimited protocol, not a timeout guarantee for malformed or
+partially delivered lines. Each flushed batch still drains before the next.
+
+A direct process check sent three sequential jobs to a width-eight worker,
+waiting for each response before sending the next. All three partial batches
+completed (nine operations), with expected file bytes. A full MCP capture with
+width eight, two batches and a 10 ms idle interval passed all 48 operations from
+16 requests. [Capture evidence](../experiments/mcp/evidence/shared-ring-idle.json)
+preserves reports and source hashes. All 64 existing tests pass. Real-agent sparse
+arrival coverage is the next step; the direct check alone does not establish it.
+
+### Actual LLM agent with sparse shared-ring requests
+
+The agent harness now accepts `uring-shared` with a positive idle-flush interval
+and validates the ring's output bytes in addition to exactly four unique worker
+calls and a final barrier. An actual agent run with batch capacity eight and a
+10 ms idle interval completed four calls, producing four partial batches and 12
+correctly attributed operations (eight writes and four expected failed reads).
+All four request queries returned exactly their own three operations. Output
+hashes were revalidated; [agent evidence](../experiments/mcp/evidence/agent-shared-ring.json)
+preserves reports, query checks, batch membership, and the agent-log hash.
+
+The agent's final text claimed concurrency, but protocol request/response
+intervals show **zero overlapping pairs**. This run proves sparse sequential
+agent requests through a persistent ring, not concurrent agent issuance. The
+replay captures remain the concurrency evidence. There were no shell commands
+or calls to other servers. All 65 tests pass, including shared-ring agent output
+and duplicate-call validation.
+
+### Measured staggered arrivals and variable ring batches
+
+Shared-ring replay now supports `--request-stagger-ms`, recorded in the manifest.
+Two fresh width-eight, two-wave captures with a 10 ms idle flush passed all 96
+operations across 32 requests. Scheduling delays are experimental inputs, not
+claims about actual concurrency. The evidence gives:
+
+| Arrival spacing | Overlapping request pairs | Peak active requests | Requests per observed batch |
+|---|---:|---:|---|
+| 50 ms | 28 | 5 | 1, 1, 1, 1, 1, 2, 1, 2, 1, 5 |
+| 2 ms | 56 | 8 | 2, 6, 8 |
+| Actual agent | 0 | 1 | 1, 1, 1, 1 |
+
+`ring_arrivals.py` computes these values from protocol monotonic intervals and
+validated graph batches, requiring complete runs, passing independent scores,
+and matching output digests. The 50 ms result shows that spacing greater than
+the idle timeout does not guarantee single-request batches: queued arrivals and
+capture/runtime scheduling affect what the worker observes. No simultaneous
+kernel execution claim follows from overlapping MCP intervals.
+[Arrival evidence](../experiments/mcp/evidence/ring-arrivals.json) preserves the
+reports, manifests, and reporter hash. Both replay cases retain exact ownership
+through irregular batch sizes.
+
+### External ring-memory collection: host restriction observed
+
+A new standalone probe stops the helper after publishing SQEs and after the
+completion-waiting enter, exposing mapping addresses and layout offsets to its
+parent. `ring_memory_probe.py` attempts external snapshots and has an initial
+ordinary SQE/CQE decoder. This is deliberately separate from MCP attribution;
+cooperative stops and helper-supplied mapping metadata remain assumptions.
+
+The first live attempt failed before decoding: `/proc/PID/mem` returned EIO for
+the ring mapping. A follow-up diagnostic tested SQ, CQ, and SQE mappings via both
+that interface and `process_vm_readv`. All ring reads failed (EIO and EFAULT,
+respectively), while both methods successfully read 16 bytes from ordinary
+executable memory in the same child. Thus general parent-child read permission
+was not sufficient for these ring mappings on this host. This result does not
+establish the precise kernel implementation cause or apply to all kernels.
+[Failure evidence](../experiments/mcp/evidence/ring-memory-access.json) preserves
+per-mapping results and source/binary identities. The decoder is not validated
+by this failed capture and is not used to claim new attribution coverage.
+
+Reproduce with `python3.11 experiments/mcp/ring_memory_probe.py NEW_DIRECTORY`;
+on this host it fails at the snapshot. `ring_memory_access.py NEW_DIRECTORY`
+then runs the two-method diagnostic against the built helper. Diagnostic output
+filenames require a fresh directory for each attempt. A future collection path
+must address mapping access or obtain observations at another trusted boundary.
+
+### Exported ring descriptor: negative control
+
+The next probe attempted SCM_RIGHTS export of the helper's ring descriptor so
+that the parent could mmap the actual ring, avoiding process-memory reads.
+`sendmsg` failed with EINVAL before the first snapshot stop. A same-helper control
+exported an ordinary file over the identical socket/message construction and
+successfully delivered one descriptor. The ring-specific failure is therefore
+not explained by a universally broken ancillary-message construction. This is
+an observed host restriction, not a claim about all kernel versions.
+[Control evidence](../experiments/mcp/evidence/ring-export-controls.json) records
+both outcomes and helper identities. `ring_memory_probe.py --export-ring
+NEW_DIRECTORY` preserves the failed attempt; no external-memory attribution
+coverage is claimed. The probe now also records a reaped child's exit status in
+its subprocess handle so failure cleanup does not attempt to signal it again.
+
+The remaining collection choices include a collector-created inherited ring,
+an in-process raw snapshot bridge, and privileged kernel observation. Each has
+a different deployment/trust boundary; these failed external-read paths do not
+invalidate the existing trusted runtime SQE/CQE attribution experiments.
+
+### Successful raw-memory observation with a collector-created inherited ring
+
+The next deployment model creates and maps the ring in a parent before forking
+the worker. The parent retains its own valid shared mappings, so it does not
+need process-memory access or SCM_RIGHTS transfer. At cooperative worker stops,
+it snapshots SQ counters/array, SQEs, and the completed CQ. The Python decoder
+reads the binary layouts and joins user_data independently of the worker's JSON
+records, then compares them as a separate consistency check.
+
+The first live capture decoded three operations correctly: two seven-byte
+writes and one EBADF read. Completion order was 103, 101, 102, rather than
+submission order. Final file bytes matched both writes. Mutation checks rejected
+an invalid SQ mask, overfull pending count, and out-of-range SQ array index.
+[Evidence](../experiments/mcp/evidence/inherited-ring-memory.json) preserves raw
+snapshot hashes, helper/decoder identities, operations, and negative checks.
+
+Reproduce with `python3.11 experiments/mcp/inherited_ring_probe.py NEW_DIRECTORY`.
+This is successful external raw-ring observation under a collector-created,
+fork-inherited deployment model. It still uses cooperative stops and supplied
+layout metadata, is limited to ordinary little-endian SQE/CQE layouts, and does
+not yet establish MCP ownership, arbitrary existing-ring collection, or kernel
+worker identity. The existing request attribution adapter does not consume
+these snapshots yet.
+
+Raw snapshot decoding now rejects missing, negative, boolean, unaligned,
+overlapping, or out-of-bounds layout fields and truncated buffers before reading
+records. New synthetic tests explicitly exercise 32-bit counter wrap and SQ array
+indirection rather than assuming sequential SQE positions. A fresh inherited-ring
+capture still passed all three operations after these checks; its
+[evidence](../experiments/mcp/evidence/inherited-ring-validated.json) records the
+updated decoder identity. All 67 tests pass. MCP integration remains outstanding.
+
+The inherited-ring collector now captures strace for both processes and verifies
+one setup in the collector, a successful fork to the submitting worker, and one
+full waiting enter referencing the inherited descriptor. It checks exact snapshot
+write lengths and requires SQ/SQE snapshot writes before enter and CQ snapshot
+writes after enter completion. A fresh live run passed these lifecycle checks
+and all three decoded operations. [Lifecycle evidence](../experiments/mcp/evidence/inherited-ring-lifecycle.json)
+includes the distinct collector/submitter PIDs, trace source references, and trace
+hashes. This supplies observed process/syscall ancestry for the raw snapshots;
+it is still a standalone experiment, not yet a request-context integration.
+
+### First MCP integration of inherited-ring snapshots
+
+The new `uring-memory` replay scenario allocates a separate snapshot directory
+per tool call. Its collector forks the submitting worker; the existing runtime
+process bridge supplies request ownership across both generations. The adapter
+decodes actual SQ/SQE/CQ snapshots, verifies their traced write sizes/order,
+compares decoded operations with the runtime witnesses, and records snapshot
+hashes and collector identity on each ring node.
+
+The first capture correctly failed closed because stderr metadata was split
+across writes. Reassembling the complete traced byte stream repaired that input
+handling. A fresh concurrency-two, two-batch capture passed four MCP requests,
+12 operations, eight writes, and four expected failed reads. All 67 tests pass.
+[Evidence](../experiments/mcp/evidence/mcp-ring-memory.json) preserves the failed
+attempt's error alongside the fresh passing reports and source identities.
+
+Reproduce with `python3.11 experiments/mcp/run.py --scenario uring-memory
+--instrumented --concurrency 2 --batches 2 --output NEW_DIRECTORY` (on one line).
+This first integration still trusts the collector and supplied layout metadata;
+it is not generic asynchronous kernel tracing. Further negative tests and
+explicit snapshot graph edges are outstanding.
+
+Raw-memory MCP provenance now contains explicit `ring_snapshot` nodes, traced
+`ring_snapshot_written` edges, and `ring_memory_observed` edges to operations.
+Request queries traverse these ancestors. A fresh concurrency-four, two-batch
+capture passed 24 operations from eight requests; all eight queries retained
+exactly three operations and three snapshot nodes. An SQE-opcode mutation in a
+captured snapshot was rejected as disagreeing with runtime witnesses, then the
+original snapshot was restored. [Graph evidence](../experiments/mcp/evidence/mcp-ring-memory-graph.json)
+preserves these checks and capture identities; output hashes were revalidated.
+All 67 tests pass. This mutation check establishes consistency checking, not
+protection against a cooperating collector falsifying both evidence streams.
+
+The raw-memory adapter now verifies that collector setup/fork and snapshot writes
+carry the same inherited request context as the submitting worker. It requires
+lifecycle/snapshot timing, rejects symlinked snapshot paths, and applies the
+unsupported registration/process-change checks to the collector except for its
+one expected worker fork. A fresh eight-request run passed all 24 operations
+under these stronger gates. [Capture evidence](../experiments/mcp/evidence/mcp-ring-memory-context.json)
+retains reports and source identities. [Mutation checks](../experiments/mcp/evidence/ring-memory-context-mutations.json)
+confirm rejection of lost setup context, changed snapshot context, and missing
+snapshot timing. These checks constrain the observed cooperative chain; they do
+not authenticate a malicious collector or make filesystem snapshots immutable.
+
+Snapshot integrity is now checked again when querying provenance. Previously,
+valid graph hashes did not establish that referenced snapshot files still had
+the recorded bytes. Queries now reject missing, changed, symlinked, or out-of-run
+snapshot paths. A real capture query passed, rejected an appended snapshot byte,
+and passed after restoration. [Query evidence](../experiments/mcp/evidence/snapshot-query-integrity.json)
+records this sequence and the query implementation hash. All 68 tests pass,
+including missing-file and symlink cases. Hash consistency is not cryptographic
+authentication of the collector, and concurrent filesystem mutation remains
+outside the immutable-capture assumption.
+
+### Raw-memory attribution under concurrent request pressure
+
+A concurrency-32, two-batch `uring-memory` replay with string request IDs and
+spoofed client context passed 64 requests and 192 operations: 128 writes and 64
+expected failed reads. All 64 request evidence chains selected exactly three
+operations and three snapshots, and all snapshot/output hashes were validated.
+[Pressure evidence](../experiments/mcp/evidence/ring-memory-c32-spoof.json)
+preserves checks, reports, and source identities. This tests isolation across
+many per-request collector/worker pairs, not a shared concurrent raw-memory ring.
+
+The actual LLM-agent raw-memory run also passed: four unique MCP calls followed
+by barrier, 12 operations, eight writes and four expected failures. All four
+queries retained three operations and three snapshots; protocol intervals showed
+zero overlapping pairs. [Agent evidence](../experiments/mcp/evidence/agent-ring-memory.json)
+preserves validated reports, source identities and agent-log hash. This adds real
+agent execution to the cooperative raw-memory path; concurrent coverage comes
+from replay. All 68 tests pass.
+
+The raw decoder audit found auxiliary SQE bytes were previously omitted from the
+normalized record without validation. Inspecting the local Linux UAPI layout
+confirmed these include I/O priority, operation-specific flags, buffer selection,
+personality, and additional union fields. The scoped decoder now requires these
+bytes to be zero, matching the controlled helper's construction, and rejects
+nonzero values rather than silently erasing unsupported semantics. Nine byte
+mutation positions are covered by regression subtests; all 69 tests pass. A fresh
+live inherited-ring capture also passed its three operations and syscall
+lifecycle checks. [Evidence](../experiments/mcp/evidence/inherited-ring-aux-validation.json)
+preserves the new decoder identity. This is an explicit scope gate, not support
+for the rejected operation modes.
+
+### Ring coverage reports distinguish evidence methods and unknown work
+
+Reports now count attributed operations by observation method and separately
+count enter calls with/without attributed operations. The legacy
+`submissions_decoded: false` is explicitly defined as lack of generic kernel
+submission decoding, avoiding confusion with scoped raw-snapshot decoding.
+A fresh four-request capture passed 12 raw-memory operations tied to four enter
+calls; eight other enter calls had no attributed operations. Those eight are
+not asserted to be eight missing I/Os: enters can submit, wait, or perform ring
+control work, so no total-operation denominator is available.
+[Coverage evidence](../experiments/mcp/evidence/ring-coverage-report.json) preserves
+the reports and identities. All 70 tests pass, including one enter carrying
+multiple operations and rejection of references to absent enter evidence.
+
+Inspecting the eight uncovered enters in the coverage capture found positive
+submission counts in all eight, with return values summing to **17 accepted
+submissions**. All originated in the Node server process (including one separate
+thread), rather than the per-request C collectors. Their opcodes, completions,
+and request ownership are not decoded. This narrows the next collection target
+to the server's own rings without claiming a specific libuv callsite from PID
+alone. [Inspection evidence](../experiments/mcp/evidence/uncovered-ring-submissions.json)
+records each source/TID, requested count, and accepted count.
+
+Coverage reporting now exposes those per-enter details and sums observed
+uncovered accepted submissions. This count does not establish successful I/O,
+completion identities, or a universal operation denominator; SQPOLL and activity
+outside decoded capture still matter. All 70 tests pass.
+
+### Static inventory for native Node ring instrumentation
+
+The installed binary retains local symbols for `uv__iou_submit`, ring setup/
+enter/register wrappers, `uv__io_poll`, and filesystem preparation routines
+including read/write, close, open, statx, and rename. A reproducible inventory
+script (`inspect_node_rings.py OUTPUT`) records the executable hash, runtime
+versions, symbol addresses, and bounded disassembly hashes.
+[Inventory evidence](../experiments/mcp/evidence/node-ring-symbols.json) pins this
+inspection to the actual installed binary.
+
+The `uv__iou_submit` disassembly begins by loading a ring-state pointer and
+publishing an incremented counter with `stlr`, then conditionally invokes a
+syscall. Its entry is not the conventional stack-frame prologue used by the
+existing work-submit hook. Consequently, reusing that patching scheme without
+instruction/ABI analysis would be unsafe. This is a static candidate inventory,
+not proof those symbols explain the captured 17 submissions. The next native
+extension needs verified ring-state layout and dynamic callsite evidence before
+it can make attribution claims.
+
+### Dynamic Node ring callsites under GDB
+
+A controlled Node workload opened, read, and closed a file three times under
+GDB. Symbol breakpoints expanded to optimized inline locations. The initial
+probe printed argument registers and produced incorrect arguments there; those
+values are not evidence. The corrected probe used debugger-resolved named
+arguments. All three observed enter calls requested two submissions/two
+completions and came from `uv__epoll_ctl_flush`, including delayed-task, main-loop,
+and tracing-shutdown stacks. No `uv__iou_submit` breakpoint fired in this run.
+
+A second run printed the live `struct uv__iou` layout and state from the caller:
+SQ/CQ counter pointers, masks, mappings, sizes, ringfd, and in-flight count were
+available through debug information. Both corrected runs exited normally.
+[Dynamic evidence](../experiments/mcp/evidence/node-ring-dynamic-callsites.json)
+preserves logs, workload/debugger script hashes, and the executable identity.
+Reusable scripts live under `experiments/mcp/node-ring-debug`; run GDB in batch
+mode with `-x callsites.gdb` (or `layout.gdb`), followed by `--args node
+workload.cjs FILE`, using full paths as needed.
+
+This establishes actual epoll-control batching in this standalone workload.
+It does not retroactively classify all 17 unknown MCP-capture submissions or
+attribute their owners. It also shows why a generic entry-register hook cannot
+be inferred from optimized symbolic breakpoints. Native collection should target
+the verified control-batch boundary separately from filesystem SQE preparation.
+
+### Debugger-assisted in-process copy of native Node SQEs
+
+Direct GDB examination of the live ring mapping failed with `Cannot access
+memory`, despite readable `uv__iou` state. A second controlled probe invoked
+`malloc`, `memcpy`, and `free` inside the stopped target to copy 128 bytes from
+its SQE mapping into ordinary memory. That copy succeeded at three epoll-flush
+breakpoints and the workload exited normally. Six copied SQE slots contained
+opcode 29; the records preserve raw fd/off/len/user_data fields.
+[Evidence](../experiments/mcp/evidence/node-ring-inferior-copy.json) includes
+script/log hashes and decoded candidates. Reusable `memory.gdb` and `copy.gdb`
+probes preserve both paths.
+
+This is a promising cooperative observation boundary, not a passive collector.
+The probe reads the first two slots, so pending SQ array/counter membership and
+CQ completions still need validation before treating them as submitted
+operations. Inferior allocator calls may deadlock in other workloads and alter
+execution. No new MCP ownership coverage is claimed by these candidate records.
+
+The debugger copy probe now also snapshots SQ head/tail counters from each
+observed native control ring. All three enters had head 0, tail 2, mask 255:
+two pending entries, agreeing with their requested submission counts. The
+workload exited normally. [Pending-count evidence](../experiments/mcp/evidence/node-ring-pending.json)
+preserves the observations and probe/log hashes. SQ array indirection is still
+uncaptured, so these counters do not alone prove that the first two copied SQE
+slots are the exact pending operations. CQE validation also remains outstanding.
+
+The setup-layout probe exposed another optimized-code limitation. Entry-local
+`params` values at `uv__iou_init` were uninitialized and must not be used as kernel
+layout evidence. Address breakpoints at the standalone function's setup-return
+and success branch did not fire, although the workload exited normally. The
+compiler also provides inline instances (GDB reports multiple symbol locations),
+so the standalone addresses are not sufficient capture points. The attempted
+`node-ring-debug/setup.gdb` script is retained as a diagnostic, not a validated
+layout collector. Capturing the setup syscall return independently of inline
+function placement is still required before validating SQ array membership.
+
+### Native SQ array membership verified in the same capture
+
+GDB syscall catchpoints for setup (AArch64 syscall 425) captured entry and return
+parameter blocks, avoiding optimized function placement. Paired per debugger
+thread and parameter address, all three successful setups returned 256 SQ / 512
+CQ entries, zero setup flags, and SQ array offset 8256. The same capture copied
+the array through inferior memory: each observed batch had head 0, tail 2, mask
+255, and array entries [0, 1]. Thus the two copied SQE slots per batch are now
+verified pending queue members for this run, rather than guessed first slots.
+[Evidence](../experiments/mcp/evidence/node-ring-array-verified.json) preserves
+setup results, checks and script/log hashes. The workload exited normally.
+Completion identity/results and MCP request ownership remain unobserved by this
+native debugger path. The fixed offset in the diagnostic is checked against
+that run's kernel-returned parameters; it is not a portable layout assumption.
+
+### Native control-ring submissions matched to completions
+
+A binary-specific breakpoint immediately after the epoll-flush enter syscall
+copies CQ counters and two CQEs before libuv consumes them. In the live controlled
+run, each of the three enters returned 2; each matching ring had CQ head 0/tail 2.
+The new bounded log inspector joins the six pending SQEs to CQEs by user_data,
+rejecting duplicate or unknown completions, count/window mismatches, and partial
+enters. [Completion evidence](../experiments/mcp/evidence/node-ring-completions.json)
+records all six identity/result pairs and the log hash. All six results were zero.
+
+This validates native control-ring operation/completion observation in this
+first-batch workload. The debugger script remains pinned to the inspected binary,
+uses target-side memory copies, and does not infer MCP ownership. Setup-return
+metadata is captured in the log but the completion inspector's scope is the
+bounded SQ/CQ join, not a general setup/lifetime verifier. Broader queue windows,
+repeated identity lifetimes, and request-context integration remain outstanding.
+
+The native completion inspector now explicitly requires observed SQ counters,
+CQ ring identity, and CQ counters in addition to array, bytes, and enter return.
+A missing CQ identity line previously could go unnoticed; the new gate rejects
+it. Regression tests also cover out-of-order identity matching, partial enter,
+changed array, duplicate completion identity, and abnormal exit. All 71 tests
+pass, and the existing live six-operation log passes the stronger validator
+([revalidation](../experiments/mcp/evidence/node-ring-completions-validated.json)).
+
+### Repeated native ring windows: first-batch collector limit confirmed
+
+A new loopback-network workload completed four checked request/response
+connections under the native debugger probe. It produced 14 enters requesting
+23 submissions, including batches of one, two, and four and a main ring advancing
+SQ/CQ heads from zero through 19. The process exited normally. The bounded
+first-batch inspector rejected the capture at the four-entry batch, as intended.
+[Window evidence](../experiments/mcp/evidence/node-ring-network-windows.json)
+records counts, source hashes, and rejection.
+
+The probe's fixed first-slot dumps are stale/incomplete for these later windows;
+only the counter/enter observations are valid here. Generalizing collection must
+copy queue entries selected by the current head, mask, and SQ array and distinguish
+reused user_data across completed lifetimes. This is concrete evidence for that
+next implementation, not a successful 23-operation attribution result.
+
+### Native queue-indexed collection across repeated batches
+
+`windows.gdb` now copies each SQ array entry selected by the current head/mask,
+then the corresponding SQE, and copies CQEs at the current CQ head/mask after
+enter. The loopback workload passed 14 serialized batches with 23 identity-matched
+operations across one-, two-, and four-entry windows. `inspect_native_windows.py`
+requires matching enter counts, CQ windows, and unique pending/completion IDs
+within each batch. Identity reuse after completed batches is permitted.
+[Window results](../experiments/mcp/evidence/node-ring-windows.json) retain all
+operations and queue positions plus the raw-log hash.
+
+This removes the stale first-slot assumption. The experimental script still uses
+the previously measured 8256-byte SQ array offset and fixed capacities; the new
+inspector explicitly does not verify setup layout or ring lifetime. It supports
+serialized batches only and does not yet supply MCP ownership. These deployment
+and observation assumptions must be closed before production integration.
+
+### Native SQ/CQ physical wraparound
+
+The loopback workload now accepts a bounded connection count. A fresh 140-
+connection debugger capture passed 422 serialized batches and 567 submission/
+completion joins; the busiest ring advanced its queue tail to 563. This exceeds
+both observed SQ capacity 256 and CQ capacity 512, exercising physical slot
+wraparound with current-head/mask copying. [Wrap evidence](../experiments/mcp/evidence/node-ring-wrap.json)
+preserves batch positions, operations, and collector/workload hashes. Synthetic
+regression also covers unsigned 32-bit counter wrap and identity reuse after a
+completed batch, plus rejected partial returns and mismatched completion IDs.
+All 72 tests pass. Native capture still has the documented fixed-layout,
+cooperative-debugger, and serialized-batch restrictions; no MCP owner is inferred.
+
+Native debugger capture now has a reproducible runner:
+`python3.11 experiments/mcp/run_native_ring_debug.py NEW_DIRECTORY --connections 8`.
+It rejects a Node executable whose SHA-256 differs from the inspected binary,
+snapshots scripts, records source/output identities, and kills the experiment
+process group on timeout. A fresh run passed 26 batches and 39 joins
+([runner evidence](../experiments/mcp/evidence/native-ring-runner.json)). Binary
+pinning prevents accidental address reuse across builds; it does not validate
+kernel layout, remove inferior-call effects, or establish request ownership.
+
+The native runner now captures setup syscall entry/return parameter blocks in
+the same session and requires layout validation before accepting batch joins.
+It checks capacities, zero setup flags, SQ array offset, counter offsets, CQE
+offset, matching parameter addresses, and setup evidence for every batch ring;
+reused setup FD numbers are rejected as unsupported. A fresh eight-connection
+run passed 26 batches/39 joins with these gates. Changing the captured array
+offset was rejected. [Layout-checked evidence](../experiments/mcp/evidence/native-ring-layout-checked.json)
+records reports, source hashes and mutation result. All 72 tests pass. This
+closes the fixed-offset assumption for accepted runner captures, while full ring
+lifetime tracking and MCP ownership remain outstanding.
+
+Native batch validation now requires each previously seen ring's SQ head to equal
+the preceding drained tail, and CQ head to match the current SQ head under the
+single-completion-per-operation contract. Gaps, overlaps, or shifted completion
+windows fail closed. A fresh 12-connection run passed these checks; the earlier
+567-operation wrap capture also revalidated. [Continuity evidence](../experiments/mcp/evidence/native-ring-continuity.json)
+preserves the fresh reports and source hashes. All 73 tests pass, including
+omitted-batch and shifted-CQ negatives. This detects internal gaps between
+observed batches; it does not prove observation of all activity before the first
+batch or after the last, nor support arbitrary multishot rings.
+
+Native epoll SQE records now include the target descriptor and control operation,
+separate from the epoll descriptor. A fresh eight-connection capture passed 39
+joins with 31 ADD and eight MOD operations. Every record retained its target FD;
+unsupported control values fail validation. [Target evidence](../experiments/mcp/evidence/native-ring-targets.json)
+preserves results and source identities. All 74 tests pass. These descriptor
+numbers are resource references, not stable OFD identities or request owners;
+connecting them to lifecycle/context evidence remains necessary. Legacy logs
+without target fields remain readable but do not gain inferred target metadata.
+
+Native batch records now include the debugger's selected inferior PID and Linux
+LWP/TID at the submission breakpoint. A fresh eight-connection run retained
+thread identities for all 26 batches/39 joins, spanning two submitting threads.
+[Thread evidence](../experiments/mcp/evidence/native-ring-thread-identity.json)
+preserves the complete results and collector identities. These are userspace
+submitter TIDs, not kernel I/O-worker TIDs, and they do not establish a request
+owner. Legacy captures without this record remain explicitly null. All 74 tests
+pass; request-context joining still requires a compatible observation stream.
+
+Setup validation now retains each successful return's log position and requires
+it to precede the corresponding batch. Previously the whole-log setup inventory
+could satisfy a batch with future evidence. The 39-operation thread-identity
+capture revalidated; moving a batch ahead of its setup was rejected with
+`ring setup follows batch`. [Ordering evidence](../experiments/mcp/evidence/native-ring-ordering.json)
+preserves the check. All 74 tests pass. This closes a chronology gap without
+claiming full descriptor-close/reuse lifecycle observation.
+
+Native batch parsing now enforces submission → return → CQ window → completion
+ordering. Duplicate returns, missing returns/windows, SQEs after return, and
+orphan batch ends are rejected instead of being accepted through final counts or
+failing with incidental Python errors. Regression tests cover these phases;
+all 75 tests pass. The 39-operation capture revalidated with layout checks
+([phase evidence](../experiments/mcp/evidence/native-ring-phase-validation.json)).
+
+Native SQE text records now retain submission flags explicitly. The scoped
+validator rejects nonzero flags rather than erasing them during normalization.
+A fresh capture passed 39 joins with zero flags on every SQE
+([flag evidence](../experiments/mcp/evidence/native-ring-flags.json)); a nonzero-
+flag mutation is rejected by regression tests. All 76 tests pass. Older logs
+remain readable without inventing a flags value; they do not gain this check
+retroactively. Other unrecorded auxiliary SQE fields remain a native-collector
+scope limitation, distinct from the stricter controlled raw-snapshot decoder.
+
+Native CQ validation now rejects nonzero completion flags and out-of-range
+result/identity fields. This enforces the single-shot completion contract instead
+of accepting richer modes merely because user_data matches. The 567-operation
+wrap capture revalidated under the stricter gate
+([CQ evidence](../experiments/mcp/evidence/native-ring-cqe-flags.json)); nonzero
+flags and invalid ranges have regression coverage. All 77 tests pass. This is
+not multishot support, nor a change to the unresolved MCP ownership boundary.
+
+Native reports now separate successful joins from completion outcomes. Auditing
+the 39-operation target capture found 31 zero results and eight -17 results;
+each negative ADD was followed by a successful MOD on the same numeric target.
+[Outcome evidence](../experiments/mcp/evidence/native-ring-outcomes.json) preserves
+those eight sequences and the log identity. Thus 39 validated joins never meant
+39 successful effects. Repeated target numbers alone do not establish stable
+resource identity or descriptor reuse; lifecycle capture is still needed before
+assigning request ownership. All 77 tests pass after adding outcome summaries.
+
+Native debugger capture now includes close syscall entry/return catchpoints
+(AArch64 syscall 57). A fresh eight-connection run retained 39 ring joins and
+46 successful paired closes, with per-thread entry/return log positions
+([close evidence](../experiments/mcp/evidence/native-ring-close-observed.json)).
+This supplies a same-stream lifecycle observation for subsequent descriptor
+analysis. Creation/installation events and close-to-operation joining are not
+implemented yet, so repeated numeric targets still do not imply stable resources
+or request owners. The runner manifest pins the augmented debugger script.
+
+### Successful closes separate repeated native target references
+
+`native_close_epochs.py` correlates target references with paired successful
+close observations in the same validated debugger log. Targets 22, 23, and 24
+appeared across respectively six, five, and five intervals separated by observed
+successful closes. None of the 39 references overlapped an unresolved captured
+close. [Close-interval evidence](../experiments/mcp/evidence/native-close-epochs.json)
+retains line references and all close outcomes.
+
+This rules out treating those numeric target values as uninterrupted descriptor
+lifetimes. The intervals are deliberately not resource/OFD identities: installs,
+duplication, transfers, close_range, and failed-close effects remain untracked.
+The analysis assumes the controlled process's shared descriptor table and makes
+no request ownership claim. Reproduce with `python3.11
+experiments/mcp/native_close_epochs.py CAPTURE/debugger.log` on one line.
+
+Native capture now observes socket and accept4 entry/return stops (AArch64 198
+and 242), alongside close and ring batches. The fresh eight-connection run
+passed 39 joins and recorded 17 successful socket installations, with syscall,
+returned FD, and log positions ([installation evidence](../experiments/mcp/evidence/native-socket-installs.json)).
+This supplies creation observations for the loopback targets; other descriptor
+installation mechanisms remain uncaptured. No stable OFD or MCP owner is inferred
+from these records yet. The same-run pairing of installs, closes, and target
+references is the next attribution step.
+
+The scoped native socket-lifetime analyzer now links 33 of 39 epoll target
+references to observed socket/accept4 installations and leaves six unresolved.
+Any observed close attempt invalidates the projection before its return, avoiding
+stale links on interrupted/failed closes; a later installation gets a distinct
+identity. [Lifetime evidence](../experiments/mcp/evidence/native-socket-lifetimes.json)
+contains all installation and reference positions. Regression covers reuse,
+failed-close invalidation, and incomplete lifecycle pairs; all 78 tests pass.
+These links are scoped observations in the controlled workload: unobserved dup,
+SCM_RIGHTS, close_range, or other replacement activity remains outside coverage.
+They are not general OFD identities and do not yet assign MCP request owners.
+
+The socket projection now abstains when an installation returns the same FD
+while another thread's close of that number remains unresolved. Such an overlap
+cannot safely be ordered using return events alone. A regression demonstrates
+that the installation remains recorded but its resource projection is rejected.
+The live socket-installation capture revalidated
+([evidence](../experiments/mcp/evidence/native-socket-lifetimes-revalidated.json));
+all 79 tests pass. This conservative rule does not replace complete descriptor
+mutation capture or establish kernel file-reference acquisition order.
+
+A second lifecycle-overlap regression covers a close that starts and finishes
+inside a socket-installation syscall interval. Checking only currently pending
+closes at installation return missed this ordering. The analyzer now retains
+close-entry positions and rejects the ambiguous projection in either ordering.
+The live capture revalidated ([interval evidence](../experiments/mcp/evidence/native-socket-intervals.json));
+all 80 tests pass. Rejection is conservative because observed syscall boundaries
+do not reveal exact descriptor installation/acquisition instants.
+
+The native runner now automatically generates socket-lifetime analysis and hashes
+that artifact in its manifest. The first integrated run failed when another
+thread hit a catchpoint during an injected `free` call; the failed manifest/log
+are preserved. Scheduler locking now surrounds only injected malloc/memcpy/free
+calls, with normal scheduling restored afterward. A fresh run passed 55 joins,
+linking 49 targets and leaving six unresolved
+([integrated evidence](../experiments/mcp/evidence/native-ring-integrated-lifetimes.json)).
+This workaround increases scheduling perturbation and can still deadlock if an
+inferior allocator needs a lock held by a stopped thread; the runner's timeout
+remains essential. It is experimental collection, not a production-safe hook.
+
+
+### Native eventfd installation evidence
+
+Added eventfd2/epoll_create1 syscall stops (19/20 verified against local AArch64
+asm-generic headers), preserving the original socket-only report. A fresh
+12-connection capture completed with 55 operations in 38 batches. The new
+resource report links 52 targets: 49 socket installations and three eventfds.
+The socket-only report still leaves six unknown, so previous metrics retain
+their meaning. Resource links invalidate on close attempts and reject observed
+overlapping closes; unobserved replacement mechanisms remain a limitation.
+No request ownership is inferred. Three targets still lack installation evidence.
+Evidence: `experiments/mcp/evidence/native-ring-control-links.json`.
+Validation: all 11 native collector/lifecycle tests pass, including control
+installation opt-in and close invalidation; live runner completed successfully.
+
+
+### Native ring capture during MCP protocol dispatch
+
+`run_native_ring_debug.py --mcp-replay` now runs a real SDK Client/McpServer
+pair over InMemoryTransport with the existing trusted request instrumentation.
+Four sequential roundtrip tools returned contexts 1–4 and verified network
+payloads. The fresh snapshotted capture decoded 23 operations in 14 batches,
+with 20 observed resource installation links and three unresolved targets.
+Request maps, native markers, responses and debugger logs are preserved and
+hashed in `evidence/native-ring-mcp-replay.json`. This is deterministic replay,
+not an LLM experiment or stdio transport capture. Markers and ring observations
+are still separate timelines; no per-operation MCP ownership is claimed.
+The next integration boundary is trusted context observation at resource creation
+and ring preparation, distinguishing it from unowned event-loop submission.
+
+
+### Submission-time context is insufficient for native MCP ring ownership
+
+The debugger now captures marker write entry buffers and full-write return values
+alongside native ring batches. `native_marker_timeline.py` checks exact equality
+with the native marker log, validates marker thread identity, and records the
+most recent execution context on each submitting thread. In the four-call MCP
+replay, all 282 markers matched. Thirteen batches had explicit context zero;
+one startup batch preceded any context observation. Thus submission-time request
+context cannot attribute these 23 epoll operations. This is measured evidence for
+tracking resource creation/operation preparation separately from ring submission.
+It does not prove which request owns each operation. Marker producers are trusted;
+this experimental join does not independently authenticate the marker file FD.
+Evidence: `experiments/mcp/evidence/native-ring-marker-timeline.json`.
+
+Reproduce the analysis with:
+`python3 experiments/mcp/native_marker_timeline.py results/mcp/native-ring-marker-timeline`.
+The first analyzer execution hit Python 3.6's missing `str.removeprefix`; replacing
+it with prefix slicing allowed the same preserved capture to validate successfully.
+
+
+### Resource creation restores ancestry across unowned ring submission
+
+Added Linux-TID mappings at debugger descriptor-installation stops and joined
+validated request markers to socket creation entry/return. The analyzer follows
+observed descriptor installation identities to epoll SQEs, retaining close/reuse
+invalidation. In a fresh four-call MCP replay, 12 of 23 operations have resource
+creation ancestry: three each for contexts 1–4. Four have explicit unowned
+creation context, and seven have unknown creation context or no installation
+link. All 13 post-instrumentation submission batches still have context zero.
+These are ancestry edges, not assertions that resource creators own every later
+operation. Shared-resource request use and operation-preparation context remain
+open. Tests exercise context reset, FD reuse, missing thread identities, and
+entry/return context disagreement; all 13 native tests pass.
+Evidence: `experiments/mcp/evidence/native-ring-resource-context.json`.
+Analyze with `native_resource_context.py RUN_DIRECTORY` after a current native
+MCP replay capture. Marker-log equality is validated before ancestry is emitted.
+
+
+### Concurrent native MCP resource ancestry
+
+Added bounded concurrent SDK calls and a workload overlap counter. Two fresh
+16-call, concurrency-eight captures completed; the integrated runner now emits
+and hashes the ancestry report automatically. Each capture decoded 71 operations
+in 22 batches. The observed maximum active tool count was eight. Six batches each
+contained resource ancestry from eight distinct requests; each request retained
+three links (48 total). Sixteen operations had unowned resource creation context,
+seven were unknown. All 21 post-instrumentation batches submitted with context
+zero. A batch-level single-request label cannot represent this measured mixing.
+This validates resource ancestry preservation under concurrent dispatch, not an
+independent oracle for ownership of all operations. All 13 native tests pass.
+Evidence: `experiments/mcp/evidence/native-ring-mcp-concurrent.json`.
+
+
+### Separate socket oracle checks inferred native ancestry
+
+The MCP replay now assigns client tokens, records outgoing RPC ID/token pairs,
+and independently records each connected client socket's numeric descriptor.
+`score_native_resources.py` recomputes inference without reading this oracle,
+then compares request-linked targets against the token/socket records. A fresh
+16-call concurrency-eight run checked 48 claimed ancestry links with zero
+mismatches and coverage of all 16 requests. Swapping the first two sockets in a
+copy of the oracle produced six mismatches, demonstrating request-swap detection.
+This validates client-socket creation ancestry only: the oracle does not establish
+ownership of all kernel effects, and numeric descriptors cannot distinguish two
+same-number incarnations inside one request. Node's private socket handle is
+used only by this controlled evaluation, not by inference.
+Evidence: `experiments/mcp/evidence/native-ring-resource-oracle.json`.
+
+
+### Native MCP ancestry stress and automatic oracle gate
+
+The runner now snapshots the oracle scorer, emits its report and hash, and fails
+if a claimed link mismatches or any request lacks a correct client-resource link.
+A 160-request run with concurrency 16 decoded 647 operations in 182 batches.
+All 480 claimed request ancestry links passed the separate socket oracle, covering
+all 160 requests. The capture exercises repeated descriptor installations and
+SQ/CQ physical queue wrap; exact per-ring tails and reuse counts are preserved
+in `experiments/mcp/evidence/native-ring-mcp-stress.json`. This does not extend
+the claimed relation beyond resource-creation ancestry or make the debugger a
+production collector. Full Python 3.11 experiment suite: 83 tests passed.
+
+
+### Native SQE preparation also occurs outside request execution
+
+Disassembly of the pinned `uv__epoll_ctl_prep` places the final user_data store at
+0x18c59b8; the next instruction 0x18c59bc retains ring pointer x1, epoll FD w0,
+target x4, control w3 and user_data x6. A breakpoint there captured all 71
+preparations in a 16-call concurrency-eight MCP replay. Joining ring/user_data
+identities and checking target/control/epoll fields matched every observed SQE.
+Sixty-nine preparations had context zero and two startup preparations had no
+observed context. Resource ancestry scoring still passed. Thus moving context
+capture from submission to SQE preparation is insufficient for this runtime;
+propagation must start earlier, such as when a watcher update is enqueued.
+Evidence: `experiments/mcp/evidence/native-ring-preparation.json`; analyzer:
+`native_preparation.py RUN_DIRECTORY`. This is a pinned debugger experiment,
+not a portable runtime adapter or a claim of complete causal ownership.
+
+### Request context survives watcher queue insertion
+
+Pinned disassembly of `uv__io_start` shows watcher queue insertion completed at
+0x18b4554, with watcher pointer x20 and loop pointer x23. A breakpoint records
+those identities, the target FD, and requested/current event masks. In a fresh
+16-call concurrency-eight replay, 32 insertion events retained request context
+(two per call), 16 had explicit context zero, and one preceded context observation.
+The existing 71-operation capture and 48-link resource ancestry oracle passed.
+This provides an earlier propagation boundary than SQE preparation, where context
+was already zero. It does not yet establish a watcher-to-SQE edge: updates may
+coalesce, and stop/restart/close paths and pointer lifetimes need observation.
+Evidence: `experiments/mcp/evidence/native-ring-watcher-enqueue.json`.
+Reproducible analysis: `native_watcher_context.py RUN_DIRECTORY`.
+
+
+### Watcher insertion/removal episodes locate context loss
+
+Pinned `uv__io_poll` disassembly identifies 0x18c8420 immediately after unlinking
+and resetting watcher queue links: x1 is the watcher, x23 the loop. Added removal
+observations and a scoped loop/pointer/FD episode matcher. The fresh concurrent
+16-call capture matched 49 insertion/removal episodes: 32 request-scoped
+insertions (two per request), 16 explicit unowned insertions, one with unknown
+context. All 49 removals had context zero. Six removals lacked observed insertions
+and remain unresolved. Missing removals and changed descriptors are recorded as
+gaps rather than silently preserving identities. Fifteen native tests pass.
+Evidence: `experiments/mcp/evidence/native-ring-watcher-queue.json`.
+The matcher is not a general watcher lifetime proof: stop/close paths and
+coalesced updates still need capture before claiming operation ownership.
+
+
+### Watcher queue ancestry reaches individual native SQEs
+
+A breakpoint at the pinned poll-loop call instruction 0x18c83f8 connects the
+preceding removal to its preparation arguments. The analyzer checks loop/FD at
+removal-to-call, ring/target/control at call-to-preparation, then uses validated
+ring/user_data preparation-to-SQE joins. A fresh 16-call replay connected 55 of
+71 operations to poll-loop removals. Thirty-two retain request insertion ancestry
+(two per call); all 32 target/request pairs agree with the separate socket oracle.
+Sixteen links have unowned insertion context and seven unknown. Sixteen other
+preparations are outside this poll call site and receive no watcher ancestry.
+This is stronger than creator-only ancestry but remains nonexclusive: coalesced
+updates, stop/close lifecycle and retry ancestry need further observation.
+Evidence: `experiments/mcp/evidence/native-ring-watcher-operations.json`.
+Analyzer: `native_watcher_operations.py RUN_DIRECTORY`.
+
+
+### Failed completion to retry ancestry
+
+Pinned flush disassembly exposes the failing completion's user_data at 0x18c5848
+and its retry preparation call at 0x18c5888. Capturing both establishes a direct
+ADD/-EEXIST-to-MOD transition, checked against decoded CQEs and preparation
+arguments. A fresh 16-call concurrent capture produced 16 validated retries,
+one per request. Every retry target/request pair matched the separate socket
+oracle. These edges recover the 16 preparations outside the normal poll call
+site while retaining their failed-operation source. Combined with the 32 direct
+request-scoped watcher links, this supplies queue ancestry for 48 operations.
+It still does not prove exclusive ownership when watcher updates coalesce, and
+other error/retry paths are not supported. Evidence:
+`experiments/mcp/evidence/native-ring-retry-ancestry.json`; analyzer:
+`native_retry_ancestry.py RUN_DIRECTORY`.
+
+
+### Typed native-ring provenance graph
+
+Added `native_graph.py`, consolidating validated request markers, watcher queue
+episodes, preparation/SQE joins, CQEs and retry triggers into typed nodes/edges.
+A fresh integrated concurrent capture contains 16 request nodes and 71 ring
+operations; each request reaches exactly three operations, including its retry.
+The runner now snapshots graph analyzers, builds `native-graph.json`, and records
+its hash in the manifest. Inference excludes the independent socket oracle,
+which continues to pass 48 resource/request checks in this capture.
+Reachability denotes observed ancestry, not exclusive ownership: incomplete
+coalescing/lifetime observation remains explicit, and this native evidence graph
+has not yet been merged into the existing strace attribution graph.
+Evidence: `experiments/mcp/evidence/native-ring-graph.json`.
+
+
+### Observing updates while a watcher is queued
+
+Added a pinned breakpoint at 0x18b44dc, after pevents changes and successful
+watcher-array allocation but before queue membership handling. The fresh
+16-call workload generated 65 update observations, none inside an already
+observed queued episode. Therefore this live workload does not test coalescing.
+The queue analyzer now retains intermediate update records and the graph can
+attach additional request parents through those records; a synthetic two-context
+update test checks retention. All 16 native tests pass. This synthetic evidence
+must not be presented as live shared-watcher coverage; a workload deliberately
+updating the same watcher from different requests is still required.
+Evidence: `experiments/mcp/evidence/native-ring-watcher-updates.json`.
+
+
+### Shared watcher workload exposes unobserved stop removals
+
+Added `--shared-watcher` (requires all calls in one concurrent batch). The first
+two attempts failed because readStart on an unconnected socket returned -107;
+both failed manifests are preserved. The corrected workload establishes one
+socket before requests, then each tool synchronously calls readStop/readStart
+and awaits the same verified network payload. Eight requests overlapped; the
+capture decoded 12 operations. It observed no intermediate queued updates,
+but eight replacements without observed removal and seven removals without
+observed insertion. Only context 8's final insertion survived to a matched queue
+episode. This is a stop/restart workload, not evidence of coalescing. Observing
+uv__io_stop is the next necessary boundary. The shared socket is created before
+requests, so the creator-only oracle's all-request coverage requirement is
+intentionally inapplicable in this mode; mismatches still reject the run, and
+its score reports actual coverage rather than claiming every request covered.
+Evidence: `experiments/mcp/evidence/native-ring-shared-watcher.json`.
+
+
+### Stop-path cancellation separates abandoned watcher episodes
+
+Added an observation at 0x18b49c0 after uv__io_stop unlinks/resets the queue.
+The analyzer retires pending episodes as canceled rather than letting them reach
+later poll removals. The first analysis failed due to an incorrect startswith
+edit; its failed manifest is preserved in native-ring-watcher-stop. After fixing
+that error, all 17 native tests passed and a fresh shared-watcher capture passed.
+The detailed cancellation counts and remaining unmatched removals are preserved
+in `experiments/mcp/evidence/native-ring-watcher-stop.json`. Cancellation is a
+runtime queue fact, not evidence that the request had no other kernel effects.
+
+
+### Canceled episodes remain queryable without false kernel links
+
+Native graphs now retain canceled insertion/update nodes and cancellation actors,
+with terminal canceled_before_poll edges. A fresh eight-request shared-watcher
+capture passed. `query_native_graph.py RUN --rpc-id 1` validates the manifest graph
+hash and source capture hashes before returning request ancestry. Request queries
+and a rejected marker-file mutation are preserved in
+`experiments/mcp/evidence/native-ring-cancellation-graph.json`. Cancellation
+nodes intentionally have no edge to subsequent ring operations. A request with
+no reachable ring operation may still have other effects outside this graph.
+
+
+### Partial-stop insertion closes a non-startup queue gap
+
+Pinned uv__io_stop disassembly has another insertion path when event interests
+remain. Added observation at 0x18b4a00 after queue links are stored (loop x0,
+watcher x1). A fresh eight-request shared-watcher run now matches five poll
+episodes, retains eight cancellations, and leaves six startup removals without
+observed insertion, down from seven. A fresh 16-request concurrency-eight
+regression also passed the runner and resource oracle; its exact queue counts
+are saved with the shared workload in
+`experiments/mcp/evidence/native-ring-partial-stop.json`. Startup initialization
+and inlined insertion paths still require observation. This change adds observed
+evidence rather than assigning missing startup owners by inference.
+
+
+### Native provenance reaches the ring submission syscall
+
+Graphs now include observed io_uring_enter batches and their returns, with ring
+FD, SQ head/tail, submitting TID and independently observed execution context.
+Each operation points to its submission through submitted_by. The direction is
+intentional: following a request's ancestry to a shared syscall must not then
+fan out into unrelated SQEs from other requests. In a fresh 16-call concurrent
+capture, every request still reached exactly three operations; eight requests
+reached the same submission nodes. This preserves the many-request-to-one-syscall
+relationship without collapsing operation identities. These are debugger-observed
+submission calls, not kernel worker execution records.
+Evidence: `experiments/mcp/evidence/native-ring-submission-graph.json`.
+
+
+### Independent graph ancestry scoring
+
+Added a graph scorer that traverses request ancestry and compares reached SQE
+targets with the separately recorded RPC/token/socket oracle. The runner now
+writes/hashes graph-score.json and rejects mismatches; ordinary per-request
+socket runs also require every request covered. A fresh 16-request concurrent
+capture passed 48 graph links. Swapping request 1 and 2's graph parents produced
+six mismatches, testing the graph rather than only resource-creation analysis.
+Shared-descriptor tokens cannot disambiguate requests targeting the same socket;
+that mode retains this explicit limitation and reports actual request coverage.
+Evidence: `experiments/mcp/evidence/native-ring-scored-graph.json`.
+
+
+### Shared-descriptor oracle detects a swap that FD scoring misses
+
+The controlled shared-socket workload now separately records each token's
+successful readStop/readStart sequence and descriptor. A scoped oracle checks
+that only the final request's update reaches ring operations in this single
+synchronous batch; earlier updates are superseded. The fresh eight-call capture
+passed. Swapping request 1 and 8 graph parents still passed numeric-FD scoring
+(all share one socket), but the sequence oracle detected two request-survival
+mismatches. The runner includes this check and hashes its input. This evaluates
+queue survival for this workload, not general shared-stream effect ownership.
+Evidence: `experiments/mcp/evidence/native-ring-shared-action-oracle.json`.
+
+
+### Shared-sequence oracle scheduling check
+
+The shared workload now schedules an immediate callback at the first action and
+records whether it has executed for every stop/start. The scorer rejects missing
+turn evidence or actions after that boundary rather than assuming a synchronous
+batch. A fresh eight-request capture passed with all 16 actions before the
+boundary and zero graph mismatches. Regression tests verify same-FD parent-swap
+detection and rejection of split/incomplete action sequences. Full experiment
+suite: 89 tests passed. Older action-oracle captures lack the new turn field and
+must not be presented as passing this stricter scorer.
+Evidence: `experiments/mcp/evidence/native-ring-shared-turn-checked.json`.
+
+
+### External stdio MCP replay under the native collector
+
+Added --mcp-stdio: an external Python JSON-RPC client initializes the SDK stdio
+server, issues bounded concurrent tool calls, validates responses and closes
+stdin for orderly shutdown. Dedicated inherited pipes separate inferior MCP
+stdout from GDB diagnostics. The initial attempt replaced Node arguments with
+GDB run redirections and never launched the script; after correcting the run
+command, a fresh four-call concurrency-two capture passed: 24 operations in 11
+batches, 12 graph ancestry links checked with zero mismatches. Full protocol
+messages and failure evidence are preserved in
+`experiments/mcp/evidence/native-ring-stdio.json`. This closes native stdio replay
+integration, but the client is deterministic, not an LLM agent. Shared-watcher
+stdio mode is intentionally unsupported pending scheduling-specific validation.

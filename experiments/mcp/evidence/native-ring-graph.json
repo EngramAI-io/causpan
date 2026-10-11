@@ -1,0 +1,82 @@
+{
+  "run": "results/mcp/native-ring-graph-integrated",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 16,
+    "mcp_replay": true,
+    "concurrency": 8,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "834e05b2a1a66330fe2941395aba4dd8654c52f0e82d6b26da478aa2718f4f25",
+      "mcp-network.mjs": "1e933db7501410805ec66eb7ecb2c648b8cb13316e0b0a53d1e2e860ceeeddbd",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "9b848352b47c768810e0b215452a678e674d2754b07f8d1bb1b4c74392db9572",
+      "native_graph.py": "091d326321745a1752c0c7f0512702c557fcd882d1d46970988019857c8effee",
+      "native_preparation.py": "1cb101289c67802f0397a75c5d7d8754c9d7e8c14ba45dde596b9f2baba6410d",
+      "native_watcher_queue.py": "351c7e80d711d0a628a30b3b8153edab50e01efac801cddbb8d48a0c31b665ce",
+      "native_watcher_operations.py": "720188f48d38d6d2343e32f23d6658b93a4a661af3897a0f4704be2e1d8206a5",
+      "native_retry_ancestry.py": "59e8b370c6a814489e3cce353b3ed5c9ac4d9542ee0855fbb9b4cafd62d73e82",
+      "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+      "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+      "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 68,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "fd4b14d65fd6cb97c1324033c33d88ee4afd1ab88f564386939264ae047c144b",
+    "socket_links": 65,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "a1e3b11f9947f26732124833c057b692f8180f4f84ec6e9b22e6e23bb1fd6c1d",
+    "native_graph_sha256": "0b9d01f0441a6e2128ca324d48c96d0c84e937c64b03959376789e367e56411f",
+    "resource_score_sha256": "40c4f5b2408274551208126ec38bc8aaed73e9b2edef4c208eb7115d259c05e6",
+    "resource_context_sha256": "2742dab6c90c42b9bded1ae6c18aa17e4889c966345998bd0c24432812a963a4",
+    "batches": 22,
+    "operations": 71,
+    "report_sha256": "1b1c65e060ffbb0a978b804ff931ded2d95db509882987d434750eb646b4fd6a"
+  },
+  "nodes_by_kind": {
+    "request": 16,
+    "ring_operation": 71,
+    "completion": 71,
+    "preparation": 71,
+    "watcher_insertion": 49,
+    "watcher_removal": 49
+  },
+  "edges_by_kind": {
+    "completed_as": 71,
+    "prepared_as": 71,
+    "observed_queue_episode": 49,
+    "poll_prepared": 49,
+    "executed_in_context": 32,
+    "triggered_retry": 16
+  },
+  "request_reachable_operations": {
+    "1": 3,
+    "2": 3,
+    "3": 3,
+    "4": 3,
+    "5": 3,
+    "6": 3,
+    "7": 3,
+    "8": 3,
+    "9": 3,
+    "10": 3,
+    "11": 3,
+    "12": 3,
+    "13": 3,
+    "14": 3,
+    "15": 3,
+    "16": 3
+  },
+  "limitations": [
+    "trusted intrusive binary-specific collector",
+    "queue coalescing and watcher lifetime gaps remain",
+    "request reachability denotes observed ancestry, not exclusive operation ownership",
+    "not yet merged into the strace attribution graph"
+  ]
+}

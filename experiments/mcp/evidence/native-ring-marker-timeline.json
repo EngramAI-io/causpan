@@ -1,0 +1,133 @@
+{
+  "run": "results/mcp/native-ring-marker-timeline",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 4,
+    "mcp_replay": true,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "994b66fac187c1e26382878c90fe98b93a944d0edb9613463d2b1421ae199ab5",
+      "mcp-network.mjs": "4c8c357865a94ada70e9a8d78ea6d79a4c1a8313a8b9e815ed3ac09b6bab8725",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "6e6d08b8dda3204887b70185fbc5d2d5ff2b578e75f93b2148c54d31fa9e3fc8",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 20,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "f0f7ba794a9d3d0a745f9be5a9f56cc2c199d76e555fce7958743f680c507444",
+    "socket_links": 17,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "62bfe9d3eba1c8bcc1767a69c9822d226a1190ba3727237c534bb97ec78a0ed1",
+    "batches": 14,
+    "operations": 23,
+    "report_sha256": "6e0161862cc0d180a4c6843981f3f7996de26df2a08b1afc14359e9699f6aea9"
+  },
+  "timeline": {
+    "markers": 282,
+    "batches": [
+      {
+        "batch": 0,
+        "tid": 412268,
+        "execution_context": null,
+        "rpc_id": null
+      },
+      {
+        "batch": 1,
+        "tid": 412220,
+        "execution_context": 0,
+        "rpc_id": null
+      },
+      {
+        "batch": 2,
+        "tid": 412220,
+        "execution_context": 0,
+        "rpc_id": null
+      },
+      {
+        "batch": 3,
+        "tid": 412220,
+        "execution_context": 0,
+        "rpc_id": null
+      },
+      {
+        "batch": 4,
+        "tid": 412220,
+        "execution_context": 0,
+        "rpc_id": null
+      },
+      {
+        "batch": 5,
+        "tid": 412220,
+        "execution_context": 0,
+        "rpc_id": null
+      },
+      {
+        "batch": 6,
+        "tid": 412220,
+        "execution_context": 0,
+        "rpc_id": null
+      },
+      {
+        "batch": 7,
+        "tid": 412220,
+        "execution_context": 0,
+        "rpc_id": null
+      },
+      {
+        "batch": 8,
+        "tid": 412220,
+        "execution_context": 0,
+        "rpc_id": null
+      },
+      {
+        "batch": 9,
+        "tid": 412220,
+        "execution_context": 0,
+        "rpc_id": null
+      },
+      {
+        "batch": 10,
+        "tid": 412220,
+        "execution_context": 0,
+        "rpc_id": null
+      },
+      {
+        "batch": 11,
+        "tid": 412220,
+        "execution_context": 0,
+        "rpc_id": null
+      },
+      {
+        "batch": 12,
+        "tid": 412220,
+        "execution_context": 0,
+        "rpc_id": null
+      },
+      {
+        "batch": 13,
+        "tid": 412220,
+        "execution_context": 0,
+        "rpc_id": null
+      }
+    ],
+    "submission_context_counts": {
+      "None": 1,
+      "0": 13
+    },
+    "artifact_sha256": {
+      "debugger.log": "0a9aaf466379f441f71d5a411b71f1e4ce462fe69819dc5545e180aaa6239c17",
+      "native-events.jsonl": "e59a322c584c5ba103b0f907642c5ec7f1f836ed542e9a06eea0547bc53d30eb",
+      "request-map.jsonl": "df9a7c91688fd61076f0654c02dc4d9ba0c91dee2374d7704543510cefb68662"
+    },
+    "limitations": [
+      "marker producers and controlled workload trusted; marker FD authority not independently validated",
+      "submission execution context is not per-SQE causal ownership",
+      "null context means no context marker observed for thread; zero means explicit unowned context"
+    ]
+  }
+}

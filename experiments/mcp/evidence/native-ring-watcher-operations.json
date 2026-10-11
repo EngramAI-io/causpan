@@ -1,0 +1,1721 @@
+{
+  "run": "results/mcp/native-ring-watcher-call",
+  "manifest": {
+    "node": "/u/kdhande/.nvm/versions/node/v24.20.0/bin/node",
+    "node_sha256": "23a5637c2470fde09fcc1acc77c1b92e04e3d7e3e6e80ff7df6f5831958d1477",
+    "connections": 16,
+    "mcp_replay": true,
+    "concurrency": 8,
+    "status": "complete",
+    "source_sha256": {
+      "windows.gdb": "bfd815c3cc0ad823874a0ec4eb24983afd0330f9704bddd2343c949200fc1a2a",
+      "mcp-network.mjs": "1e933db7501410805ec66eb7ecb2c648b8cb13316e0b0a53d1e2e860ceeeddbd",
+      "inspect_native_windows.py": "ebf214c2403f3e25cf571cf26d177fef16f42832be18ba6d95c12505c65162bb",
+      "native_socket_lifetimes.py": "5b6b2e8efbcb70f19302ed291879f14025108629866e9a630fab224011041f68",
+      "run_native_ring_debug.py": "2c5e379fe2593e805bbdd3943d2f77a4eee04d3ae2dc3d8bced29f525e6d002b",
+      "score_native_resources.py": "3914df695b2ec4a7082a3abeb938b132c82393c725bb254154c360743f133c06",
+      "native_resource_context.py": "b624daaefd464b6509e7c7677ce0eefbe173cc4c8d1f3465237cfb034f9bc323",
+      "native_marker_timeline.py": "e6ed7ed6cb09ff9c8b5ecbf4ae7687668912e682629bd3a91a565f4f8dbffa1f",
+      "instrument.mjs": "f03c64aa148b14b3d4679de13c3875bc6fb2c6f51694618545158deb0ff826ed",
+      "context.node": "a7976f5113284189bcc20053429ce17547640a4283b120fdb3883f28e66c96d2",
+      "build.json": "a9d80201a64f05ea4e75228b7a2fd78da466d7bf9828bb5ead6dd29f960febc4",
+      "context.cc": "a18ab764883bb174c4a16f9d484fcdfa3d81100925c896d4c929842f0fef6d4a"
+    },
+    "resource_links": 68,
+    "unresolved_resource_targets": 3,
+    "resource_lifetimes_sha256": "e9163db7b0cf2305d68fc29f29689e02c57be9639149b57c006187a47fb73bec",
+    "socket_links": 65,
+    "unresolved_socket_targets": 6,
+    "socket_lifetimes_sha256": "dcfc325dedccbd2f1077a4679f030560747e53be611c9b93edc88ea135922580",
+    "resource_score_sha256": "81aed8db45de560b8a3b32c4af25ce0473dd54dcf17f6efd4523ecb5fe51458e",
+    "resource_context_sha256": "9cf74a5acd8d63d71d6458ce410e7639eeefcaa3205a6be0ef4ee6e113792e5b",
+    "batches": 22,
+    "operations": 71,
+    "report_sha256": "b55ca0cae66951a340a0c8f9cb62abefc0d6362a5925e861f8553602f199850e"
+  },
+  "watcher_operations": {
+    "links": [
+      {
+        "call_line": 93,
+        "preparation_line": 96,
+        "sqe_line": 110,
+        "target_fd": 12,
+        "queue_episode": null,
+        "enqueue_context": null
+      },
+      {
+        "call_line": 101,
+        "preparation_line": 103,
+        "sqe_line": 113,
+        "target_fd": 14,
+        "queue_episode": null,
+        "enqueue_context": null
+      },
+      {
+        "call_line": 902,
+        "preparation_line": 904,
+        "sqe_line": 970,
+        "target_fd": 17,
+        "queue_episode": null,
+        "enqueue_context": null
+      },
+      {
+        "call_line": 908,
+        "preparation_line": 910,
+        "sqe_line": 973,
+        "target_fd": 19,
+        "queue_episode": null,
+        "enqueue_context": null
+      },
+      {
+        "call_line": 914,
+        "preparation_line": 916,
+        "sqe_line": 976,
+        "target_fd": 23,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 109285912,
+            "fd": 23,
+            "pevents": 1,
+            "events": 0,
+            "line": 702,
+            "tid": 506040,
+            "context": null
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 109285912,
+            "fd": 23,
+            "pevents": 1,
+            "events": 0,
+            "line": 912,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": null
+      },
+      {
+        "call_line": 920,
+        "preparation_line": 922,
+        "sqe_line": 979,
+        "target_fd": 24,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110371432,
+            "fd": 24,
+            "pevents": 4,
+            "events": 0,
+            "line": 825,
+            "tid": 506040,
+            "context": 1
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110371432,
+            "fd": 24,
+            "pevents": 4,
+            "events": 0,
+            "line": 918,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 1
+      },
+      {
+        "call_line": 926,
+        "preparation_line": 928,
+        "sqe_line": 982,
+        "target_fd": 25,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110370168,
+            "fd": 25,
+            "pevents": 4,
+            "events": 0,
+            "line": 835,
+            "tid": 506040,
+            "context": 2
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110370168,
+            "fd": 25,
+            "pevents": 4,
+            "events": 0,
+            "line": 924,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 2
+      },
+      {
+        "call_line": 932,
+        "preparation_line": 934,
+        "sqe_line": 985,
+        "target_fd": 26,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110370600,
+            "fd": 26,
+            "pevents": 4,
+            "events": 0,
+            "line": 845,
+            "tid": 506040,
+            "context": 3
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110370600,
+            "fd": 26,
+            "pevents": 4,
+            "events": 0,
+            "line": 930,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 3
+      },
+      {
+        "call_line": 938,
+        "preparation_line": 940,
+        "sqe_line": 988,
+        "target_fd": 27,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110372104,
+            "fd": 27,
+            "pevents": 4,
+            "events": 0,
+            "line": 855,
+            "tid": 506040,
+            "context": 4
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110372104,
+            "fd": 27,
+            "pevents": 4,
+            "events": 0,
+            "line": 936,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 4
+      },
+      {
+        "call_line": 944,
+        "preparation_line": 946,
+        "sqe_line": 991,
+        "target_fd": 28,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110372536,
+            "fd": 28,
+            "pevents": 4,
+            "events": 0,
+            "line": 865,
+            "tid": 506040,
+            "context": 5
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110372536,
+            "fd": 28,
+            "pevents": 4,
+            "events": 0,
+            "line": 942,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 5
+      },
+      {
+        "call_line": 950,
+        "preparation_line": 952,
+        "sqe_line": 994,
+        "target_fd": 29,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110373112,
+            "fd": 29,
+            "pevents": 4,
+            "events": 0,
+            "line": 875,
+            "tid": 506040,
+            "context": 6
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110373112,
+            "fd": 29,
+            "pevents": 4,
+            "events": 0,
+            "line": 948,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 6
+      },
+      {
+        "call_line": 956,
+        "preparation_line": 958,
+        "sqe_line": 997,
+        "target_fd": 30,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110373544,
+            "fd": 30,
+            "pevents": 4,
+            "events": 0,
+            "line": 885,
+            "tid": 506040,
+            "context": 7
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110373544,
+            "fd": 30,
+            "pevents": 4,
+            "events": 0,
+            "line": 954,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 7
+      },
+      {
+        "call_line": 962,
+        "preparation_line": 964,
+        "sqe_line": 1000,
+        "target_fd": 31,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110373976,
+            "fd": 31,
+            "pevents": 4,
+            "events": 0,
+            "line": 895,
+            "tid": 506040,
+            "context": 8
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110373976,
+            "fd": 31,
+            "pevents": 4,
+            "events": 0,
+            "line": 960,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 8
+      },
+      {
+        "call_line": 1068,
+        "preparation_line": 1070,
+        "sqe_line": 1124,
+        "target_fd": 32,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110353000,
+            "fd": 32,
+            "pevents": 1,
+            "events": 0,
+            "line": 1032,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110353000,
+            "fd": 32,
+            "pevents": 1,
+            "events": 0,
+            "line": 1066,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 1074,
+        "preparation_line": 1076,
+        "sqe_line": 1127,
+        "target_fd": 24,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110371432,
+            "fd": 24,
+            "pevents": 1,
+            "events": 0,
+            "line": 1035,
+            "tid": 506040,
+            "context": 1
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110371432,
+            "fd": 24,
+            "pevents": 1,
+            "events": 0,
+            "line": 1072,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 1
+      },
+      {
+        "call_line": 1080,
+        "preparation_line": 1082,
+        "sqe_line": 1130,
+        "target_fd": 25,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110370168,
+            "fd": 25,
+            "pevents": 1,
+            "events": 0,
+            "line": 1039,
+            "tid": 506040,
+            "context": 2
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110370168,
+            "fd": 25,
+            "pevents": 1,
+            "events": 0,
+            "line": 1078,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 2
+      },
+      {
+        "call_line": 1086,
+        "preparation_line": 1088,
+        "sqe_line": 1133,
+        "target_fd": 26,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110370600,
+            "fd": 26,
+            "pevents": 1,
+            "events": 0,
+            "line": 1043,
+            "tid": 506040,
+            "context": 3
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110370600,
+            "fd": 26,
+            "pevents": 1,
+            "events": 0,
+            "line": 1084,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 3
+      },
+      {
+        "call_line": 1092,
+        "preparation_line": 1094,
+        "sqe_line": 1136,
+        "target_fd": 27,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110372104,
+            "fd": 27,
+            "pevents": 1,
+            "events": 0,
+            "line": 1047,
+            "tid": 506040,
+            "context": 4
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110372104,
+            "fd": 27,
+            "pevents": 1,
+            "events": 0,
+            "line": 1090,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 4
+      },
+      {
+        "call_line": 1098,
+        "preparation_line": 1100,
+        "sqe_line": 1139,
+        "target_fd": 28,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110372536,
+            "fd": 28,
+            "pevents": 1,
+            "events": 0,
+            "line": 1051,
+            "tid": 506040,
+            "context": 5
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110372536,
+            "fd": 28,
+            "pevents": 1,
+            "events": 0,
+            "line": 1096,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 5
+      },
+      {
+        "call_line": 1104,
+        "preparation_line": 1106,
+        "sqe_line": 1142,
+        "target_fd": 29,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110373112,
+            "fd": 29,
+            "pevents": 1,
+            "events": 0,
+            "line": 1055,
+            "tid": 506040,
+            "context": 6
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110373112,
+            "fd": 29,
+            "pevents": 1,
+            "events": 0,
+            "line": 1102,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 6
+      },
+      {
+        "call_line": 1110,
+        "preparation_line": 1112,
+        "sqe_line": 1145,
+        "target_fd": 30,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110373544,
+            "fd": 30,
+            "pevents": 1,
+            "events": 0,
+            "line": 1059,
+            "tid": 506040,
+            "context": 7
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110373544,
+            "fd": 30,
+            "pevents": 1,
+            "events": 0,
+            "line": 1108,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 7
+      },
+      {
+        "call_line": 1116,
+        "preparation_line": 1118,
+        "sqe_line": 1148,
+        "target_fd": 31,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110373976,
+            "fd": 31,
+            "pevents": 1,
+            "events": 0,
+            "line": 1063,
+            "tid": 506040,
+            "context": 8
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110373976,
+            "fd": 31,
+            "pevents": 1,
+            "events": 0,
+            "line": 1114,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 8
+      },
+      {
+        "call_line": 1247,
+        "preparation_line": 1249,
+        "sqe_line": 1255,
+        "target_fd": 33,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110358808,
+            "fd": 33,
+            "pevents": 1,
+            "events": 0,
+            "line": 1239,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110358808,
+            "fd": 33,
+            "pevents": 1,
+            "events": 0,
+            "line": 1245,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 1323,
+        "preparation_line": 1325,
+        "sqe_line": 1331,
+        "target_fd": 34,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110353432,
+            "fd": 34,
+            "pevents": 1,
+            "events": 0,
+            "line": 1267,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110353432,
+            "fd": 34,
+            "pevents": 1,
+            "events": 0,
+            "line": 1321,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 1401,
+        "preparation_line": 1403,
+        "sqe_line": 1409,
+        "target_fd": 24,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110371432,
+            "fd": 24,
+            "pevents": 1,
+            "events": 0,
+            "line": 1343,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110371432,
+            "fd": 24,
+            "pevents": 1,
+            "events": 0,
+            "line": 1399,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 1479,
+        "preparation_line": 1481,
+        "sqe_line": 1487,
+        "target_fd": 25,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110353000,
+            "fd": 25,
+            "pevents": 1,
+            "events": 0,
+            "line": 1421,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110353000,
+            "fd": 25,
+            "pevents": 1,
+            "events": 0,
+            "line": 1477,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 1557,
+        "preparation_line": 1559,
+        "sqe_line": 1565,
+        "target_fd": 26,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110358808,
+            "fd": 26,
+            "pevents": 1,
+            "events": 0,
+            "line": 1499,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110358808,
+            "fd": 26,
+            "pevents": 1,
+            "events": 0,
+            "line": 1555,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 1635,
+        "preparation_line": 1637,
+        "sqe_line": 1643,
+        "target_fd": 27,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110353432,
+            "fd": 27,
+            "pevents": 1,
+            "events": 0,
+            "line": 1577,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110353432,
+            "fd": 27,
+            "pevents": 1,
+            "events": 0,
+            "line": 1633,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 1713,
+        "preparation_line": 1715,
+        "sqe_line": 1721,
+        "target_fd": 24,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110371432,
+            "fd": 24,
+            "pevents": 1,
+            "events": 0,
+            "line": 1655,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110371432,
+            "fd": 24,
+            "pevents": 1,
+            "events": 0,
+            "line": 1711,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 2027,
+        "preparation_line": 2029,
+        "sqe_line": 2077,
+        "target_fd": 25,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110373544,
+            "fd": 25,
+            "pevents": 4,
+            "events": 0,
+            "line": 1938,
+            "tid": 506040,
+            "context": 9
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110373544,
+            "fd": 25,
+            "pevents": 4,
+            "events": 0,
+            "line": 2025,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 9
+      },
+      {
+        "call_line": 2033,
+        "preparation_line": 2035,
+        "sqe_line": 2080,
+        "target_fd": 26,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110353000,
+            "fd": 26,
+            "pevents": 4,
+            "events": 0,
+            "line": 1948,
+            "tid": 506040,
+            "context": 10
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110353000,
+            "fd": 26,
+            "pevents": 4,
+            "events": 0,
+            "line": 2031,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 10
+      },
+      {
+        "call_line": 2039,
+        "preparation_line": 2041,
+        "sqe_line": 2083,
+        "target_fd": 28,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110373112,
+            "fd": 28,
+            "pevents": 4,
+            "events": 0,
+            "line": 1958,
+            "tid": 506040,
+            "context": 11
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110373112,
+            "fd": 28,
+            "pevents": 4,
+            "events": 0,
+            "line": 2037,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 11
+      },
+      {
+        "call_line": 2045,
+        "preparation_line": 2047,
+        "sqe_line": 2086,
+        "target_fd": 29,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110372536,
+            "fd": 29,
+            "pevents": 4,
+            "events": 0,
+            "line": 1968,
+            "tid": 506040,
+            "context": 12
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110372536,
+            "fd": 29,
+            "pevents": 4,
+            "events": 0,
+            "line": 2043,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 12
+      },
+      {
+        "call_line": 2051,
+        "preparation_line": 2053,
+        "sqe_line": 2089,
+        "target_fd": 30,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110372104,
+            "fd": 30,
+            "pevents": 4,
+            "events": 0,
+            "line": 1978,
+            "tid": 506040,
+            "context": 13
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110372104,
+            "fd": 30,
+            "pevents": 4,
+            "events": 0,
+            "line": 2049,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 13
+      },
+      {
+        "call_line": 2057,
+        "preparation_line": 2059,
+        "sqe_line": 2092,
+        "target_fd": 32,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110370600,
+            "fd": 32,
+            "pevents": 4,
+            "events": 0,
+            "line": 1988,
+            "tid": 506040,
+            "context": 14
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110370600,
+            "fd": 32,
+            "pevents": 4,
+            "events": 0,
+            "line": 2055,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 14
+      },
+      {
+        "call_line": 2063,
+        "preparation_line": 2065,
+        "sqe_line": 2095,
+        "target_fd": 33,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110370168,
+            "fd": 33,
+            "pevents": 4,
+            "events": 0,
+            "line": 1998,
+            "tid": 506040,
+            "context": 15
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110370168,
+            "fd": 33,
+            "pevents": 4,
+            "events": 0,
+            "line": 2061,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 15
+      },
+      {
+        "call_line": 2069,
+        "preparation_line": 2071,
+        "sqe_line": 2098,
+        "target_fd": 34,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110353864,
+            "fd": 34,
+            "pevents": 4,
+            "events": 0,
+            "line": 2008,
+            "tid": 506040,
+            "context": 16
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110353864,
+            "fd": 34,
+            "pevents": 4,
+            "events": 0,
+            "line": 2067,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 16
+      },
+      {
+        "call_line": 2162,
+        "preparation_line": 2164,
+        "sqe_line": 2218,
+        "target_fd": 27,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110353432,
+            "fd": 27,
+            "pevents": 1,
+            "events": 0,
+            "line": 2124,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110353432,
+            "fd": 27,
+            "pevents": 1,
+            "events": 0,
+            "line": 2160,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 2168,
+        "preparation_line": 2170,
+        "sqe_line": 2221,
+        "target_fd": 25,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110373544,
+            "fd": 25,
+            "pevents": 1,
+            "events": 0,
+            "line": 2129,
+            "tid": 506040,
+            "context": 9
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110373544,
+            "fd": 25,
+            "pevents": 1,
+            "events": 0,
+            "line": 2166,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 9
+      },
+      {
+        "call_line": 2174,
+        "preparation_line": 2176,
+        "sqe_line": 2224,
+        "target_fd": 26,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110353000,
+            "fd": 26,
+            "pevents": 1,
+            "events": 0,
+            "line": 2133,
+            "tid": 506040,
+            "context": 10
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110353000,
+            "fd": 26,
+            "pevents": 1,
+            "events": 0,
+            "line": 2172,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 10
+      },
+      {
+        "call_line": 2180,
+        "preparation_line": 2182,
+        "sqe_line": 2227,
+        "target_fd": 28,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110373112,
+            "fd": 28,
+            "pevents": 1,
+            "events": 0,
+            "line": 2137,
+            "tid": 506040,
+            "context": 11
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110373112,
+            "fd": 28,
+            "pevents": 1,
+            "events": 0,
+            "line": 2178,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 11
+      },
+      {
+        "call_line": 2186,
+        "preparation_line": 2188,
+        "sqe_line": 2230,
+        "target_fd": 29,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110372536,
+            "fd": 29,
+            "pevents": 1,
+            "events": 0,
+            "line": 2141,
+            "tid": 506040,
+            "context": 12
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110372536,
+            "fd": 29,
+            "pevents": 1,
+            "events": 0,
+            "line": 2184,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 12
+      },
+      {
+        "call_line": 2192,
+        "preparation_line": 2194,
+        "sqe_line": 2233,
+        "target_fd": 30,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110372104,
+            "fd": 30,
+            "pevents": 1,
+            "events": 0,
+            "line": 2145,
+            "tid": 506040,
+            "context": 13
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110372104,
+            "fd": 30,
+            "pevents": 1,
+            "events": 0,
+            "line": 2190,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 13
+      },
+      {
+        "call_line": 2198,
+        "preparation_line": 2200,
+        "sqe_line": 2236,
+        "target_fd": 32,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110370600,
+            "fd": 32,
+            "pevents": 1,
+            "events": 0,
+            "line": 2149,
+            "tid": 506040,
+            "context": 14
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110370600,
+            "fd": 32,
+            "pevents": 1,
+            "events": 0,
+            "line": 2196,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 14
+      },
+      {
+        "call_line": 2204,
+        "preparation_line": 2206,
+        "sqe_line": 2239,
+        "target_fd": 33,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110370168,
+            "fd": 33,
+            "pevents": 1,
+            "events": 0,
+            "line": 2153,
+            "tid": 506040,
+            "context": 15
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110370168,
+            "fd": 33,
+            "pevents": 1,
+            "events": 0,
+            "line": 2202,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 15
+      },
+      {
+        "call_line": 2210,
+        "preparation_line": 2212,
+        "sqe_line": 2242,
+        "target_fd": 34,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110353864,
+            "fd": 34,
+            "pevents": 1,
+            "events": 0,
+            "line": 2157,
+            "tid": 506040,
+            "context": 16
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110353864,
+            "fd": 34,
+            "pevents": 1,
+            "events": 0,
+            "line": 2208,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 16
+      },
+      {
+        "call_line": 2341,
+        "preparation_line": 2343,
+        "sqe_line": 2349,
+        "target_fd": 24,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110371432,
+            "fd": 24,
+            "pevents": 1,
+            "events": 0,
+            "line": 2333,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110371432,
+            "fd": 24,
+            "pevents": 1,
+            "events": 0,
+            "line": 2339,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 2417,
+        "preparation_line": 2419,
+        "sqe_line": 2425,
+        "target_fd": 31,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110373976,
+            "fd": 31,
+            "pevents": 1,
+            "events": 0,
+            "line": 2361,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110373976,
+            "fd": 31,
+            "pevents": 1,
+            "events": 0,
+            "line": 2415,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 2495,
+        "preparation_line": 2497,
+        "sqe_line": 2503,
+        "target_fd": 25,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110373544,
+            "fd": 25,
+            "pevents": 1,
+            "events": 0,
+            "line": 2437,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110373544,
+            "fd": 25,
+            "pevents": 1,
+            "events": 0,
+            "line": 2493,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 2573,
+        "preparation_line": 2575,
+        "sqe_line": 2581,
+        "target_fd": 26,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110353432,
+            "fd": 26,
+            "pevents": 1,
+            "events": 0,
+            "line": 2515,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110353432,
+            "fd": 26,
+            "pevents": 1,
+            "events": 0,
+            "line": 2571,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 2651,
+        "preparation_line": 2653,
+        "sqe_line": 2659,
+        "target_fd": 24,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110371432,
+            "fd": 24,
+            "pevents": 1,
+            "events": 0,
+            "line": 2593,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110371432,
+            "fd": 24,
+            "pevents": 1,
+            "events": 0,
+            "line": 2649,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 2729,
+        "preparation_line": 2731,
+        "sqe_line": 2737,
+        "target_fd": 27,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110373976,
+            "fd": 27,
+            "pevents": 1,
+            "events": 0,
+            "line": 2671,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110373976,
+            "fd": 27,
+            "pevents": 1,
+            "events": 0,
+            "line": 2727,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 2807,
+        "preparation_line": 2809,
+        "sqe_line": 2815,
+        "target_fd": 25,
+        "queue_episode": {
+          "insertion": {
+            "loop": 107089216,
+            "watcher": 110373544,
+            "fd": 25,
+            "pevents": 1,
+            "events": 0,
+            "line": 2749,
+            "tid": 506040,
+            "context": 0
+          },
+          "removal": {
+            "loop": 107089216,
+            "watcher": 110373544,
+            "fd": 25,
+            "pevents": 1,
+            "events": 0,
+            "line": 2805,
+            "tid": 506040,
+            "context": 0
+          },
+          "masks_unchanged": true
+        },
+        "enqueue_context": 0
+      },
+      {
+        "call_line": 2956,
+        "preparation_line": 2958,
+        "sqe_line": 2970,
+        "target_fd": 7,
+        "queue_episode": null,
+        "enqueue_context": null
+      },
+      {
+        "call_line": 2962,
+        "preparation_line": 2964,
+        "sqe_line": 2973,
+        "target_fd": 9,
+        "queue_episode": null,
+        "enqueue_context": null
+      }
+    ],
+    "operations": 71,
+    "enqueue_context_counts": {
+      "None": 7,
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+      "0": 16,
+      "9": 2,
+      "10": 2,
+      "11": 2,
+      "12": 2,
+      "13": 2,
+      "14": 2,
+      "15": 2,
+      "16": 2
+    },
+    "artifact_sha256": {
+      "debugger.log": "30448d2e106c198fa389afc1c6d2ec786c05b586ca24fabe84428596ec1e2395",
+      "native-events.jsonl": "be389b8ef9f46c4e5922411a3ff8da752334d2e11a3483441b2b387badc21168",
+      "request-map.jsonl": "8aaf5285857838ebc0fb5b34d269593c6e2d888324beb19503c32789899dc1b6"
+    },
+    "limitations": [
+      "only observed start insertion and poll removal sites",
+      "stop/close lifecycle and intermediate coalescing not captured",
+      "matching pointer and FD is scoped queue evidence, not general lifetime proof or SQE ownership",
+      "queue insertion ancestry is not exclusive ownership of coalesced watcher updates",
+      "preparations outside poll call site remain without watcher ancestry"
+    ]
+  },
+  "oracle_checks": [
+    {
+      "context": 1,
+      "correct": true
+    },
+    {
+      "context": 2,
+      "correct": true
+    },
+    {
+      "context": 3,
+      "correct": true
+    },
+    {
+      "context": 4,
+      "correct": true
+    },
+    {
+      "context": 5,
+      "correct": true
+    },
+    {
+      "context": 6,
+      "correct": true
+    },
+    {
+      "context": 7,
+      "correct": true
+    },
+    {
+      "context": 8,
+      "correct": true
+    },
+    {
+      "context": 1,
+      "correct": true
+    },
+    {
+      "context": 2,
+      "correct": true
+    },
+    {
+      "context": 3,
+      "correct": true
+    },
+    {
+      "context": 4,
+      "correct": true
+    },
+    {
+      "context": 5,
+      "correct": true
+    },
+    {
+      "context": 6,
+      "correct": true
+    },
+    {
+      "context": 7,
+      "correct": true
+    },
+    {
+      "context": 8,
+      "correct": true
+    },
+    {
+      "context": 9,
+      "correct": true
+    },
+    {
+      "context": 10,
+      "correct": true
+    },
+    {
+      "context": 11,
+      "correct": true
+    },
+    {
+      "context": 12,
+      "correct": true
+    },
+    {
+      "context": 13,
+      "correct": true
+    },
+    {
+      "context": 14,
+      "correct": true
+    },
+    {
+      "context": 15,
+      "correct": true
+    },
+    {
+      "context": 16,
+      "correct": true
+    },
+    {
+      "context": 9,
+      "correct": true
+    },
+    {
+      "context": 10,
+      "correct": true
+    },
+    {
+      "context": 11,
+      "correct": true
+    },
+    {
+      "context": 12,
+      "correct": true
+    },
+    {
+      "context": 13,
+      "correct": true
+    },
+    {
+      "context": 14,
+      "correct": true
+    },
+    {
+      "context": 15,
+      "correct": true
+    },
+    {
+      "context": 16,
+      "correct": true
+    }
+  ]
+}

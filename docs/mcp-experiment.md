@@ -8,7 +8,7 @@ The existing docs correctly focus on the missing boundary between logical tasks 
 
 ## Run it
 
-Requires Linux with working `ptrace`/`strace -ff -yy`, Node.js (tested with 24.20.0), npm, and Python **3.11+**. This host's `python3` is 3.6: use `python3.11` explicitly. Agent runs additionally need Codex CLI (tested with 0.160.1) and an existing `codex login` session. They consume model usage. No API key is needed when using that login.
+Requires Linux with working `ptrace`/`strace -ff -yy`, Node.js (tested with 24.20.0), npm, and Python **3.11+**. This host's `python3` is 3.6: use `python3.11` explicitly. Agent runs additionally need Codex CLI (tested with 0.160.1) and an existing `codex login` session. The agent model is `gpt-6-astra` (configured in `~/.codex/config.toml`; pass `--model NAME` to override). They consume model usage. No API key is needed when using that login.
 
 From the repo root:
 
@@ -17,7 +17,7 @@ npm ci --prefix experiments/mcp
 python3.11 -m unittest discover -s experiments/mcp -v
 
 # Real LLM chooses and executes MCP calls, including writing and reading a summary.
-python3.11 experiments/mcp/run.py --mode agent
+python3.11 experiments/mcp/run_agent.py --model <model-id> --output results/mcp/<run-name>
 
 # Repeatable protocol controls against the very same real MCP server.
 python3.11 experiments/mcp/run.py --mode replay --concurrency 1
@@ -115,7 +115,7 @@ Implementation references: [official filesystem server](https://raw.githubuserco
 Run the actual agent against the instrumented controlled MCP server:
 
 ```sh
-python3.11 experiments/mcp/run.py --mode agent --scenario worker-relay --instrumented --batches 2 --concurrency 4
+python3.11 experiments/mcp/run_agent.py --model <model-id> --scenario worker-relay --output results/mcp/<run-name> --concurrency 4 --batches 2
 ```
 
 This agent task requests four distinct `worker_slot` calls and one final `barrier`.
@@ -165,3 +165,144 @@ Use a fresh output directory/file. This submits real ring operations; do not use
 the no-ring injection control. The report distinguishes syscall observations from
 trusted application SQE/CQE observations and independent file-content checks.
 It is a standalone gap experiment, not yet an MCP ring attribution adapter.
+
+### MCP ring-operation attribution
+
+```sh
+python3.11 experiments/mcp/run.py --scenario uring --instrumented --concurrency 16 --batches 2
+python3.11 experiments/mcp/run_agent.py --model <model-id> --scenario uring --output results/mcp/<run-name> --concurrency 4 --batches 2
+```
+
+These run real ring operations. Do not combine them with `--disable-io-uring`.
+The harness builds and hashes the C helper, captures its descendants, joins its
+trusted SQE/CQE observations to inherited MCP identity, and runs `score_ring.py`.
+`ring-score.json` is required for queries of these runs. Request queries expose
+`ring_operation` nodes separately from syscall nodes. The current adapter uses
+one process/ring per request; shared rings and arbitrary runtime ring users remain
+unsupported. Kernel worker thread identity is not inferred.
+
+### Persistent shared-ring experiment
+
+```sh
+python3.11 experiments/mcp/run.py --scenario uring-shared --instrumented --concurrency 16 --batches 3
+```
+
+This replay uses one persistent worker/ring, with one submission syscall per batch
+of requests. `--concurrency` sets the fixed batch width (1–128); the total number
+of fixture slots must not exceed 10,000. The helper fails on partial batches at
+EOF. This scenario is not enabled in agent mode because arbitrary sequential
+agent calls would not necessarily fill a batch.
+
+Per-SQE context is captured inside verified IPC preparation brackets. Batch enter
+and completion dispatch are unscoped. Query output retains that distinction while
+linking each ring operation to its request. The observation sidecar is
+`ring-observations.jsonl`, checked against traced writes. `ring-score.json` scores
+ownership and resulting file contents independently.
+
+For a completed shared-ring run, compare conditional ownership baselines:
+
+```sh
+python3.11 experiments/mcp/ring_baselines.py results/mcp/YOUR_SHARED_RING_RUN
+```
+
+The comparison is deliberately supplied the known ring-operation inventory and
+submission syscall. It measures ownership ambiguity, not operation discovery or
+external provenance-system performance. It validates attribution output hashes
+and the independent oracle before scoring.
+
+Ring-aware queries keep operation evidence separate from syscall events:
+
+```sh
+python3.11 experiments/mcp/query.py results/mcp/YOUR_RUN --request 3 --fixture-only
+python3.11 experiments/mcp/query.py results/mcp/YOUR_RUN --operation 'FULL_RING_OPERATION_NODE_ID'
+```
+
+Copy the full operation ID from query/provenance output. `ring_operations` holds
+selected logical operations; `events` holds selected syscalls. Fixture filtering
+uses conservative observed-open pathname evidence. Failed operations with invalid
+FDs lack a fixture path and are counted as omitted; direct operation queries can
+still inspect them. Pathname observations do not establish inode/OFD identity or
+track renames.
+
+To reproduce descriptor reuse between SQE preparation and submission, run:
+
+```sh
+python3.11 experiments/mcp/matrix.py --scenarios uring,uring-shared,uring-reuse --concurrency 4 --pools 4 --repeats 1 --batches 2 --jobs 2 --output results/mcp/ring-submission-resource-repeat
+```
+
+`uring-reuse` replaces the prepared file descriptor before submission. Its
+independent scorer requires writes in `replacement.bin`, unchanged original
+slots, and provenance resource links to the replacement file. This exercises
+ordinary descriptors in a controlled single-threaded helper, not registered
+files or concurrent descriptor mutation.
+
+Shared-ring partial batches can be enabled explicitly:
+
+```sh
+python3.11 experiments/mcp/run.py --scenario uring-shared --instrumented --concurrency 8 --batches 2 --ring-idle-ms 10 --output results/mcp/shared-ring-idle-repeat
+```
+
+The idle interval bounds waiting for another job once a complete job is received;
+it does not bound kernel I/O completion or malformed partial input. Zero (default)
+retains the fixed-width experiment.
+
+An actual LLM agent can exercise sparse requests against the persistent ring:
+
+```sh
+python3.11 experiments/mcp/run_agent.py --model <model-id> --scenario uring-shared --output results/mcp/<run-name> --concurrency 8 --batches 2 --ring-idle-ms 10
+```
+
+Here concurrency sets batch capacity; it does not force the agent to issue
+concurrent calls. Use captured protocol intervals to establish overlap.
+
+To vary shared-ring arrivals and inspect measured batching:
+
+```sh
+python3.11 experiments/mcp/run.py --scenario uring-shared --instrumented --concurrency 8 --batches 2 --ring-idle-ms 10 --request-stagger-ms 50 --output results/mcp/shared-ring-stagger-repeat
+python3.11 experiments/mcp/ring_arrivals.py results/mcp/shared-ring-stagger-repeat
+```
+
+Arrival spacing is requested at the replay client. Use the report's observed
+intervals and batch membership rather than assuming the requested spacing
+forces a particular grouping.
+
+For the experimental native Node epoll-ring debugger collector:
+
+```sh
+python3.11 experiments/mcp/run_native_ring_debug.py results/mcp/native-ring-repeat --connections 8
+```
+
+The runner requires the inspected Node binary hash. This is a standalone
+loopback workload with cooperative debugger copies, not an MCP attribution run.
+Its report validates serialized SQ/CQ joins under the documented layout limits.
+
+
+Native collector with instrumented MCP replay (binary-pinned host required):
+
+```sh
+python3 experiments/mcp/run_native_ring_debug.py results/mcp/native-mcp-new --mcp-replay --connections 4
+```
+
+This uses SDK in-memory protocol transport and deterministic requests. It captures
+request markers alongside native ring evidence; it does not yet infer ring request
+ownership. Use a fresh output directory for each capture.
+
+Concurrent native MCP replay:
+
+```sh
+python3 experiments/mcp/run_native_ring_debug.py results/mcp/native-mcp-concurrent-new --mcp-replay --connections 16 --concurrency 8
+```
+
+The runner writes `resource-context.json` and `mcp-overlap.json`; ancestry
+references include their ring batch index. Creation ancestry remains separate
+from execution ownership.
+
+
+Native MCP over actual stdio with an external deterministic client:
+
+```sh
+python3 experiments/mcp/run_native_ring_debug.py results/mcp/native-stdio-new --mcp-stdio --connections 4 --concurrency 2
+```
+
+The capture preserves `stdio-protocol.json`, native graph, scores and source
+snapshots. This is a replay client; native external LLM integration remains open.

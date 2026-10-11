@@ -1,0 +1,64 @@
+{
+  "normal_exit": true,
+  "raw_sqe_candidates": [
+    {
+      "opcode": 29,
+      "flags": 0,
+      "fd": 10,
+      "off_union": 12,
+      "len_union": 1,
+      "user_data": 51539607553
+    },
+    {
+      "opcode": 29,
+      "flags": 0,
+      "fd": 10,
+      "off_union": 14,
+      "len_union": 1,
+      "user_data": 60129542149
+    },
+    {
+      "opcode": 29,
+      "flags": 0,
+      "fd": 15,
+      "off_union": 17,
+      "len_union": 1,
+      "user_data": 73014444033
+    },
+    {
+      "opcode": 29,
+      "flags": 0,
+      "fd": 15,
+      "off_union": 19,
+      "len_union": 1,
+      "user_data": 81604378629
+    },
+    {
+      "opcode": 29,
+      "flags": 0,
+      "fd": 3,
+      "off_union": 7,
+      "len_union": 1,
+      "user_data": 30064771073
+    },
+    {
+      "opcode": 29,
+      "flags": 0,
+      "fd": 3,
+      "off_union": 9,
+      "len_union": 1,
+      "user_data": 38654705669
+    }
+  ],
+  "scope": "First two SQE slots copied per observed epoll flush; pending queue membership and completions not yet validated.",
+  "limitations": [
+    "GDB invokes malloc/memcpy/free inside stopped target",
+    "May deadlock or perturb other workloads",
+    "Not passive capture or MCP attribution"
+  ],
+  "sha256": {
+    "results/mcp/node-ring-debug-memory/debugger.log": "90cff2706082e3d05678a3c4be488ad39fc81aa781cc9f4779852e094b7ee858",
+    "results/mcp/node-ring-debug-memory/copy.log": "0254017c63fba2d4d99ef298854e8998753406e71fbc2139f0d4d2f61d2d05e6",
+    "experiments/mcp/node-ring-debug/copy.gdb": "de467562e694a8583e60ffd87298f2af5af11c884265db1742372e29100bfec5"
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "summary": {
+    "operations": 39,
+    "completion_results": {
+      "0": 31,
+      "-17": 8
+    },
+    "successful_operations": 31,
+    "failed_operations": 8
+  },
+  "sequences": [
+    {
+      "add": {
+        "batch": 2,
+        "ring_fd": 16,
+        "index": 5,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 94489280533,
+        "target_fd": 22,
+        "control_operation": 1,
+        "result": -17,
+        "flags": 0
+      },
+      "following_mod": {
+        "batch": 3,
+        "ring_fd": 16,
+        "index": 6,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 94489280539,
+        "target_fd": 22,
+        "control_operation": 3,
+        "result": 0,
+        "flags": 0
+      }
+    },
+    {
+      "add": {
+        "batch": 5,
+        "ring_fd": 16,
+        "index": 9,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 103079215141,
+        "target_fd": 24,
+        "control_operation": 1,
+        "result": -17,
+        "flags": 0
+      },
+      "following_mod": {
+        "batch": 6,
+        "ring_fd": 16,
+        "index": 10,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 103079215147,
+        "target_fd": 24,
+        "control_operation": 3,
+        "result": 0,
+        "flags": 0
+      }
+    },
+    {
+      "add": {
+        "batch": 8,
+        "ring_fd": 16,
+        "index": 13,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 98784247861,
+        "target_fd": 23,
+        "control_operation": 1,
+        "result": -17,
+        "flags": 0
+      },
+      "following_mod": {
+        "batch": 9,
+        "ring_fd": 16,
+        "index": 14,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 98784247867,
+        "target_fd": 23,
+        "control_operation": 3,
+        "result": 0,
+        "flags": 0
+      }
+    },
+    {
+      "add": {
+        "batch": 11,
+        "ring_fd": 16,
+        "index": 17,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 94489280581,
+        "target_fd": 22,
+        "control_operation": 1,
+        "result": -17,
+        "flags": 0
+      },
+      "following_mod": {
+        "batch": 12,
+        "ring_fd": 16,
+        "index": 18,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 94489280587,
+        "target_fd": 22,
+        "control_operation": 3,
+        "result": 0,
+        "flags": 0
+      }
+    },
+    {
+      "add": {
+        "batch": 14,
+        "ring_fd": 16,
+        "index": 21,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 103079215189,
+        "target_fd": 24,
+        "control_operation": 1,
+        "result": -17,
+        "flags": 0
+      },
+      "following_mod": {
+        "batch": 15,
+        "ring_fd": 16,
+        "index": 22,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 103079215195,
+        "target_fd": 24,
+        "control_operation": 3,
+        "result": 0,
+        "flags": 0
+      }
+    },
+    {
+      "add": {
+        "batch": 17,
+        "ring_fd": 16,
+        "index": 25,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 98784247909,
+        "target_fd": 23,
+        "control_operation": 1,
+        "result": -17,
+        "flags": 0
+      },
+      "following_mod": {
+        "batch": 18,
+        "ring_fd": 16,
+        "index": 26,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 98784247915,
+        "target_fd": 23,
+        "control_operation": 3,
+        "result": 0,
+        "flags": 0
+      }
+    },
+    {
+      "add": {
+        "batch": 20,
+        "ring_fd": 16,
+        "index": 29,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 94489280629,
+        "target_fd": 22,
+        "control_operation": 1,
+        "result": -17,
+        "flags": 0
+      },
+      "following_mod": {
+        "batch": 21,
+        "ring_fd": 16,
+        "index": 30,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 94489280635,
+        "target_fd": 22,
+        "control_operation": 3,
+        "result": 0,
+        "flags": 0
+      }
+    },
+    {
+      "add": {
+        "batch": 23,
+        "ring_fd": 16,
+        "index": 33,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 103079215237,
+        "target_fd": 24,
+        "control_operation": 1,
+        "result": -17,
+        "flags": 0
+      },
+      "following_mod": {
+        "batch": 24,
+        "ring_fd": 16,
+        "index": 34,
+        "opcode": 29,
+        "fd": 15,
+        "user_data": 103079215243,
+        "target_fd": 24,
+        "control_operation": 3,
+        "result": 0,
+        "flags": 0
+      }
+    }
+  ],
+  "log_sha256": "c2c107a628f89163a42ad6b702e1e9053032f540958b877653bb5d761936ea4e",
+  "scope": "Observed same-numeric-target ADD failure then MOD success; descriptor lifetimes and causal retry intent are not inferred."
+}

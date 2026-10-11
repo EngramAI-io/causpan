@@ -1,0 +1,295 @@
+{
+  "valid": true,
+  "batches": [
+    {
+      "ring_fd": 11,
+      "sq_head": 0,
+      "sq_tail": 2,
+      "operations": [
+        {
+          "index": 0,
+          "opcode": 29,
+          "fd": 10,
+          "user_data": 51539607553,
+          "result": 0,
+          "flags": 0
+        },
+        {
+          "index": 1,
+          "opcode": 29,
+          "fd": 10,
+          "user_data": 60129542149,
+          "result": 0,
+          "flags": 0
+        }
+      ]
+    },
+    {
+      "ring_fd": 16,
+      "sq_head": 0,
+      "sq_tail": 4,
+      "operations": [
+        {
+          "index": 0,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 73014444033,
+          "result": 0,
+          "flags": 0
+        },
+        {
+          "index": 1,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 81604378629,
+          "result": 0,
+          "flags": 0
+        },
+        {
+          "index": 2,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 90194313225,
+          "result": 0,
+          "flags": 0
+        },
+        {
+          "index": 3,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 94489280525,
+          "result": 0,
+          "flags": 0
+        }
+      ]
+    },
+    {
+      "ring_fd": 16,
+      "sq_head": 4,
+      "sq_tail": 6,
+      "operations": [
+        {
+          "index": 4,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 98784247825,
+          "result": 0,
+          "flags": 0
+        },
+        {
+          "index": 5,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 94489280533,
+          "result": -17,
+          "flags": 0
+        }
+      ]
+    },
+    {
+      "ring_fd": 16,
+      "sq_head": 6,
+      "sq_tail": 7,
+      "operations": [
+        {
+          "index": 6,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 94489280539,
+          "result": 0,
+          "flags": 0
+        }
+      ]
+    },
+    {
+      "ring_fd": 16,
+      "sq_head": 7,
+      "sq_tail": 8,
+      "operations": [
+        {
+          "index": 7,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 103079215133,
+          "result": 0,
+          "flags": 0
+        }
+      ]
+    },
+    {
+      "ring_fd": 16,
+      "sq_head": 8,
+      "sq_tail": 10,
+      "operations": [
+        {
+          "index": 8,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 94489280545,
+          "result": 0,
+          "flags": 0
+        },
+        {
+          "index": 9,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 103079215141,
+          "result": -17,
+          "flags": 0
+        }
+      ]
+    },
+    {
+      "ring_fd": 16,
+      "sq_head": 10,
+      "sq_tail": 11,
+      "operations": [
+        {
+          "index": 10,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 103079215147,
+          "result": 0,
+          "flags": 0
+        }
+      ]
+    },
+    {
+      "ring_fd": 16,
+      "sq_head": 11,
+      "sq_tail": 12,
+      "operations": [
+        {
+          "index": 11,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 98784247853,
+          "result": 0,
+          "flags": 0
+        }
+      ]
+    },
+    {
+      "ring_fd": 16,
+      "sq_head": 12,
+      "sq_tail": 14,
+      "operations": [
+        {
+          "index": 12,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 103079215153,
+          "result": 0,
+          "flags": 0
+        },
+        {
+          "index": 13,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 98784247861,
+          "result": -17,
+          "flags": 0
+        }
+      ]
+    },
+    {
+      "ring_fd": 16,
+      "sq_head": 14,
+      "sq_tail": 15,
+      "operations": [
+        {
+          "index": 14,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 98784247867,
+          "result": 0,
+          "flags": 0
+        }
+      ]
+    },
+    {
+      "ring_fd": 16,
+      "sq_head": 15,
+      "sq_tail": 16,
+      "operations": [
+        {
+          "index": 15,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 94489280573,
+          "result": 0,
+          "flags": 0
+        }
+      ]
+    },
+    {
+      "ring_fd": 16,
+      "sq_head": 16,
+      "sq_tail": 18,
+      "operations": [
+        {
+          "index": 16,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 98784247873,
+          "result": 0,
+          "flags": 0
+        },
+        {
+          "index": 17,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 94489280581,
+          "result": -17,
+          "flags": 0
+        }
+      ]
+    },
+    {
+      "ring_fd": 16,
+      "sq_head": 18,
+      "sq_tail": 19,
+      "operations": [
+        {
+          "index": 18,
+          "opcode": 29,
+          "fd": 15,
+          "user_data": 94489280587,
+          "result": 0,
+          "flags": 0
+        }
+      ]
+    },
+    {
+      "ring_fd": 4,
+      "sq_head": 0,
+      "sq_tail": 2,
+      "operations": [
+        {
+          "index": 0,
+          "opcode": 29,
+          "fd": 3,
+          "user_data": 30064771073,
+          "result": 0,
+          "flags": 0
+        },
+        {
+          "index": 1,
+          "opcode": 29,
+          "fd": 3,
+          "user_data": 38654705669,
+          "result": 0,
+          "flags": 0
+        }
+      ]
+    }
+  ],
+  "operations": 23,
+  "log_sha256": "1f4351e0260bd01fbfb6e3adcb382af42e5bf4b958724ddcae30e3c9cc0338e3",
+  "limitations": [
+    "binary-specific cooperative debugger probe",
+    "fixed layout offset not verified by this inspector",
+    "serialized batches only",
+    "no request ownership or kernel worker identity"
+  ]
+}
