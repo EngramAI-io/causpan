@@ -78,7 +78,8 @@ def build(run):
                 artifact_sha256=preparations['artifact_sha256'],
                 limitations=['trusted intrusive binary-specific collector','queue coalescing and watcher lifetime gaps remain',
                              'request reachability denotes observed ancestry, not exclusive operation ownership',
-                             'not yet merged into the strace attribution graph'])
+                             'not yet merged into the strace attribution graph',
+                             'use merge_graphs.py to combine with provenance.jsonl'])
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('run',type=Path)

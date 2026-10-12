@@ -25,12 +25,30 @@ def validate_snapshot_files(run,graph):
         if digest!=node['sha256']:raise ValueError('snapshot integrity mismatch: '+str(path))
 
 
+_NATIVE_EDGE_KINDS = {'prepared_as', 'observed_queue_episode', 'poll_prepared',
+                      'observed_update_while_queued', 'canceled_before_poll',
+                      'triggered_retry'}
+_CAUSAL_EDGE_KINDS = {'ring_memory_observed', 'ring_snapshot_written',
+                      'ring_resource_observed', 'ring_submitted',
+                      'ring_submission_observed', 'ring_completion_observed',
+                      'descriptor_sent', 'descriptor_received',
+                      'cancelled_before_execution', 'ipc_sent', 'submitted',
+                      'executed', 'spawned', 'joined', 'created_task',
+                      'polled', 'connected', 'socket_effect', 'accepted',
+                      'accepted_connection'} | _NATIVE_EDGE_KINDS
+_HANDOFF_EDGE_KINDS = {'ring_submitted', 'ring_submission_observed',
+                       'ring_completion_observed', 'descriptor_sent',
+                       'descriptor_received'} | _NATIVE_EDGE_KINDS
+
+
 def evidence_chain(graph,selected,request=None,operations=None):
     wanted={r['id'] for r in graph if r['type']=='node' and r['kind']=='syscall' and any(r['id'].endswith('syscall:'+e['source']) for e in selected)}
     wanted.update(r['id'] for r in (operations or []))
     # Request queries retain handoff outcomes even when no syscall was executed.
     if request is not None:
-        descendants={r['id'] for r in graph if r['type']=='node' and r['kind']=='mcp_request' and r.get('rpc_id')==request}
+        descendants={r['id'] for r in graph if r['type']=='node'
+                     and r.get('kind') in ('mcp_request', 'request')
+                     and r.get('rpc_id')==request}
         changed=True
         while changed:
             changed=False
@@ -44,18 +62,17 @@ def evidence_chain(graph,selected,request=None,operations=None):
     while changed:
         changed=False
         for edge in graph:
-            if edge['type']=='edge' and edge['kind'] in {'ring_submitted','ring_submission_observed','ring_completion_observed','descriptor_sent','descriptor_received'} and edge['source'] in wanted and edge['target'] not in wanted:
+            if edge['type']=='edge' and edge['kind'] in _HANDOFF_EDGE_KINDS and edge['source'] in wanted and edge['target'] not in wanted:
                 wanted.add(edge['target']);changed=True
     ancestors=set(wanted)
     changed=True
     while changed:
         changed=False
         for edge in graph:
-            causal=edge['kind'] in {'ring_memory_observed','ring_snapshot_written','ring_resource_observed','ring_submitted','ring_submission_observed','ring_completion_observed','descriptor_sent','descriptor_received','cancelled_before_execution','ipc_sent','submitted','executed','spawned','joined','created_task','polled','connected','socket_effect','accepted','accepted_connection'}
-            if edge['type']=='edge' and causal and edge['target'] in ancestors and edge['source'] not in ancestors:
+            if edge['type']=='edge' and edge['kind'] in _CAUSAL_EDGE_KINDS and edge['target'] in ancestors and edge['source'] not in ancestors:
                 ancestors.add(edge['source']);changed=True
     evidence=[r for r in graph if (r['type']=='node' and r['id'] in ancestors) or
-              (r['type']=='edge' and r['kind'] in {'ring_memory_observed','ring_snapshot_written','ring_resource_observed','ring_submitted','ring_submission_observed','ring_completion_observed','descriptor_sent','descriptor_received','cancelled_before_execution','ipc_sent','submitted','executed','spawned','joined','created_task','polled','connected','socket_effect','accepted','accepted_connection'} and r['source'] in ancestors and r['target'] in ancestors)]
+              (r['type']=='edge' and r['kind'] in _CAUSAL_EDGE_KINDS and r['source'] in ancestors and r['target'] in ancestors)]
     return evidence
 
 
@@ -106,7 +123,7 @@ def main():
     if args.operation is not None and not operations and not omitted:
         raise SystemExit('Unknown ring operation ID')
     evidence=evidence_chain(graph,selected,request=request,operations=operations)
-    if json.loads((run/'causal-report.json').read_text())!=report:raise SystemExit('Analysis changed while reading; retry after it completes')
+    if json.loads((run/'causal-report.json').read_text())!=report:raise SystemExit('Analysis changed while reading; use --allow-failed-workload only for a failed workload with valid attribution')
     print(json.dumps({'workload_status':manifest['status'],'workload_error':manifest.get('error'),
                       'attribution_valid':True,'events':selected,'ring_operations':operations,
                       'ring_operations_omitted_by_fixture_filter':omitted,'provenance':evidence},indent=2))
